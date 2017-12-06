@@ -178,7 +178,7 @@ public class BoxContour {
     public void setStroke(Stroke s) {
         stroke = s;
     }
-    
+
     public Stroke stroke() {
         return stroke;
     }
