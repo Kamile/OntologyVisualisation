@@ -110,13 +110,13 @@ public class BoxContour {
         return (int) (cy + height/2) + 1;
     }
 
-    static void fitRectanglesToSize(ArrayList<BoxContour> rectangles, int size) {
+    static void fitRectanglesToSize(ArrayList<BoxContour> boxes, int size) {
         int minX = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE;
         int minY = Integer.MAX_VALUE;
         int maxY = Integer.MIN_VALUE;
 
-        for (BoxContour bc : rectangles) {
+        for (BoxContour bc : boxes) {
             if (bc.getMinX() < minX) {
                 minX = bc.getMinX();
             }
@@ -133,7 +133,7 @@ public class BoxContour {
 
         double midX = (minX + maxX) * 0.5;
         double midY = (minY + maxY) * 0.5;
-        for (BoxContour bc : rectangles) {
+        for (BoxContour bc : boxes) {
             bc.shift(-midX, -midY);
         }
 
@@ -141,11 +141,11 @@ public class BoxContour {
         double height = maxY - minY;
         double biggest_HW = Math.max(height, width);
         double scale = (size * 0.95) / biggest_HW;
-        for (BoxContour bc : rectangles) {
+        for (BoxContour bc : boxes) {
             bc.scaleAboutZero(scale);
         }
 
-        for (BoxContour bc : rectangles) {
+        for (BoxContour bc : boxes) {
             bc.shift(size * 0.5, size * 0.5);
         }
 
