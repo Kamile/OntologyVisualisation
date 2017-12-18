@@ -3,6 +3,7 @@ package concrete;
 
 import abstractDescription.AbstractConceptDiagramDescription;
 import icircles.concreteDiagram.*;
+import icircles.util.CannotDrawException;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -29,7 +30,12 @@ public class ConcreteConceptDiagram extends ConcreteDiagram {
         return boxes;
     }
 
-    public static ConcreteConceptDiagram makeConcreteDiagram(AbstractConceptDiagramDescription abstractDescription, int size) {
+    public static ConcreteConceptDiagram makeConcreteDiagram(AbstractConceptDiagramDescription abstractDescription, int size) throws CannotDrawException {
+
+        if (abstractDescription.isValid()) {
+            throw new CannotDrawException("Invalid diagram specification");
+        }
+
         ConceptDiagramCreator cdc = new ConceptDiagramCreator(abstractDescription);
         return cdc.createDiagram(size);
     }

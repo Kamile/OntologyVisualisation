@@ -37,6 +37,16 @@ public class ConceptDiagramCreator {
         ConcreteConceptDiagram result = null;
 
         return result;
+    }
 
+    /**
+     * Re-written from createCircles in iCircles to remove split curves and apply extra layout criteria.
+     * @param deb_size
+     * @return
+     * @throws CannotDrawException
+     */
+    private boolean createCircles(int deb_size) throws CannotDrawException {
+
+        return true;
     }
 }
