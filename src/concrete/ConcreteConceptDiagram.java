@@ -51,4 +51,6 @@ public class ConcreteConceptDiagram extends ConcreteDiagram {
         return cdc.createDiagram(size);
     }
 
+
+
 }
