@@ -1,4 +1,6 @@
 package abstractDescription;
 
-public class AbstractPropertyDiagramDescription {
+import icircles.abstractDescription.AbstractDescription;
+
+public class AbstractPropertyDiagramDescription extends AbstractDescription {
 }
