@@ -4,7 +4,6 @@ import abstractDescription.AbstractConceptDiagramDescription;
 import icircles.abstractDescription.AbstractBasicRegion;
 import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
-import icircles.concreteDiagram.CircleContour;
 import icircles.concreteDiagram.DiagramCreator;
 import icircles.decomposition.DecompositionStep;
 import icircles.decomposition.DecompositionStrategy;
@@ -14,6 +13,8 @@ import icircles.recomposition.RecompositionStrategy;
 import icircles.util.CannotDrawException;
 import org.apache.log4j.Logger;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,6 +42,14 @@ public class ConceptDiagramCreator extends DiagramCreator {
     int debug_image_number = 0;
     int debug_size = 50;
 
+    private static Color[] colours = {
+            new Color(0,100, 0),
+            Color.red,
+            Color.blue,
+            new Color(150, 50, 0),
+            new Color(0, 50, 150),
+            new Color(100, 0, 100)
+    };
 
     public ConceptDiagramCreator(AbstractConceptDiagramDescription abstractDescription) {
         super(abstractDescription);
@@ -89,11 +98,44 @@ public class ConceptDiagramCreator extends DiagramCreator {
 
         BuildStep step = bs;
 
+        // Labelled loop => break statement breaks the outer loop.
+        stepLoop:
+        while (step != null) {
+            logger.debug("New build step");
+            Rectangle2D.Double outerBox = concrete.CircleContour.makeBigOuterBox(circles);
+
+
+            // Add new curves in position with existing curves
+            if (step.recomp_data.size() > 1) {
+                if (step.recomp_data.get(0).split_zones.size() == 1) {
+                    // Combine symmetric nested contours
+                } else if (step.recomp_data.get(0).split_zones.size() == 2) {
+                    // Combine symmetry of 1-piercings
+                }
+            }
+
+            for (RecompData rd: step.recomp_data) {
+                AbstractCurve ac = rd.added_curve;
+                double suggestedRadians = guide_sizes.get(ac);
+
+                if (rd.split_zones.size() == 1) {
+                    // add nested contours
+                } else if ( rd.split_zones.size() == 2) {
+                    // add single piercing
+                } else {
+                    // double piercing
+                }
+
+            }
+        }
 
         return true;
     }
 
-    private void shuffleAndCombine(BuildStep bs) {
-
+    private void shuffleAndCombine(BuildStep stepList) {
+        // Collect together additions that are
+        // (i) nested in the same zone
+        // (ii) single-piercings with the same zones
+        // (iii) will have the same radius (score)
     }
 }
