@@ -44,7 +44,7 @@ import org.apache.log4j.Level;
 
 import icircles.abstractDescription.AbstractCurve;
 
-public class CircleContour {
+public class CircleContour extends icircles.concreteDiagram.CircleContour{
 
     static Logger logger = Logger.getLogger(CircleContour.class.getName());
 
@@ -57,16 +57,12 @@ public class CircleContour {
     Color col;
     Stroke stroke;
     
-//    Area bigInterior;
-//    Area smallInterior; 
-    // TODO this caching of the smallInterior somehow became out of date.
-    // I have just suppressed it, which slow things down. but we need to understand why and reinstate the cache.
-
     public AbstractCurve ac;
 
     public CircleContour(double cx,
             double cy, double radius, 
             AbstractCurve ac) {
+        super(cx, cy, radius, ac);
         this.cx = cx;
         this.cy = cy;
         this.radius = radius;
@@ -75,6 +71,7 @@ public class CircleContour {
     }
 
     public CircleContour(CircleContour c) {
+        super(c);
 		this.cx = c.cx;
 		this.cy = c.cy;
 		this.radius = c.radius;

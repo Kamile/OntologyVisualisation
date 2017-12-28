@@ -1,8 +1,10 @@
 package concrete;
 
-
 import abstractDescription.AbstractConceptDiagramDescription;
-import icircles.concreteDiagram.*;
+import icircles.concreteDiagram.CircleContour;
+import icircles.concreteDiagram.ConcreteDiagram;
+import icircles.concreteDiagram.ConcreteZone;
+import icircles.concreteDiagram.ConcreteSpider;
 import icircles.util.CannotDrawException;
 
 import java.awt.geom.Rectangle2D;
@@ -25,7 +27,6 @@ import java.util.ArrayList;
  *    binary relations.
  */
 public class ConcreteConceptDiagram extends ConcreteDiagram {
-
 
     ArrayList<BoxContour> boxes;
     public ConcreteConceptDiagram(ArrayList<BoxContour> boxes,
