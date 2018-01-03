@@ -84,8 +84,6 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
         cx += x;
         cy += y;
         circle = makeEllipse(cx, cy, radius);
-//        bigInterior = null;
-//        smallInterior = null;
     }
 
     private void scaleAboutZero(double scale) {
@@ -93,8 +91,6 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
         cy *= scale;
         radius *= scale;
         circle = makeEllipse(cx, cy, radius);
-//        bigInterior = null;
-//        smallInterior = null;
     }
 
     private Ellipse2D.Double makeEllipse(double x, double y, double r) {
@@ -106,16 +102,12 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
     }
 
     public Area getBigInterior() {
-//        if (bigInterior == null) {
           Area  bigInterior = new Area(makeEllipse(cx, cy, radius + nudge));
-//        }
         return bigInterior;
     }
 
     public Area getSmallInterior() {
-        //if (smallInterior == null) {
         Area    smallInterior = new Area(makeEllipse(cx, cy, radius - nudge));
-        //}
         return smallInterior;
     }
 
@@ -154,8 +146,8 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
     public int getMaxY() {
         return (int) (cy + radius) + 1;
     }
-    static void fitCirclesToSize(ArrayList<CircleContour> circles, int size)
-    {
+
+    static void fitCirclesToSize(ArrayList<CircleContour> circles, int size) {
         // work out a suitable size
         int minX = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE;
@@ -165,12 +157,15 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
             if (cc.getMinX() < minX) {
                 minX = cc.getMinX();
             }
+
             if (cc.getMinY() < minY) {
                 minY = cc.getMinY();
             }
+
             if (cc.getMaxX() > maxX) {
                 maxX = cc.getMaxX();
             }
+
             if (cc.getMaxY() > maxY) {
                 maxY = cc.getMaxY();
             }
@@ -178,6 +173,7 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
 
         double midX = (minX + maxX) * 0.5;
         double midY = (minY + maxY) * 0.5;
+
         for (CircleContour cc : circles) {
             cc.shift(-midX, -midY);
         }
@@ -186,6 +182,7 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
         double height = maxY - minY;
         double biggest_HW = Math.max(height, width);
         double scale = (size * 0.95) / biggest_HW;
+
         for (CircleContour cc : circles) {
             cc.scaleAboutZero(scale);
         }
@@ -194,9 +191,10 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
             cc.shift(size * 0.5, size * 0.5);
         }
     }
-    static Rectangle2D.Double makeBigOuterBox(ArrayList<CircleContour> circles)
-    {
-    	if(circles.size()==0)
+
+    static Rectangle2D.Double makeBigOuterBox(ArrayList<CircleContour> circles) {
+
+    	if (circles.size()==0)
     		return new Rectangle2D.Double(0, 0, 1000, 1000);
     	
         // work out a suitable size
@@ -204,20 +202,25 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
         int maxX = Integer.MIN_VALUE;
         int minY = Integer.MAX_VALUE;
         int maxY = Integer.MIN_VALUE;
+
         for (CircleContour cc : circles) {
             if (cc.getMinX() < minX) {
                 minX = cc.getMinX();
             }
+
             if (cc.getMinY() < minY) {
                 minY = cc.getMinY();
             }
+
             if (cc.getMaxX() > maxX) {
                 maxX = cc.getMaxX();
             }
+
             if (cc.getMaxY() > maxY) {
                 maxY = cc.getMaxY();
             }
         }
+
         int width = maxX - minX;
         int height = maxY - minX;
         
@@ -247,6 +250,7 @@ public class CircleContour extends icircles.concreteDiagram.CircleContour{
 	public void setStroke(Stroke s) {
 		stroke = s;
 	}
+
 	public Stroke stroke() {
 		return stroke;
 	}

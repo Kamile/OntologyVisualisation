@@ -51,7 +51,4 @@ public class ConcreteConceptDiagram extends ConcreteDiagram {
         ConceptDiagramCreator cdc = new ConceptDiagramCreator(abstractDescription);
         return cdc.createDiagram(size);
     }
-
-
-
 }
