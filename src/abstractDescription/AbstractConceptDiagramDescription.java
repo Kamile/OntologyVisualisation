@@ -13,26 +13,36 @@ public class AbstractConceptDiagramDescription extends AbstractDescription {
     ArrayList<AbstractArrow> m_arrows;
 
     public AbstractConceptDiagramDescription() {
-        this.m_arrows = new ArrayList<>();
+        super();
+        m_arrows = new ArrayList<>();
     }
 
     public AbstractConceptDiagramDescription(Set<AbstractCurve> contours, Set<AbstractBasicRegion> zones, Set<AbstractBasicRegion> shaded_zones) {
         super(contours, zones, shaded_zones);
-        this.m_arrows = new ArrayList<>();
+        m_arrows = new ArrayList<>();
     }
 
     public AbstractConceptDiagramDescription(Set<AbstractCurve> contours, Set<AbstractBasicRegion> zones) {
         super(contours, zones);
-        this.m_arrows = new ArrayList<>();
+        m_arrows = new ArrayList<>();
+    }
+
+    public void addArrow(AbstractArrow a) {
+        m_arrows.add(a);
     }
 
     @JsonIgnore
     public int getNumArrows() {
-        return this.m_arrows.size();
+        return m_arrows.size();
+    }
+
+    @JsonIgnore
+    public Iterator<AbstractArrow> getArrowIterator() {
+        return m_arrows.iterator();
     }
 
     public boolean arrowIncludesLabel(String l) {
-        Iterator i = this.m_arrows.iterator();
+        Iterator i = m_arrows.iterator();
 
         AbstractArrow a;
 
