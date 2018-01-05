@@ -12,7 +12,10 @@ import java.awt.geom.Ellipse2D;
  */
 public class ConcreteArrowHead {
     Logger logger = Logger.getLogger(ConcreteArrowHead.class.getName());
-    static double theta = Math.PI/6;
+
+    private static double THETA = Math.PI/6;
+    private static final double HEAD_LENGTH = 2;
+
     private double x;
     private double y;
     private ConcreteArrow arrow;
