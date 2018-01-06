@@ -3,7 +3,6 @@ package concrete;
 import org.apache.log4j.Logger;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
 /**
  * Arrows sourced from individual or class and can has a class or individual
@@ -21,6 +20,7 @@ public class ConcreteArrowHead {
     private double x;
     private double y;
     private ConcreteArrow arrow;
+    private ConcreteArrowShaft shaft; // needed to calculate arrowhead angles
     private boolean isTarget; // target has arrowhead, source doesn't
 
     public ConcreteArrowHead(double x, double y, boolean isTarget) {
@@ -64,10 +64,9 @@ public class ConcreteArrowHead {
     // Return a polyline for the vee
     public Graphics2D getArrowHead() {
         if (isTarget) {
-
+            ConcreteArrowHead from = shaft.getFrom();
         }
         return null;
-
     }
 
     /**
@@ -75,7 +74,7 @@ public class ConcreteArrowHead {
      */
     public void getArrowHead(Graphics2D g2) {
         if (!isTarget) {
-            return;
+            return; // don't need to draw arrowhead
         }
     }
 
