@@ -11,9 +11,7 @@ tokens {
     PAIR            =           '=';
     LIST            =           '[';
     SLIST           =           '(';
-    CD_COMPOUND     =  'CompoundCD';
     CD_PRIMARY      =   'PrimaryCD';
-    CD_BINARY       =    'BinaryCD';
     CD_UNARY        =     'UnaryCD';
     CD_NULL         =      'NullCD';
 }
