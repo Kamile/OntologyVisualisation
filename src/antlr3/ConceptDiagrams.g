@@ -11,9 +11,7 @@ tokens {
     PAIR            =           '=';
     LIST            =           '[';
     SLIST           =           '(';
-    CD_PRIMARY      =   'PrimaryCD';
-    CD_UNARY        =     'UnaryCD';
-    CD_NULL         =      'NullCD';
+    CD              =   'ConceptDiagram';
 }
 
 @parser::header {
@@ -63,11 +61,7 @@ start
     ;
 
 conceptDiagram
-    :    'PrimaryCD'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'UnaryCD'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'BinaryCD'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'CompoundCD'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'NullCD'^ ('{'! (keyValue (','! keyValue)*)? '}'!)?
+    :    'CD'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
 keyValues
