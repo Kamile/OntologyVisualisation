@@ -2,82 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7fed458f-8c4c-42a8-9c46-775109b2ca89" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__asm_asm_3_3_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_awt_util_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_bridge_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_css_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_dom_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_ext_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_gui_util_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_gvt_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_parser_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_script_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_svg_dom_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_svggen_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_swing_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_util_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_xml_1_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cglib_cglib_2_2_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_0_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_0_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_0_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jai_imageio_jai_imageio_core_1_3_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_lowagie_itext_2_1_7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_jna_jna_3_0_9.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_cli_commons_cli_1_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_1_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_4_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_lept4j_lept4j_1_2_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_tess4j_tess4j_3_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr_3_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr_runtime_3_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_stringtemplate_3_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_xmlgraphics_xmlgraphics_commons_1_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ghost4j_ghost4j_1_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_all_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_all_1_9_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_rococoa_rococoa_core_0_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_scala_lang_scala_library_2_11_7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_21.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_21.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_log4j_over_slf4j_1_7_21.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_20.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__rhino_js_1_5R4_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_icircles_0_0_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_inkmllibj_0_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_propity_0_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_recognizer_0_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_speedith_core_0_0_1_SNAPSHOT.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_speedith_gui_0_0_1_SNAPSHOT.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_spider_drawer_0_0_1_SNAPSHOT.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xerces_xercesImpl_2_5_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xml_apis_xmlParserAPIs_2_0_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/OntologyVisualisation.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/MainForm.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/abstractDescription/AbstractConceptDiagramDescription.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/abstractDescription/AbstractPropertyDiagramDescription.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/concrete/BoxContour.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/concrete/ConceptDiagramCreator.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/concrete/ConcreteBox.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/concrete/ConcreteConceptDiagram.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/target/main-1.0-SNAPSHOT-sources.jar" afterPath="$PROJECT_DIR$/core/target/main-1.0-SNAPSHOT-sources.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/target/main-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/core/target/main-1.0-SNAPSHOT.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/core.iml" afterPath="$PROJECT_DIR$/core/core.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/pom.xml" afterPath="$PROJECT_DIR$/core/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractArrow.java" afterPath="$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractArrow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/lang/ConceptDiagram.java" afterPath="$PROJECT_DIR$/core/src/main/java/lang/ConceptDiagram.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/main/target/" />
@@ -132,6 +59,44 @@
                 <element signature="imports" expanded="true" />
                 <element signature="e#1454#1472#0" expanded="true" />
                 <element signature="e#1454#1472#0" expanded="true" />
+                <marker date="1515440548461" expanded="false" signature="278:287" ph="name" />
+                <marker date="1515440548461" expanded="true" signature="449:457" ph="{}" />
+                <marker date="1515440548461" expanded="true" signature="498:604" ph="{...}" />
+                <marker date="1515440548461" expanded="true" signature="661:768" ph="{...}" />
+                <marker date="1515440548461" expanded="false" signature="792:803" ph=" { " />
+                <marker date="1515440548461" expanded="false" signature="815:821" ph=" }" />
+                <marker date="1515440548461" expanded="false" signature="851:862" ph=" { " />
+                <marker date="1515440548461" expanded="false" signature="877:883" ph=" }" />
+                <marker date="1515440548461" expanded="false" signature="972:978" ph=" }" />
+                <marker date="1515440548461" expanded="false" signature="1049:1050" ph="" />
+                <marker date="1515440548461" expanded="false" signature="1059:1060" ph="" />
+                <marker date="1515440548461" expanded="false" signature="1144:1154" ph="label" />
+                <marker date="1515440548461" expanded="false" signature="1172:1173" ph="" />
+                <marker date="1515440548461" expanded="false" signature="1181:1182" ph="" />
+                <marker date="1515440548461" expanded="false" signature="1266:1273" ph="id" />
+                <marker date="1515440548461" expanded="false" signature="1292:1299" ph="id" />
+                <marker date="1515440548461" expanded="false" signature="1396:1415" ph="&quot;&quot;" />
+                <marker date="1515440548461" expanded="false" signature="1570:1589" ph="effectiveLevel" />
+                <marker date="1515440548461" expanded="false" signature="1609:1620" ph="" />
+                <marker date="1515440548461" expanded="false" signature="1623:1635" ph="&quot;&quot;" />
+                <marker date="1515440548461" expanded="false" signature="1692:1703" ph=" { " />
+                <marker date="1515440548461" expanded="false" signature="1717:1725" ph=" ≡ " />
+                <marker date="1515440548461" expanded="false" signature="1727:1737" ph="label" />
+                <marker date="1515440548461" expanded="false" signature="1737:1738" ph="" />
+                <marker date="1515440548461" expanded="false" signature="1739:1745" ph=" }" />
+                <marker date="1515440548461" expanded="false" signature="1795:1796" ph=" &quot;${" />
+                <marker date="1515440548461" expanded="false" signature="1808:1812" ph="}" />
+                <marker date="1515440548461" expanded="false" signature="1813:1817" ph="$" />
+                <marker date="1515440548461" expanded="false" signature="1821:1822" ph="&quot;;" />
+                <marker date="1515440548461" expanded="false" signature="1822:1828" ph=" }" />
+                <marker date="1515440548461" expanded="false" signature="1902:1906" ph="$" />
+                <marker date="1515440548461" expanded="false" signature="1913:1917" ph="" />
+                <marker date="1515440548461" expanded="false" signature="1927:1931" ph="$" />
+                <marker date="1515440548461" expanded="false" signature="1938:1950" ph="&quot;)&#10;giving &quot;" />
+                <marker date="1515440548461" expanded="false" signature="1971:1972" ph="}&quot;)" />
+                <marker date="1515440548461" expanded="false" signature="1989:1998" ph="" />
+                <marker date="1515440548461" expanded="false" signature="2053:2064" ph=" { " />
+                <marker date="1515440548461" expanded="false" signature="2079:2085" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -149,41 +114,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="35" column="33" lean-forward="false" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+            <state relative-caret-position="307">
+              <caret line="163" column="10" lean-forward="false" selection-start-line="163" selection-start-column="10" selection-end-line="163" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConceptDiagramsLexer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/target/generated-sources/antlr3/reader/ConceptDiagramsLexer.java">
+      <file leaf-file-name="OntologyVisualisation.iml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/OntologyVisualisation.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConceptDiagramsParser.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/target/generated-sources/antlr3/reader/ConceptDiagramsParser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1396">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConceptDiagrams.g" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/target/classes/ConceptDiagrams.g">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="165">
+              <caret line="11" column="40" lean-forward="false" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -192,8 +137,8 @@
       <file leaf-file-name="core.iml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/core.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="6" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+            <state relative-caret-position="180">
+              <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -260,6 +205,7 @@
         <option value="$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractArrow.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/concrete/BuildStep.java" />
         <option value="$PROJECT_DIR$/core/pom.xml" />
+        <option value="$PROJECT_DIR$/OntologyVisualisation.iml" />
       </list>
     </option>
   </component>
@@ -304,44 +250,12 @@
           <expand>
             <path>
               <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="OntologyVisualisation" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="OntologyVisualisation" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="antlr3" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="reader" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -360,14 +274,14 @@
     <property name="Repository.Attach.Sources" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/main/src/main" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="abstractDescription" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/main/src/main" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -536,10 +450,31 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30938417" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3841642" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3489736" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.347544" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -550,6 +485,33 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/concrete/ConceptDiagramCreator.java" />
+    <entry file="file://$PROJECT_DIR$/OntologyVisualisation.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="40" lean-forward="false" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/BuildStep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$USER_HOME$/speedith/Speedith.Gui/target/speedith-gui-0.0.1-SNAPSHOT.jar!/speedith/Main.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -690,14 +652,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/abstract/AbstractBox" />
-    <entry file="file://$PROJECT_DIR$/src/abstractDescription/TestClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/abstractDescription/TestClass.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/si/urbas/icircles/0.0.2/icircles-0.0.2.jar!/icircles/concreteDiagram/BuildStep.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -709,14 +664,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/scriptFile.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/concrete/scriptFile.scala" />
     <entry file="jar://$MAVEN_REPOSITORY$/si/urbas/icircles/0.0.2/icircles-0.0.2.jar!/icircles/concreteDiagram/DiagramCreator.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
@@ -826,14 +774,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/OntologyVisualisation/antlr3/ConceptDiagrams.g">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="34" column="1" lean-forward="false" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/OntologyVisualisation/antlr3/ConceptDiagrams.g" />
     <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteBox.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -992,17 +933,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="1" lean-forward="false" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-          <folding>
-            <element signature="e#180#181#0" expanded="false" />
-            <element signature="e#207#208#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/OntologyVisualisation.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="40" lean-forward="true" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -1017,8 +947,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/core.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="6" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        <state relative-caret-position="180">
+          <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1027,7 +957,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1043,7 +972,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1051,7 +979,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1396">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1073,6 +1000,44 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1454#1472#0" expanded="true" />
             <element signature="e#1454#1472#0" expanded="true" />
+            <marker date="1515440548461" expanded="false" signature="278:287" ph="name" />
+            <marker date="1515440548461" expanded="true" signature="449:457" ph="{}" />
+            <marker date="1515440548461" expanded="true" signature="498:604" ph="{...}" />
+            <marker date="1515440548461" expanded="true" signature="661:768" ph="{...}" />
+            <marker date="1515440548461" expanded="false" signature="792:803" ph=" { " />
+            <marker date="1515440548461" expanded="false" signature="815:821" ph=" }" />
+            <marker date="1515440548461" expanded="false" signature="851:862" ph=" { " />
+            <marker date="1515440548461" expanded="false" signature="877:883" ph=" }" />
+            <marker date="1515440548461" expanded="false" signature="972:978" ph=" }" />
+            <marker date="1515440548461" expanded="false" signature="1049:1050" ph="" />
+            <marker date="1515440548461" expanded="false" signature="1059:1060" ph="" />
+            <marker date="1515440548461" expanded="false" signature="1144:1154" ph="label" />
+            <marker date="1515440548461" expanded="false" signature="1172:1173" ph="" />
+            <marker date="1515440548461" expanded="false" signature="1181:1182" ph="" />
+            <marker date="1515440548461" expanded="false" signature="1266:1273" ph="id" />
+            <marker date="1515440548461" expanded="false" signature="1292:1299" ph="id" />
+            <marker date="1515440548461" expanded="false" signature="1396:1415" ph="&quot;&quot;" />
+            <marker date="1515440548461" expanded="false" signature="1570:1589" ph="effectiveLevel" />
+            <marker date="1515440548461" expanded="false" signature="1609:1620" ph="" />
+            <marker date="1515440548461" expanded="false" signature="1623:1635" ph="&quot;&quot;" />
+            <marker date="1515440548461" expanded="false" signature="1692:1703" ph=" { " />
+            <marker date="1515440548461" expanded="false" signature="1717:1725" ph=" ≡ " />
+            <marker date="1515440548461" expanded="false" signature="1727:1737" ph="label" />
+            <marker date="1515440548461" expanded="false" signature="1737:1738" ph="" />
+            <marker date="1515440548461" expanded="false" signature="1739:1745" ph=" }" />
+            <marker date="1515440548461" expanded="false" signature="1795:1796" ph=" &quot;${" />
+            <marker date="1515440548461" expanded="false" signature="1808:1812" ph="}" />
+            <marker date="1515440548461" expanded="false" signature="1813:1817" ph="$" />
+            <marker date="1515440548461" expanded="false" signature="1821:1822" ph="&quot;;" />
+            <marker date="1515440548461" expanded="false" signature="1822:1828" ph=" }" />
+            <marker date="1515440548461" expanded="false" signature="1902:1906" ph="$" />
+            <marker date="1515440548461" expanded="false" signature="1913:1917" ph="" />
+            <marker date="1515440548461" expanded="false" signature="1927:1931" ph="$" />
+            <marker date="1515440548461" expanded="false" signature="1938:1950" ph="&quot;)&#10;giving &quot;" />
+            <marker date="1515440548461" expanded="false" signature="1971:1972" ph="}&quot;)" />
+            <marker date="1515440548461" expanded="false" signature="1989:1998" ph="" />
+            <marker date="1515440548461" expanded="false" signature="2053:2064" ph=" { " />
+            <marker date="1515440548461" expanded="false" signature="2079:2085" ph=" }" />
           </folding>
         </state>
       </provider>
@@ -1105,8 +1070,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="35" column="33" lean-forward="false" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+        <state relative-caret-position="307">
+          <caret line="163" column="10" lean-forward="false" selection-start-line="163" selection-start-column="10" selection-end-line="163" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OntologyVisualisation.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="40" lean-forward="false" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
           <folding />
         </state>
       </provider>
