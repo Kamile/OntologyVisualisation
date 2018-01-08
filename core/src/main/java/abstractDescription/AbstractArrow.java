@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-
 public class AbstractArrow implements Comparable<AbstractArrow> {
     static Logger logger = Logger.getLogger(AbstractArrow.class.getName());
     static int id = 0;

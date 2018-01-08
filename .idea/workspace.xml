@@ -2,12 +2,86 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7fed458f-8c4c-42a8-9c46-775109b2ca89" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/concrete/BuildStep.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__asm_asm_3_3_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_awt_util_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_bridge_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_css_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_dom_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_ext_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_gui_util_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_gvt_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_parser_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_script_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_svg_dom_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_svggen_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_swing_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_util_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__batik_batik_xml_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cglib_cglib_2_2_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_0_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_0_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_0_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jai_imageio_jai_imageio_core_1_3_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_lowagie_itext_2_1_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_jna_jna_3_0_9.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_cli_commons_cli_1_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_1_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_4_1_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_lept4j_lept4j_1_2_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_tess4j_tess4j_3_2_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr_3_3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr_runtime_3_3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_stringtemplate_3_2_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_xmlgraphics_xmlgraphics_commons_1_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ghost4j_ghost4j_1_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_all_1_3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_all_1_9_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_rococoa_rococoa_core_0_5.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_scala_lang_scala_library_2_11_7.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_21.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_21.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_log4j_over_slf4j_1_7_21.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_20.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__rhino_js_1_5R4_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_icircles_0_0_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_inkmllibj_0_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_propity_0_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_recognizer_0_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_speedith_core_0_0_1_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_speedith_gui_0_0_1_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__si_urbas_spider_drawer_0_0_1_SNAPSHOT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xerces_xercesImpl_2_5_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xml_apis_xmlParserAPIs_2_0_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/OntologyVisualisation.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/MainForm.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/abstractDescription/AbstractConceptDiagramDescription.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/abstractDescription/AbstractPropertyDiagramDescription.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/concrete/BoxContour.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/concrete/ConceptDiagramCreator.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/concrete/ConcreteBox.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/OntologyVisualisation/concrete/ConcreteConceptDiagram.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/concrete/ConceptDiagramCreator.java" afterPath="$PROJECT_DIR$/src/concrete/ConceptDiagramCreator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/concrete/ConcreteConceptDiagram.java" afterPath="$PROJECT_DIR$/src/concrete/ConcreteConceptDiagram.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/core.iml" afterPath="$PROJECT_DIR$/core/core.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/pom.xml" afterPath="$PROJECT_DIR$/core/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractArrow.java" afterPath="$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractArrow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/lang/ConceptDiagram.java" afterPath="$PROJECT_DIR$/core/src/main/java/lang/ConceptDiagram.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/main/target/" />
+    <ignored path="$PROJECT_DIR$/core/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,79 +91,57 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainForm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MainForm.java">
+      <file leaf-file-name="ConceptDiagrams.g" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/antlr3/ConceptDiagrams.g">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="180">
+              <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainForm.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/MainForm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
               <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConceptDiagramCreator.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/concrete/ConceptDiagramCreator.java">
+      <file leaf-file-name="ConceptDiagramsReader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/reader/ConceptDiagramsReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="84" column="13" lean-forward="true" selection-start-line="84" selection-start-column="13" selection-end-line="84" selection-end-column="13" />
+            <state relative-caret-position="61">
+              <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1126#1156#0" expanded="true" />
-                <element signature="e#1707#1708#0" expanded="true" />
-                <element signature="e#1749#1750#0" expanded="true" />
-                <element signature="e#2102#2132#0" expanded="true" />
-                <element signature="e#2142#2179#1" expanded="true" />
-                <element signature="e#2552#2572#1" expanded="true" />
-                <element signature="e#2581#2603#1" expanded="true" />
-                <element signature="e#2613#3221#0" expanded="true" />
-                <element signature="e#2618#2638#0" expanded="true" />
-                <element signature="e#2613#3221#0" expanded="true" />
-                <element signature="e#2796#2845#1" expanded="true" />
-                <element signature="e#2822#2844#0" expanded="true" />
-                <element signature="e#2858#3211#0" expanded="true" />
-                <element signature="e#2858#3211#0" expanded="true" />
-                <element signature="e#2897#2923#1" expanded="true" />
-                <element signature="e#2940#2977#1" expanded="true" />
-                <element signature="e#2994#3197#0" expanded="true" />
-                <element signature="e#2994#3197#0" expanded="true" />
-                <element signature="e#3263#3283#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractArrow.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractArrow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-51">
+              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1454#1472#0" expanded="true" />
+                <element signature="e#1454#1472#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="BuildStep.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/concrete/BuildStep.java">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/BuildStep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#164#179#0" expanded="true" />
-                <element signature="e#245#246#0" expanded="true" />
-                <element signature="e#255#279#0" expanded="true" />
-                <element signature="e#255#279#0" expanded="true" />
-                <element signature="e#285#286#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConcreteBox.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteBox.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConcreteConceptDiagram.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteConceptDiagram.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state relative-caret-position="15">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -97,46 +149,51 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConcreteArrow.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteArrow.java">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+            <state relative-caret-position="427">
+              <caret line="35" column="33" lean-forward="false" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BoxContour.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/concrete/BoxContour.java">
+      <file leaf-file-name="ConceptDiagramsLexer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/target/generated-sources/antlr3/reader/ConceptDiagramsLexer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractConceptDiagramDescription.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/abstractDescription/AbstractConceptDiagramDescription.java">
+      <file leaf-file-name="ConceptDiagramsParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/target/generated-sources/antlr3/reader/ConceptDiagramsParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding>
-                <element signature="e#194#195#0" expanded="true" />
-                <element signature="e#221#222#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-1396">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractPropertyDiagramDescription.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/abstractDescription/AbstractPropertyDiagramDescription.java">
+      <file leaf-file-name="ConceptDiagrams.g" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/target/classes/ConceptDiagrams.g">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="core.iml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/core.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="6" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -148,6 +205,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="java" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -158,9 +216,11 @@
       <find>editor</find>
       <find>tactics</find>
       <find>tactic</find>
+      <find>Spider</find>
     </findStrings>
     <replaceStrings>
       <replace>boxes</replace>
+      <replace>Concept</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -177,17 +237,48 @@
         <option value="$PROJECT_DIR$/src/concrete/BoxContour.java" />
         <option value="$PROJECT_DIR$/src/MainForm.java" />
         <option value="$PROJECT_DIR$/src/abstractDescription/TestClass.java" />
+        <option value="$PROJECT_DIR$/src/concrete/BuildStep.java" />
+        <option value="$PROJECT_DIR$/src/concrete/scriptFile.scala" />
+        <option value="$PROJECT_DIR$/src/concrete/ConceptDiagramCreator.java" />
+        <option value="$PROJECT_DIR$/src/concrete/ConcreteConceptDiagram.java" />
+        <option value="$PROJECT_DIR$/src/concrete/CircleContour.java" />
+        <option value="$PROJECT_DIR$/src/abstractDescription/AbstractArrow.java" />
         <option value="$PROJECT_DIR$/src/abstractDescription/AbstractConceptDiagramDescription.java" />
         <option value="$PROJECT_DIR$/src/abstractDescription/AbstractPropertyDiagramDescription.java" />
-        <option value="$PROJECT_DIR$/src/concrete/ConcreteConceptDiagram.java" />
-        <option value="$PROJECT_DIR$/src/concrete/BuildStep.java" />
-        <option value="$PROJECT_DIR$/src/concrete/ConceptDiagramCreator.java" />
+        <option value="$PROJECT_DIR$/src/concrete/ConcreteArrowShaft.java" />
+        <option value="$PROJECT_DIR$/src/gui/DiagramPanel.java" />
+        <option value="$PROJECT_DIR$/src/concrete/ConcreteArrow.java" />
+        <option value="$PROJECT_DIR$/src/concrete/ConcreteArrowHead.java" />
+        <option value="$PROJECT_DIR$/src/lang/ConceptDiagramElement.java" />
+        <option value="$PROJECT_DIR$/src/lang/ConceptDiagram.java" />
+        <option value="$PROJECT_DIR$/src/reader/ConceptDiagramsReader.java" />
+        <option value="$PROJECT_DIR$/src/antlr3/ConceptDiagrams.g" />
+        <option value="$PROJECT_DIR$/main/pom.xml" />
+        <option value="$PROJECT_DIR$/core/src/main/java/lang/ConceptDiagram.java" />
+        <option value="$PROJECT_DIR$/core/core.iml" />
+        <option value="$PROJECT_DIR$/core/target/classes/ConceptDiagrams.g" />
+        <option value="$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractArrow.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/concrete/BuildStep.java" />
+        <option value="$PROJECT_DIR$/core/pom.xml" />
       </list>
     </option>
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="638" />
+    <option name="width" value="1121" />
     <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -213,46 +304,44 @@
           <expand>
             <path>
               <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OntologyVisualisation" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OntologyVisualisation" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OntologyVisualisation" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="abstractDescription" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OntologyVisualisation" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="concrete" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="antlr3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="reader" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="speedith-gui-0.0.1-SNAPSHOT" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="speedith-gui-0.0.1-SNAPSHOT" type="70bed36:NamedLibraryElementNode" />
-              <item name="speedith-gui-0.0.1-SNAPSHOT.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OntologyVisualisation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="speedith-gui-0.0.1-SNAPSHOT" type="70bed36:NamedLibraryElementNode" />
-              <item name="speedith-gui-0.0.1-SNAPSHOT.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="speedith" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -269,6 +358,17 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/main/src/main" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="abstractDescription" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -294,7 +394,7 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="OntologyVisualisation" />
+      <module name="core" />
       <envs />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -402,23 +502,33 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="638" height="777" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1121" height="777" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30938417" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10410557" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3841642" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3489736" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3050672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.347544" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -429,9 +539,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -450,7 +558,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainForm.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/MainForm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
@@ -458,7 +566,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteBox.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteBox.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="26" lean-forward="true" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
@@ -466,46 +574,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteConceptDiagram.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteConceptDiagram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="40" column="5" lean-forward="true" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteArrow.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteArrow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#197#226#0" expanded="false" />
+            <element signature="e#460#495#0" expanded="false" />
+            <element signature="e#518#552#0" expanded="false" />
+            <element signature="e#600#620#1" expanded="false" />
+            <element signature="e#630#782#0" expanded="false" />
+            <element signature="e#635#657#0" expanded="false" />
+            <element signature="e#630#782#0" expanded="false" />
+            <element signature="e#698#731#0" expanded="false" />
+            <element signature="e#792#939#0" expanded="false" />
+            <element signature="e#797#821#0" expanded="false" />
+            <element signature="e#792#939#0" expanded="false" />
+            <element signature="e#858#887#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/BoxContour.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/BoxContour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1380">
           <caret line="117" column="0" lean-forward="true" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/abstractDescription/AbstractConceptDiagramDescription.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractConceptDiagramDescription.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="4" column="20" lean-forward="false" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-          <folding>
-            <element signature="e#194#195#0" expanded="true" />
-            <element signature="e#221#222#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/abstractDescription/AbstractPropertyDiagramDescription.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractPropertyDiagramDescription.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
@@ -513,31 +632,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/ConceptDiagramCreator.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConceptDiagramCreator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="46" column="7" lean-forward="true" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1126#1156#0" expanded="true" />
-            <element signature="e#1707#1708#0" expanded="true" />
-            <element signature="e#1749#1750#0" expanded="true" />
-            <element signature="e#2102#2132#0" expanded="true" />
-            <element signature="e#2142#2179#1" expanded="true" />
-            <element signature="e#2552#2572#1" expanded="true" />
-            <element signature="e#2581#2603#1" expanded="true" />
-            <element signature="e#2613#3221#0" expanded="true" />
-            <element signature="e#2618#2638#0" expanded="true" />
-            <element signature="e#2613#3221#0" expanded="true" />
-            <element signature="e#2796#2845#1" expanded="true" />
-            <element signature="e#2822#2844#0" expanded="true" />
-            <element signature="e#2858#3211#0" expanded="true" />
-            <element signature="e#2858#3211#0" expanded="true" />
-            <element signature="e#2897#2923#1" expanded="true" />
-            <element signature="e#2940#2977#1" expanded="true" />
-            <element signature="e#2994#3197#0" expanded="true" />
-            <element signature="e#2994#3197#0" expanded="true" />
-            <element signature="e#3263#3283#1" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1132#1162#0" expanded="false" />
+            <element signature="e#1944#1945#0" expanded="false" />
+            <element signature="e#1986#1987#0" expanded="false" />
+            <element signature="e#2339#2369#0" expanded="false" />
+            <element signature="e#2379#2416#1" expanded="false" />
+            <element signature="e#2789#2809#1" expanded="false" />
+            <element signature="e#2818#2840#1" expanded="false" />
+            <element signature="e#2850#3458#0" expanded="false" />
+            <element signature="e#2855#2875#0" expanded="false" />
+            <element signature="e#2850#3458#0" expanded="false" />
+            <element signature="e#3033#3082#1" expanded="false" />
+            <element signature="e#3059#3081#0" expanded="false" />
+            <element signature="e#3095#3448#0" expanded="false" />
+            <element signature="e#3095#3448#0" expanded="false" />
+            <element signature="e#3134#3160#1" expanded="false" />
+            <element signature="e#3177#3214#1" expanded="false" />
+            <element signature="e#3231#3434#0" expanded="false" />
+            <element signature="e#3231#3434#0" expanded="false" />
+            <element signature="e#3500#3520#1" expanded="false" />
+            <element signature="e#3615#4646#0" expanded="false" />
+            <element signature="e#3615#4646#0" expanded="false" />
+            <element signature="e#3694#3772#1" expanded="false" />
+            <element signature="e#3850#4177#0" expanded="false" />
+            <element signature="e#3850#4177#0" expanded="false" />
+            <element signature="e#3901#4163#0" expanded="false" />
+            <element signature="e#3901#4163#0" expanded="false" />
+            <element signature="e#4036#4163#0" expanded="false" />
+            <element signature="e#4036#4163#0" expanded="false" />
+            <element signature="e#4191#4636#0" expanded="false" />
+            <element signature="e#4196#4209#0" expanded="false" />
+            <element signature="e#4191#4636#0" expanded="false" />
+            <element signature="e#4247#4281#1" expanded="false" />
+            <element signature="e#4298#4344#1" expanded="false" />
+            <element signature="e#4324#4343#0" expanded="false" />
+            <element signature="e#4324#4343#0" expanded="false" />
+            <element signature="e#4362#4621#0" expanded="false" />
+            <element signature="e#4362#4621#0" expanded="false" />
+            <element signature="e#4462#4621#0" expanded="false" />
+            <element signature="e#4462#4621#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -551,63 +690,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/abstract/AbstractBox" />
-    <entry file="file://$PROJECT_DIR$/src/MainForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/abstractDescription/TestClass.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteArrow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/BoxContour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/abstractDescription/AbstractConceptDiagramDescription.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#194#195#0" expanded="true" />
-            <element signature="e#221#222#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/abstractDescription/AbstractPropertyDiagramDescription.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -623,57 +709,405 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/BuildStep.java">
+    <entry file="file://$PROJECT_DIR$/src/concrete/scriptFile.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/si/urbas/icircles/0.0.2/icircles-0.0.2.jar!/icircles/concreteDiagram/DiagramCreator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="66" column="27" lean-forward="false" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar!/org/apache/log4j/Logger.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/si/urbas/icircles/0.0.2/icircles-0.0.2.jar!/icircles/abstractDescription/AbstractBasicRegion.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/si/urbas/icircles/0.0.2/icircles-0.0.2.jar!/icircles/abstractDescription/AbstractDescription.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3510">
+          <caret line="267" column="28" lean-forward="false" selection-start-line="267" selection-start-column="28" selection-end-line="267" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractPropertyDiagramDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="89" lean-forward="false" selection-start-line="4" selection-start-column="89" selection-end-line="4" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConceptDiagramCreator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-498">
+          <caret line="61" column="25" lean-forward="true" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#164#179#0" expanded="true" />
-            <element signature="e#245#246#0" expanded="true" />
-            <element signature="e#255#279#0" expanded="true" />
-            <element signature="e#255#279#0" expanded="true" />
-            <element signature="e#285#286#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1132#1162#0" expanded="false" />
+            <element signature="e#1944#1945#0" expanded="false" />
+            <element signature="e#1986#1987#0" expanded="false" />
+            <element signature="e#2339#2369#0" expanded="false" />
+            <element signature="e#2379#2416#1" expanded="false" />
+            <element signature="e#2789#2809#1" expanded="false" />
+            <element signature="e#2818#2840#1" expanded="false" />
+            <element signature="e#2850#3458#0" expanded="false" />
+            <element signature="e#2855#2875#0" expanded="false" />
+            <element signature="e#2850#3458#0" expanded="false" />
+            <element signature="e#3033#3082#1" expanded="false" />
+            <element signature="e#3059#3081#0" expanded="false" />
+            <element signature="e#3095#3448#0" expanded="false" />
+            <element signature="e#3095#3448#0" expanded="false" />
+            <element signature="e#3134#3160#1" expanded="false" />
+            <element signature="e#3177#3214#1" expanded="false" />
+            <element signature="e#3231#3434#0" expanded="false" />
+            <element signature="e#3231#3434#0" expanded="false" />
+            <element signature="e#3500#3520#1" expanded="false" />
+            <element signature="e#3615#4646#0" expanded="false" />
+            <element signature="e#3615#4646#0" expanded="false" />
+            <element signature="e#3694#3772#1" expanded="false" />
+            <element signature="e#3850#4177#0" expanded="false" />
+            <element signature="e#3850#4177#0" expanded="false" />
+            <element signature="e#3901#4163#0" expanded="false" />
+            <element signature="e#3901#4163#0" expanded="false" />
+            <element signature="e#4036#4163#0" expanded="false" />
+            <element signature="e#4036#4163#0" expanded="false" />
+            <element signature="e#4191#4636#0" expanded="false" />
+            <element signature="e#4196#4209#0" expanded="false" />
+            <element signature="e#4191#4636#0" expanded="false" />
+            <element signature="e#4247#4281#1" expanded="false" />
+            <element signature="e#4298#4344#1" expanded="false" />
+            <element signature="e#4324#4343#0" expanded="false" />
+            <element signature="e#4324#4343#0" expanded="false" />
+            <element signature="e#4362#4621#0" expanded="false" />
+            <element signature="e#4362#4621#0" expanded="false" />
+            <element signature="e#4462#4621#0" expanded="false" />
+            <element signature="e#4462#4621#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/ConcreteConceptDiagram.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteConceptDiagram.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
+        <state relative-caret-position="627">
           <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/si/urbas/icircles/0.0.2/icircles-0.0.2.jar!/icircles/abstractDescription/AbstractCurve.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="12" column="30" lean-forward="true" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#2018#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/OntologyVisualisation/antlr3/ConceptDiagrams.g">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="34" column="1" lean-forward="false" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/CircleContour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="224" column="33" lean-forward="true" selection-start-line="224" selection-start-column="33" selection-end-line="224" selection-end-column="33" />
+          <folding>
+            <element signature="e#5744#5821#0" expanded="false" />
+            <element signature="e#5744#5821#0" expanded="false" />
+            <element signature="e#6072#6149#0" expanded="false" />
+            <element signature="e#6076#6088#0" expanded="false" />
+            <element signature="e#6072#6149#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/BoxContour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10">
+          <caret line="132" column="0" lean-forward="true" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/gui/DiagramPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#394#395#0" expanded="false" />
+            <element signature="e#419#420#0" expanded="false" />
+            <element signature="e#580#609#0" expanded="false" />
+            <element signature="e#580#609#0" expanded="false" />
+            <element signature="e#619#671#0" expanded="false" />
+            <element signature="e#619#671#0" expanded="false" />
+            <element signature="e#682#702#1" expanded="false" />
+            <element signature="e#711#760#0" expanded="false" />
+            <element signature="e#732#746#0" expanded="false" />
+            <element signature="e#711#760#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/gui/DiagramsFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteArrow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="5" lean-forward="false" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#197#226#0" expanded="false" />
+            <element signature="e#460#495#0" expanded="false" />
+            <element signature="e#518#552#0" expanded="false" />
+            <element signature="e#600#620#1" expanded="false" />
+            <element signature="e#630#782#0" expanded="false" />
+            <element signature="e#635#657#0" expanded="false" />
+            <element signature="e#630#782#0" expanded="false" />
+            <element signature="e#698#731#0" expanded="false" />
+            <element signature="e#792#939#0" expanded="false" />
+            <element signature="e#797#821#0" expanded="false" />
+            <element signature="e#792#939#0" expanded="false" />
+            <element signature="e#858#887#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteArrowShaft.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="125" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="125" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#564#565#0" expanded="false" />
+            <element signature="e#591#592#0" expanded="false" />
+            <element signature="e#631#632#0" expanded="false" />
+            <element signature="e#657#658#0" expanded="false" />
+            <element signature="e#696#697#0" expanded="false" />
+            <element signature="e#730#731#0" expanded="false" />
+            <element signature="e#762#763#0" expanded="false" />
+            <element signature="e#828#829#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/ConcreteArrowHead.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="21" column="5" lean-forward="false" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#326#359#0" expanded="false" />
+            <element signature="e#403#412#0" expanded="false" />
+            <element signature="e#988#989#0" expanded="false" />
+            <element signature="e#1012#1013#0" expanded="false" />
+            <element signature="e#1039#1040#0" expanded="false" />
+            <element signature="e#1065#1066#0" expanded="false" />
+            <element signature="e#1093#1094#0" expanded="false" />
+            <element signature="e#1117#1118#0" expanded="false" />
+            <element signature="e#1144#1145#0" expanded="false" />
+            <element signature="e#1170#1171#0" expanded="false" />
+            <element signature="e#1206#1207#0" expanded="false" />
+            <element signature="e#1237#1238#0" expanded="false" />
+            <element signature="e#1279#1280#0" expanded="false" />
+            <element signature="e#1319#1320#0" expanded="false" />
+            <element signature="e#1358#1359#0" expanded="false" />
+            <element signature="e#1386#1387#0" expanded="false" />
+            <element signature="e#1428#1429#0" expanded="false" />
+            <element signature="e#1462#1463#0" expanded="false" />
+            <element signature="e#1549#1628#0" expanded="false" />
+            <element signature="e#1549#1628#0" expanded="false" />
+            <element signature="e#1577#1618#1" expanded="false" />
+            <element signature="e#1602#1617#0" expanded="false" />
+            <element signature="e#1770#1848#0" expanded="false" />
+            <element signature="e#1770#1848#0" expanded="false" />
+            <element signature="e#1908#1991#0" expanded="false" />
+            <element signature="e#1908#1991#0" expanded="false" />
+            <element signature="e#1908#1991#0" expanded="false" />
+            <element signature="e#1986#1991#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/lang/ConceptDiagramElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/lang/PrimaryConceptDiagram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/lang/ConceptDiagram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="1" lean-forward="false" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+          <folding>
+            <element signature="e#180#181#0" expanded="false" />
+            <element signature="e#207#208#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OntologyVisualisation.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="40" lean-forward="true" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractConceptDiagramDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="16" column="33" lean-forward="false" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/core.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="6" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/target/classes/ConceptDiagrams.g">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/antlr3/ConceptDiagrams.g">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/target/generated-sources/antlr3/reader/ConceptDiagramsLexer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/target/generated-sources/antlr3/reader/ConceptDiagramsParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1396">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/reader/ConceptDiagramsReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="61">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/concrete/ConceptDiagramCreator.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/abstractDescription/AbstractArrow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="84" column="13" lean-forward="true" selection-start-line="84" selection-start-column="13" selection-end-line="84" selection-end-column="13" />
+        <state relative-caret-position="-51">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1126#1156#0" expanded="true" />
-            <element signature="e#1707#1708#0" expanded="true" />
-            <element signature="e#1749#1750#0" expanded="true" />
-            <element signature="e#2102#2132#0" expanded="true" />
-            <element signature="e#2142#2179#1" expanded="true" />
-            <element signature="e#2552#2572#1" expanded="true" />
-            <element signature="e#2581#2603#1" expanded="true" />
-            <element signature="e#2613#3221#0" expanded="true" />
-            <element signature="e#2618#2638#0" expanded="true" />
-            <element signature="e#2613#3221#0" expanded="true" />
-            <element signature="e#2796#2845#1" expanded="true" />
-            <element signature="e#2822#2844#0" expanded="true" />
-            <element signature="e#2858#3211#0" expanded="true" />
-            <element signature="e#2858#3211#0" expanded="true" />
-            <element signature="e#2897#2923#1" expanded="true" />
-            <element signature="e#2940#2977#1" expanded="true" />
-            <element signature="e#2994#3197#0" expanded="true" />
-            <element signature="e#2994#3197#0" expanded="true" />
-            <element signature="e#3263#3283#1" expanded="true" />
+            <element signature="e#1454#1472#0" expanded="true" />
+            <element signature="e#1454#1472#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/speedith/SpiderDrawer/target/spider-drawer-0.0.1-SNAPSHOT.jar!/spiderdrawer/shape/Box.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4241">
+          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/concrete/BuildStep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/MainForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="35" column="33" lean-forward="false" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
