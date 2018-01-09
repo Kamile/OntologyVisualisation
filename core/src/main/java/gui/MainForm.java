@@ -1,3 +1,5 @@
+package gui;
+
 import speedith.ui.SpeedithMainForm;
 
 public class MainForm extends javax.swing.JFrame {
