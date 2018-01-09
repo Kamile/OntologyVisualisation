@@ -1,19 +1,29 @@
 package gui;
 
+import lang.ConceptDiagram;
+import reader.ConceptDiagramsReader;
+import speedith.core.lang.reader.ReadingException;
+
 import javax.swing.*;
 import java.awt.event.*;
 
 public class CDInputDialog extends JDialog {
+
+    private boolean cancelled = true;
+    private ConceptDiagram conceptDiagram = null;
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextArea txtInputArea;
     private JLabel lblInstruction;
+    private JLabel lblError;
 
     public CDInputDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setTitle("Text representation");
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -44,12 +54,19 @@ public class CDInputDialog extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
+        String cdText = txtInputArea.getText();
+
+        try {
+            conceptDiagram = ConceptDiagramsReader.readConceptDiagram(cdText);
+            cancelled = false;
+            dispose();
+        } catch (ReadingException e) {
+            lblError.setText("Error parsing representation.");
+        }
         dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 
@@ -59,4 +76,25 @@ public class CDInputDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setConceptDiagramText(ConceptDiagram cd) {
+        if (cd == null) {
+            setConceptDiagramText("");
+        } else {
+            setConceptDiagramText(cd.toString());
+        }
+    }
+
+    public void setConceptDiagramText(String cd) {
+        txtInputArea.setText(cd);
+    }
+
+    public ConceptDiagram getConceptDiagrma() {
+        return conceptDiagram;
+    }
+
 }

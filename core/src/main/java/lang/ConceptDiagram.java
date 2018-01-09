@@ -7,4 +7,8 @@ public class ConceptDiagram implements Iterable<ConceptDiagram>, ConceptDiagramE
     public Iterator<ConceptDiagram> iterator() {
         return null;
     }
+
+    public String toString() {
+        return "";
+    }
 }
