@@ -61,6 +61,7 @@ public class CDInputDialog extends JDialog {
             cancelled = false;
             dispose();
         } catch (ReadingException e) {
+            System.err.println("Error parsing representation.");
             lblError.setText("Error parsing representation.");
         }
         dispose();

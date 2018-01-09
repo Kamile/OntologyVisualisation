@@ -1,13 +1,21 @@
 package reader;
 
 import lang.ConceptDiagram;
+import org.antlr.runtime.tree.CommonTree;
+import reader.ConceptDiagramsLexer;
+import reader.ConceptDiagramsParser;
+import reader.ConceptDiagramsParser.conceptDiagram_return;
 import org.antlr.runtime.*;
+import speedith.core.lang.reader.ParseException;
 import speedith.core.lang.reader.ReadingException;
+import speedith.core.lang.reader.SpiderDiagramsParser;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+
+import static speedith.i18n.Translations.i18n;
 
 /**
  * Read text representation of Concept Diagram and create a
@@ -49,6 +57,45 @@ public class ConceptDiagramsReader {
     }
 
     public static ConceptDiagram readConceptDiagram(CharStream stream) throws ReadingException {
-        return null;
+        ConceptDiagramsLexer lexer = new ConceptDiagramsLexer(stream);
+        ConceptDiagramsParser parser = new ConceptDiagramsParser(new CommonTokenStream(lexer));
+
+        try {
+            return toConceptDiagram(parser.conceptDiagram());
+        } catch (RecognitionException re) {
+            throw new ReadingException(i18n("ERR_PARSE_INVALID_SYNTAX"), re);
+        } catch (ParseException pe) {
+            throw new ReadingException(pe.getMessage(), pe);
+        }
+    }
+
+    private static ConceptDiagram toConceptDiagram(conceptDiagram_return cd) throws ReadingException {
+        if (cd == null) {
+            throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "conceptDiagram"));
+        }
+        return CDTranslator.Instance.fromASTNode(cd.tree);
+    }
+
+    private abstract static class ElementTranslator<T> {
+
+        public abstract T fromASTNode(CommonTree treeNode) throws ReadingException;
+    }
+
+    private static abstract class GeneralCDTranslator<V extends ConceptDiagram>  {
+
+    }
+
+    private static class CDTranslator extends ElementTranslator<ConceptDiagram> {
+        public static final CDTranslator Instance = new CDTranslator();
+
+        private CDTranslator() { }
+
+        @Override
+        public ConceptDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
+            switch (treeNode.token.getType()) {
+                case SpiderDiagramsParser.SD_BINARY:
+            }
+            return null;
+        }
     }
 }

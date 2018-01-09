@@ -15,12 +15,12 @@ tokens {
 }
 
 @parser::header {
-package speedith.core.lang.reader;
+package reader;
 import static speedith.core.i18n.Translations.i18n;
 }
 
 @lexer::header {
-package speedith.core.lang.reader;
+package reader;
 import static speedith.core.i18n.Translations.i18n;
 }
 
