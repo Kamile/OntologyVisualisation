@@ -405,7 +405,7 @@ public class ConceptDiagramsReader {
                 case ConceptDiagramsParser.SD_NULL:
                     return NullSDTranslator.Instance.fromASTNode(treeNode);
                 default:
-                    System.err.println("Unknown SD type in SDTranslator");
+                    System.err.println("Unknown SD type in SDTranslator: "+  treeNode.token.getText());
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
             }
         }
@@ -557,13 +557,13 @@ public class ConceptDiagramsReader {
 
         private BasicCDTranslator() {
             super(ConceptDiagramsParser.CD_BASIC);
-            addMandatoryAttribute(CDTextSpiderDiagramAttribute, SDTranslator.Instance);
+            addMandatoryAttribute(CDTextSpiderDiagramAttribute, new ListTranslator<>(SDTranslator.Instance));
         }
 
         @Override
         @SuppressWarnings("unchecked")
         BasicConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            return ConceptDiagrams.createBasicConceptDiagram((Collection<String>) attributes.get(CDTextSpiderDiagramAttribute).getKey());
+            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<SpiderDiagram>) attributes.get(CDTextSpiderDiagramAttribute).getKey());
         }
     }
 }
