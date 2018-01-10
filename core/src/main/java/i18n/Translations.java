@@ -7,7 +7,7 @@ public final class Translations {
     private Translations() {
     }
 
-    public static final String StringsBundle = "i18n/strings";
+    public static final String StringsBundle = "speedith/core/i18n/strings";
 
     public static String i18n(String key) {
         return java.util.ResourceBundle.getBundle(StringsBundle).getString(key);
