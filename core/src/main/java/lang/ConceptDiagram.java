@@ -2,6 +2,7 @@ package lang;
 
 import speedith.core.lang.Transformer;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 public abstract class ConceptDiagram implements Iterable<ConceptDiagram>, ConceptDiagramElement {
@@ -15,14 +16,10 @@ public abstract class ConceptDiagram implements Iterable<ConceptDiagram>, Concep
     }
 
     @Override
-    public boolean equals(Object other) {
-        return false;
-    }
+    public abstract boolean equals(Object other);
 
     @Override
-    public int hashCode() {
-        return 1;
-    }
+    public abstract int hashCode();
 
     public ConceptDiagram transform(Transformer t) {
         return transform(t, true);
@@ -32,9 +29,9 @@ public abstract class ConceptDiagram implements Iterable<ConceptDiagram>, Concep
         return transform(t);
     }
 
+    public abstract boolean isValid();
 
+    public abstract String toString();
 
-    public String toString() {
-        return "";
-    }
+    public abstract void toString(Appendable sb) throws IOException;
 }
