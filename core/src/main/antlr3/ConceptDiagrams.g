@@ -11,7 +11,7 @@ tokens {
     PAIR            =           '=';
     LIST            =           '[';
     SLIST           =           '(';
-    CD              =   'ConceptDiagram';
+    CD_BASIC              =   'BasicCD';
 }
 
 @parser::header {
@@ -61,7 +61,15 @@ start
     ;
 
 conceptDiagram
-    :    'CD'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    :    'BasicCD'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    ;
+
+spiderDiagram
+    :    'PrimarySD'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    |    'UnarySD'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    |    'BinarySD'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    |    'CompoundSD'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    |    'NullSD'^ ('{'! (keyValue (','! keyValue)*)? '}'!)?
     ;
 
 keyValues
@@ -85,6 +93,7 @@ languageElement
     |    keyValues
     |    list
     |    sortedList
+    |    spiderDiagram
     |    conceptDiagram
     ;
 

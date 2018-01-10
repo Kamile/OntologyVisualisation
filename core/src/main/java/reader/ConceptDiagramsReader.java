@@ -220,7 +220,7 @@ public class ConceptDiagramsReader {
         @Override
         public ConceptDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
-                case ConceptDiagramsParser.CD:
+                case ConceptDiagramsParser.CD_BASIC:
                     SpiderDiagramsReader.readSpiderDiagram(treeNode.token.getText());
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
