@@ -1,6 +1,9 @@
 package reader;
 
+import i18n.Translations;
+import lang.BasicConceptDiagram;
 import lang.ConceptDiagram;
+import lang.ConceptDiagrams;
 import org.antlr.runtime.tree.CommonTree;
 import reader.ConceptDiagramsLexer;
 import reader.ConceptDiagramsParser;
@@ -9,17 +12,14 @@ import org.antlr.runtime.*;
 import speedith.core.lang.reader.ParseException;
 import speedith.core.lang.reader.ReadingException;
 import speedith.core.lang.reader.SpiderDiagramsParser;
-import speedith.core.lang.reader.SpiderDiagramsReader;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
+import static lang.BasicConceptDiagram.CDTextSpiderDiagramAttribute;
 import static speedith.i18n.Translations.i18n;
 
 /**
@@ -68,8 +68,10 @@ public class ConceptDiagramsReader {
         try {
             return toConceptDiagram(parser.conceptDiagram());
         } catch (RecognitionException re) {
+            System.err.println("Invalid Syntax");
             throw new ReadingException(i18n("ERR_PARSE_INVALID_SYNTAX"), re);
         } catch (ParseException pe) {
+            System.err.println("Parse Exception");
             throw new ReadingException(pe.getMessage(), pe);
         }
     }
@@ -78,6 +80,7 @@ public class ConceptDiagramsReader {
         if (cd == null) {
             throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "conceptDiagram"));
         }
+        System.out.println("We got a non-null conceptDiagram_return");
         return CDTranslator.Instance.fromASTNode(cd.tree);
     }
 
@@ -98,6 +101,90 @@ public class ConceptDiagramsReader {
                 return treeNode.token.getText();
             }
             throw new ReadingException(i18n("ERR_TRANSLATE_INVALID_ID"), treeNode);
+        }
+    }
+
+    private static abstract class CollectionTranslator<V> extends ElementTranslator<ArrayList<V>> {
+
+        private int headTokenType;
+
+        public CollectionTranslator(int headTokenType) {
+            if (headTokenType == SpiderDiagramsParser.SLIST || headTokenType == SpiderDiagramsParser.LIST) {
+                this.headTokenType = headTokenType;
+            } else {
+                throw new IllegalArgumentException(i18n("GERR_ILLEGAL_ARGUMENT", "headTokenType"));
+            }
+        }
+
+        @Override
+        public ArrayList<V> fromASTNode(CommonTree treeNode) throws ReadingException {
+            if (treeNode.token != null && treeNode.token.getType() == headTokenType) {
+                checkNode(treeNode);
+                if (treeNode.getChildCount() < 1) {
+                    return null;
+                }
+                ArrayList<V> objs = new ArrayList<>(treeNode.getChildCount());
+                int i = 0;
+                for (Object obj : treeNode.getChildren()) {
+                    objs.add(fromASTChildAt(i++, (CommonTree) obj));
+                }
+                return objs;
+            }
+            throw new ReadingException(i18n("ERR_TRANSLATE_UNEXPECTED_ELEMENT", i18n(i18n("ERR_TRANSLATE_LIST_OR_SLIST"))), treeNode);
+        }
+
+        protected abstract V fromASTChildAt(int i, CommonTree treeNode) throws ReadingException;
+
+        /**
+         * Checks whether the node (which should be a list) is okay for
+         * translation. It indicates so by not throwing an exception.
+         * <p>The default implementation does nothing.</p>
+         * @param treeNode the node which should be checked.
+         * @exception ReadingException this exception should be thrown if the
+         * AST node is not valid in some sense.
+         */
+        protected void checkNode(CommonTree treeNode) throws ReadingException {
+        }
+    }
+
+    private static class StringTranslator extends ElementTranslator<String> {
+
+        public static final StringTranslator Instance = new StringTranslator();
+
+        @Override
+        public String fromASTNode(CommonTree treeNode) throws ReadingException {
+            if (treeNode.token != null && treeNode.token.getType() == speedith.core.lang.reader.SpiderDiagramsParser.STRING) {
+                String str = treeNode.token.getText();
+                if (str != null && str.length() >= 2) {
+                    return str.substring(1, str.length() - 1);
+                }
+            }
+            throw new ReadingException(i18n("ERR_TRANSLATE_INVALID_STRING"), treeNode);
+        }
+    }
+
+
+
+    private static class ListTranslator<V> extends CollectionTranslator<V> {
+
+        public static final ListTranslator<String> StringListTranslator = new ListTranslator<>(StringTranslator.Instance);
+        ElementTranslator<? extends V> valueTranslator = null;
+
+        public ListTranslator(ElementTranslator<? extends V> valueTranslator) {
+            this(SpiderDiagramsParser.LIST, valueTranslator);
+        }
+
+        public ListTranslator(int headTokenType, ElementTranslator<? extends V> valueTranslator) {
+            super(headTokenType);
+            if (valueTranslator == null) {
+                throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "valueTranslator"));
+            }
+            this.valueTranslator = valueTranslator;
+        }
+
+        @Override
+        protected V fromASTChildAt(int i, CommonTree treeNode) throws ReadingException {
+            return valueTranslator.fromASTNode(treeNode);
         }
     }
 
@@ -153,7 +240,7 @@ public class ConceptDiagramsReader {
                         V value = translator.fromASTNode((CommonTree) node.getChild(1));
                         kVals.put(key, new AbstractMap.SimpleEntry<>(value, node));
                     } else {
-                        throw new ReadingException(i18n("ERR_TRANSLATE_UNEXPECTED_ELEMENT", i18n("TRANSLATE_KEY_VALUE_PAIR")), node);
+                        throw new ReadingException("Stumbled upon an unexpected element in the spider diagram description. Expected: %s key = value");
                     }
                 }
                 return kVals;
@@ -221,10 +308,28 @@ public class ConceptDiagramsReader {
         public ConceptDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
                 case ConceptDiagramsParser.CD_BASIC:
-                    SpiderDiagramsReader.readSpiderDiagram(treeNode.token.getText());
+                    System.out.println("Matched on CD_BASIC");
+                    return BasicCDTranslator.Instance.fromASTNode(treeNode);
+//                    return SpiderDiagramsReader.readSpiderDiagram(treeNode.token.getText());
                 default:
+                    System.err.println("couldn't find a match for the token.");
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
             }
+        }
+    }
+
+    private static class BasicCDTranslator extends GeneralCDTranslator<BasicConceptDiagram> {
+
+        public static final BasicCDTranslator Instance = new BasicCDTranslator();
+
+        private BasicCDTranslator() {
+            super(ConceptDiagramsParser.CD_BASIC);
+            addMandatoryAttribute(CDTextSpiderDiagramAttribute, ListTranslator.StringListTranslator);
+        }
+
+        @Override
+        BasicConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
+            return ConceptDiagrams.createBasicConceptDiagram((Collection<String>) attributes.get(CDTextSpiderDiagramAttribute).getKey());
         }
     }
 }

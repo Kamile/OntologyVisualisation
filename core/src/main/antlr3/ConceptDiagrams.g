@@ -11,17 +11,24 @@ tokens {
     PAIR            =           '=';
     LIST            =           '[';
     SLIST           =           '(';
-    CD_BASIC              =   'BasicCD';
+    CD_BASIC        =     'BasicCD';
+    SD_COMPOUND     =  'CompoundSD';    // The 'nary spider diagram' (arbitrary arity).
+    SD_PRIMARY      =   'PrimarySD';    // The 'primary spider diagram'.
+    SD_BINARY       =    'BinarySD';    // The 'binary spider diagram'.
+    SD_UNARY        =     'UnarySD';    // The 'unary spider diagram'.
+    SD_NULL         =      'NullSD';    // The 'null spider diagram'.
 }
 
 @parser::header {
 package reader;
 import static speedith.core.i18n.Translations.i18n;
+import speedith.core.lang.reader.ParseException;
 }
 
 @lexer::header {
 package reader;
 import static speedith.core.i18n.Translations.i18n;
+import speedith.core.lang.reader.ParseException;
 }
 
 @rulecatch {
