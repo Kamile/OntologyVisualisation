@@ -7,7 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
- * Modified version from CirclesPanel, to draw arrows
+ * Modified version from ProofPanel + CirclesPanel, to draw arrows
  */
 public class DiagramPanel extends JPanel {
     private static final long serialVersionUID = 1L;
