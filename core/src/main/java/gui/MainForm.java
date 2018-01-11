@@ -1,16 +1,12 @@
 package gui;
 
-import i18n.Translations;
 import lang.ConceptDiagram;
 import reader.ConceptDiagramsReader;
 import speedith.core.lang.DiagramType;
-import speedith.core.lang.SpiderDiagram;
 import speedith.core.lang.reader.ReadingException;
-import speedith.core.lang.reader.SpiderDiagramsReader;
 import speedith.core.reasoning.Goals;
 import speedith.core.reasoning.rules.util.ReasoningUtils;
 import speedith.ui.ProofPanel;
-import speedith.ui.SpeedithMainForm;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -22,8 +18,6 @@ import java.io.IOException;
 import static speedith.i18n.Translations.i18n;
 
 public class MainForm extends JFrame {
-
-    private DiagramType activeDiagram;
 
     private JMenu fileMenu;
     private JMenuItem openMenuItem;
@@ -41,6 +35,7 @@ public class MainForm extends JFrame {
     private JMenu saveMenu;
 
     private ProofPanel proofPanel;
+    private DiagramPanel diagramPanel;
     private JMenuBar menuBar;
 
     public MainForm() {
@@ -51,6 +46,7 @@ public class MainForm extends JFrame {
         GridBagConstraints gridBagConstraints;
 
         proofPanel = new ProofPanel();
+        diagramPanel = new DiagramPanel();
 
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
@@ -71,6 +67,8 @@ public class MainForm extends JFrame {
 
         proofPanel.setMinimumSize(new Dimension(500, 300));
         proofPanel.setPreferredSize(new Dimension(750, 300));
+        diagramPanel.setMinimumSize(new Dimension(500, 300));
+        diagramPanel.setPreferredSize(new Dimension(750, 300));
 
         initMenuBar();
 
@@ -78,11 +76,11 @@ public class MainForm extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(proofPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
+                        .addComponent(diagramPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                        .addComponent(proofPanel, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                        .addComponent(diagramPanel, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
         );
 
         goalFileChooser = new JFileChooser();
@@ -180,11 +178,12 @@ public class MainForm extends JFrame {
             File file = goalFileChooser.getSelectedFile();
             try {
                 // TODO: parse as CD
-                SpiderDiagram input = SpiderDiagramsReader.readSpiderDiagram(file);
+                ConceptDiagram input = ConceptDiagramsReader.readConceptDiagram(file);
                 if (!input.isValid()) {
                     throw new ReadingException("The spider diagram contained in the file is not valid.");
                 }
-                proofPanel.newProof(Goals.createGoalsFrom(ReasoningUtils.normalize(input)));
+                diagramPanel.setDiagram(input);
+//                proofPanel.newProof(Goals.createGoalsFrom(ReasoningUtils.normalize(input)));
                 this.setTitle("Speedith"+": " + file.getName());
 
             } catch (IOException ioe) {

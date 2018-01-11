@@ -4,11 +4,8 @@ import icircles.util.CannotDrawException;
 import lang.BasicConceptDiagram;
 import lang.ConceptDiagram;
 import reader.ConceptDiagramsReader;
-import speedith.core.lang.PrimarySpiderDiagram;
 import speedith.core.lang.SpiderDiagram;
 import speedith.core.lang.reader.ReadingException;
-import speedith.core.reasoning.Goals;
-import speedith.ui.DiagramVisualisation;
 import speedith.ui.SpiderDiagramPanel;
 
 import javax.swing.*;
@@ -20,7 +17,7 @@ import static speedith.i18n.Translations.i18n;
 /** Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagrams
  * Panel
  */
-public class DiagramPanel extends JDialog {
+public class DiagramPanel extends JPanel {
     private static final Dimension PrimaryDiagramSize = new Dimension(150, 150);
 
     private JPanel contentPane;
@@ -78,20 +75,7 @@ public class DiagramPanel extends JDialog {
         }
     }
 
-
-
     private void initComponents() {
-        setContentPane(contentPane);
-        setModal(true);
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -129,12 +113,10 @@ public class DiagramPanel extends JDialog {
 
     private void onCancel() {
         // add your code here if necessary
-        dispose();
     }
 
     public static void main(String[] args) {
         DiagramPanel dialog = new DiagramPanel();
-        dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
     }
