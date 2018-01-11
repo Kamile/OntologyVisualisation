@@ -19,6 +19,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
+import static speedith.i18n.Translations.i18n;
+
 public class MainForm extends JFrame {
 
     private DiagramType activeDiagram;
@@ -47,7 +49,6 @@ public class MainForm extends JFrame {
 
     private void initUI() {
         GridBagConstraints gridBagConstraints;
-        JSplitPane mainSplitPane = new JSplitPane();
 
         proofPanel = new ProofPanel();
 
@@ -70,7 +71,6 @@ public class MainForm extends JFrame {
 
         proofPanel.setMinimumSize(new Dimension(500, 300));
         proofPanel.setPreferredSize(new Dimension(750, 300));
-        mainSplitPane.setLeftComponent(proofPanel);
 
         initMenuBar();
 
@@ -78,11 +78,11 @@ public class MainForm extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(mainSplitPane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
+                        .addComponent(proofPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                        .addComponent(mainSplitPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                        .addComponent(proofPanel, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
         );
 
         goalFileChooser = new JFileChooser();
@@ -140,8 +140,8 @@ public class MainForm extends JFrame {
 
 
         useCdExample1MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_MASK));
-        useCdExample1MenuItem.setMnemonic(Translations.i18n("MAIN_FORM_USE_EXAMPLE1_MNEMONIC").charAt(0));
-        useCdExample1MenuItem.setText(Translations.i18n("MAIN_FORM_USE_EXAMPLE1")); // NOI18N
+        useCdExample1MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE1_MNEMONIC").charAt(0));
+        useCdExample1MenuItem.setText(i18n("MAIN_FORM_USE_EXAMPLE1")); // NOI18N
         useCdExample1MenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 onExample1(evt);
@@ -150,8 +150,8 @@ public class MainForm extends JFrame {
         drawMenu.add(useCdExample1MenuItem);
 
         useCdExample2MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_MASK));
-        useCdExample2MenuItem.setMnemonic(Translations.i18n("MAIN_FORM_USE_EXAMPLE2_MNEMONIC").charAt(0));
-        useCdExample2MenuItem.setText(Translations.i18n("MAIN_FORM_USE_EXAMPLE2")); // NOI18N
+        useCdExample2MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE2_MNEMONIC").charAt(0));
+        useCdExample2MenuItem.setText(i18n("MAIN_FORM_USE_EXAMPLE2")); // NOI18N
         useCdExample2MenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 onExample2(evt);
@@ -160,8 +160,8 @@ public class MainForm extends JFrame {
         drawMenu.add(useCdExample2MenuItem);
 
         useCdExample3MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_MASK));
-        useCdExample3MenuItem.setMnemonic(Translations.i18n("MAIN_FORM_USE_EXAMPLE3_MNEMONIC").charAt(0));
-        useCdExample3MenuItem.setText(Translations.i18n("MAIN_FORM_USE_EXAMPLE3")); // NOI18N
+        useCdExample3MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE3_MNEMONIC").charAt(0));
+        useCdExample3MenuItem.setText(i18n("MAIN_FORM_USE_EXAMPLE3")); // NOI18N
         useCdExample3MenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 onExample3(evt);
@@ -203,17 +203,17 @@ public class MainForm extends JFrame {
     }
 
     private void onExample1(ActionEvent evt) {
-        proofPanel.newProof(Goals.createGoalsFrom(getExampleA()));
+//        proofPanel.newProof(Goals.createGoalsFrom(getExampleA()));
         setTitle("Speedith" + ": " + "Example 1");
     }
 
     private void onExample2(ActionEvent evt) {
-        proofPanel.newProof(Goals.createGoalsFrom(getExampleB()));
+//        proofPanel.newProof(Goals.createGoalsFrom(getExampleB()));
         setTitle("Speedith"+": "+"Example 2");
     }
 
     private void onExample3(ActionEvent evt) {
-        proofPanel.newProof(Goals.createGoalsFrom(getExampleC()));
+//        proofPanel.newProof(Goals.createGoalsFrom(getExampleC()));
         setTitle("Speedith"+": "+"Example 3");
     }
 
@@ -226,7 +226,7 @@ public class MainForm extends JFrame {
         }
         dialog.setVisible(true);
         if (!dialog.isCancelled() && dialog.getConceptDiagrma() != null) {
-            proofPanel.newProof(Goals.createGoalsFrom(ReasoningUtils.normalize(dialog.getConceptDiagrma())));
+//            proofPanel.newProof(Goals.createGoalsFrom(ReasoningUtils.normalize(dialog.getConceptDiagrma())));
             setTitle("Speedith");
         }
     }

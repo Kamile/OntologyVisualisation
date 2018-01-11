@@ -5,6 +5,7 @@ import speedith.core.reasoning.Goals;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class DiagramPanel extends JDialog {
     private JPanel contentPane;
@@ -42,6 +43,10 @@ public class DiagramPanel extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    public void newProof(ArrayList<ConceptDiagram> cds) {
+
     }
 
     public static void main(String[] args) {
