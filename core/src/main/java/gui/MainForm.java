@@ -217,7 +217,7 @@ public class MainForm extends JFrame {
         setTitle("Speedith"+": "+"Example 3");
     }
 
-    private void onTextInputClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onTextInputClicked
+    private void onTextInputClicked(java.awt.event.ActionEvent evt) {
         CDInputDialog dialog = new CDInputDialog();
         if (proofPanel.getLastGoals() != null && !proofPanel.getLastGoals().isEmpty()) {
 //            dialog.setConceptDiagramText(proofPanel.getLastGoals().getGoalAt(0));
@@ -256,8 +256,6 @@ public class MainForm extends JFrame {
     }
 
     public static void main(String[] args) {
-//        SpeedithMainForm mainForm = new SpeedithMainForm();
-//        mainForm.main(null);
         new MainForm().setVisible(true);
     }
 }

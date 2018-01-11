@@ -1,38 +1,53 @@
 package gui;
 
-import concrete.ConcreteConceptDiagram;
+import lang.ConceptDiagram;
+import speedith.core.reasoning.Goals;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
+import java.awt.event.*;
 
-/**
- * Modified version from ProofPanel + CirclesPanel, to draw arrows
- */
-public class DiagramPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
-    private ConcreteConceptDiagram cd;
-    DiagramPanel dp;
+public class DiagramPanel extends JDialog {
+    private JPanel contentPane;
+    private JPanel pnlDiagram;
+    private JScrollPane scrlDiagram;
 
-    ConcreteConceptDiagram getDiagram() {
-        return cd;
+    public DiagramPanel() {
+        this(null);
     }
 
-    private void init(String desc, String failureMessages, ConcreteConceptDiagram diagram, int size, boolean useColours) {
-        this.cd = diagram;
-        setLayout(new BorderLayout());
-        setBorder(new LineBorder(new Color(0,0,0), 1, true));
-
-        int labelHeight = 0;
-        if (desc != null && !desc.isEmpty()) {
-
-        }
+    public DiagramPanel(ConceptDiagram cd) {
+        initComponents();
     }
 
-    @Override
-    public void paint(Graphics g) {
-        // Draw bounding rectangles!
+    private void initComponents() {
+        setContentPane(contentPane);
+        setModal(true);
 
-        // Draw curved arrows + dashed arrows!
+        // call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+
+        // call onCancel() on ESCAPE
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+
+    private void onCancel() {
+        // add your code here if necessary
+        dispose();
+    }
+
+    public static void main(String[] args) {
+        DiagramPanel dialog = new DiagramPanel();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
     }
 }
