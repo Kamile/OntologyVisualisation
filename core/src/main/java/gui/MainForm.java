@@ -2,15 +2,10 @@ package gui;
 
 import lang.ConceptDiagram;
 import reader.ConceptDiagramsReader;
-import speedith.core.lang.DiagramType;
 import speedith.core.lang.reader.ReadingException;
-import speedith.core.reasoning.Goals;
-import speedith.core.reasoning.rules.util.ReasoningUtils;
-import speedith.ui.ProofPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +29,6 @@ public class MainForm extends JFrame {
     private JMenu openMenu;
     private JMenu saveMenu;
 
-    private ProofPanel proofPanel;
     private DiagramPanel diagramPanel;
     private JMenuBar menuBar;
 
@@ -43,9 +37,6 @@ public class MainForm extends JFrame {
     }
 
     private void initUI() {
-        GridBagConstraints gridBagConstraints;
-
-        proofPanel = new ProofPanel();
         diagramPanel = new DiagramPanel();
 
         menuBar = new JMenuBar();
@@ -64,11 +55,6 @@ public class MainForm extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ontology Visualiser");
-
-        proofPanel.setMinimumSize(new Dimension(500, 300));
-        proofPanel.setPreferredSize(new Dimension(750, 300));
-        diagramPanel.setMinimumSize(new Dimension(500, 300));
-        diagramPanel.setPreferredSize(new Dimension(750, 300));
 
         initMenuBar();
 
@@ -130,12 +116,10 @@ public class MainForm extends JFrame {
             }
         });
         fileMenu.add(exitMenuItem);
-
         menuBar.add(fileMenu);
 
         drawMenu.setMnemonic('D');
         drawMenu.setText("Draw");
-
 
         useCdExample1MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_MASK));
         useCdExample1MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE1_MNEMONIC").charAt(0));
@@ -166,9 +150,7 @@ public class MainForm extends JFrame {
             }
         });
         drawMenu.add(useCdExample3MenuItem);
-
         menuBar.add(drawMenu);
-
         setJMenuBar(menuBar);
     }
 
@@ -177,15 +159,13 @@ public class MainForm extends JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = goalFileChooser.getSelectedFile();
             try {
-                // TODO: parse as CD
                 ConceptDiagram input = ConceptDiagramsReader.readConceptDiagram(file);
                 if (!input.isValid()) {
                     throw new ReadingException("The spider diagram contained in the file is not valid.");
                 }
                 diagramPanel.setDiagram(input);
-//                proofPanel.newProof(Goals.createGoalsFrom(ReasoningUtils.normalize(input)));
-                this.setTitle("Speedith"+": " + file.getName());
-
+                this.setTitle("Ontology Visualisation" + ": " + file.getName());
+                this.add(diagramPanel);
             } catch (IOException ioe) {
                 JOptionPane.showMessageDialog(this, "An error occurred while accessing the file:\n" + ioe.getLocalizedMessage());
             } catch (ReadingException re) {
@@ -208,24 +188,20 @@ public class MainForm extends JFrame {
 
     private void onExample2(ActionEvent evt) {
 //        proofPanel.newProof(Goals.createGoalsFrom(getExampleB()));
-        setTitle("Speedith"+": "+"Example 2");
+        setTitle("Speedith" + ": " + "Example 2");
     }
 
     private void onExample3(ActionEvent evt) {
 //        proofPanel.newProof(Goals.createGoalsFrom(getExampleC()));
-        setTitle("Speedith"+": "+"Example 3");
+        setTitle("Speedith" + ": " + "Example 3");
     }
 
     private void onTextInputClicked(java.awt.event.ActionEvent evt) {
         CDInputDialog dialog = new CDInputDialog();
-        if (proofPanel.getLastGoals() != null && !proofPanel.getLastGoals().isEmpty()) {
-//            dialog.setConceptDiagramText(proofPanel.getLastGoals().getGoalAt(0));
-        } else {
-            dialog.setConceptDiagramText(getExampleA());
-        }
+        dialog.setConceptDiagramText(getExampleA());
         dialog.setVisible(true);
-        if (!dialog.isCancelled() && dialog.getConceptDiagrma() != null) {
-//            proofPanel.newProof(Goals.createGoalsFrom(ReasoningUtils.normalize(dialog.getConceptDiagrma())));
+        if (!dialog.isCancelled() && dialog.getConceptDiagram() != null) {
+            diagramPanel.setDiagram(dialog.getConceptDiagram());
             setTitle("Speedith");
         }
     }

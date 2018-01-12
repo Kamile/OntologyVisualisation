@@ -93,7 +93,7 @@ public class CDInputDialog extends JDialog {
         txtInputArea.setText(cd);
     }
 
-    public ConceptDiagram getConceptDiagrma() {
+    public ConceptDiagram getConceptDiagram() {
         return conceptDiagram;
     }
 

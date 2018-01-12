@@ -18,11 +18,10 @@ import static speedith.i18n.Translations.i18n;
  * Panel
  */
 public class DiagramPanel extends JPanel {
-    private static final Dimension PrimaryDiagramSize = new Dimension(150, 150);
+    private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
+    private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
 
     private JPanel contentPane;
-    private JPanel pnlDiagram;
-    private JScrollPane scrlDiagram;
     private ConceptDiagram conceptDiagram;
 
     /**
@@ -30,6 +29,8 @@ public class DiagramPanel extends JPanel {
      */
     public DiagramPanel() {
         this(null);
+        initComponents();
+        drawNoDiagramLabel();
     }
 
     /**
@@ -41,6 +42,18 @@ public class DiagramPanel extends JPanel {
         setDiagram(cd);
     }
 
+    private void initComponents() {
+        setMinimumSize(MINIMUM_SIZE);
+        setPreferredSize(PREFERRED_SIZE);
+        setBackground(Color.WHITE);
+
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+
     public ConceptDiagram getDiagram() {
         return conceptDiagram;
     }
@@ -48,7 +61,7 @@ public class DiagramPanel extends JPanel {
     public final void setDiagram(ConceptDiagram diagram) {
         if (conceptDiagram != diagram) {
             conceptDiagram = diagram;
-            pnlDiagram.removeAll();
+            this.removeAll();
             if (conceptDiagram != null) {
                 try {
                     drawDiagram();
@@ -75,36 +88,27 @@ public class DiagramPanel extends JPanel {
         }
     }
 
-    private void initComponents() {
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
-
     private void drawErrorLabel() {
         JLabel errorLabel = new JLabel();
         errorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         errorLabel.setText(i18n("PSD_LABEL_DISPLAY_ERROR"));
-        pnlDiagram.add(errorLabel);
+        this.add(errorLabel);
     }
 
     private void drawNoDiagramLabel() {
         JLabel noDiagramLbl = new JLabel();
         noDiagramLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         noDiagramLbl.setText(i18n("CSD_PANEL_NO_DIAGRAM"));
-        pnlDiagram.add(noDiagramLbl);
+        this.add(noDiagramLbl);
     }
 
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
                 java.util.List<SpiderDiagram> spiders = ((BasicConceptDiagram) conceptDiagram).getSpiderDiagrams();
-                SpiderDiagramPanel panel = new SpiderDiagramPanel();
-                panel.setDiagram(spiders.get(0));
-                pnlDiagram.add(panel);
+                SpiderDiagramPanel panel = new SpiderDiagramPanel(spiders.get(0));
+                panel.setVisible(true);
+                this.add(panel);
             } else {
                 throw new IllegalArgumentException(i18n("SD_PANEL_UNKNOWN_DIAGRAM_TYPE"));
             }
@@ -112,7 +116,6 @@ public class DiagramPanel extends JPanel {
     }
 
     private void onCancel() {
-        // add your code here if necessary
     }
 
     public static void main(String[] args) {
