@@ -106,9 +106,11 @@ public class DiagramPanel extends JPanel {
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
                 java.util.List<SpiderDiagram> spiders = ((BasicConceptDiagram) conceptDiagram).getSpiderDiagrams();
-                SpiderDiagramPanel panel = new SpiderDiagramPanel(spiders.get(0));
-                panel.setVisible(true);
-                this.add(panel);
+                for(SpiderDiagram spider: spiders) {
+                    SpiderDiagramPanel panel = new SpiderDiagramPanel(spider);
+                    panel.setVisible(true);
+                    this.add(panel);
+                }
             } else {
                 throw new IllegalArgumentException(i18n("SD_PANEL_UNKNOWN_DIAGRAM_TYPE"));
             }
