@@ -1,6 +1,5 @@
 package reader;
 
-import i18n.Translations;
 import lang.BasicConceptDiagram;
 import lang.ConceptDiagram;
 import lang.ConceptDiagrams;
@@ -21,7 +20,6 @@ import java.util.*;
 
 import static i18n.Translations.i18n;
 import static lang.BasicConceptDiagram.CDTextSpiderDiagramAttribute;
-import static speedith.core.lang.CompoundSpiderDiagram.SDTextOperatorAttribute;
 import static speedith.core.lang.PrimarySpiderDiagram.*;
 
 /**
@@ -394,12 +392,6 @@ public class ConceptDiagramsReader {
         @Override
         public SpiderDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
-                case ConceptDiagramsParser.SD_BINARY:
-                    return CompoundSDTranslator.BinaryTranslator.fromASTNode(treeNode);
-                case ConceptDiagramsParser.SD_UNARY:
-                    return CompoundSDTranslator.UnaryTranslator.fromASTNode(treeNode);
-                case ConceptDiagramsParser.SD_COMPOUND:
-                    return CompoundSDTranslator.CompoundTranslator.fromASTNode(treeNode);
                 case ConceptDiagramsParser.SD_PRIMARY:
                     return PrimarySDTranslator.Instance.fromASTNode(treeNode);
                 case ConceptDiagramsParser.SD_NULL:
@@ -407,42 +399,6 @@ public class ConceptDiagramsReader {
                 default:
                     System.err.println("Unknown SD type in SDTranslator: "+  treeNode.token.getText());
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
-            }
-        }
-    }
-
-    private static class CompoundSDTranslator extends GeneralSDTranslator<CompoundSpiderDiagram> {
-
-        public static final CompoundSDTranslator CompoundTranslator = new CompoundSDTranslator(ConceptDiagramsParser.SD_COMPOUND);
-        public static final CompoundSDTranslator BinaryTranslator = new CompoundSDTranslator(ConceptDiagramsParser.SD_BINARY);
-        public static final CompoundSDTranslator UnaryTranslator = new CompoundSDTranslator(ConceptDiagramsParser.SD_UNARY);
-
-        public CompoundSDTranslator(int headTokenType) {
-            super(headTokenType);
-            addMandatoryAttribute(SDTextOperatorAttribute, StringTranslator.Instance);
-            addDefaultAttribute(SDTranslator.Instance);
-        }
-
-        @Override
-        CompoundSpiderDiagram createSD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            String operator = (String) attributes.remove(SDTextOperatorAttribute).getKey();
-            ArrayList<SpiderDiagram> operands = new ArrayList<>();
-            int i = 1;
-            Map.Entry<Object, CommonTree> curSD, lastSD = null;
-            while ((curSD = attributes.remove(CompoundSpiderDiagram.SDTextArgAttribute + i++)) != null && curSD.getKey() instanceof SpiderDiagram) {
-                operands.add((SpiderDiagram) curSD.getKey());
-                lastSD = curSD;
-            }
-            if (curSD != null) {
-                throw new ReadingException(i18n("GERR_ILLEGAL_STATE"), (CommonTree) curSD.getValue().getChild(0));
-            }
-            if (!attributes.isEmpty()) {
-                throw new ReadingException(i18n("ERR_TRANSLATE_UNKNOWN_ATTRIBUTES", attributes.keySet()), (CommonTree) attributes.values().iterator().next().getValue().getChild(0));
-            }
-            try {
-                return SpiderDiagrams.createCompoundSD(operator, operands, false);
-            } catch (Exception e) {
-                throw new ReadingException(e.getLocalizedMessage(), lastSD == null ? mainNode : (CommonTree) lastSD.getValue().getChild(0));
             }
         }
     }
@@ -491,7 +447,7 @@ public class ConceptDiagramsReader {
         private TreeSet<String> mandatoryAttributes;
 
         private GeneralCDTranslator(int headTokenType) {
-            keyValueMapTranslator = new GeneralMapTranslator<Object>(headTokenType, new HashMap<String, ElementTranslator<? extends Object>>(), null);
+            keyValueMapTranslator = new GeneralMapTranslator<>(headTokenType, new HashMap<String, ElementTranslator<? extends Object>>(), null);
         }
 
         <T> void addMandatoryAttribute(String key, ElementTranslator<T> valueTranslator) {

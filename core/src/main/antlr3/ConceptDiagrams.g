@@ -12,10 +12,7 @@ tokens {
     LIST            =           '[';
     SLIST           =           '(';
     CD_BASIC        =     'BasicCD';
-    SD_COMPOUND     =  'CompoundSD';    // The 'nary spider diagram' (arbitrary arity).
     SD_PRIMARY      =   'PrimarySD';    // The 'primary spider diagram'.
-    SD_BINARY       =    'BinarySD';    // The 'binary spider diagram'.
-    SD_UNARY        =     'UnarySD';    // The 'unary spider diagram'.
     SD_NULL         =      'NullSD';    // The 'null spider diagram'.
 }
 
@@ -73,9 +70,6 @@ conceptDiagram
 
 spiderDiagram
     :    'PrimarySD'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'UnarySD'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'BinarySD'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'CompoundSD'^ '{'! (keyValue (','! keyValue)*)? '}'!
     |    'NullSD'^ ('{'! (keyValue (','! keyValue)*)? '}'!)?
     ;
 
