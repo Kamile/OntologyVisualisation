@@ -9,6 +9,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import static speedith.i18n.Translations.i18n;
 
@@ -20,7 +21,7 @@ public class MainForm extends JFrame {
     private JMenuItem exitMenuItem;
 
     private JMenu drawMenu;
-    private JMenuItem textInputMenu;
+    private JMenuItem textInputMenuItem;
     private JMenuItem useCdExample1MenuItem;
     private JMenuItem useCdExample2MenuItem;
     private JMenuItem useCdExample3MenuItem;
@@ -48,7 +49,7 @@ public class MainForm extends JFrame {
         saveMenuItem = new JMenuItem();
 
         drawMenu = new JMenu();
-        textInputMenu = new JMenuItem();
+        textInputMenuItem = new JMenuItem();
         useCdExample1MenuItem = new JMenuItem();
         useCdExample2MenuItem = new JMenuItem();
         useCdExample3MenuItem = new JMenuItem();
@@ -70,7 +71,7 @@ public class MainForm extends JFrame {
         );
 
         goalFileChooser = new JFileChooser();
-        goalFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Speedith diagram files", "sdt"));
+        goalFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("OntologyVisualiser diagram files", "sdt"));
         goalFileChooser.setMultiSelectionEnabled(false);
 
         pack();
@@ -120,6 +121,17 @@ public class MainForm extends JFrame {
 
         drawMenu.setMnemonic('D');
         drawMenu.setText("Draw");
+
+        textInputMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_MASK));
+        textInputMenuItem.setMnemonic(ResourceBundle.getBundle("speedith/i18n/strings").getString("MAIN_FORM_TEXT_INPUT_MNEMONIC").charAt(0));
+        ResourceBundle bundle = ResourceBundle.getBundle("speedith/i18n/strings"); // NOI18N
+        textInputMenuItem.setText(bundle.getString("MAIN_FORM_TEXT_INPUT")); // NOI18N
+        textInputMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                onTextInputClicked(evt);
+            }
+        });
+        drawMenu.add(textInputMenuItem);
 
         useCdExample1MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_MASK));
         useCdExample1MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE1_MNEMONIC").charAt(0));
@@ -183,26 +195,26 @@ public class MainForm extends JFrame {
 
     private void onExample1(ActionEvent evt) {
 //        proofPanel.newProof(Goals.createGoalsFrom(getExampleA()));
-        setTitle("Speedith" + ": " + "Example 1");
+        setTitle("OntologyVisualiser" + ": " + "Example 1");
     }
 
     private void onExample2(ActionEvent evt) {
 //        proofPanel.newProof(Goals.createGoalsFrom(getExampleB()));
-        setTitle("Speedith" + ": " + "Example 2");
+        setTitle("OntologyVisualiser" + ": " + "Example 2");
     }
 
     private void onExample3(ActionEvent evt) {
 //        proofPanel.newProof(Goals.createGoalsFrom(getExampleC()));
-        setTitle("Speedith" + ": " + "Example 3");
+        setTitle("OntologyVisualiser: " + ": " + "Example 3");
     }
 
     private void onTextInputClicked(java.awt.event.ActionEvent evt) {
         CDInputDialog dialog = new CDInputDialog();
-        dialog.setConceptDiagramText(getExampleA());
+//        dialog.setConceptDiagramText(getExampleA());
         dialog.setVisible(true);
         if (!dialog.isCancelled() && dialog.getConceptDiagram() != null) {
             diagramPanel.setDiagram(dialog.getConceptDiagram());
-            setTitle("Speedith");
+            setTitle("OntologyVisualiser");
         }
     }
 

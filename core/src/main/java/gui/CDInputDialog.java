@@ -5,6 +5,7 @@ import reader.ConceptDiagramsReader;
 import speedith.core.lang.reader.ReadingException;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class CDInputDialog extends JDialog {
@@ -24,6 +25,8 @@ public class CDInputDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setTitle("Text representation");
+        setMinimumSize(new Dimension(500, 200));
+        setPreferredSize(new Dimension(750,300));
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
