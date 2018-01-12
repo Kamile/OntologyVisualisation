@@ -107,6 +107,7 @@ public class DiagramPanel extends JPanel {
             if (conceptDiagram instanceof BasicConceptDiagram) {
                 java.util.List<SpiderDiagram> spiders = ((BasicConceptDiagram) conceptDiagram).getSpiderDiagrams();
                 for(SpiderDiagram spider: spiders) {
+                    // TODO: check that spiders aren't equivalent
                     SpiderDiagramPanel panel = new SpiderDiagramPanel(spider);
                     panel.setVisible(true);
                     this.add(panel);

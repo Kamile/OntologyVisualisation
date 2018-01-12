@@ -14,6 +14,7 @@ tokens {
     CD_BASIC        =     'BasicCD';
     SD_PRIMARY      =   'PrimarySD';    // The 'primary spider diagram'.
     SD_NULL         =      'NullSD';    // The 'null spider diagram'.
+    ARROW           =       'Arrow';
 }
 
 @parser::header {
