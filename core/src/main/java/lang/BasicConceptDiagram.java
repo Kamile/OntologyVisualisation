@@ -19,21 +19,24 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
     public static final String CDTextBasicId = "BasicCD";
 
     public static final String CDTextSpiderDiagramAttribute = "spider_diagrams";
+    public static final String CDTextArrowsAttribute = "arrows";
 
     private static final long serialVersionUID = -23423534656432L;
-    private final ArrayList<SpiderDiagram> spiderDiagrams;
+    private ArrayList<SpiderDiagram> spiderDiagrams;
+    private ArrayList<Arrow> arrows;
     private boolean hashInvalid = true;
     private int hash;
     private Boolean valid;
     private int subDiagramCount = -1;
 
     BasicConceptDiagram(ArrayList<SpiderDiagram> sds) {
-        for (SpiderDiagram sd: sds) {
-            if (sd == null) {
-                throw new IllegalArgumentException(i18n("ERR_OPERAND_NULL"));
-            }
-        }
-        this.spiderDiagrams = sds;
+        setSpiderDiagrams(sds);
+        this.arrows = new ArrayList<>();
+    }
+
+    BasicConceptDiagram(ArrayList<SpiderDiagram> sds, ArrayList<Arrow> arrows) {
+        setSpiderDiagrams(sds);
+        this.arrows = arrows;
     }
 
     public List<SpiderDiagram> getSpiderDiagrams() {
@@ -126,5 +129,14 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
     private boolean __isCDEqual(BasicConceptDiagram bcd) {
         return hashCode() == bcd.hashCode()
                 && spiderDiagrams.equals(bcd.spiderDiagrams);
+    }
+
+    private void setSpiderDiagrams(ArrayList<SpiderDiagram> sds) {
+        for (SpiderDiagram sd: sds) {
+            if (sd == null) {
+                throw new IllegalArgumentException(i18n("ERR_OPERAND_NULL"));
+            }
+        }
+        spiderDiagrams = sds;
     }
 }

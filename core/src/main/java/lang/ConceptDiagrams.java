@@ -1,12 +1,9 @@
 package lang;
 
 import speedith.core.lang.SpiderDiagram;
-import speedith.core.lang.reader.ReadingException;
-import speedith.core.lang.reader.SpiderDiagramsReader;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.WeakHashMap;
 
 /** Provides Concept Diagram factory methods and utilities.
