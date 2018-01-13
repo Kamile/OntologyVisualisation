@@ -109,6 +109,7 @@ public class DiagramPanel extends JPanel {
                 for(SpiderDiagram spider: spiders) {
                     // TODO: check that spiders aren't equivalent
                     SpiderDiagramPanel panel = new SpiderDiagramPanel(spider);
+                    panel.setBorder(BorderFactory.createEmptyBorder());
                     panel.setVisible(true);
                     this.add(panel);
                 }

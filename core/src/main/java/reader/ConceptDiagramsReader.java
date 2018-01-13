@@ -70,10 +70,8 @@ public class ConceptDiagramsReader {
         try {
             return toConceptDiagram(parser.conceptDiagram());
         } catch (RecognitionException re) {
-            System.err.println("Invalid Syntax");
             throw new ReadingException(i18n("ERR_PARSE_INVALID_SYNTAX"), re);
         } catch (ParseException pe) {
-            System.err.println("Parse Exception");
             throw new ReadingException(pe.getMessage(), pe);
         }
     }
@@ -399,7 +397,6 @@ public class ConceptDiagramsReader {
                 case ConceptDiagramsParser.SD_NULL:
                     return NullSDTranslator.Instance.fromASTNode(treeNode);
                 default:
-                    System.err.println("Unknown SD type in SDTranslator: "+  treeNode.token.getText());
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
             }
         }

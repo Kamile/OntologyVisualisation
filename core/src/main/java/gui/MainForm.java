@@ -26,7 +26,7 @@ public class MainForm extends JFrame {
     private JMenuItem useCdExample2MenuItem;
     private JMenuItem useCdExample3MenuItem;
 
-    private JFileChooser goalFileChooser;
+    private JFileChooser descriptionFileChooser;
     private JMenu openMenu;
     private JMenu saveMenu;
 
@@ -70,9 +70,9 @@ public class MainForm extends JFrame {
                         .addComponent(diagramPanel, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
         );
 
-        goalFileChooser = new JFileChooser();
-        goalFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("OntologyVisualiser diagram files", "sdt"));
-        goalFileChooser.setMultiSelectionEnabled(false);
+        descriptionFileChooser = new JFileChooser();
+        descriptionFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("OntologyVisualiser diagram files", "sdt"));
+        descriptionFileChooser.setMultiSelectionEnabled(false);
 
         pack();
     }
@@ -88,7 +88,7 @@ public class MainForm extends JFrame {
 
         openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
         openMenuItem.setMnemonic('L');
-        openMenuItem.setText("Load Goal");
+        openMenuItem.setText("Load Description");
         openMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -99,7 +99,7 @@ public class MainForm extends JFrame {
 
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
         saveMenuItem.setMnemonic('S');
-        saveMenuItem.setText("Save selected Subgoal");
+        saveMenuItem.setText("Save selected description");
         saveMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -167,9 +167,9 @@ public class MainForm extends JFrame {
     }
 
     private void onOpen() {
-        int returnVal = goalFileChooser.showOpenDialog(this);
+        int returnVal = descriptionFileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = goalFileChooser.getSelectedFile();
+            File file = descriptionFileChooser.getSelectedFile();
             try {
                 ConceptDiagram input = ConceptDiagramsReader.readConceptDiagram(file);
                 if (!input.isValid()) {
@@ -194,17 +194,17 @@ public class MainForm extends JFrame {
     }
 
     private void onExample1(ActionEvent evt) {
-//        proofPanel.newProof(Goals.createGoalsFrom(getExampleA()));
+        diagramPanel.setDiagram(getExampleA());
         setTitle("OntologyVisualiser" + ": " + "Example 1");
     }
 
     private void onExample2(ActionEvent evt) {
-//        proofPanel.newProof(Goals.createGoalsFrom(getExampleB()));
+        diagramPanel.setDiagram(getExampleB());
         setTitle("OntologyVisualiser" + ": " + "Example 2");
     }
 
     private void onExample3(ActionEvent evt) {
-//        proofPanel.newProof(Goals.createGoalsFrom(getExampleC()));
+        diagramPanel.setDiagram(getExampleC());
         setTitle("OntologyVisualiser: " + ": " + "Example 3");
     }
 
@@ -220,7 +220,21 @@ public class MainForm extends JFrame {
 
     public static ConceptDiagram getExampleA() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("BinarySD {arg1 = PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s\", [([\"A\", \"B\"], [])]), (\"s'\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}, arg2 = PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s'\", [([\"A\", \"B\"], [])]), (\"s\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}, operator = \"op &\" }");
+            return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
+                    "    spider_diagrams = [\n" +
+                    "        PrimarySD {\n" +
+                    "            spiders = [\"c\"],\n" +
+                    "            habitats = [(\"c\", [([\"C4\"],[])])],\n" +
+                    "            sh_zones = [],\n" +
+                    "            present_zones = [([], [\"C4\"]), ([\"C4\"], [])]},\n" +
+                    "        PrimarySD {\n" +
+                    "            spiders = [\" \", \"\"],\n" +
+                    "            habitats = [(\" \", [([\"C5\", \"_anon\"],[])]), (\"\", [([\"C5\", \"_anon\"],[])])],\n" +
+                    "            sh_zones = [([\"_anon\"], [\"C5\"])],\n" +
+                    "            present_zones = [([\"_anon\", \"C5\"], []), ([\"C5\"], [\"_anon\"]), ([], [\"_anon\", \"C5\"])]}\n" +
+                    "    ],\n" +
+                    "\tarrows = [(\"op\", \"c\", \"C5\")]\n" +
+                    "}");
         } catch (Exception ex) {
             throw new RuntimeException();
         }
@@ -228,7 +242,7 @@ public class MainForm extends JFrame {
 
     public static ConceptDiagram getExampleB() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("BinarySD {arg1 = PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s\", [([\"A\", \"B\"], [])]), (\"s'\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}, arg2 = PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s'\", [([\"A\", \"B\"], [])]), (\"s\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}, operator = \"op &\" }");
+            return ConceptDiagramsReader.readConceptDiagram("BasicCD {spider_diagrams = [PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s\", [([\"A\", \"B\"], [])]), (\"s'\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}, PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s'\", [([\"A\", \"B\"], [])]), (\"s\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}]}");
         } catch (Exception ex) {
             throw new RuntimeException();
         }
