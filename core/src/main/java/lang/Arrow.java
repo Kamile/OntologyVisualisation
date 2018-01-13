@@ -2,9 +2,11 @@ package lang;
 
 import org.mockito.internal.matchers.Null;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import static com.sun.xml.internal.bind.v2.schemagen.Util.equal;
+import static speedith.i18n.Translations.i18n;
 
 public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializable{
 
@@ -76,7 +78,20 @@ public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializ
     }
 
     public void toString(Appendable sb) {
-
+        try {
+            if (sb == null) {
+                throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "sb"));
+            }
+            sb.append('[');
+            sb.append(label);
+            sb.append(", ");
+            sb.append(source);
+            sb.append(", ");
+            sb.append(target);
+            sb.append(']');
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
