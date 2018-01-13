@@ -1,12 +1,16 @@
 package gui;
 
+import icircles.abstractDescription.AbstractDescription;
+import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
 import lang.Arrow;
 import lang.BasicConceptDiagram;
 import lang.ConceptDiagram;
 import reader.ConceptDiagramsReader;
+import speedith.core.lang.PrimarySpiderDiagram;
 import speedith.core.lang.SpiderDiagram;
 import speedith.core.lang.reader.ReadingException;
+import speedith.ui.DiagramVisualisation;
 import speedith.ui.SpiderDiagramPanel;
 
 import javax.swing.*;
@@ -122,11 +126,13 @@ public class DiagramPanel extends JPanel {
                 List<Arrow> arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
                 this.setLayout(new GridLayout(1,0));
                 for(SpiderDiagram spider: spiders) {
-                    // TODO: check that spiders aren't equivalent
-                    SpiderDiagramPanel panel = new SpiderDiagramPanel(spider);
-                    panel.setBorder(BorderFactory.createEmptyBorder());
-                    panel.setVisible(true);
-                    this.add(panel);
+                    // TODO: check that spiders aren't equivalent + check that spider is primary
+                    AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram)spider);
+                    ConcreteDiagram cd = ConcreteDiagram.makeConcreteDiagram(ad, 300);
+                    ConceptDiagramsDrawer panel2 = new ConceptDiagramsDrawer(cd);
+                    panel2.setBorder(BorderFactory.createEmptyBorder());
+                    panel2.setVisible(true);
+                    this.add(panel2);
                 }
                 for (Arrow a: arrows) {
                     addArrowLabel(a);
