@@ -43,12 +43,24 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
         return Collections.unmodifiableList(spiderDiagrams);
     }
 
+    public List<Arrow> getArrows() {
+        return Collections.unmodifiableList(arrows);
+    }
+
     public int getSpiderDiagramsCount() {
         return spiderDiagrams.size();
     }
 
+    public int getArrowCount() {
+        return arrows.size();
+    }
+
     public SpiderDiagram getSpiderDiagram(int index) {
         return spiderDiagrams.get(index);
+    }
+
+    public Arrow getArrow(int index) {
+        return arrows.get(index);
     }
 
     @Override
@@ -69,6 +81,11 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
             if (spiderDiagrams != null) {
                 for (SpiderDiagram sd: spiderDiagrams) {
                     hash += sd.hashCode();
+                }
+            }
+            if (arrows != null) {
+                for (Arrow a: arrows) {
+                    hash += a.hashCode();
                 }
             }
             hashInvalid = false;
@@ -138,5 +155,14 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
             }
         }
         spiderDiagrams = sds;
+    }
+
+    private void setArrows(ArrayList<Arrow> arrows) {
+        for (Arrow a: arrows) {
+            if (a == null) {
+                throw new IllegalArgumentException(i18n("ERR_OPERAND_NULL"));
+            }
+        }
+        this.arrows = arrows;
     }
 }

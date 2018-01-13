@@ -540,7 +540,8 @@ public class ConceptDiagramsReader {
         @Override
         @SuppressWarnings("unchecked")
         BasicConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<SpiderDiagram>) attributes.get(CDTextSpiderDiagramAttribute).getKey());
+            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<SpiderDiagram>) attributes.get(CDTextSpiderDiagramAttribute).getKey(),
+                    (ArrayList<Arrow>) attributes.get(CDTextArrowsAttribute).getKey());
         }
     }
 }

@@ -1,6 +1,7 @@
 package gui;
 
 import icircles.util.CannotDrawException;
+import lang.Arrow;
 import lang.BasicConceptDiagram;
 import lang.ConceptDiagram;
 import reader.ConceptDiagramsReader;
@@ -11,6 +12,7 @@ import speedith.ui.SpiderDiagramPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 import static speedith.i18n.Translations.i18n;
 
@@ -102,16 +104,28 @@ public class DiagramPanel extends JPanel {
         this.add(noDiagramLbl);
     }
 
+    private void addArrowLabel(Arrow a) {
+        JLabel arrowLabel = new JLabel();
+        arrowLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        arrowLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+        arrowLabel.setText(a.toString());
+        this.add(arrowLabel);
+    }
+
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
-                java.util.List<SpiderDiagram> spiders = ((BasicConceptDiagram) conceptDiagram).getSpiderDiagrams();
+                List<SpiderDiagram> spiders = ((BasicConceptDiagram) conceptDiagram).getSpiderDiagrams();
+                List<Arrow> arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
                 for(SpiderDiagram spider: spiders) {
                     // TODO: check that spiders aren't equivalent
                     SpiderDiagramPanel panel = new SpiderDiagramPanel(spider);
                     panel.setBorder(BorderFactory.createEmptyBorder());
                     panel.setVisible(true);
                     this.add(panel);
+                }
+                for (Arrow a: arrows) {
+                    addArrowLabel(a);
                 }
             } else {
                 throw new IllegalArgumentException(i18n("SD_PANEL_UNKNOWN_DIAGRAM_TYPE"));

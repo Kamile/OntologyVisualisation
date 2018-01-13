@@ -19,4 +19,8 @@ public class ConceptDiagrams {
     public static BasicConceptDiagram createBasicConceptDiagram(ArrayList<SpiderDiagram> sds) {
         return new BasicConceptDiagram(sds);
     }
+
+    public static BasicConceptDiagram createBasicConceptDiagram(ArrayList<SpiderDiagram> sds, ArrayList<Arrow> arrows) {
+        return new BasicConceptDiagram(sds, arrows);
+    }
 }
