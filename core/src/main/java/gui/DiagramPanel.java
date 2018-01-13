@@ -14,6 +14,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
+import static java.awt.GridBagConstraints.BOTH;
+import static java.awt.GridBagConstraints.NONE;
+import static java.awt.GridBagConstraints.RELATIVE;
 import static speedith.i18n.Translations.i18n;
 
 /** Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagrams
@@ -117,6 +120,7 @@ public class DiagramPanel extends JPanel {
             if (conceptDiagram instanceof BasicConceptDiagram) {
                 List<SpiderDiagram> spiders = ((BasicConceptDiagram) conceptDiagram).getSpiderDiagrams();
                 List<Arrow> arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
+                this.setLayout(new GridLayout(1,0));
                 for(SpiderDiagram spider: spiders) {
                     // TODO: check that spiders aren't equivalent
                     SpiderDiagramPanel panel = new SpiderDiagramPanel(spider);
