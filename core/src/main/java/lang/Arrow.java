@@ -1,11 +1,8 @@
 package lang;
 
-import org.mockito.internal.matchers.Null;
-
 import java.io.IOException;
 import java.io.Serializable;
 
-import static com.sun.xml.internal.bind.v2.schemagen.Util.equal;
 import static speedith.i18n.Translations.i18n;
 
 public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializable{
@@ -61,7 +58,7 @@ public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializ
             return true;
         } else if (obj instanceof Arrow) {
             Arrow a = (Arrow) obj;
-            return equal(label, a.label) && equal(source, a.source) && equal(target, a.target);
+            return label.equals(a.label) && source.equals(a.source) && target.equals(a.target);
         }
         return false;
     }

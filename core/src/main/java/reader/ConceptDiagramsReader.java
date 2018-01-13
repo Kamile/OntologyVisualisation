@@ -1,5 +1,6 @@
 package reader;
 
+import lang.Arrow;
 import lang.BasicConceptDiagram;
 import lang.ConceptDiagram;
 import lang.ConceptDiagrams;
@@ -19,6 +20,7 @@ import java.io.Reader;
 import java.util.*;
 
 import static i18n.Translations.i18n;
+import static lang.BasicConceptDiagram.CDTextArrowsAttribute;
 import static lang.BasicConceptDiagram.CDTextSpiderDiagramAttribute;
 import static speedith.core.lang.PrimarySpiderDiagram.*;
 
@@ -442,6 +444,28 @@ public class ConceptDiagramsReader {
 
     /** END methods from SpiderDiagramsReader **/
 
+    private static class ArrowTranslator extends ElementTranslator<Arrow> {
+
+        public static final ArrowTranslator Instance = new ArrowTranslator();
+        private ListTranslator<String> translator;
+
+        private ArrowTranslator() {
+            translator = new ListTranslator<>(ConceptDiagramsParser.SLIST, StringTranslator.Instance);
+        }
+
+        @Override
+        public Arrow fromASTNode(CommonTree treeNode) throws ReadingException {
+            ArrayList<String> arrows = translator.fromASTNode(treeNode);
+            if (arrows != null && arrows.size() == 2) {
+                return new Arrow(arrows.get(0), arrows.get(1));
+            } else if (arrows != null && arrows.size() == 3) {
+                return new Arrow(arrows.get(0), arrows.get(1), arrows.get(2));
+            } else {
+                throw new ReadingException("Error translating arrow", treeNode);
+            }
+        }
+    }
+
     private static abstract class GeneralCDTranslator<V extends ConceptDiagram> extends ElementTranslator<V>  {
         private GeneralMapTranslator<Object> keyValueMapTranslator;
         private TreeSet<String> mandatoryAttributes;
@@ -499,7 +523,6 @@ public class ConceptDiagramsReader {
         public ConceptDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
                 case ConceptDiagramsParser.CD_BASIC:
-                    System.out.println("Matched on CD_BASIC");
                     return BasicCDTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
@@ -514,6 +537,7 @@ public class ConceptDiagramsReader {
         private BasicCDTranslator() {
             super(ConceptDiagramsParser.CD_BASIC);
             addMandatoryAttribute(CDTextSpiderDiagramAttribute, new ListTranslator<>(SDTranslator.Instance));
+            addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
 
         @Override
