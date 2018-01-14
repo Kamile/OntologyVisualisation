@@ -23,7 +23,8 @@ public class AbstractDescriptionTranslator {
     private static Map<String, AbstractBasicRegion> spiderMap;
     private static HashMap<String, AbstractCurve> contourMap;
 
-    private AbstractDescriptionTranslator() { }
+    private AbstractDescriptionTranslator() {
+    }
 
     public static AbstractConceptDiagramDescription getAbstractDescription(BasicConceptDiagram cd) throws CannotDrawException {
         Set<AbstractDescription> abstractSDDescriptions = new TreeSet<>();
@@ -34,7 +35,7 @@ public class AbstractDescriptionTranslator {
         contourMap = new HashMap<>();
 
         List<SpiderDiagram> spiderDiagrams = cd.getSpiderDiagrams();
-        for (SpiderDiagram sd: spiderDiagrams) {
+        for (SpiderDiagram sd : spiderDiagrams) {
             AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram) sd);
             abstractSDDescriptions.add(ad);
             contours.addAll(ad.getCopyOfContours());
@@ -44,7 +45,7 @@ public class AbstractDescriptionTranslator {
 
         List<Arrow> arrows = cd.getArrows();
         if (arrows != null) {
-            for (Arrow a: arrows) {
+            for (Arrow a : arrows) {
                 // TODO: Get whether arrow is dashed or not.
                 String label = a.getLabel();
                 boolean isSourceContour = isContour(a.getSource());
@@ -67,7 +68,7 @@ public class AbstractDescriptionTranslator {
 
     private static List<String> getContourLabels() {
         List<String> contourLabels = new ArrayList<>();
-        for(AbstractCurve ac: contours) {
+        for (AbstractCurve ac : contours) {
             contourLabels.add(ac.getLabel());
             contourMap.put(ac.getLabel(), ac);
         }
@@ -75,18 +76,15 @@ public class AbstractDescriptionTranslator {
     }
 
     private static boolean isContour(String label) {
-        if (getContourLabels().contains(label)){
-            return true;
-        }
-        return false;
+        return (getContourLabels().contains(label));
     }
 
     private static HashMap<String, AbstractBasicRegion> getSpiderMaps(PrimarySpiderDiagram sd) {
         HashMap<String, AbstractBasicRegion> regions = new HashMap<>();
         if (sd.getHabitatsCount() > 0) {
             SortedMap<String, Region> habitats = sd.getHabitats();
-            for (Map.Entry<String, Region> habitat: habitats.entrySet()) {
-                for (Zone foot: habitat.getValue().sortedZones()) {
+            for (Map.Entry<String, Region> habitat : habitats.entrySet()) {
+                for (Zone foot : habitat.getValue().sortedZones()) {
                     spiderMap.put(habitat.getKey(), constructABR(foot, contourMap));
                 }
             }
@@ -103,6 +101,4 @@ public class AbstractDescriptionTranslator {
         }
         return AbstractBasicRegion.get(inContours);
     }
-
-
 }

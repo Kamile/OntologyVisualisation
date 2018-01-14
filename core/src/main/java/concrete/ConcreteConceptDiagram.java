@@ -9,6 +9,7 @@ import icircles.util.CannotDrawException;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Set;
 
 /***
  * Build on ConcreteDiagram in iCircles, adding boundary rectangles,
@@ -26,16 +27,13 @@ import java.util.ArrayList;
  * -- Arrows (dashed/solid, labelled/unlabelled), representing semantics about
  *    binary relations.
  */
-public class ConcreteConceptDiagram extends ConcreteDiagram {
+public class ConcreteConceptDiagram{
 
     ArrayList<BoxContour> boxes;
-    public ConcreteConceptDiagram(ArrayList<BoxContour> boxes,
-                                  ArrayList<CircleContour> circles,
-                                  ArrayList<ConcreteZone> shadedZones,
-                                  ArrayList<ConcreteZone> unshadedZones,
-                                  ArrayList<ConcreteSpider> spiders) {
-        super(new Rectangle2D.Double(), circles, shadedZones, unshadedZones, spiders);
-        this.boxes = boxes;
+    ArrayList<ConcreteArrow> arrows;
+
+    public ConcreteConceptDiagram(Set<ConcreteDiagram> concreteSpiderDiagrams, Set<ConcreteArrow>  concreteArrow) {
+
     }
 
     public ArrayList<BoxContour> getBoxes() {

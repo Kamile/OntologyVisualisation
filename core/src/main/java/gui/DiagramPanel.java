@@ -128,8 +128,9 @@ public class DiagramPanel extends JPanel {
                 for (SpiderDiagram spider : spiders) {
                     // TODO: check that spiders aren't equivalent + check that spider is primary
 
-//                    AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription(conceptDiagram);
-//                    ConcreteConceptDiagram cd2 = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
+                    AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((BasicConceptDiagram) conceptDiagram);
+                    ConcreteConceptDiagram cd2 = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
+                    ConceptDiagramsDrawer panel3 = new ConceptDiagramsDrawer(cd2);
 
                     AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram) spider);
                     ConcreteDiagram cd = ConcreteDiagram.makeConcreteDiagram(ad, 300);

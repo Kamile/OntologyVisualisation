@@ -11,8 +11,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class AbstractConceptDiagramDescription {
-    Set<AbstractArrow> m_arrows;
-    Set<AbstractDescription> m_spiderDiagrams;
+    private Set<AbstractArrow> m_arrows;
+    private Set<AbstractDescription> m_spiderDiagrams;
 
     public AbstractConceptDiagramDescription() {
         super();
@@ -22,6 +22,14 @@ public class AbstractConceptDiagramDescription {
     public AbstractConceptDiagramDescription(Set<AbstractDescription> primarySpiderDiagrams, Set<AbstractArrow> arrows) {
         m_spiderDiagrams = primarySpiderDiagrams;
         m_arrows = arrows;
+    }
+
+    public Set<AbstractDescription> getSpiderDescriptions() {
+        return m_spiderDiagrams;
+    }
+
+    public Set<AbstractArrow> getArrowDescriptions() {
+        return m_arrows;
     }
 
     public void addArrow(AbstractArrow a) {
@@ -61,6 +69,7 @@ public class AbstractConceptDiagramDescription {
     }
 
     public boolean isValid() {
+        //TODO: Proper implementation...
         return true;
     }
 }
