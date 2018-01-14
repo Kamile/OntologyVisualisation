@@ -1,5 +1,7 @@
 package gui;
 
+import abstractDescription.AbstractConceptDiagramDescription;
+import concrete.ConcreteConceptDiagram;
 import icircles.abstractDescription.AbstractDescription;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
@@ -19,7 +21,8 @@ import java.util.List;
 
 import static speedith.i18n.Translations.i18n;
 
-/** Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagrams
+/**
+ * Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagrams
  * Panel
  */
 public class DiagramPanel extends JPanel {
@@ -40,6 +43,7 @@ public class DiagramPanel extends JPanel {
 
     /**
      * Create panel visualising given Concept Diagram
+     *
      * @param cd
      */
     public DiagramPanel(ConceptDiagram cd) {
@@ -120,17 +124,21 @@ public class DiagramPanel extends JPanel {
             if (conceptDiagram instanceof BasicConceptDiagram) {
                 List<SpiderDiagram> spiders = ((BasicConceptDiagram) conceptDiagram).getSpiderDiagrams();
                 List<Arrow> arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
-                this.setLayout(new GridLayout(1,0));
-                for(SpiderDiagram spider: spiders) {
+                this.setLayout(new GridLayout(1, 0));
+                for (SpiderDiagram spider : spiders) {
                     // TODO: check that spiders aren't equivalent + check that spider is primary
-                    AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram)spider);
+
+//                    AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription(conceptDiagram);
+//                    ConcreteConceptDiagram cd2 = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
+
+                    AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram) spider);
                     ConcreteDiagram cd = ConcreteDiagram.makeConcreteDiagram(ad, 300);
                     ConceptDiagramsDrawer panel2 = new ConceptDiagramsDrawer(cd);
                     panel2.setBorder(BorderFactory.createEmptyBorder());
                     panel2.setVisible(true);
                     this.add(panel2);
                 }
-                for (Arrow a: arrows) {
+                for (Arrow a : arrows) {
                     addArrowLabel(a);
                 }
             } else {

@@ -74,6 +74,10 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
         return m_label;
     }
 
+    public boolean isAnon() {
+        return m_isAnon;
+    }
+
     public Object getSource() {
         if (abr_source == null) {
             return c_source;

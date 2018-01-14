@@ -9,22 +9,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
-public class AbstractConceptDiagramDescription extends AbstractDescription {
+public class AbstractConceptDiagramDescription {
     ArrayList<AbstractArrow> m_arrows;
+    Set<AbstractDescription> m_spiderDiagrams;
 
     public AbstractConceptDiagramDescription() {
         super();
         m_arrows = new ArrayList<>();
     }
 
-    public AbstractConceptDiagramDescription(Set<AbstractCurve> contours, Set<AbstractBasicRegion> zones, Set<AbstractBasicRegion> shaded_zones) {
-        super(contours, zones, shaded_zones);
-        m_arrows = new ArrayList<>();
-    }
-
-    public AbstractConceptDiagramDescription(Set<AbstractCurve> contours, Set<AbstractBasicRegion> zones) {
-        super(contours, zones);
-        m_arrows = new ArrayList<>();
+    public AbstractConceptDiagramDescription(Set<AbstractDescription> primarySpiderDiagrams, ArrayList<AbstractArrow> arrows) {
+        m_spiderDiagrams = primarySpiderDiagrams;
+        m_arrows = arrows;
     }
 
     public void addArrow(AbstractArrow a) {
