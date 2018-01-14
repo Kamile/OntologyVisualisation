@@ -11,16 +11,12 @@ import speedith.core.lang.PrimarySpiderDiagram;
 import speedith.core.lang.SpiderDiagram;
 import speedith.core.lang.reader.ReadingException;
 import speedith.ui.DiagramVisualisation;
-import speedith.ui.SpiderDiagramPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
-import static java.awt.GridBagConstraints.BOTH;
-import static java.awt.GridBagConstraints.NONE;
-import static java.awt.GridBagConstraints.RELATIVE;
 import static speedith.i18n.Translations.i18n;
 
 /** Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagrams

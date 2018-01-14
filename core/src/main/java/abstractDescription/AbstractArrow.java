@@ -1,6 +1,8 @@
 package abstractDescription;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import icircles.abstractDescription.AbstractBasicRegion;
+import icircles.abstractDescription.AbstractCurve;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -13,22 +15,55 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
     private int m_id;
     private boolean m_isAnon;
 
-    public AbstractArrow() {
+    /* Two of the following four will be set; one source, one target */
+    private AbstractBasicRegion abr_source;
+    private AbstractBasicRegion abr_target;
+    private AbstractCurve c_source;
+    private AbstractCurve c_target;
+
+
+    public AbstractArrow(String label, boolean isAnon, AbstractBasicRegion source, AbstractBasicRegion target) {
+        ++id;
+        m_id = id;
+        m_label = label;
+        m_isAnon = isAnon;
+        abr_source = source;
+        abr_target = target;
 
     }
 
-    public AbstractArrow(String label) {
+    public AbstractArrow(String label, boolean isAnon, AbstractBasicRegion source, AbstractCurve to) {
         ++id;
-        this.m_id = id;
-        this.m_label = label;
-        this.m_isAnon = false;
+        m_id = id;
+        m_label = label;
+        m_isAnon = isAnon;
+        abr_source = source;
+        c_target = to;
+    }
+
+    public AbstractArrow(String label, boolean isAnon, AbstractCurve source, AbstractCurve target) {
+        ++id;
+        m_id = id;
+        m_label = label;
+        m_isAnon = isAnon;
+        c_source = source;
+        c_target = target;
+    }
+
+    public AbstractArrow(String label, boolean isAnon, AbstractCurve source, AbstractBasicRegion target) {
+        ++id;
+        m_id = id;
+        m_label = label;
+        m_isAnon = isAnon;
+        c_source = source;
+        abr_target = target;
     }
 
     public AbstractArrow(String label, boolean isAnon) {
         ++id;
-        this.m_id = id;
-        this.m_label = label;
-        this.m_isAnon = isAnon;
+        m_id = id;
+        m_label = label;
+        m_isAnon = isAnon;
     }
 
     public int getId() {
@@ -39,8 +74,20 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
         return m_label;
     }
 
-    public AbstractArrow clone() {
-        return new AbstractArrow(m_label, m_isAnon);
+    public Object getSource() {
+        if (abr_source == null) {
+            return c_source;
+        } else {
+            return abr_source;
+        }
+    }
+
+    public Object getTarget() {
+        if (abr_target == null) {
+            return c_target;
+        } else {
+            return abr_target;
+        }
     }
 
     @Override
