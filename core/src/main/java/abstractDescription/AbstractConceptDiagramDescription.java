@@ -8,17 +8,18 @@ import icircles.abstractDescription.AbstractDescription;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class AbstractConceptDiagramDescription {
-    ArrayList<AbstractArrow> m_arrows;
+    Set<AbstractArrow> m_arrows;
     Set<AbstractDescription> m_spiderDiagrams;
 
     public AbstractConceptDiagramDescription() {
         super();
-        m_arrows = new ArrayList<>();
+        m_arrows = new TreeSet<>();
     }
 
-    public AbstractConceptDiagramDescription(Set<AbstractDescription> primarySpiderDiagrams, ArrayList<AbstractArrow> arrows) {
+    public AbstractConceptDiagramDescription(Set<AbstractDescription> primarySpiderDiagrams, Set<AbstractArrow> arrows) {
         m_spiderDiagrams = primarySpiderDiagrams;
         m_arrows = arrows;
     }

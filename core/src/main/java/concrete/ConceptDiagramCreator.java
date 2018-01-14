@@ -25,7 +25,7 @@ import java.util.Iterator;
  * Here we re-write the DiagramCreator from iCircles to remove split curves and apply
  * all of the layout constraints as described in the success criteria.
  */
-public class ConceptDiagramCreator extends DiagramCreator {
+public class ConceptDiagramCreator {
 
     ArrayList<BoxContour> boxes;
     static Logger logger = Logger.getLogger(DiagramCreator.class.getName());
@@ -52,11 +52,9 @@ public class ConceptDiagramCreator extends DiagramCreator {
     };
 
     public ConceptDiagramCreator(AbstractConceptDiagramDescription abstractDescription) {
-        super(abstractDescription);
     }
 
     public ConceptDiagramCreator(AbstractConceptDiagramDescription abstractDescription, DecompositionStrategy decomp_strategy, RecompositionStrategy recomp_strategy) {
-        super(abstractDescription, decomp_strategy, recomp_strategy);
     }
 
     public ConcreteConceptDiagram createDiagram(int size) throws CannotDrawException {
