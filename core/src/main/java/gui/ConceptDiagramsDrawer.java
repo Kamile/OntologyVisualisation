@@ -97,7 +97,7 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.repaint();
     }
 
-    public HashMap<String, ConcreteArrowEnd> getTargetMappings() {
+    HashMap<String, ConcreteArrowEnd> getTargetMappings() {
         return targetMappings;
     }
 
@@ -109,6 +109,7 @@ public class ConceptDiagramsDrawer extends JPanel {
         return p;
     }
 
+    @Override
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -194,8 +195,6 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                 while(var10.hasNext()) {
                     ConcreteSpiderLeg leg = (ConcreteSpiderLeg)var10.next();
-                    targetMappings.put(leg.from.getSpider().as.getName(), new ConcreteArrowEnd(leg.from.getX(), leg.from.getY()));
-                    targetMappings.put(leg.from.getSpider().as.getName(), new ConcreteArrowEnd(leg.to.getX(), leg.to.getY()));
                     g2d.drawLine((int)(leg.from.getX() * this.scaleFactor), (int)(leg.from.getY() * this.scaleFactor), (int)(leg.to.getX() * this.scaleFactor), (int)(leg.to.getY() * this.scaleFactor));
                 }
 
@@ -203,6 +202,7 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                 while(var10.hasNext()) {
                     ConcreteSpiderFoot foot = (ConcreteSpiderFoot)var10.next();
+                    targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(foot.getX(), foot.getY()));
                     foot.getBlob(tmpCircle);
                     Color oldColor2 = g2d.getColor();
                     translateCircleCentre(this.scaleFactor, tmpCircle, tmpCircle);
@@ -234,7 +234,7 @@ public class ConceptDiagramsDrawer extends JPanel {
                 g2d.draw(tmpCircle);
             }
         }
-
+        System.out.println(targetMappings);
     }
 
     public void setBounds(int x, int y, int width, int height) {
@@ -320,7 +320,6 @@ public class ConceptDiagramsDrawer extends JPanel {
                 this.setScaleFactor((double)Math.min((float)this.getWidth() / (float)size, (float)this.getHeight() / (float)size));
             }
         }
-
     }
 
     private void recalculateTransform() {

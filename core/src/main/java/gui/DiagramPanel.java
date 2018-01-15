@@ -1,24 +1,20 @@
 package gui;
 
 import abstractDescription.AbstractConceptDiagramDescription;
-import concrete.ConcreteArrow;
 import concrete.ConcreteArrowEnd;
 import concrete.ConcreteConceptDiagram;
-import icircles.abstractDescription.AbstractDescription;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
 import lang.Arrow;
 import lang.BasicConceptDiagram;
 import lang.ConceptDiagram;
 import reader.ConceptDiagramsReader;
-import speedith.core.lang.PrimarySpiderDiagram;
-import speedith.core.lang.SpiderDiagram;
 import speedith.core.lang.reader.ReadingException;
-import speedith.ui.DiagramVisualisation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -125,27 +121,40 @@ public class DiagramPanel extends JPanel {
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
-                List<SpiderDiagram> spiders = ((BasicConceptDiagram) conceptDiagram).getSpiderDiagrams();
-                List<Arrow> arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
+                final List<Arrow> arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
                 this.setLayout(new GridLayout(1, 0));
 
                 AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((BasicConceptDiagram) conceptDiagram);
-                ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
-                HashMap<String, ConcreteArrowEnd> targetMappings = new HashMap<>();
+                final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
+                final HashMap<String, ConcreteArrowEnd> targetMappings = new HashMap<>();
+
                 for (ConcreteDiagram cd : ccd.getSpiderDiagrams()) {
                     ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, targetMappings);
-                    targetMappings = panel.getTargetMappings();
+                    targetMappings.putAll(panel.getTargetMappings());
                     panel.setBorder(BorderFactory.createEmptyBorder());
                     panel.setVisible(true);
-                    this.add(panel);
+                    add(panel);
                 }
-                for (ConcreteArrow concreteArrow : ccd.getArrows()) {
-//                    addArrowLabel(concreteArrow);
-                }
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        addArrows(targetMappings, arrows);
+                    }
+                });
             } else {
                 throw new IllegalArgumentException(i18n("SD_PANEL_UNKNOWN_DIAGRAM_TYPE"));
             }
         }
+    }
+
+    private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
+        System.out.println("In addArrows");
+        System.out.println(targetMappings.keySet().size());
+        ArrowDrawer arrowPanel = new ArrowDrawer(arrows, targetMappings);
+        arrowPanel.setVisible(true);
+        add(arrowPanel);
+        System.out.println("At end of addArrows");
     }
 
     private void onCancel() {
