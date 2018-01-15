@@ -17,10 +17,7 @@ import org.apache.log4j.Logger;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /***
  * Layout algorithms for well-formedness of concept and property diagrams.
@@ -41,12 +38,19 @@ public class ConceptDiagramCreator {
     }
 
     public ConcreteConceptDiagram createDiagram(int size) throws CannotDrawException {
-
+        Set<ConcreteDiagram> concreteSpiderDiagrams = new HashSet<>();
+        Set<ConcreteArrow> concreteArrows = new HashSet<>();
         for (AbstractDescription ad: spiderDiagramDescriptions) {
             DiagramCreator dc = new DiagramCreator(ad);
             ConcreteDiagram cd = dc.createDiagram(size);
+            concreteSpiderDiagrams.add(cd);
         }
 
-        return null;
+        for (AbstractArrow abstractArrow: arrowDescriptions) {
+            ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow);
+            concreteArrows.add(concreteArrow);
+        }
+
+        return new ConcreteConceptDiagram(concreteSpiderDiagrams, concreteArrows);
     }
 }

@@ -29,20 +29,25 @@ import java.util.Set;
  */
 public class ConcreteConceptDiagram{
 
-    ArrayList<BoxContour> boxes;
-    ArrayList<ConcreteArrow> arrows;
+    private Set<ConcreteArrow> arrows;
+    private Set<ConcreteDiagram> spiderDiagrams;
 
-    public ConcreteConceptDiagram(Set<ConcreteDiagram> concreteSpiderDiagrams, Set<ConcreteArrow>  concreteArrow) {
-
+    public ConcreteConceptDiagram(Set<ConcreteDiagram> concreteSpiderDiagrams, Set<ConcreteArrow>  concreteArrows) {
+        spiderDiagrams = concreteSpiderDiagrams;
+        arrows = concreteArrows;
     }
 
-    public ArrayList<BoxContour> getBoxes() {
-        return boxes;
+    public Set<ConcreteDiagram> getSpiderDiagrams() {
+        return spiderDiagrams;
+    }
+
+    public Set<ConcreteArrow> getArrows() {
+        return arrows;
     }
 
     public static ConcreteConceptDiagram makeConcreteDiagram(AbstractConceptDiagramDescription abstractDescription, int size) throws CannotDrawException {
 
-        if (abstractDescription.isValid()) {
+        if (!abstractDescription.isValid()) {
             throw new CannotDrawException("Invalid diagram specification");
         }
 

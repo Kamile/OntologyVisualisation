@@ -27,10 +27,10 @@ public class AbstractDescriptionTranslator {
     }
 
     public static AbstractConceptDiagramDescription getAbstractDescription(BasicConceptDiagram cd) throws CannotDrawException {
-        Set<AbstractDescription> abstractSDDescriptions = new TreeSet<>();
-        Set<AbstractArrow> abstractArrows = new TreeSet<>();
-        contours = new TreeSet<>();
-        spiders = new TreeSet<>();
+        Set<AbstractDescription> abstractSDDescriptions = new HashSet<>();
+        Set<AbstractArrow> abstractArrows = new HashSet<>();
+        contours = new HashSet<>();
+        spiders = new HashSet<>();
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
 
@@ -39,6 +39,7 @@ public class AbstractDescriptionTranslator {
             AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram) sd);
             abstractSDDescriptions.add(ad);
             contours.addAll(ad.getCopyOfContours());
+            createContourMap();
             spiderMap.putAll(getSpiderMaps((PrimarySpiderDiagram) sd));
             spiders.addAll(((PrimarySpiderDiagram) sd).getSpiders());
         }
@@ -66,17 +67,14 @@ public class AbstractDescriptionTranslator {
         return new AbstractConceptDiagramDescription(abstractSDDescriptions, abstractArrows);
     }
 
-    private static List<String> getContourLabels() {
-        List<String> contourLabels = new ArrayList<>();
+    private static void createContourMap() {
         for (AbstractCurve ac : contours) {
-            contourLabels.add(ac.getLabel());
             contourMap.put(ac.getLabel(), ac);
         }
-        return contourLabels;
     }
 
     private static boolean isContour(String label) {
-        return (getContourLabels().contains(label));
+        return contourMap.keySet().contains(label);
     }
 
     private static HashMap<String, AbstractBasicRegion> getSpiderMaps(PrimarySpiderDiagram sd) {
