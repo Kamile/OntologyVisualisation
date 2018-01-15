@@ -6,13 +6,11 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 
 public class ConcreteArrow {
-
     static Logger logger = Logger.getLogger(ConcreteArrow.class.getName());
 
     private AbstractArrow arrow;
     private ConcreteArrowSource source;
     private ConcreteArrowTarget target;
-    private ConcreteArrowShaft shaft;
 
     public ConcreteArrow(AbstractArrow arrow) {
         this.arrow = arrow;
@@ -26,15 +24,22 @@ public class ConcreteArrow {
         this.source = source;
     }
 
+    public ConcreteArrowTarget getTarget() {
+        return target;
+    }
+
     public void setTarget(ConcreteArrowTarget target) {
         this.target = target;
+    }
+
+    public AbstractArrow getAbstractArrow() {
+        return arrow;
     }
 
     public double checksum() {
         double result = 0.0;
         result += source.checksum();
         result += target.checksum();
-        result += shaft.checksum();
         return result;
     }
 }

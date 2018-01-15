@@ -59,13 +59,6 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
         abr_target = target;
     }
 
-    public AbstractArrow(String label, boolean isAnon) {
-        ++id;
-        m_id = id;
-        m_label = label;
-        m_isAnon = isAnon;
-    }
-
     public int getId() {
         return m_id;
     }
