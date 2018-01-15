@@ -1,5 +1,6 @@
 package gui;
 
+import concrete.ConcreteArrowEnd;
 import icircles.concreteDiagram.*;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -15,6 +16,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class ConceptDiagramsDrawer extends JPanel {
@@ -37,6 +39,8 @@ public class ConceptDiagramsDrawer extends JPanel {
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
 
+    private HashMap<String, ConcreteArrowEnd> targetMappings;
+
     public ConceptDiagramsDrawer(ConcreteDiagram diagram) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
@@ -50,6 +54,23 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.initComponents();
         this.resetDiagram(diagram);
         this.resizeContents();
+    }
+
+    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings ) {
+        this.domImpl = GenericDOMImplementation.getDOMImplementation();
+        this.svgNS = "http://www.w3.org/2000/svg";
+        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
+        this.svgGenerator = new SVGGraphics2D(this.document);
+        this.scaleFactor = 1.0D;
+        this.trans = new AffineTransform();
+        this.highlightedContour = null;
+        this.highlightedZone = null;
+        this.highlightedFoot = null;
+        this.initComponents();
+        this.resetDiagram(diagram);
+        this.resizeContents();
+
+        this.targetMappings = targetMappings;
     }
 
     public ConceptDiagramsDrawer() {
@@ -74,6 +95,10 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.scaleFactor = newScaleFactor;
         this.recalculateTransform();
         this.repaint();
+    }
+
+    public HashMap<String, ConcreteArrowEnd> getTargetMappings() {
+        return targetMappings;
     }
 
     public Point toDiagramCoordinates(Point p) {
@@ -125,6 +150,7 @@ public class ConceptDiagramsDrawer extends JPanel {
 
             while(var16.hasNext()) {
                 CircleContour cc = (CircleContour)var16.next();
+                targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(cc.get_cx()*this.scaleFactor, (cc.get_cy() - cc.get_radius())*this.scaleFactor));
                 Color col = cc.color();
                 if (col == null) {
                     col = Color.black;
@@ -168,6 +194,8 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                 while(var10.hasNext()) {
                     ConcreteSpiderLeg leg = (ConcreteSpiderLeg)var10.next();
+                    targetMappings.put(leg.from.getSpider().as.getName(), new ConcreteArrowEnd(leg.from.getX(), leg.from.getY()));
+                    targetMappings.put(leg.from.getSpider().as.getName(), new ConcreteArrowEnd(leg.to.getX(), leg.to.getY()));
                     g2d.drawLine((int)(leg.from.getX() * this.scaleFactor), (int)(leg.from.getY() * this.scaleFactor), (int)(leg.to.getX() * this.scaleFactor), (int)(leg.to.getY() * this.scaleFactor));
                 }
 

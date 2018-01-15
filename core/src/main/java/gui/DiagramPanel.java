@@ -2,6 +2,7 @@ package gui;
 
 import abstractDescription.AbstractConceptDiagramDescription;
 import concrete.ConcreteArrow;
+import concrete.ConcreteArrowEnd;
 import concrete.ConcreteConceptDiagram;
 import icircles.abstractDescription.AbstractDescription;
 import icircles.concreteDiagram.ConcreteDiagram;
@@ -18,6 +19,7 @@ import speedith.ui.DiagramVisualisation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 import java.util.List;
 
 import static speedith.i18n.Translations.i18n;
@@ -129,8 +131,10 @@ public class DiagramPanel extends JPanel {
 
                 AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((BasicConceptDiagram) conceptDiagram);
                 ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
+                HashMap<String, ConcreteArrowEnd> targetMappings = new HashMap<>();
                 for (ConcreteDiagram cd : ccd.getSpiderDiagrams()) {
-                    ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd);
+                    ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, targetMappings);
+                    targetMappings = panel.getTargetMappings();
                     panel.setBorder(BorderFactory.createEmptyBorder());
                     panel.setVisible(true);
                     this.add(panel);
