@@ -1,8 +1,6 @@
 package gui;
 
 import concrete.ConcreteArrowEnd;
-import concrete.ConcreteArrowSource;
-import concrete.ConcreteArrowTarget;
 import lang.Arrow;
 
 import javax.swing.*;
@@ -37,8 +35,8 @@ public class ArrowDrawer extends JPanel {
                 String source = a.getSource();
                 String target = a.getTarget();
                 if (targetMappings.keySet().size() > 0) {
-                    ConcreteArrowSource arrowSource = (ConcreteArrowSource) targetMappings.get(source);
-                    ConcreteArrowTarget arrowTarget = (ConcreteArrowTarget) targetMappings.get(target);
+                    ConcreteArrowEnd arrowSource = targetMappings.get(source);
+                    ConcreteArrowEnd arrowTarget = targetMappings.get(target);
                     System.out.println("Drawing arrows");
                     g2d.drawLine((int) arrowSource.getX(), (int) arrowSource.getY(), (int) arrowTarget.getX(), (int) arrowTarget.getY());
                 }

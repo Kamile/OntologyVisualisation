@@ -139,7 +139,8 @@ public class DiagramPanel extends JPanel {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        addArrows(targetMappings, arrows);
+                        HashMap<String, ConcreteArrowEnd> copyTargets = (HashMap<String, ConcreteArrowEnd>) targetMappings.clone();
+                        addArrows(copyTargets, arrows);
                     }
                 });
             } else {
@@ -153,7 +154,8 @@ public class DiagramPanel extends JPanel {
         System.out.println(targetMappings.keySet().size());
         ArrowDrawer arrowPanel = new ArrowDrawer(arrows, targetMappings);
         arrowPanel.setVisible(true);
-        add(arrowPanel);
+        this.add(arrowPanel);
+        this.repaint();
         System.out.println("At end of addArrows");
     }
 
