@@ -215,8 +215,6 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                     g2d.fill(tmpCircle);
                     targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getCenteringTranslationY()));
-                    System.out.println(foot.getSpider().as.getName() + " " + (tmpCircle.x + getX()) + " " + (tmpCircle.y + getY()));
-                    System.out.println("X: " + getX() + " Y: " + getY());
                     if (this.getHighlightedFoot() == foot) {
                         g2d.setColor(oldColor2);
                     }
