@@ -30,6 +30,7 @@ public class MainForm extends JFrame {
     private JMenu saveMenu;
 
     private DiagramPanel diagramPanel;
+    private ArrowPanel glassPanel;
     private JMenuBar menuBar;
 
     public MainForm() {
@@ -38,6 +39,7 @@ public class MainForm extends JFrame {
 
     private void initUI() {
         diagramPanel = new DiagramPanel();
+        glassPanel = new ArrowPanel();
 
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
@@ -57,22 +59,13 @@ public class MainForm extends JFrame {
         setTitle("Ontology Visualiser");
 
         initMenuBar();
-
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(diagramPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createSequentialGroup()
-                        .addComponent(diagramPanel, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-        );
+        setContentPane(diagramPanel);
+        setGlassPane(glassPanel);
+        getGlassPane().setVisible(true);
 
         descriptionFileChooser = new JFileChooser();
         descriptionFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("OntologyVisualiser diagram files", "sdt"));
         descriptionFileChooser.setMultiSelectionEnabled(false);
-
         pack();
     }
 
@@ -175,8 +168,9 @@ public class MainForm extends JFrame {
                     throw new ReadingException("The spider diagram contained in the file is not valid.");
                 }
                 diagramPanel.setDiagram(input);
+                setArrowPanel();
                 this.setTitle("Ontology Visualisation" + ": " + file.getName());
-                this.add(diagramPanel);
+                pack();
             } catch (IOException ioe) {
                 JOptionPane.showMessageDialog(this, "An error occurred while accessing the file:\n" + ioe.getLocalizedMessage());
             } catch (ReadingException re) {
@@ -192,19 +186,39 @@ public class MainForm extends JFrame {
         this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
+    private void setArrowPanel() {
+        this.remove(glassPanel);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                glassPanel = diagramPanel.getArrowGlassPanel();
+                setGlassPane(glassPanel);
+                getGlassPane().setVisible(true);
+            }
+        });
+        validate();
+        repaint();
+    }
+
     private void onExample1(ActionEvent evt) {
         diagramPanel.setDiagram(getExampleA());
+        setArrowPanel();
         setTitle("OntologyVisualiser" + ": " + "Example 1");
+        pack();
     }
 
     private void onExample2(ActionEvent evt) {
         diagramPanel.setDiagram(getExampleB());
+        setArrowPanel();
         setTitle("OntologyVisualiser" + ": " + "Example 2");
+        pack();
     }
 
     private void onExample3(ActionEvent evt) {
         diagramPanel.setDiagram(getExampleC());
+        setArrowPanel();
         setTitle("OntologyVisualiser: " + ": " + "Example 3");
+        pack();
     }
 
     private void onTextInputClicked(java.awt.event.ActionEvent evt) {
@@ -212,7 +226,9 @@ public class MainForm extends JFrame {
         dialog.setVisible(true);
         if (!dialog.isCancelled() && dialog.getConceptDiagram() != null) {
             diagramPanel.setDiagram(dialog.getConceptDiagram());
+            setArrowPanel();
             setTitle("OntologyVisualiser");
+            pack();
         }
     }
 
@@ -231,7 +247,7 @@ public class MainForm extends JFrame {
                     "            sh_zones = [([\"_anon\"], [\"C5\"])],\n" +
                     "            present_zones = [([\"_anon\", \"C5\"], []), ([\"C5\"], [\"_anon\"]), ([], [\"_anon\", \"C5\"])]}\n" +
                     "    ],\n" +
-                    "\tarrows = [(\"op\", \"c\", \"C5\")]\n" +
+                    "\tarrows = [(\"op\", \"c\", \"_anon\")]\n" +
                     "}");
         } catch (Exception ex) {
             throw new RuntimeException();

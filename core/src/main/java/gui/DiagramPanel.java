@@ -13,7 +13,6 @@ import speedith.core.lang.reader.ReadingException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,25 +22,25 @@ import static speedith.i18n.Translations.i18n;
  * Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagrams
  * Panel
  */
-public class DiagramPanel extends JLayeredPane {
+public class DiagramPanel extends JPanel {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
 
-    private JPanel contentPane;
+    private ArrowPanel arrowPanel;
     private ConceptDiagram conceptDiagram;
+    private HashMap<String, ConcreteArrowEnd> targetMappings;
+    private List<Arrow> arrows;
 
     /**
      * Create new diagram panel with nothing displayed in it.
      */
     public DiagramPanel() {
         this(null);
-        initComponents();
         drawNoDiagramLabel();
     }
 
     /**
      * Create panel visualising given Concept Diagram
-     *
      * @param cd
      */
     public DiagramPanel(ConceptDiagram cd) {
@@ -53,16 +52,19 @@ public class DiagramPanel extends JLayeredPane {
         setMinimumSize(MINIMUM_SIZE);
         setPreferredSize(PREFERRED_SIZE);
         setBackground(Color.WHITE);
-
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        arrowPanel = new ArrowPanel();
     }
 
     public ConceptDiagram getDiagram() {
         return conceptDiagram;
+    }
+
+    public List<Arrow> getArrows() {
+        return arrows;
+    }
+
+    public HashMap<String, ConcreteArrowEnd> getTargetMappings() {
+        return targetMappings;
     }
 
     public final void setDiagram(ConceptDiagram diagram) {
@@ -118,15 +120,14 @@ public class DiagramPanel extends JLayeredPane {
     }
 
     private void drawDiagram() throws CannotDrawException {
-//        add(new ArrowLayer(contentPane).createLayer());
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
-                final List<Arrow> arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
+                arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
                 this.setLayout(new GridLayout(1, 0));
 
                 AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((BasicConceptDiagram) conceptDiagram);
                 final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
-                final HashMap<String, ConcreteArrowEnd> targetMappings = new HashMap<>();
+                targetMappings = new HashMap<>();
 
                 for (ConcreteDiagram cd : ccd.getSpiderDiagrams()) {
                     ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, targetMappings);
@@ -148,18 +149,13 @@ public class DiagramPanel extends JLayeredPane {
         }
     }
 
+    public ArrowPanel getArrowGlassPanel() {
+        System.out.println("getting arrow panel");
+        return arrowPanel;
+    }
+
     private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
-        ArrowDrawer arrowPanel = new ArrowDrawer(arrows, targetMappings);
-        arrowPanel.setVisible(true);
-        add(arrowPanel, new Integer(1));
-    }
-
-    private void onCancel() {
-    }
-
-    public static void main(String[] args) {
-        DiagramPanel dialog = new DiagramPanel();
-        dialog.setVisible(true);
-        System.exit(0);
+        System.out.println(targetMappings.keySet().size() > 0);
+        arrowPanel = new ArrowPanel(arrows, targetMappings);
     }
 }
