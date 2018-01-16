@@ -14,7 +14,6 @@ import speedith.core.lang.reader.ReadingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +23,7 @@ import static speedith.i18n.Translations.i18n;
  * Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagrams
  * Panel
  */
-public class DiagramPanel extends JPanel {
+public class DiagramPanel extends JLayeredPane {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
 
@@ -119,6 +118,7 @@ public class DiagramPanel extends JPanel {
     }
 
     private void drawDiagram() throws CannotDrawException {
+//        add(new ArrowLayer(contentPane).createLayer());
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
                 final List<Arrow> arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
@@ -139,8 +139,7 @@ public class DiagramPanel extends JPanel {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        HashMap<String, ConcreteArrowEnd> copyTargets = (HashMap<String, ConcreteArrowEnd>) targetMappings.clone();
-                        addArrows(copyTargets, arrows);
+                        addArrows(targetMappings, arrows);
                     }
                 });
             } else {
@@ -150,13 +149,9 @@ public class DiagramPanel extends JPanel {
     }
 
     private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
-        System.out.println("In addArrows");
-        System.out.println(targetMappings.keySet().size());
         ArrowDrawer arrowPanel = new ArrowDrawer(arrows, targetMappings);
         arrowPanel.setVisible(true);
-        this.add(arrowPanel);
-        this.repaint();
-        System.out.println("At end of addArrows");
+        add(arrowPanel, new Integer(1));
     }
 
     private void onCancel() {

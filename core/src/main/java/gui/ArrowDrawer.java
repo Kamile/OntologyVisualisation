@@ -24,11 +24,11 @@ public class ArrowDrawer extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println("In paint in ArrowDrawer");
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (arrows != null) {
             super.paintComponent(g);
+            g.translate(0, 0);
             g2d.setBackground(new Color(255,255,255,255));
             for (Arrow a: arrows) {
                 String label = a.getLabel();
@@ -37,7 +37,6 @@ public class ArrowDrawer extends JPanel {
                 if (targetMappings.keySet().size() > 0) {
                     ConcreteArrowEnd arrowSource = targetMappings.get(source);
                     ConcreteArrowEnd arrowTarget = targetMappings.get(target);
-                    System.out.println("Drawing arrows");
                     g2d.drawLine((int) arrowSource.getX(), (int) arrowSource.getY(), (int) arrowTarget.getX(), (int) arrowTarget.getY());
                 }
             }

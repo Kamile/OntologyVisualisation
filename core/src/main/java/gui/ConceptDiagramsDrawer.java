@@ -122,7 +122,6 @@ public class ConceptDiagramsDrawer extends JPanel {
             g2d.setBackground(Color.white);
             g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
             g.translate(this.getCenteringTranslationX(), this.getCenteringTranslationY());
-            g.setColor(Color.lightGray);
             Iterator var3 = this.diagram.getShadedZones().iterator();
 
             while(var3.hasNext()) {
@@ -151,7 +150,7 @@ public class ConceptDiagramsDrawer extends JPanel {
 
             while(var16.hasNext()) {
                 CircleContour cc = (CircleContour)var16.next();
-                targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(cc.get_cx()*this.scaleFactor, (cc.get_cy() - cc.get_radius())*this.scaleFactor));
+                targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(cc.get_cx() - getX(), (cc.get_cy() + cc.get_radius() - getY())));
                 Color col = cc.color();
                 if (col == null) {
                     col = Color.black;
@@ -202,7 +201,7 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                 while(var10.hasNext()) {
                     ConcreteSpiderFoot foot = (ConcreteSpiderFoot)var10.next();
-                    targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(foot.getX(), foot.getY()));
+                    targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(foot.getX() - this.getX(), foot.getY() - this.getY()));
                     foot.getBlob(tmpCircle);
                     Color oldColor2 = g2d.getColor();
                     translateCircleCentre(this.scaleFactor, tmpCircle, tmpCircle);
@@ -234,7 +233,6 @@ public class ConceptDiagramsDrawer extends JPanel {
                 g2d.draw(tmpCircle);
             }
         }
-        System.out.println(targetMappings);
     }
 
     public void setBounds(int x, int y, int width, int height) {

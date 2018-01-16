@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 import static speedith.i18n.Translations.i18n;
 
 public class MainForm extends JFrame {
-
     private JMenu fileMenu;
     private JMenuItem openMenuItem;
     private JMenuItem saveMenuItem;
@@ -210,7 +209,6 @@ public class MainForm extends JFrame {
 
     private void onTextInputClicked(java.awt.event.ActionEvent evt) {
         CDInputDialog dialog = new CDInputDialog();
-//        dialog.setConceptDiagramText(getExampleA());
         dialog.setVisible(true);
         if (!dialog.isCancelled() && dialog.getConceptDiagram() != null) {
             diagramPanel.setDiagram(dialog.getConceptDiagram());
