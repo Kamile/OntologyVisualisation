@@ -28,17 +28,15 @@ public class ArrowPanel extends JComponent {
     private void initComponents() {
         setMinimumSize(MINIMUM_SIZE);
         setPreferredSize(PREFERRED_SIZE);
-        setBackground(new Color(255,255,255,255));
-        System.out.println("inititing");
+        setBorder(BorderFactory.createLineBorder(new Color(166,255, 88, 132)));
     }
 
     @Override
     public void paintComponent(Graphics g) {
-//        System.out.println("aininging");
         Graphics2D g2d = (Graphics2D) g;
+        g.translate(0, 22);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (arrows != null && targetMappings.keySet().size() > 0) {
-            System.out.println("aininging");
             super.paintComponent(g);
             for (Arrow a: arrows) {
                 String label = a.getLabel();

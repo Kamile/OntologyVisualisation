@@ -150,7 +150,6 @@ public class ConceptDiagramsDrawer extends JPanel {
 
             while(var16.hasNext()) {
                 CircleContour cc = (CircleContour)var16.next();
-                targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(cc.get_cx() - getX(), (cc.get_cy() + cc.get_radius() - getY())));
                 Color col = cc.color();
                 if (col == null) {
                     col = Color.black;
@@ -158,7 +157,11 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                 g.setColor(col);
                 transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
+                targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() - (tmpCircle.getHeight()/2) + getY() + getCenteringTranslationY()));
+                System.out.println(cc.ac.getLabel() + " " + (tmpCircle.getCenterX() + getX()) + " " + (tmpCircle.getMinY() + getY()));
+                System.out.println("X: " + getX() + " Y: " + getY());
                 g2d.draw(tmpCircle);
+
                 if (cc.ac.getLabel() != null) {
                     g.setColor(col);
                     if (cc.stroke() != null) {
@@ -201,7 +204,6 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                 while(var10.hasNext()) {
                     ConcreteSpiderFoot foot = (ConcreteSpiderFoot)var10.next();
-                    targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(foot.getX() - this.getX(), foot.getY() - this.getY()));
                     foot.getBlob(tmpCircle);
                     Color oldColor2 = g2d.getColor();
                     translateCircleCentre(this.scaleFactor, tmpCircle, tmpCircle);
@@ -212,6 +214,9 @@ public class ConceptDiagramsDrawer extends JPanel {
                     }
 
                     g2d.fill(tmpCircle);
+                    targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getCenteringTranslationY()));
+                    System.out.println(foot.getSpider().as.getName() + " " + (tmpCircle.x + getX()) + " " + (tmpCircle.y + getY()));
+                    System.out.println("X: " + getX() + " Y: " + getY());
                     if (this.getHighlightedFoot() == foot) {
                         g2d.setColor(oldColor2);
                     }
