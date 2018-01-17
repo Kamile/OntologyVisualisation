@@ -5,6 +5,9 @@ import lang.Arrow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.QuadCurve2D;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +19,7 @@ public class ArrowPanel extends JComponent {
 
     private List<Arrow> arrows;
     private HashMap<String, ConcreteArrowEnd> targetMappings;
+    private HashMap<Arrow, Double> arrowOffsets;
 
     ArrowPanel() {
         this(null, null);
@@ -24,6 +28,12 @@ public class ArrowPanel extends JComponent {
     ArrowPanel(List<Arrow> arrows, HashMap<String, ConcreteArrowEnd> targetMappings) {
         this.arrows = arrows;
         this.targetMappings = targetMappings;
+        if (arrows != null) {
+            arrowOffsets = new HashMap<>();
+            for (Arrow a : arrows) {
+                arrowOffsets.put(a, getRandomOffset());
+            }
+        }
         initComponents();
     }
 
@@ -51,10 +61,22 @@ public class ArrowPanel extends JComponent {
                 double y1 = arrowSource.getY();
                 double x2 = arrowTarget.getX();
                 double y2 = arrowTarget.getY();
-                g2d.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
+
+                double gradient = (y2-y1)/(x2-x1);
+                double perpendicular = -1/gradient;
+                double midX = (Math.min(x1, x2) + Math.abs(x2 - x1)/2);
+                double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
+
+                //get random control point
+                double cx = midX - arrowOffsets.get(a)*perpendicular*getWidth()/1000;
+                double cy = midY - arrowOffsets.get(a)*perpendicular*getHeight()/1000;
+
+                QuadCurve2D curve = new QuadCurve2D.Double();
+                curve.setCurve(x1, y1, cx, cy, x2, y2);
+                g2d.draw(curve);
 
                 // draw arrowheads for target
-                double theta = Math.atan2(y2 - y1, x2 - x1);
+                double theta = Math.atan2(y2 - cy, x2 - cx);
                 double x = x2 - headLength * Math.cos(theta + phi);
                 double y = y2 - headLength * Math.sin(theta + phi);
                 g2d.drawLine((int) x2, (int) y2, (int) x, (int) y);
@@ -63,8 +85,21 @@ public class ArrowPanel extends JComponent {
                 g2d.drawLine((int) x2, (int) y2, (int) x, (int) y);
 
                 // add label
-                g2d.drawString(label, (int)(Math.min(x1, x2) + Math.abs(x2 - x1)/2), (int)(Math.min(y1, y2) + Math.abs(y2 - y1)/2) - 8);
+                double offset = 0;
+                if (curve.getFlatness() < 10) {
+                    offset = 15;
+                } else if (Math.abs(gradient) < 2) {
+                    offset = curve.getFlatness()*gradient;
+                } else {
+                    offset = curve.getFlatness()/(gradient*2);
+                }
+
+                g2d.drawString(label, (int) midX, (int) (midY + offset));
             }
         }
+    }
+
+    private static double getRandomOffset() {
+        return Math.floor(Math.random()*31 + 10);
     }
 }
