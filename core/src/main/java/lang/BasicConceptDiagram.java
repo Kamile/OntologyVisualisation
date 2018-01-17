@@ -22,41 +22,47 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
     public static final String CDTextArrowsAttribute = "arrows";
 
     private static final long serialVersionUID = -23423534656432L;
-    private ArrayList<SpiderDiagram> spiderDiagrams;
+    private ArrayList<BoundaryRectangle> boundaryRectangles;
+//    private ArrayList<SpiderDiagram> spiderDiagrams;
     private ArrayList<Arrow> arrows;
     private boolean hashInvalid = true;
     private int hash;
     private Boolean valid;
     private int subDiagramCount = -1;
 
-    BasicConceptDiagram(ArrayList<SpiderDiagram> sds) {
-        setSpiderDiagrams(sds);
+    BasicConceptDiagram(ArrayList<BoundaryRectangle> sds) {
+        setBoundaryRectangles(sds);
         this.arrows = new ArrayList<>();
     }
 
-    BasicConceptDiagram(ArrayList<SpiderDiagram> sds, ArrayList<Arrow> arrows) {
-        setSpiderDiagrams(sds);
+//    BasicConceptDiagram(ArrayList<SpiderDiagram> sds, ArrayList<Arrow> arrows) {
+//        setBoundaryRectangles(sds);
+//        this.arrows = arrows;
+//    }
+
+    BasicConceptDiagram(ArrayList<BoundaryRectangle> boundaryRectangles, ArrayList<Arrow> arrows) {
+        this.boundaryRectangles = boundaryRectangles;
         this.arrows = arrows;
     }
 
-    public List<SpiderDiagram> getSpiderDiagrams() {
-        return Collections.unmodifiableList(spiderDiagrams);
+    public List<BoundaryRectangle> getBoundaryRectangles() {
+        return Collections.unmodifiableList(boundaryRectangles);
     }
 
     public List<Arrow> getArrows() {
         return Collections.unmodifiableList(arrows);
     }
 
-    public int getSpiderDiagramsCount() {
-        return spiderDiagrams.size();
+    public int getBoundaryRectangleCount() {
+        return boundaryRectangles.size();
     }
 
     public int getArrowCount() {
         return arrows.size();
     }
 
-    public SpiderDiagram getSpiderDiagram(int index) {
-        return spiderDiagrams.get(index);
+    public BoundaryRectangle getBoundaryRectangle(int index) {
+        return boundaryRectangles.get(index);
     }
 
     public Arrow getArrow(int index) {
@@ -78,8 +84,8 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
     public int hashCode() {
         if (hashInvalid) {
             hash = 0;
-            if (spiderDiagrams != null) {
-                for (SpiderDiagram sd: spiderDiagrams) {
+            if (boundaryRectangles != null) {
+                for (BoundaryRectangle sd: boundaryRectangles) {
                     hash += sd.hashCode();
                 }
             }
@@ -95,7 +101,7 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
 
     @Override
     public boolean isValid() {
-        for (SpiderDiagram sd: spiderDiagrams) {
+        for (BoundaryRectangle sd: boundaryRectangles) {
             if (!sd.isValid()) {
                 return false;
             }
@@ -131,13 +137,13 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
 
     private void printArg(Appendable sb, int i) throws IOException {
         sb.append(CDTextSpiderDiagramAttribute).append(Integer.toString(i)).append(" = ");
-        spiderDiagrams.get(i-1).toString(sb);
+        boundaryRectangles.get(i-1).toString(sb);
     }
 
     private void printArgs(Appendable sb) throws IOException {
-        if (spiderDiagrams.size() > 0) {
+        if (boundaryRectangles.size() > 0) {
             printArg(sb, 1);
-            for (int i = 2; i <= spiderDiagrams.size(); i++) {
+            for (int i = 2; i <= boundaryRectangles.size(); i++) {
                 printArg(sb.append(", "), i);
             }
         }
@@ -145,16 +151,16 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
 
     private boolean __isCDEqual(BasicConceptDiagram bcd) {
         return hashCode() == bcd.hashCode()
-                && spiderDiagrams.equals(bcd.spiderDiagrams);
+                && boundaryRectangles.equals(bcd.boundaryRectangles);
     }
 
-    private void setSpiderDiagrams(ArrayList<SpiderDiagram> sds) {
-        for (SpiderDiagram sd: sds) {
+    private void setBoundaryRectangles(ArrayList<BoundaryRectangle> sds) {
+        for (BoundaryRectangle sd: sds) {
             if (sd == null) {
                 throw new IllegalArgumentException(i18n("ERR_OPERAND_NULL"));
             }
         }
-        spiderDiagrams = sds;
+        boundaryRectangles = sds;
     }
 
     private void setArrows(ArrayList<Arrow> arrows) {

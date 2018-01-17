@@ -4,27 +4,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import icircles.abstractDescription.AbstractBasicRegion;
 import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
+import lang.BoundaryRectangle;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class AbstractConceptDiagramDescription {
     private Set<AbstractArrow> m_arrows;
-    private Set<AbstractDescription> m_spiderDiagrams;
+    private HashMap<BoundaryRectangle, Set<AbstractDescription>> m_spiderDiagrams;
 
     public AbstractConceptDiagramDescription() {
         super();
         m_arrows = new TreeSet<>();
     }
 
-    public AbstractConceptDiagramDescription(Set<AbstractDescription> primarySpiderDiagrams, Set<AbstractArrow> arrows) {
+    public AbstractConceptDiagramDescription(HashMap<BoundaryRectangle, Set<AbstractDescription>> primarySpiderDiagrams, Set<AbstractArrow> arrows) {
         m_spiderDiagrams = primarySpiderDiagrams;
         m_arrows = arrows;
     }
 
-    public Set<AbstractDescription> getSpiderDescriptions() {
+    public HashMap<BoundaryRectangle, Set<AbstractDescription>> getSpiderDescriptions() {
         return m_spiderDiagrams;
     }
 

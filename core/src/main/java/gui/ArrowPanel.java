@@ -62,6 +62,9 @@ public class ArrowPanel extends JComponent {
                 double x2 = arrowTarget.getX();
                 double y2 = arrowTarget.getY();
 
+                System.out.println("x1 " + x1
+                    + " y1 " + y1 + " x2 " + x2 + " y2 " + y2 );
+
                 double gradient = (y2-y1)/(x2-x1);
                 double perpendicular = -1/gradient;
                 double midX = (Math.min(x1, x2) + Math.abs(x2 - x1)/2);

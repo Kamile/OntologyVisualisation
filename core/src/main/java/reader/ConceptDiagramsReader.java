@@ -1,9 +1,6 @@
 package reader;
 
-import lang.Arrow;
-import lang.BasicConceptDiagram;
-import lang.ConceptDiagram;
-import lang.ConceptDiagrams;
+import lang.*;
 import org.antlr.runtime.tree.CommonTree;
 import reader.ConceptDiagramsLexer;
 import reader.ConceptDiagramsParser;
@@ -304,6 +301,8 @@ public class ConceptDiagramsReader {
         }
     }
 
+
+
     private static class HabitatTranslator extends ElementTranslator<Map<String, Region>> {
 
         public static final HabitatTranslator Instance = new HabitatTranslator();
@@ -439,6 +438,22 @@ public class ConceptDiagramsReader {
 
     /** END methods from SpiderDiagramsReader **/
 
+    private static class SpiderListTranslator extends ElementTranslator<BoundaryRectangle> {
+
+        public static final SpiderListTranslator Instance = new SpiderListTranslator();
+        private ListTranslator<SpiderDiagram> translator;
+
+        private SpiderListTranslator() {
+            translator = new ListTranslator<>(ConceptDiagramsParser.SLIST, SDTranslator.Instance);
+        }
+
+        @Override
+        public BoundaryRectangle fromASTNode(CommonTree treeNode) throws ReadingException {
+            ArrayList<SpiderDiagram> spiders = translator.fromASTNode(treeNode);
+            return new BoundaryRectangle(spiders);
+        }
+    }
+
     private static class ArrowTranslator extends ElementTranslator<Arrow> {
 
         public static final ArrowTranslator Instance = new ArrowTranslator();
@@ -531,14 +546,14 @@ public class ConceptDiagramsReader {
 
         private BasicCDTranslator() {
             super(ConceptDiagramsParser.CD_BASIC);
-            addMandatoryAttribute(CDTextSpiderDiagramAttribute, new ListTranslator<>(SDTranslator.Instance));
+            addMandatoryAttribute(CDTextSpiderDiagramAttribute, new ListTranslator<>(SpiderListTranslator.Instance));
             addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
 
         @Override
         @SuppressWarnings("unchecked")
         BasicConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<SpiderDiagram>) attributes.get(CDTextSpiderDiagramAttribute).getKey(),
+            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<BoundaryRectangle>) attributes.get(CDTextSpiderDiagramAttribute).getKey(),
                     (ArrayList<Arrow>) attributes.get(CDTextArrowsAttribute).getKey());
         }
     }

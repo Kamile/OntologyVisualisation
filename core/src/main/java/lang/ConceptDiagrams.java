@@ -16,11 +16,11 @@ public class ConceptDiagrams {
 
     private ConceptDiagrams(){}
 
-    public static BasicConceptDiagram createBasicConceptDiagram(ArrayList<SpiderDiagram> sds) {
-        return new BasicConceptDiagram(sds);
+    public static BasicConceptDiagram createBasicConceptDiagram(ArrayList<BoundaryRectangle> br) {
+        return new BasicConceptDiagram(br);
     }
 
-    public static BasicConceptDiagram createBasicConceptDiagram(ArrayList<SpiderDiagram> sds, ArrayList<Arrow> arrows) {
-        return new BasicConceptDiagram(sds, arrows);
+    public static BasicConceptDiagram createBasicConceptDiagram(ArrayList<BoundaryRectangle> br, ArrayList<Arrow> arrows) {
+        return new BasicConceptDiagram(br, arrows);
     }
 }

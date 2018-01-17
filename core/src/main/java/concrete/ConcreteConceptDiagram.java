@@ -6,9 +6,11 @@ import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.concreteDiagram.ConcreteZone;
 import icircles.concreteDiagram.ConcreteSpider;
 import icircles.util.CannotDrawException;
+import lang.BoundaryRectangle;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 /***
@@ -30,15 +32,19 @@ import java.util.Set;
 public class ConcreteConceptDiagram{
 
     private Set<ConcreteArrow> arrows;
-    private Set<ConcreteDiagram> spiderDiagrams;
+    private HashMap<BoundaryRectangle, Set<ConcreteDiagram>> spiderDiagrams;
 
-    public ConcreteConceptDiagram(Set<ConcreteDiagram> concreteSpiderDiagrams, Set<ConcreteArrow>  concreteArrows) {
+    public ConcreteConceptDiagram(HashMap<BoundaryRectangle, Set<ConcreteDiagram>> concreteSpiderDiagrams, Set<ConcreteArrow>  concreteArrows) {
         spiderDiagrams = concreteSpiderDiagrams;
         arrows = concreteArrows;
     }
 
-    public Set<ConcreteDiagram> getSpiderDiagrams() {
+    public HashMap<BoundaryRectangle, Set<ConcreteDiagram>> getBoundarySpiderDiagramMapping() {
         return spiderDiagrams;
+    }
+
+    public Set<ConcreteDiagram> getSpiderDiagram(BoundaryRectangle br) {
+        return spiderDiagrams.get(br);
     }
 
     public Set<ConcreteArrow> getArrows() {

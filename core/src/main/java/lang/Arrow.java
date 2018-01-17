@@ -42,7 +42,6 @@ public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializ
         if (o == null) {
             throw new NullPointerException();
         }
-
         if (this == o) {
             return 0;
         } else if (this.source != o.source){

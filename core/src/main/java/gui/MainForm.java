@@ -29,7 +29,7 @@ public class MainForm extends JFrame {
     private JMenu openMenu;
     private JMenu saveMenu;
 
-    private DiagramPanel diagramPanel;
+    private BoundaryPanel boundaryPanel;
     private ArrowPanel glassPanel;
     private JMenuBar menuBar;
 
@@ -38,7 +38,7 @@ public class MainForm extends JFrame {
     }
 
     private void initUI() {
-        diagramPanel = new DiagramPanel();
+        boundaryPanel = new BoundaryPanel();
         glassPanel = new ArrowPanel();
 
         menuBar = new JMenuBar();
@@ -59,7 +59,7 @@ public class MainForm extends JFrame {
         setTitle("Ontology Visualiser");
 
         initMenuBar();
-        setContentPane(diagramPanel);
+        setContentPane(boundaryPanel);
         setGlassPane(glassPanel);
         getGlassPane().setVisible(true);
 
@@ -167,7 +167,7 @@ public class MainForm extends JFrame {
                 if (!input.isValid()) {
                     throw new ReadingException("The spider diagram contained in the file is not valid.");
                 }
-                diagramPanel.setDiagram(input);
+                boundaryPanel.setDiagram(input);
                 setArrowPanel();
                 this.setTitle("Ontology Visualisation" + ": " + file.getName());
                 pack();
@@ -191,7 +191,7 @@ public class MainForm extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                glassPanel = diagramPanel.getArrowGlassPanel();
+                glassPanel = boundaryPanel.getArrowGlassPanel();
                 setGlassPane(glassPanel);
                 getGlassPane().setVisible(true);
                 pack();
@@ -202,31 +202,28 @@ public class MainForm extends JFrame {
     }
 
     private void onExample1(ActionEvent evt) {
-        diagramPanel.setDiagram(getExampleA());
+        boundaryPanel.setDiagram(getExampleA());
         setArrowPanel();
         setTitle("OntologyVisualiser" + ": " + "Subclass");
-        pack();
     }
 
     private void onExample2(ActionEvent evt) {
-        diagramPanel.setDiagram(getExampleB());
+        boundaryPanel.setDiagram(getExampleB());
         setArrowPanel();
         setTitle("OntologyVisualiser" + ": " + "Example 2");
-        pack();
     }
 
     private void onExample3(ActionEvent evt) {
-        diagramPanel.setDiagram(getExampleC());
+        boundaryPanel.setDiagram(getExampleC());
         setArrowPanel();
         setTitle("OntologyVisualiser: " + ": " + "Example 3");
-        pack();
     }
 
     private void onTextInputClicked(java.awt.event.ActionEvent evt) {
         CDInputDialog dialog = new CDInputDialog();
         dialog.setVisible(true);
         if (!dialog.isCancelled() && dialog.getConceptDiagram() != null) {
-            diagramPanel.setDiagram(dialog.getConceptDiagram());
+            boundaryPanel.setDiagram(dialog.getConceptDiagram());
             setArrowPanel();
             setTitle("OntologyVisualiser");
             pack();
@@ -237,7 +234,7 @@ public class MainForm extends JFrame {
         try {
             return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
                     "    spider_diagrams = [\n" +
-                    "        PrimarySD {\n" +
+                    "        (PrimarySD {\n" +
                     "            spiders = [\"c\"],\n" +
                     "            habitats = [(\"c\", [([\"C4\"],[])])],\n" +
                     "            sh_zones = [],\n" +
@@ -247,7 +244,7 @@ public class MainForm extends JFrame {
                     "            habitats = [(\"_1\", [([\"C5\", \"_anon\"],[])]), (\"_2\", [([\"C5\", \"_anon\"],[])])],\n" +
                     "            sh_zones = [([\"_anon\"], [\"C5\"])],\n" +
                     "            present_zones = [([\"_anon\", \"C5\"], []), ([\"C5\"], [\"_anon\"]), ([], [\"_anon\", \"C5\"])]}\n" +
-                    "    ],\n" +
+                    "    )],\n" +
                     "\tarrows = [(\"op\", \"c\", \"_anon\")]\n" +
                     "}");
         } catch (Exception ex) {

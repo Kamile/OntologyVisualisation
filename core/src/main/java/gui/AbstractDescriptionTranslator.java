@@ -8,6 +8,7 @@ import icircles.abstractDescription.AbstractDescription;
 import icircles.util.CannotDrawException;
 import lang.Arrow;
 import lang.BasicConceptDiagram;
+import lang.BoundaryRectangle;
 import speedith.core.lang.PrimarySpiderDiagram;
 import speedith.core.lang.Region;
 import speedith.core.lang.SpiderDiagram;
@@ -20,6 +21,8 @@ public class AbstractDescriptionTranslator {
     private static final int DEFAULT_DIAGRAM_SIZE = 500;
     private static Set<AbstractCurve> contours;
     private static Set<String> spiders;
+    private static Set<String> boundaryRectangles;
+    private static HashMap<BoundaryRectangle, Set<AbstractDescription>> boundaryDescriptions;
     private static Map<String, AbstractBasicRegion> spiderMap;
     private static HashMap<String, AbstractCurve> contourMap;
 
@@ -30,18 +33,24 @@ public class AbstractDescriptionTranslator {
         Set<AbstractDescription> abstractSDDescriptions = new HashSet<>();
         Set<AbstractArrow> abstractArrows = new HashSet<>();
         contours = new HashSet<>();
+        boundaryRectangles = new HashSet<>();
+        boundaryDescriptions = new HashMap<>();
         spiders = new HashSet<>();
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
 
-        List<SpiderDiagram> spiderDiagrams = cd.getSpiderDiagrams();
-        for (SpiderDiagram sd : spiderDiagrams) {
-            AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram) sd);
-            abstractSDDescriptions.add(ad);
-            contours.addAll(ad.getCopyOfContours());
-            createContourMap();
-            spiderMap.putAll(getSpiderMaps((PrimarySpiderDiagram) sd));
-            spiders.addAll(((PrimarySpiderDiagram) sd).getSpiders());
+        List<BoundaryRectangle> boundaryRectangles = cd.getBoundaryRectangles();
+        for (BoundaryRectangle br : boundaryRectangles) {
+            for (SpiderDiagram sd : br.getSpiderDiagrams()) {
+                AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram) sd);
+                abstractSDDescriptions.add(ad);
+                contours.addAll(ad.getCopyOfContours());
+                createContourMap();
+                spiderMap.putAll(getSpiderMaps((PrimarySpiderDiagram) sd));
+                spiders.addAll(((PrimarySpiderDiagram) sd).getSpiders());
+            }
+            boundaryDescriptions.put(br, abstractSDDescriptions);
+            abstractSDDescriptions = new HashSet<>();
         }
 
         List<Arrow> arrows = cd.getArrows();
@@ -64,7 +73,7 @@ public class AbstractDescriptionTranslator {
             }
 
         }
-        return new AbstractConceptDiagramDescription(abstractSDDescriptions, abstractArrows);
+        return new AbstractConceptDiagramDescription(boundaryDescriptions, abstractArrows);
     }
 
     private static void createContourMap() {
