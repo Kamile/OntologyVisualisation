@@ -172,7 +172,9 @@ public class ConceptDiagramsDrawer extends JPanel {
                     if (f != null) {
                         g2d.setFont(f);
                     }
-                    g2d.drawString(cc.ac.getLabel(), (int)(cc.getLabelXPosition() * this.trans.getScaleX()) + 5, (int)(cc.getLabelYPosition() * this.trans.getScaleY()) + 5);
+                    if (!cc.ac.getLabel().startsWith("_")) {
+                        g2d.drawString(cc.ac.getLabel(), (int) (cc.getLabelXPosition() * this.trans.getScaleX()) + 5, (int) (cc.getLabelYPosition() * this.trans.getScaleY()) + 5);
+                    }
                 }
             }
 
@@ -219,7 +221,9 @@ public class ConceptDiagramsDrawer extends JPanel {
                 }
 
                 if (s.as.getName() != null) {
-                    g2d.drawString(s.as.getName(), (int)(((ConcreteSpiderFoot)s.feet.get(0)).getX() * this.trans.getScaleX()) - 5, (int)(((ConcreteSpiderFoot)s.feet.get(0)).getY() * this.trans.getScaleY()) - 10);
+                    if (!s.as.getName().startsWith("_")) {
+                        g2d.drawString(s.as.getName(), (int) (((ConcreteSpiderFoot) s.feet.get(0)).getX() * this.trans.getScaleX()) - 5, (int) (((ConcreteSpiderFoot) s.feet.get(0)).getY() * this.trans.getScaleY()) - 10);
+                    }
                     if (highlightedSpider == s) {
                         g2d.setColor(oldColor);
                         g2d.setStroke(oldStroke);

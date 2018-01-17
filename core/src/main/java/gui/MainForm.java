@@ -127,7 +127,7 @@ public class MainForm extends JFrame {
 
         useCdExample1MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_MASK));
         useCdExample1MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE1_MNEMONIC").charAt(0));
-        useCdExample1MenuItem.setText(i18n("MAIN_FORM_USE_EXAMPLE1")); // NOI18N
+        useCdExample1MenuItem.setText("Subclass example"); // NOI18N
         useCdExample1MenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 onExample1(evt);
@@ -204,7 +204,7 @@ public class MainForm extends JFrame {
     private void onExample1(ActionEvent evt) {
         diagramPanel.setDiagram(getExampleA());
         setArrowPanel();
-        setTitle("OntologyVisualiser" + ": " + "Example 1");
+        setTitle("OntologyVisualiser" + ": " + "Subclass");
         pack();
     }
 
@@ -243,8 +243,8 @@ public class MainForm extends JFrame {
                     "            sh_zones = [],\n" +
                     "            present_zones = [([], [\"C4\"]), ([\"C4\"], [])]},\n" +
                     "        PrimarySD {\n" +
-                    "            spiders = [\" \", \"\"],\n" +
-                    "            habitats = [(\" \", [([\"C5\", \"_anon\"],[])]), (\"\", [([\"C5\", \"_anon\"],[])])],\n" +
+                    "            spiders = [\"_1\", \"_2\"],\n" +
+                    "            habitats = [(\"_1\", [([\"C5\", \"_anon\"],[])]), (\"_2\", [([\"C5\", \"_anon\"],[])])],\n" +
                     "            sh_zones = [([\"_anon\"], [\"C5\"])],\n" +
                     "            present_zones = [([\"_anon\", \"C5\"], []), ([\"C5\"], [\"_anon\"]), ([], [\"_anon\", \"C5\"])]}\n" +
                     "    ],\n" +
