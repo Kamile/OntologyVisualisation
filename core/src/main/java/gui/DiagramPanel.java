@@ -55,18 +55,6 @@ public class DiagramPanel extends JPanel {
         arrowPanel = new ArrowPanel();
     }
 
-    public ConceptDiagram getDiagram() {
-        return conceptDiagram;
-    }
-
-    public List<Arrow> getArrows() {
-        return arrows;
-    }
-
-    public HashMap<String, ConcreteArrowEnd> getTargetMappings() {
-        return targetMappings;
-    }
-
     public final void setDiagram(ConceptDiagram diagram) {
         if (conceptDiagram != diagram) {
             conceptDiagram = diagram;
@@ -111,14 +99,6 @@ public class DiagramPanel extends JPanel {
         this.add(noDiagramLbl);
     }
 
-    private void addArrowLabel(Arrow a) {
-        JLabel arrowLabel = new JLabel();
-        arrowLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        arrowLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-        arrowLabel.setText(a.toString());
-        this.add(arrowLabel);
-    }
-
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
@@ -150,12 +130,10 @@ public class DiagramPanel extends JPanel {
     }
 
     public ArrowPanel getArrowGlassPanel() {
-        System.out.println("getting arrow panel");
         return arrowPanel;
     }
 
     private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
-        System.out.println(targetMappings.keySet().size() > 0);
         arrowPanel = new ArrowPanel(arrows, targetMappings);
     }
 }

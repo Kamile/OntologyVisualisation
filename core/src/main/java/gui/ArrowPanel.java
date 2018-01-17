@@ -30,14 +30,14 @@ public class ArrowPanel extends JComponent {
     private void initComponents() {
         setMinimumSize(MINIMUM_SIZE);
         setPreferredSize(PREFERRED_SIZE);
-        setBorder(BorderFactory.createLineBorder(new Color(166,255, 88, 132)));
     }
 
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g.translate(0, 22);
-        g.setColor(new Color(11, 61, 0, 255));
+        g.setColor(new Color(10, 86, 0, 255));
+        g.setFont(new Font("Courier", Font.PLAIN, 16));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (arrows != null && targetMappings.keySet().size() > 0) {
             super.paintComponent(g);
@@ -62,7 +62,8 @@ public class ArrowPanel extends JComponent {
                 y = y2 - headLength * Math.sin(theta - phi);
                 g2d.drawLine((int) x2, (int) y2, (int) x, (int) y);
 
-                g2d.drawString(label, (int)((arrowTarget.getX() - arrowSource.getX())/2), (int)((arrowTarget.getY() - arrowSource.getY())/2));
+                // add label
+                g2d.drawString(label, (int)(Math.min(x1, x2) + Math.abs(x2 - x1)/2), (int)(Math.min(y1, y2) + Math.abs(y2 - y1)/2) - 8);
             }
         }
     }

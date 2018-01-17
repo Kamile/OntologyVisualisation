@@ -156,9 +156,6 @@ public class MainForm extends JFrame {
         drawMenu.add(useCdExample3MenuItem);
         menuBar.add(drawMenu);
         setJMenuBar(menuBar);
-        System.out.println("Menu bar height " + menuBar.getPreferredSize().height);
-        System.out.println("Draw menu height " + drawMenu.getY());
-
     }
 
     private void onOpen() {
@@ -197,7 +194,7 @@ public class MainForm extends JFrame {
                 glassPanel = diagramPanel.getArrowGlassPanel();
                 setGlassPane(glassPanel);
                 getGlassPane().setVisible(true);
-                System.out.println("Changing glass pane");
+                pack();
             }
         });
         validate();

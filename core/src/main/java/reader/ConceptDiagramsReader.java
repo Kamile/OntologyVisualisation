@@ -80,12 +80,10 @@ public class ConceptDiagramsReader {
         if (cd == null) {
             throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "conceptDiagram"));
         }
-        System.out.println("We got a non-null conceptDiagram_return");
         return CDTranslator.Instance.fromASTNode(cd.tree);
     }
 
     /** BEGIN methods from SpiderDiagramsReader **/
-
     private abstract static class ElementTranslator<T> {
 
         public abstract T fromASTNode(CommonTree treeNode) throws ReadingException;
