@@ -16,7 +16,7 @@ import static speedith.i18n.Translations.i18n;
  */
 public class BasicConceptDiagram extends ConceptDiagram implements Serializable {
 
-    public static final String CDTextBasicId = "BasicCD";
+    public static final String CDTextBasicId = "ConceptDiagram";
 
     public static final String CDTextSpiderDiagramAttribute = "spider_diagrams";
     public static final String CDTextArrowsAttribute = "arrows";

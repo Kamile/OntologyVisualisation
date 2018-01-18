@@ -11,7 +11,7 @@ tokens {
     PAIR            =           '=';
     LIST            =           '[';
     SLIST           =           '(';
-    CD_BASIC        =     'BasicCD';
+    CD              =     'ConceptDiagram';
     SD_PRIMARY      =   'PrimarySD';    // The 'primary spider diagram'.
     SD_NULL         =      'NullSD';    // The 'null spider diagram'.
 }
@@ -65,7 +65,7 @@ start
     ;
 
 conceptDiagram
-    :    'BasicCD'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    :    'ConceptDiagram'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
 spiderDiagram

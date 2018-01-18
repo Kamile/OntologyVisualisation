@@ -250,7 +250,7 @@ public class MainForm extends JFrame {
 
     public static ConceptDiagram getExampleA() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
+            return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    spider_diagrams = [\n" +
                     "        (PrimarySD {\n" +
                     "            spiders = [\"c\"],\n" +
@@ -272,7 +272,7 @@ public class MainForm extends JFrame {
 
     public static ConceptDiagram getExampleB() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
+            return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    spider_diagrams = [\n" +
                     "        (PrimarySD {\n" +
                     "            spiders = [],\n" +
@@ -294,7 +294,7 @@ public class MainForm extends JFrame {
 
     public static ConceptDiagram getExampleC() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
+            return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    spider_diagrams = [\n" +
                     "        (PrimarySD {\n" +
                     "            spiders = [\"a\"],\n" +
@@ -311,7 +311,7 @@ public class MainForm extends JFrame {
 
     public static ConceptDiagram getExampleD() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
+            return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    spider_diagrams = [\n" +
                     "        (PrimarySD {\n" +
                     "            spiders = [],\n" +

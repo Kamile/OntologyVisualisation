@@ -87,7 +87,6 @@ public class BoundaryPanel extends JPanel {
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
-                System.out.println("drawing");
                 arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
                 this.setLayout(new GridLayout(1, 0));
 
@@ -129,6 +128,5 @@ public class BoundaryPanel extends JPanel {
 
     private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
         arrowPanel = new ArrowPanel(arrows, targetMappings);
-        System.out.println("Adding arrows");
     }
 }

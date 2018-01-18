@@ -532,7 +532,7 @@ public class ConceptDiagramsReader {
         @Override
         public ConceptDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
-                case ConceptDiagramsParser.CD_BASIC:
+                case ConceptDiagramsParser.CD:
                     return BasicCDTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
@@ -545,7 +545,7 @@ public class ConceptDiagramsReader {
         public static final BasicCDTranslator Instance = new BasicCDTranslator();
 
         private BasicCDTranslator() {
-            super(ConceptDiagramsParser.CD_BASIC);
+            super(ConceptDiagramsParser.CD);
             addMandatoryAttribute(CDTextSpiderDiagramAttribute, new ListTranslator<>(SpiderListTranslator.Instance));
             addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
