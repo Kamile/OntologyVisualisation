@@ -5,8 +5,6 @@ import lang.Arrow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
 import java.awt.geom.QuadCurve2D;
 import java.util.HashMap;
 import java.util.List;

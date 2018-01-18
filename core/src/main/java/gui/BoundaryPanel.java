@@ -9,8 +9,6 @@ import lang.Arrow;
 import lang.BasicConceptDiagram;
 import lang.BoundaryRectangle;
 import lang.ConceptDiagram;
-import reader.ConceptDiagramsReader;
-import speedith.core.lang.reader.ReadingException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,6 +87,7 @@ public class BoundaryPanel extends JPanel {
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
             if (conceptDiagram instanceof BasicConceptDiagram) {
+                System.out.println("drawing");
                 arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
                 this.setLayout(new GridLayout(1, 0));
 
@@ -97,10 +96,9 @@ public class BoundaryPanel extends JPanel {
                 targetMappings = new HashMap<>();
 
                 HashMap<BoundaryRectangle, Set<ConcreteDiagram>> mapping = ccd.getBoundarySpiderDiagramMapping();
-
                 for (BoundaryRectangle br : mapping.keySet()) {
-                    System.out.println(mapping.get(br) == null);
                     final DiagramPanel dp = new DiagramPanel(mapping.get(br));
+
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
@@ -111,7 +109,6 @@ public class BoundaryPanel extends JPanel {
                     dp.setVisible(true);
                     dp.setBorder(BorderFactory.createLineBorder(new Color(2,0, 113)));
                     add(dp);
-                    System.out.println("Added br");
                 }
 
                 SwingUtilities.invokeLater(new Runnable() {

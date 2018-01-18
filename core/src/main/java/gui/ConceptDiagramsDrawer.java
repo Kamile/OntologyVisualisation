@@ -38,10 +38,11 @@ public class ConceptDiagramsDrawer extends JPanel {
     private CircleContour highlightedContour;
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
+    private int boundaryOffset;
 
     private HashMap<String, ConcreteArrowEnd> targetMappings;
 
-    public ConceptDiagramsDrawer(ConcreteDiagram diagram) {
+    public ConceptDiagramsDrawer(ConcreteDiagram diagram, int boundaryOffset) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
         this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
@@ -51,12 +52,13 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.highlightedContour = null;
         this.highlightedZone = null;
         this.highlightedFoot = null;
+        this.boundaryOffset = boundaryOffset;
         this.initComponents();
         this.resetDiagram(diagram);
         this.resizeContents();
     }
 
-    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings ) {
+    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings, int boundaryOffset) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
         this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
@@ -66,6 +68,7 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.highlightedContour = null;
         this.highlightedZone = null;
         this.highlightedFoot = null;
+        this.boundaryOffset = boundaryOffset;
         this.initComponents();
         this.resetDiagram(diagram);
         this.resizeContents();
@@ -74,7 +77,7 @@ public class ConceptDiagramsDrawer extends JPanel {
     }
 
     public ConceptDiagramsDrawer() {
-        this((ConcreteDiagram)null);
+        this((ConcreteDiagram)null, 0);
     }
 
     public ConcreteDiagram getDiagram() {
@@ -214,6 +217,7 @@ public class ConceptDiagramsDrawer extends JPanel {
                     }
 
                     g2d.fill(tmpCircle);
+                    System.out.println("x " + getX() + " y " + getY());
                     targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getCenteringTranslationY()));
                     if (this.getHighlightedFoot() == foot) {
                         g2d.setColor(oldColor2);

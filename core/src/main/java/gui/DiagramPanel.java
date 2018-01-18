@@ -43,7 +43,6 @@ public class DiagramPanel extends JPanel {
 
     public final void setDiagrams(Set<ConcreteDiagram> diagrams) {
         if (spiderDiagrams != diagrams) {
-            System.out.println("spider diagrams not null");
             spiderDiagrams = diagrams;
             this.removeAll();
             if (spiderDiagrams != null) {
@@ -63,7 +62,7 @@ public class DiagramPanel extends JPanel {
             this.setLayout(new GridLayout(1, 0));
 
             for (ConcreteDiagram cd : spiderDiagrams) {
-                ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, targetMappings);
+                ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, targetMappings, this.getX());
                 targetMappings.putAll(panel.getTargetMappings());
                 panel.setBorder(BorderFactory.createEmptyBorder());
                 panel.setVisible(true);

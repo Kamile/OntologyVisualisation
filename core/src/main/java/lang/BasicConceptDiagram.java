@@ -50,7 +50,11 @@ public class BasicConceptDiagram extends ConceptDiagram implements Serializable 
     }
 
     public List<Arrow> getArrows() {
-        return Collections.unmodifiableList(arrows);
+        if (arrows != null) {
+            return Collections.unmodifiableList(arrows);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public int getBoundaryRectangleCount() {

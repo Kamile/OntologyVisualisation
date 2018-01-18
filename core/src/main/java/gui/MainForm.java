@@ -24,6 +24,7 @@ public class MainForm extends JFrame {
     private JMenuItem useCdExample1MenuItem;
     private JMenuItem useCdExample2MenuItem;
     private JMenuItem useCdExample3MenuItem;
+    private JMenuItem useCdExample4MenuItem;
 
     private JFileChooser descriptionFileChooser;
     private JMenu openMenu;
@@ -54,6 +55,7 @@ public class MainForm extends JFrame {
         useCdExample1MenuItem = new JMenuItem();
         useCdExample2MenuItem = new JMenuItem();
         useCdExample3MenuItem = new JMenuItem();
+        useCdExample4MenuItem = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ontology Visualiser");
@@ -137,7 +139,7 @@ public class MainForm extends JFrame {
 
         useCdExample2MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_MASK));
         useCdExample2MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE2_MNEMONIC").charAt(0));
-        useCdExample2MenuItem.setText(i18n("MAIN_FORM_USE_EXAMPLE2")); // NOI18N
+        useCdExample2MenuItem.setText("ObjectSomeValuesFrom(op CE) Example");
         useCdExample2MenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 onExample2(evt);
@@ -147,13 +149,23 @@ public class MainForm extends JFrame {
 
         useCdExample3MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_MASK));
         useCdExample3MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE3_MNEMONIC").charAt(0));
-        useCdExample3MenuItem.setText(i18n("MAIN_FORM_USE_EXAMPLE3")); // NOI18N
+        useCdExample3MenuItem.setText("Assertion Axiom Example"); // NOI18N
         useCdExample3MenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 onExample3(evt);
             }
         });
         drawMenu.add(useCdExample3MenuItem);
+
+        useCdExample4MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, InputEvent.CTRL_MASK));
+        useCdExample4MenuItem.setMnemonic('4');
+        useCdExample4MenuItem.setText("Datatype Definition Example"); // NOI18N
+        useCdExample4MenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                onExample4(evt);
+            }
+        });
+        drawMenu.add(useCdExample4MenuItem);
         menuBar.add(drawMenu);
         setJMenuBar(menuBar);
     }
@@ -210,13 +222,19 @@ public class MainForm extends JFrame {
     private void onExample2(ActionEvent evt) {
         boundaryPanel.setDiagram(getExampleB());
         setArrowPanel();
-        setTitle("OntologyVisualiser" + ": " + "Example 2");
+        setTitle("OntologyVisualiser" + ": ObjectSomeValuesFrom(op CE)");
     }
 
     private void onExample3(ActionEvent evt) {
         boundaryPanel.setDiagram(getExampleC());
         setArrowPanel();
-        setTitle("OntologyVisualiser: " + ": " + "Example 3");
+        setTitle("OntologyVisualiser: " + ": OWL Assertion Axiom ");
+    }
+
+    private void onExample4(ActionEvent evt) {
+        boundaryPanel.setDiagram(getExampleD());
+        setArrowPanel();
+        setTitle("OntologyVisualiser: " + ": DatatypeDefinition(DT DataUnionOf(DR1, DR2))");
     }
 
     private void onTextInputClicked(java.awt.event.ActionEvent evt) {
@@ -254,7 +272,21 @@ public class MainForm extends JFrame {
 
     public static ConceptDiagram getExampleB() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("BasicCD {spider_diagrams = [PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s\", [([\"A\", \"B\"], [])]), (\"s'\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}, PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s'\", [([\"A\", \"B\"], [])]), (\"s\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}]}");
+            return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
+                    "    spider_diagrams = [\n" +
+                    "        (PrimarySD {\n" +
+                    "            spiders = [],\n" +
+                    "            habitats = [],\n" +
+                    "            sh_zones = [],\n" +
+                    "            present_zones = [([], [\"CE\"]), ([\"CE\"], [])]}),\n" +
+                    "        (PrimarySD {\n" +
+                    "            spiders = [],\n" +
+                    "            habitats = [],\n" +
+                    "            sh_zones = [([\"_anon\"], [])],\n" +
+                    "            present_zones = [([], [\"_anon\"])]})\n" +
+                    "    ],\n" +
+                    "\tarrows = [(\"op-\", \"CE\", \"_anon\")]\n" +
+                    "}\n");
         } catch (Exception ex) {
             throw new RuntimeException();
         }
@@ -262,7 +294,42 @@ public class MainForm extends JFrame {
 
     public static ConceptDiagram getExampleC() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("BinarySD {arg1 = PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s\", [([\"A\", \"B\"], [])]), (\"s'\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}, arg2 = PrimarySD { spiders = [\"s\", \"s'\"], sh_zones = [], habitats = [(\"s'\", [([\"A\", \"B\"], [])]), (\"s\", [([\"A\"], [\"B\"]), ([\"B\"], [\"A\"])])], present_zones=[([],[\"A\",\"B\"])]}, operator = \"op -->\" }");
+            return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
+                    "    spider_diagrams = [\n" +
+                    "        (PrimarySD {\n" +
+                    "            spiders = [\"a\"],\n" +
+                    "            sh_zones = [],\n" +
+                    "            habitats = [(\"a\", [([\"C1\"], [\"C2\"])])],\n" +
+                    "            present_zones=[([\"C2\"],[\"C1\"]), ([\"C1\"],[\"C2\"]), ([],[\"C1\", \"C2\"]), ([\"C1\", \"C2\"],[])]})\n" +
+                    "    ],\n" +
+                    "\tarrows = []\n" +
+                    "}");
+        } catch (Exception ex) {
+            throw new RuntimeException();
+        }
+    }
+
+    public static ConceptDiagram getExampleD() {
+        try {
+            return ConceptDiagramsReader.readConceptDiagram("BasicCD {\n" +
+                    "    spider_diagrams = [\n" +
+                    "        (PrimarySD {\n" +
+                    "            spiders = [],\n" +
+                    "            sh_zones = [\n" +
+                    "                ([\"DT\"], [\"DR1\", \"DR2\"]),\n" +
+                    "                ([\"DR1\", \"DR2\"], [\"DT\"]),\n" +
+                    "                ([\"DR2\"], [\"DT\", \"DR1\"]),\n" +
+                    "                ([\"DR1\"],[\"DT\", \"DR2\"])],\n" +
+                    "            habitats = [],\n" +
+                    "            present_zones=[\n" +
+                    "                ([\"DR2\", \"DT\"],[\"DR1\"]),\n" +
+                    "                ([\"DR1\", \"DT\"],[\"DR2\"]),\n" +
+                    "                ([],[\"DT\", \"DR1\", \"DR2\"]),\n" +
+                    "                ([\"DT\", \"DR1\", \"DR2\"],[])]\n" +
+                    "        })\n" +
+                    "    ],\n" +
+                    "\tarrows = []\n" +
+                    "}\n");
         } catch (Exception ex) {
             throw new RuntimeException();
         }
