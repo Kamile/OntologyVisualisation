@@ -11,6 +11,8 @@ public class ConcreteArrow {
     private AbstractArrow arrow;
     private ConcreteArrowSource source;
     private ConcreteArrowTarget target;
+    private String cardinality;
+    private boolean dashed;
 
     public ConcreteArrow(AbstractArrow arrow) {
         this.arrow = arrow;
