@@ -9,29 +9,11 @@ public class ConcreteArrow {
     static Logger logger = Logger.getLogger(ConcreteArrow.class.getName());
 
     private AbstractArrow arrow;
-    private ConcreteArrowSource source;
-    private ConcreteArrowTarget target;
     private String cardinality;
     private boolean dashed;
 
     public ConcreteArrow(AbstractArrow arrow) {
         this.arrow = arrow;
-    }
-
-    public ConcreteArrowSource getSource() {
-        return source;
-    }
-
-    public void setSource(ConcreteArrowSource source) {
-        this.source = source;
-    }
-
-    public ConcreteArrowTarget getTarget() {
-        return target;
-    }
-
-    public void setTarget(ConcreteArrowTarget target) {
-        this.target = target;
     }
 
     public AbstractArrow getAbstractArrow() {
@@ -40,8 +22,6 @@ public class ConcreteArrow {
 
     public double checksum() {
         double result = 0.0;
-        result += source.checksum();
-        result += target.checksum();
         return result;
     }
 }

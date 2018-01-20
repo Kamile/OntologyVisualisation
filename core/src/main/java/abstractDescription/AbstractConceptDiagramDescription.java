@@ -8,7 +8,7 @@ import lang.BoundaryRectangle;
 
 import java.util.*;
 
-public class AbstractConceptDiagramDescription {
+public class AbstractConceptDiagramDescription extends AbstractDescription{
     private Set<AbstractArrow> m_arrows;
     private HashMap<BoundaryRectangle, Set<AbstractDescription>> m_spiderDiagrams;
 
