@@ -1,28 +1,26 @@
 package abstractDescription;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import icircles.abstractDescription.AbstractBasicRegion;
-import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
-import lang.BoundaryRectangle;
+import lang.ClassObjectPropertyDiagram;
 
 import java.util.*;
 
 public class AbstractConceptDiagramDescription extends AbstractDescription{
     private Set<AbstractArrow> m_arrows;
-    private HashMap<BoundaryRectangle, Set<AbstractDescription>> m_spiderDiagrams;
+    private HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> m_spiderDiagrams;
 
     public AbstractConceptDiagramDescription() {
         super();
         m_arrows = new TreeSet<>();
     }
 
-    public AbstractConceptDiagramDescription(HashMap<BoundaryRectangle, Set<AbstractDescription>> primarySpiderDiagrams, Set<AbstractArrow> arrows) {
+    public AbstractConceptDiagramDescription(HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> primarySpiderDiagrams, Set<AbstractArrow> arrows) {
         m_spiderDiagrams = primarySpiderDiagrams;
         m_arrows = arrows;
     }
 
-    public HashMap<BoundaryRectangle, Set<AbstractDescription>> getSpiderDescriptions() {
+    public HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> getSpiderDescriptions() {
         return m_spiderDiagrams;
     }
 

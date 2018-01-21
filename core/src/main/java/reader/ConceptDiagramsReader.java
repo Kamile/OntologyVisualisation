@@ -2,8 +2,6 @@ package reader;
 
 import lang.*;
 import org.antlr.runtime.tree.CommonTree;
-import reader.ConceptDiagramsLexer;
-import reader.ConceptDiagramsParser;
 import reader.ConceptDiagramsParser.conceptDiagram_return;
 import org.antlr.runtime.*;
 import speedith.core.lang.*;
@@ -17,9 +15,12 @@ import java.io.Reader;
 import java.util.*;
 
 import static i18n.Translations.i18n;
-import static lang.BasicConceptDiagram.CDTextArrowsAttribute;
-import static lang.BasicConceptDiagram.CDTextSpiderDiagramAttribute;
+import static lang.ConceptDiagram.CDTextArrowsAttribute;
+import static lang.ConceptDiagram.CDTextSpiderDiagramAttribute;
 import static speedith.core.lang.PrimarySpiderDiagram.*;
+import reader.ConceptDiagramsParser;
+import reader.ConceptDiagramsLexer;
+
 
 /**
  * Read text representation of Concept Diagram and create a
@@ -61,8 +62,8 @@ public class ConceptDiagramsReader {
     }
 
     public static ConceptDiagram readConceptDiagram(CharStream stream) throws ReadingException {
-        ConceptDiagramsLexer lexer = new ConceptDiagramsLexer(stream);
-        ConceptDiagramsParser parser = new ConceptDiagramsParser(new CommonTokenStream(lexer));
+        reader.ConceptDiagramsLexer lexer = new reader.ConceptDiagramsLexer(stream);
+        reader.ConceptDiagramsParser parser = new reader.ConceptDiagramsParser(new CommonTokenStream(lexer));
 
         try {
             return toConceptDiagram(parser.conceptDiagram());
@@ -92,7 +93,7 @@ public class ConceptDiagramsReader {
 
         @Override
         public String fromASTNode(CommonTree treeNode) throws ReadingException {
-            if (treeNode.token != null && treeNode.token.getType() == ConceptDiagramsParser.ID) {
+            if (treeNode.token != null && treeNode.token.getType() == reader.ConceptDiagramsParser.ID) {
                 return treeNode.token.getText();
             }
             throw new ReadingException(i18n("ERR_TRANSLATE_INVALID_ID"), treeNode);
@@ -104,7 +105,7 @@ public class ConceptDiagramsReader {
         private int headTokenType;
 
         public CollectionTranslator(int headTokenType) {
-            if (headTokenType == ConceptDiagramsParser.SLIST || headTokenType == ConceptDiagramsParser.LIST) {
+            if (headTokenType == reader.ConceptDiagramsParser.SLIST || headTokenType == ConceptDiagramsParser.LIST) {
                 this.headTokenType = headTokenType;
             } else {
                 throw new IllegalArgumentException(i18n("GERR_ILLEGAL_ARGUMENT", "headTokenType"));
@@ -409,12 +410,14 @@ public class ConceptDiagramsReader {
             addMandatoryAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
             addMandatoryAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
+            addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
 
         @Override
         @SuppressWarnings("unchecked")
         PrimarySpiderDiagram createSD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
+            // TODO: re-implement SpiderDiagrams for COPs.
             return SpiderDiagrams.createPrimarySDNoCopy((Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
@@ -438,7 +441,7 @@ public class ConceptDiagramsReader {
 
     /** END methods from SpiderDiagramsReader **/
 
-    private static class SpiderListTranslator extends ElementTranslator<BoundaryRectangle> {
+    private static class SpiderListTranslator extends ElementTranslator<ClassObjectPropertyDiagram> {
 
         public static final SpiderListTranslator Instance = new SpiderListTranslator();
         private ListTranslator<SpiderDiagram> translator;
@@ -448,9 +451,9 @@ public class ConceptDiagramsReader {
         }
 
         @Override
-        public BoundaryRectangle fromASTNode(CommonTree treeNode) throws ReadingException {
+        public ClassObjectPropertyDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             ArrayList<SpiderDiagram> spiders = translator.fromASTNode(treeNode);
-            return new BoundaryRectangle(spiders);
+            return new ClassObjectPropertyDiagram(spiders);
         }
     }
 
@@ -476,7 +479,7 @@ public class ConceptDiagramsReader {
         }
     }
 
-    private static abstract class GeneralCDTranslator<V extends ConceptDiagram> extends ElementTranslator<V>  {
+    private static abstract class GeneralCDTranslator<V> extends ElementTranslator<V>  {
         private GeneralMapTranslator<Object> keyValueMapTranslator;
         private TreeSet<String> mandatoryAttributes;
 
@@ -532,7 +535,7 @@ public class ConceptDiagramsReader {
         @Override
         public ConceptDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
-                case ConceptDiagramsParser.CD:
+                case reader.ConceptDiagramsParser.CD:
                     return BasicCDTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
@@ -540,20 +543,20 @@ public class ConceptDiagramsReader {
         }
     }
 
-    private static class BasicCDTranslator extends GeneralCDTranslator<BasicConceptDiagram> {
+    private static class BasicCDTranslator extends GeneralCDTranslator<ConceptDiagram> {
 
         public static final BasicCDTranslator Instance = new BasicCDTranslator();
 
         private BasicCDTranslator() {
-            super(ConceptDiagramsParser.CD);
+            super(reader.ConceptDiagramsParser.CD);
             addMandatoryAttribute(CDTextSpiderDiagramAttribute, new ListTranslator<>(SpiderListTranslator.Instance));
             addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
 
         @Override
         @SuppressWarnings("unchecked")
-        BasicConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<BoundaryRectangle>) attributes.get(CDTextSpiderDiagramAttribute).getKey(),
+        ConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
+            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<ClassObjectPropertyDiagram>) attributes.get(CDTextSpiderDiagramAttribute).getKey(),
                     (ArrayList<Arrow>) attributes.get(CDTextArrowsAttribute).getKey());
         }
     }

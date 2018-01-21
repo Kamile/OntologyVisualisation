@@ -2,22 +2,13 @@ package concrete;
 
 import abstractDescription.AbstractArrow;
 import abstractDescription.AbstractConceptDiagramDescription;
-import icircles.abstractDescription.AbstractBasicRegion;
-import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.concreteDiagram.DiagramCreator;
-import icircles.decomposition.DecompositionStep;
-import icircles.decomposition.DecompositionStrategy;
-import icircles.recomposition.RecompData;
-import icircles.recomposition.RecompositionStep;
-import icircles.recomposition.RecompositionStrategy;
 import icircles.util.CannotDrawException;
-import lang.BoundaryRectangle;
+import lang.ClassObjectPropertyDiagram;
 import org.apache.log4j.Logger;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.util.*;
 
 /***
@@ -29,7 +20,7 @@ import java.util.*;
  * First use DiagramCreator to draw each spider diagram separately, space them out and draw arrows
  */
 public class ConceptDiagramCreator {
-    HashMap<BoundaryRectangle, Set<AbstractDescription>> spiderDiagramDescriptions;
+    HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> spiderDiagramDescriptions;
     Set<AbstractArrow> arrowDescriptions;
     static Logger logger = Logger.getLogger(DiagramCreator.class.getName());
 
@@ -39,11 +30,11 @@ public class ConceptDiagramCreator {
     }
 
     public ConcreteConceptDiagram createDiagram(int size) throws CannotDrawException {
-        HashMap<BoundaryRectangle, Set<ConcreteDiagram>> spiderDiagramGroups = new HashMap<>();
+        HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> spiderDiagramGroups = new HashMap<>();
         Set<ConcreteDiagram> concreteSpiderDiagrams = new HashSet<>();
         Set<ConcreteArrow> concreteArrows = new HashSet<>();
 
-        for (BoundaryRectangle br: spiderDiagramDescriptions.keySet()) {
+        for (ClassObjectPropertyDiagram br: spiderDiagramDescriptions.keySet()) {
             for (AbstractDescription ad: spiderDiagramDescriptions.get(br)) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 ConcreteDiagram cd = dc.createDiagram(size);

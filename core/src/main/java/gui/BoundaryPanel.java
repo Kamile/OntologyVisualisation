@@ -6,9 +6,8 @@ import concrete.ConcreteConceptDiagram;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
 import lang.Arrow;
-import lang.BasicConceptDiagram;
-import lang.BoundaryRectangle;
 import lang.ConceptDiagram;
+import lang.ClassObjectPropertyDiagram;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,16 +85,16 @@ public class BoundaryPanel extends JPanel {
 
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
-            if (conceptDiagram instanceof BasicConceptDiagram) {
-                arrows = ((BasicConceptDiagram) conceptDiagram).getArrows();
+            if (conceptDiagram instanceof ConceptDiagram) {
+                arrows = ((ConceptDiagram) conceptDiagram).getArrows();
                 this.setLayout(new GridLayout(1, 0));
 
-                AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((BasicConceptDiagram) conceptDiagram);
+                AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((ConceptDiagram) conceptDiagram);
                 final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
                 targetMappings = new HashMap<>();
 
-                HashMap<BoundaryRectangle, Set<ConcreteDiagram>> mapping = ccd.getBoundarySpiderDiagramMapping();
-                for (BoundaryRectangle br : mapping.keySet()) {
+                HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> mapping = ccd.getBoundarySpiderDiagramMapping();
+                for (ClassObjectPropertyDiagram br : mapping.keySet()) {
                     final DiagramPanel dp = new DiagramPanel(mapping.get(br));
 
                     SwingUtilities.invokeLater(new Runnable() {

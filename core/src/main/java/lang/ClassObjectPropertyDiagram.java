@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 import static speedith.i18n.Translations.i18n;
 
-public class BoundaryRectangle implements Comparable<BoundaryRectangle>, ConceptDiagramElement, Serializable {
+public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropertyDiagram>, ConceptDiagramElement, Serializable {
     private ArrayList<SpiderDiagram> spiderDiagrams;
     private boolean hashInvalid;
     private int hash;
 
-    public BoundaryRectangle(ArrayList<SpiderDiagram> spiderDiagrams) {
+    public ClassObjectPropertyDiagram(ArrayList<SpiderDiagram> spiderDiagrams) {
         this.spiderDiagrams = spiderDiagrams;
     }
 
@@ -22,7 +22,7 @@ public class BoundaryRectangle implements Comparable<BoundaryRectangle>, Concept
     }
 
     @Override
-    public int compareTo(BoundaryRectangle o) {
+    public int compareTo(ClassObjectPropertyDiagram o) {
         return 0;
     }
 

@@ -7,8 +7,8 @@ import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
 import icircles.util.CannotDrawException;
 import lang.Arrow;
-import lang.BasicConceptDiagram;
-import lang.BoundaryRectangle;
+import lang.ConceptDiagram;
+import lang.ClassObjectPropertyDiagram;
 import speedith.core.lang.PrimarySpiderDiagram;
 import speedith.core.lang.Region;
 import speedith.core.lang.SpiderDiagram;
@@ -22,14 +22,14 @@ public class AbstractDescriptionTranslator {
     private static Set<AbstractCurve> contours;
     private static Set<String> spiders;
     private static Set<String> boundaryRectangles;
-    private static HashMap<BoundaryRectangle, Set<AbstractDescription>> boundaryDescriptions;
+    private static HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> boundaryDescriptions;
     private static Map<String, AbstractBasicRegion> spiderMap;
     private static HashMap<String, AbstractCurve> contourMap;
 
     private AbstractDescriptionTranslator() {
     }
 
-    public static AbstractConceptDiagramDescription getAbstractDescription(BasicConceptDiagram cd) throws CannotDrawException {
+    public static AbstractConceptDiagramDescription getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {
         Set<AbstractDescription> abstractSDDescriptions = new HashSet<>();
         Set<AbstractArrow> abstractArrows = new HashSet<>();
         contours = new HashSet<>();
@@ -39,8 +39,8 @@ public class AbstractDescriptionTranslator {
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
 
-        List<BoundaryRectangle> boundaryRectangles = cd.getBoundaryRectangles();
-        for (BoundaryRectangle br : boundaryRectangles) {
+        List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = cd.getClassObjectPropertyDiagrams();
+        for (ClassObjectPropertyDiagram br : classObjectPropertyDiagrams) {
             for (SpiderDiagram sd : br.getSpiderDiagrams()) {
                 AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram) sd);
                 abstractSDDescriptions.add(ad);

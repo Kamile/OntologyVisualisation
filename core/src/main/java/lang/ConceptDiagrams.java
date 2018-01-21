@@ -1,7 +1,5 @@
 package lang;
 
-import speedith.core.lang.SpiderDiagram;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.WeakHashMap;
@@ -16,11 +14,11 @@ public class ConceptDiagrams {
 
     private ConceptDiagrams(){}
 
-    public static BasicConceptDiagram createBasicConceptDiagram(ArrayList<BoundaryRectangle> br) {
-        return new BasicConceptDiagram(br);
+    public static ConceptDiagram createBasicConceptDiagram(ArrayList<ClassObjectPropertyDiagram> br) {
+        return new ConceptDiagram(br);
     }
 
-    public static BasicConceptDiagram createBasicConceptDiagram(ArrayList<BoundaryRectangle> br, ArrayList<Arrow> arrows) {
-        return new BasicConceptDiagram(br, arrows);
+    public static ConceptDiagram createBasicConceptDiagram(ArrayList<ClassObjectPropertyDiagram> br, ArrayList<Arrow> arrows) {
+        return new ConceptDiagram(br, arrows);
     }
 }
