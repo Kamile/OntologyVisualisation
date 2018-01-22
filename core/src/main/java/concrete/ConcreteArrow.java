@@ -9,8 +9,6 @@ public class ConcreteArrow {
     static Logger logger = Logger.getLogger(ConcreteArrow.class.getName());
 
     private AbstractArrow arrow;
-    private String cardinality;
-    private boolean dashed;
 
     public ConcreteArrow(AbstractArrow arrow) {
         this.arrow = arrow;

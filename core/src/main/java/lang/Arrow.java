@@ -11,6 +11,9 @@ public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializ
     private String label;
     private String source;
     private String target;
+    private String cardinalityOperator;
+    private int cardinalityArgument;
+    private boolean isDashed;
     private boolean hashInvalid = true;
     private int hash;
 
@@ -25,6 +28,15 @@ public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializ
         this.target = target;
     }
 
+    public Arrow(String label, String source, String target, String cardinalityOperator, int cardinalityArgument, boolean isDashed) {
+        this.label = label;
+        this.source = source;
+        this.target = target;
+        this.cardinalityArgument = cardinalityArgument;
+        this.cardinalityOperator = cardinalityOperator;
+        this.isDashed = isDashed;
+    }
+
     public String getLabel() {
         return label;
     }
@@ -35,6 +47,18 @@ public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializ
 
     public String getTarget() {
         return target;
+    }
+
+    public boolean isDashed() {
+        return isDashed;
+    }
+
+    public String getCardinalityOperator() {
+        return cardinalityOperator;
+    }
+
+    public int getCardinalityArgument() {
+        return cardinalityArgument;
     }
 
     @Override
