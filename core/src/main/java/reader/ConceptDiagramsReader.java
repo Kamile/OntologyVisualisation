@@ -473,7 +473,14 @@ public class ConceptDiagramsReader {
                 return new Arrow(arrows.get(0), arrows.get(1));
             } else if (arrows != null && arrows.size() == 3) {
                 return new Arrow(arrows.get(0), arrows.get(1), arrows.get(2));
-            } else {
+            } else if (arrows!= null && arrows.size() == 6) {
+                return new Arrow(arrows.get(0),
+                        arrows.get(1),
+                        arrows.get(2),
+                        arrows.get(3),
+                        Integer.parseInt(arrows.get(4)),
+                        Boolean.parseBoolean(arrows.get(5)));
+            }  else {
                 throw new ReadingException("Error translating arrow", treeNode);
             }
         }
