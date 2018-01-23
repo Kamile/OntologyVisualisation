@@ -22,7 +22,6 @@ import java.util.*;
 public class ConceptDiagramCreator {
     HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> spiderDiagramDescriptions;
     Set<AbstractArrow> arrowDescriptions;
-    static Logger logger = Logger.getLogger(DiagramCreator.class.getName());
 
     public ConceptDiagramCreator(AbstractConceptDiagramDescription abstractDescription) {
         spiderDiagramDescriptions = abstractDescription.getSpiderDescriptions();
@@ -42,15 +41,12 @@ public class ConceptDiagramCreator {
             }
             spiderDiagramGroups.put(br, concreteSpiderDiagrams);
             concreteSpiderDiagrams = new HashSet<>();
-            System.out.println(spiderDiagramGroups);
         }
-
 
         for (AbstractArrow abstractArrow: arrowDescriptions) {
             ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow);
             concreteArrows.add(concreteArrow);
         }
-
         return new ConcreteConceptDiagram(spiderDiagramGroups, concreteArrows);
     }
 }

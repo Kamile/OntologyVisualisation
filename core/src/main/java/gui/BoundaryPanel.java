@@ -85,39 +85,34 @@ public class BoundaryPanel extends JPanel {
 
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
-            if (conceptDiagram instanceof ConceptDiagram) {
-                arrows = ((ConceptDiagram) conceptDiagram).getArrows();
-                this.setLayout(new GridLayout(1, 0));
+            arrows = conceptDiagram.getArrows();
+            this.setLayout(new GridLayout(1, 0));
 
-                AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((ConceptDiagram) conceptDiagram);
-                final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
-                targetMappings = new HashMap<>();
+            AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((ConceptDiagram) conceptDiagram);
+            final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
+            targetMappings = new HashMap<>();
 
-                HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> mapping = ccd.getBoundarySpiderDiagramMapping();
-                for (ClassObjectPropertyDiagram br : mapping.keySet()) {
-                    final DiagramPanel dp = new DiagramPanel(mapping.get(br));
-
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            targetMappings.putAll(dp.getTargetMappings());
-                            System.out.println(targetMappings.keySet().size());
-                        }
-                    });
-                    dp.setVisible(true);
-                    dp.setBorder(BorderFactory.createLineBorder(new Color(2,0, 113)));
-                    add(dp);
-                }
+            HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> mapping = ccd.getBoundarySpiderDiagramMapping();
+            for (ClassObjectPropertyDiagram br : mapping.keySet()) {
+                final DiagramPanel dp = new DiagramPanel(mapping.get(br));
 
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        addArrows(targetMappings, arrows);
+                        targetMappings.putAll(dp.getTargetMappings());
                     }
                 });
-            } else {
-                throw new IllegalArgumentException(i18n("SD_PANEL_UNKNOWN_DIAGRAM_TYPE"));
+                dp.setVisible(true);
+                dp.setBorder(BorderFactory.createLineBorder(new Color(2,0, 113)));
+                add(dp);
             }
+
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    addArrows(targetMappings, arrows);
+                }
+            });
         }
     }
 

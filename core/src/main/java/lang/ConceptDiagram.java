@@ -15,7 +15,7 @@ import static speedith.i18n.Translations.i18n;
  * Basic concept diagram that is just a set of primary spider
  * diagrams with no arrows.
  */
-public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram>, ConceptDiagramElement {
+public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
 
     public static final String CDTextBasicId = "ConceptDiagram";
 
@@ -24,12 +24,10 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram>, C
 
     private static final long serialVersionUID = -23423534656432L;
     private ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams;
-//    private ArrayList<SpiderDiagram> spiderDiagrams;
     private ArrayList<Arrow> arrows;
     private boolean hashInvalid = true;
     private int hash;
     private Boolean valid;
-    private int subDiagramCount = -1;
 
     ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> sds) {
         setClassObjectPropertyDiagrams(sds);
@@ -56,22 +54,6 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram>, C
         } else {
             return new ArrayList<>();
         }
-    }
-
-    public int getBoundaryRectangleCount() {
-        return classObjectPropertyDiagrams.size();
-    }
-
-    public int getArrowCount() {
-        return arrows.size();
-    }
-
-    public ClassObjectPropertyDiagram getBoundaryRectangle(int index) {
-        return classObjectPropertyDiagrams.get(index);
-    }
-
-    public Arrow getArrow(int index) {
-        return arrows.get(index);
     }
 
     @Override

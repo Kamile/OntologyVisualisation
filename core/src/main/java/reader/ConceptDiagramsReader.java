@@ -458,7 +458,6 @@ public class ConceptDiagramsReader {
     }
 
     private static class ArrowTranslator extends ElementTranslator<Arrow> {
-
         public static final ArrowTranslator Instance = new ArrowTranslator();
         private ListTranslator<String> translator;
 

@@ -4,7 +4,6 @@ import icircles.concreteDiagram.CircleContour;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.concreteDiagram.ConcreteSpider;
 import icircles.concreteDiagram.ConcreteZone;
-import speedith.core.lang.PrimarySpiderDiagram;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;

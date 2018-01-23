@@ -47,7 +47,9 @@ public class ArrowPanel extends JComponent {
         g.setColor(new Color(10, 86, 0, 255));
         g.setFont(new Font("Courier", Font.PLAIN, 16));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         if (arrows != null && targetMappings.keySet().size() > 0) {
+            System.out.println("Painting arrows with non-null target mappings");
             super.paintComponent(g);
             for (Arrow a: arrows) {
                 String label = a.getLabel();
@@ -94,7 +96,6 @@ public class ArrowPanel extends JComponent {
                 } else {
                     offset = curve.getFlatness()/(gradient*2);
                 }
-
                 g2d.drawString(label, (int) midX, (int) (midY + offset));
             }
         }

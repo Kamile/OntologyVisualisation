@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static speedith.i18n.Translations.i18n;
 
-public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropertyDiagram>, ConceptDiagramElement, Serializable {
+public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropertyDiagram>, Serializable {
     private ArrayList<SpiderDiagram> spiderDiagrams;
     private boolean hashInvalid;
     private int hash;

@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import static speedith.i18n.Translations.i18n;
 
-public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializable{
+public class Arrow implements Comparable<Arrow>, Serializable{
 
     private final static String NO_LABEL = "";
     private String label;
@@ -35,6 +35,7 @@ public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializ
         this.cardinalityArgument = cardinalityArgument;
         this.cardinalityOperator = cardinalityOperator;
         this.isDashed = isDashed;
+        System.out.println("Arrow is anonymous!!");
     }
 
     public String getLabel() {
@@ -102,13 +103,17 @@ public class Arrow implements Comparable<Arrow>, ConceptDiagramElement, Serializ
             if (sb == null) {
                 throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "sb"));
             }
-            sb.append('[');
             sb.append(label);
             sb.append(", ");
             sb.append(source);
             sb.append(", ");
             sb.append(target);
-            sb.append(']');
+            sb.append(", ");
+            sb.append(cardinalityOperator);
+            sb.append(", ");
+            sb.append(String.valueOf(cardinalityArgument));
+            sb.append(", ");
+            sb.append(String.valueOf(isDashed));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

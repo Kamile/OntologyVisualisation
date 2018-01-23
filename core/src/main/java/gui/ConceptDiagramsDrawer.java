@@ -26,7 +26,6 @@ public class ConceptDiagramsDrawer extends JPanel {
     private static final Color HIGHLIGHTED_FOOT_COLOUR;
     private static final Color HIGHLIGHT_STROKE_COLOUR;
     private static final Color HIGHLIGHT_ZONE_COLOUR;
-    private static final double HIGHLIGHTED_FOOT_SCALE = 1.4D;
     private static final long serialVersionUID = 6593217652932473248L;
     private DOMImplementation domImpl;
     private String svgNS;
@@ -41,22 +40,6 @@ public class ConceptDiagramsDrawer extends JPanel {
     private int boundaryOffset;
 
     private HashMap<String, ConcreteArrowEnd> targetMappings;
-
-    public ConceptDiagramsDrawer(ConcreteDiagram diagram, int boundaryOffset) {
-        this.domImpl = GenericDOMImplementation.getDOMImplementation();
-        this.svgNS = "http://www.w3.org/2000/svg";
-        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
-        this.svgGenerator = new SVGGraphics2D(this.document);
-        this.scaleFactor = 1.0D;
-        this.trans = new AffineTransform();
-        this.highlightedContour = null;
-        this.highlightedZone = null;
-        this.highlightedFoot = null;
-        this.boundaryOffset = boundaryOffset;
-        this.initComponents();
-        this.resetDiagram(diagram);
-        this.resizeContents();
-    }
 
     public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings, int boundaryOffset) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
@@ -76,24 +59,6 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.targetMappings = targetMappings;
     }
 
-    public ConceptDiagramsDrawer() {
-        this((ConcreteDiagram)null, 0);
-    }
-
-    public ConcreteDiagram getDiagram() {
-        return this.diagram;
-    }
-
-    public void setDiagram(ConcreteDiagram diagram) {
-        if (this.diagram != diagram) {
-            this.resetDiagram(diagram);
-        }
-    }
-
-    public final double getScaleFactor() {
-        return this.scaleFactor;
-    }
-
     private void setScaleFactor(double newScaleFactor) {
         this.scaleFactor = newScaleFactor;
         this.recalculateTransform();
@@ -102,14 +67,6 @@ public class ConceptDiagramsDrawer extends JPanel {
 
     HashMap<String, ConcreteArrowEnd> getTargetMappings() {
         return targetMappings;
-    }
-
-    public Point toDiagramCoordinates(Point p) {
-        p.x -= this.getCenteringTranslationX();
-        p.x = (int)((double)p.x / this.scaleFactor);
-        p.y -= this.getCenteringTranslationY();
-        p.y = (int)((double)p.y / this.scaleFactor);
-        return p;
     }
 
     @Override
@@ -217,7 +174,6 @@ public class ConceptDiagramsDrawer extends JPanel {
                     }
 
                     g2d.fill(tmpCircle);
-                    System.out.println("x " + getX() + " y " + getY());
                     targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getCenteringTranslationY()));
                     if (this.getHighlightedFoot() == foot) {
                         g2d.setColor(oldColor2);
@@ -278,7 +234,6 @@ public class ConceptDiagramsDrawer extends JPanel {
             this.highlightedZone = highlightedZone;
             this.repaint();
         }
-
     }
 
     protected CircleContour getHighlightedContour() {
@@ -292,7 +247,6 @@ public class ConceptDiagramsDrawer extends JPanel {
             this.highlightedContour = highlightedContour;
             this.repaint();
         }
-
     }
 
     protected ConcreteSpiderFoot getHighlightedFoot() {
@@ -306,7 +260,6 @@ public class ConceptDiagramsDrawer extends JPanel {
             this.highlightedFoot = foot;
             this.repaint();
         }
-
     }
 
     private void resetDiagram(ConcreteDiagram diagram) {
@@ -359,13 +312,6 @@ public class ConceptDiagramsDrawer extends JPanel {
         circle.y -= circle.height * (scale - 1.0D) / 2.0D;
         circle.width *= scale;
         circle.height *= scale;
-    }
-
-    private void repaintShape(Shape shape) {
-        if (shape != null) {
-            this.repaint(shape.getBounds());
-        }
-
     }
 
     private int getCenteringTranslationX() {

@@ -56,22 +56,21 @@ public class AbstractDescriptionTranslator {
         List<Arrow> arrows = cd.getArrows();
         if (arrows != null) {
             for (Arrow a : arrows) {
-                // TODO: Get whether arrow is dashed or not.
                 String label = a.getLabel();
+                boolean isAnon = a.isDashed();
                 boolean isSourceContour = isContour(a.getSource());
                 boolean isTargetContour = isContour(a.getTarget());
 
                 if (isSourceContour && isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, false, contourMap.get(a.getSource()), contourMap.get(a.getTarget())));
+                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget())));
                 } else if (isSourceContour) {
-                    abstractArrows.add(new AbstractArrow(label, false, contourMap.get(a.getSource()), spiderMap.get(a.getTarget())));
+                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget())));
                 } else if (isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, false, spiderMap.get(a.getSource()), contourMap.get(a.getTarget())));
+                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget())));
                 } else {
-                    abstractArrows.add(new AbstractArrow(label, false, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget())));
+                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget())));
                 }
             }
-
         }
         return new AbstractConceptDiagramDescription(boundaryDescriptions, abstractArrows);
     }
