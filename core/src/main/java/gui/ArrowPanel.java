@@ -12,6 +12,8 @@ import java.util.List;
 public class ArrowPanel extends JComponent {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
+    private static float dash[] = {10.0f};
+    private static final BasicStroke dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
     private static final int headLength = 15;
     private static final double phi = Math.PI/6;
 
@@ -47,7 +49,9 @@ public class ArrowPanel extends JComponent {
         g.setColor(new Color(10, 86, 0, 255));
         g.setFont(new Font("Courier", Font.PLAIN, 16));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+        if (targetMappings != null) {
+            System.out.println("target mappings exist: " + (targetMappings.keySet().size() > 0));
+        }
         if (arrows != null && targetMappings.keySet().size() > 0) {
             System.out.println("Painting arrows with non-null target mappings");
             super.paintComponent(g);
@@ -76,6 +80,9 @@ public class ArrowPanel extends JComponent {
 
                 QuadCurve2D curve = new QuadCurve2D.Double();
                 curve.setCurve(x1, y1, cx, cy, x2, y2);
+                if (a.isDashed()) {
+                    g2d.setStroke(dashed);
+                }
                 g2d.draw(curve);
 
                 // draw arrowheads for target
@@ -88,7 +95,7 @@ public class ArrowPanel extends JComponent {
                 g2d.drawLine((int) x2, (int) y2, (int) x, (int) y);
 
                 // add label
-                double offset = 0;
+                double offset;
                 if (curve.getFlatness() < 10) {
                     offset = 15;
                 } else if (Math.abs(gradient) < 2) {

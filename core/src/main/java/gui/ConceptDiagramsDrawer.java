@@ -118,6 +118,7 @@ public class ConceptDiagramsDrawer extends JPanel {
                 g.setColor(col);
                 transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
                 targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() - (tmpCircle.getHeight()/2) + getY() + getCenteringTranslationY()));
+//                System.out.println(targetMappings);
                 g2d.draw(tmpCircle);
 
                 if (cc.ac.getLabel() != null) {

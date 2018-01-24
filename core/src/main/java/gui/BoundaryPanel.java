@@ -121,6 +121,8 @@ public class BoundaryPanel extends JPanel {
     }
 
     private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
-        arrowPanel = new ArrowPanel(arrows, targetMappings);
+        if (targetMappings != null && targetMappings.keySet().size() > 0) {
+            arrowPanel = new ArrowPanel(arrows, targetMappings);
+        }
     }
 }

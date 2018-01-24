@@ -60,7 +60,6 @@ public class DiagramPanel extends JPanel {
     private void drawDiagrams() throws CannotDrawException {
         if (spiderDiagrams != null) {
             this.setLayout(new GridLayout(1, 0));
-
             for (ConcreteDiagram cd : spiderDiagrams) {
                 ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, targetMappings, this.getX());
                 targetMappings.putAll(panel.getTargetMappings());

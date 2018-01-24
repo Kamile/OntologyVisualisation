@@ -34,11 +34,6 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
         this.arrows = new ArrayList<>();
     }
 
-//    ConceptDiagram(ArrayList<SpiderDiagram> sds, ArrayList<Arrow> arrows) {
-//        setClassObjectPropertyDiagrams(sds);
-//        this.arrows = arrows;
-//    }
-
     ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams, ArrayList<Arrow> arrows) {
         this.classObjectPropertyDiagrams = classObjectPropertyDiagrams;
         this.arrows = arrows;
@@ -146,15 +141,6 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
             }
         }
         classObjectPropertyDiagrams = sds;
-    }
-
-    private void setArrows(ArrayList<Arrow> arrows) {
-        for (Arrow a: arrows) {
-            if (a == null) {
-                throw new IllegalArgumentException(i18n("ERR_OPERAND_NULL"));
-            }
-        }
-        this.arrows = arrows;
     }
 
     public Iterator<ConceptDiagram> iterator() {

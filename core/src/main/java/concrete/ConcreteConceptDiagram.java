@@ -38,10 +38,6 @@ public class ConcreteConceptDiagram{
         return spiderDiagrams;
     }
 
-    public Set<ConcreteDiagram> getSpiderDiagram(ClassObjectPropertyDiagram br) {
-        return spiderDiagrams.get(br);
-    }
-
     public Set<ConcreteArrow> getArrows() {
         return arrows;
     }

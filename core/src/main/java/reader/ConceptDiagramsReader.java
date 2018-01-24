@@ -401,7 +401,6 @@ public class ConceptDiagramsReader {
     }
 
     private static class PrimarySDTranslator extends GeneralSDTranslator<PrimarySpiderDiagram> {
-
         public static final PrimarySDTranslator Instance = new PrimarySDTranslator();
 
         private PrimarySDTranslator() {
@@ -426,9 +425,7 @@ public class ConceptDiagramsReader {
     }
 
     private static class NullSDTranslator extends GeneralSDTranslator<NullSpiderDiagram> {
-
         public static final NullSDTranslator Instance = new NullSDTranslator();
-
         private NullSDTranslator() {
             super(ConceptDiagramsParser.SD_NULL);
         }
@@ -442,7 +439,6 @@ public class ConceptDiagramsReader {
     /** END methods from SpiderDiagramsReader **/
 
     private static class SpiderListTranslator extends ElementTranslator<ClassObjectPropertyDiagram> {
-
         public static final SpiderListTranslator Instance = new SpiderListTranslator();
         private ListTranslator<SpiderDiagram> translator;
 

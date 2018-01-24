@@ -35,7 +35,6 @@ public class Arrow implements Comparable<Arrow>, Serializable{
         this.cardinalityArgument = cardinalityArgument;
         this.cardinalityOperator = cardinalityOperator;
         this.isDashed = isDashed;
-        System.out.println("Arrow is anonymous!!");
     }
 
     public String getLabel() {
