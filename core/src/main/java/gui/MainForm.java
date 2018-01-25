@@ -244,7 +244,6 @@ public class MainForm extends JFrame {
             boundaryPanel.setDiagram(dialog.getConceptDiagram());
             setArrowPanel();
             setTitle("OntologyVisualiser");
-            pack();
         }
     }
 

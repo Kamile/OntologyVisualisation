@@ -57,6 +57,10 @@ public class ArrowPanel extends JComponent {
             super.paintComponent(g);
             for (Arrow a: arrows) {
                 String label = a.getLabel();
+                String operator = a.getCardinalityOperator();
+                int argument = a.getCardinalityArgument();
+                label = label + " " + getOperator(operator) + " " + argument;
+
                 String source = a.getSource();
                 String target = a.getTarget();
                 ConcreteArrowEnd arrowSource = targetMappings.get(source);
@@ -103,12 +107,22 @@ public class ArrowPanel extends JComponent {
                 } else {
                     offset = curve.getFlatness()/(gradient*2);
                 }
-                g2d.drawString(label, (int) midX, (int) (midY + offset));
+                g2d.drawString(label, (int) midX - 15, (int) (midY + 2*offset));
             }
         }
     }
 
     private static double getRandomOffset() {
         return Math.floor(Math.random()*31 + 10);
+    }
+
+    private String getOperator(String operator) {
+        operator = operator.toLowerCase();
+        switch (operator) {
+            case "leq":
+                return "<";
+            default:
+                return "";
+        }
     }
 }

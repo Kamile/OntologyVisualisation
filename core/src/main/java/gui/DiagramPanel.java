@@ -63,6 +63,7 @@ public class DiagramPanel extends JPanel {
             for (ConcreteDiagram cd : spiderDiagrams) {
                 ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, targetMappings, this.getX());
                 targetMappings.putAll(panel.getTargetMappings());
+                System.out.println(targetMappings);
                 panel.setBorder(BorderFactory.createEmptyBorder());
                 panel.setVisible(true);
                 add(panel);
