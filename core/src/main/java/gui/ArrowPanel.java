@@ -59,7 +59,7 @@ public class ArrowPanel extends JComponent {
                 String label = a.getLabel();
                 String operator = a.getCardinalityOperator();
                 int argument = a.getCardinalityArgument();
-                label = label + " " + getOperator(operator) + " " + argument;
+//                label = label + " " + getOperator(operator) + " " + argument;
 
                 String source = a.getSource();
                 String target = a.getTarget();
@@ -120,7 +120,7 @@ public class ArrowPanel extends JComponent {
         operator = operator.toLowerCase();
         switch (operator) {
             case "leq":
-                return "<";
+                return "<=";
             default:
                 return "";
         }
