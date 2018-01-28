@@ -119,7 +119,7 @@ public class ConceptDiagramsDrawer extends JPanel {
                 g.setColor(col);
                 transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
                 targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() - (tmpCircle.getHeight()/2) + getY() + getCenteringTranslationY()));
-                circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() +getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getWidth(), tmpCircle.getHeight()));
+                circleMap.put(cc.ac.getLabel(), tmpCircle);
                 g2d.draw(tmpCircle);
 
                 if (cc.ac.getLabel() != null) {
@@ -177,7 +177,7 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                     g2d.fill(tmpCircle);
                     targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getCenteringTranslationY()));
-                    circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() +getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getWidth(), tmpCircle.getHeight()));
+                    circleMap.put(foot.getSpider().as.getName(), tmpCircle);
                     if (this.getHighlightedFoot() == foot) {
                         g2d.setColor(oldColor2);
                     }
