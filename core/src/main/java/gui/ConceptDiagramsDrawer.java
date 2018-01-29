@@ -60,6 +60,25 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.targetMappings = targetMappings;
     }
 
+    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings, HashMap<String, Ellipse2D> circleMap, int boundaryOffset) {
+        this.domImpl = GenericDOMImplementation.getDOMImplementation();
+        this.svgNS = "http://www.w3.org/2000/svg";
+        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
+        this.svgGenerator = new SVGGraphics2D(this.document);
+        this.scaleFactor = 1.0D;
+        this.trans = new AffineTransform();
+        this.highlightedContour = null;
+        this.highlightedZone = null;
+        this.highlightedFoot = null;
+        this.boundaryOffset = boundaryOffset;
+        this.initComponents();
+        this.resetDiagram(diagram);
+        this.resizeContents();
+
+        this.targetMappings = targetMappings;
+        this.circleMap = circleMap;
+    }
+
     private void setScaleFactor(double newScaleFactor) {
         this.scaleFactor = newScaleFactor;
         this.recalculateTransform();
@@ -68,6 +87,10 @@ public class ConceptDiagramsDrawer extends JPanel {
 
     HashMap<String, ConcreteArrowEnd> getTargetMappings() {
         return targetMappings;
+    }
+
+    HashMap<String, Ellipse2D> getCircleMap() {
+        return circleMap;
     }
 
     @Override

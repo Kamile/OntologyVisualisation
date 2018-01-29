@@ -5,7 +5,10 @@ import lang.Arrow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.QuadCurve2D;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class ArrowPanel extends JComponent {
 
     private List<Arrow> arrows;
     private HashMap<String, ConcreteArrowEnd> targetMappings;
+    private HashMap<String, Ellipse2D> circleMap;
     private HashMap<Arrow, Double> arrowOffsets;
 
     ArrowPanel() {
@@ -36,6 +40,18 @@ public class ArrowPanel extends JComponent {
         }
         initComponents();
     }
+
+//    ArrowPanel(List<Arrow> arrows, HashMap<String, Ellipse2D> circleMap) {
+//        this.arrows = arrows;
+//        this.circleMap = circleMap;
+//        if (arrows != null) {
+//            arrowOffsets = new HashMap<>();
+//            for (Arrow a : arrows) {
+//                arrowOffsets.put(a, getRandomOffset());
+//            }
+//        }
+//        initComponents();
+//    }
 
     private void initComponents() {
         setMinimumSize(MINIMUM_SIZE);
@@ -125,4 +141,14 @@ public class ArrowPanel extends JComponent {
                 return "";
         }
     }
+
+    public Point getSource(Ellipse2D source, Ellipse2D target) {
+
+        Line2D.Double lineBetweenCentres =
+                new Line2D.Double(source.getCenterX(), source.getCenterY(), target.getCenterX(), target.getCenterY());
+//        Collection<Point> intersections = source.intersections(lineBetweenCentres);
+        return new Point();
+
+    }
+
 }
