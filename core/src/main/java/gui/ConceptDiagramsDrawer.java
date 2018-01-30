@@ -1,6 +1,5 @@
 package gui;
 
-import concrete.ConcreteArrowEnd;
 import icircles.concreteDiagram.*;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -37,30 +36,10 @@ public class ConceptDiagramsDrawer extends JPanel {
     private CircleContour highlightedContour;
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
-    private int boundaryOffset;
 
-    private HashMap<String, ConcreteArrowEnd> targetMappings;
     private HashMap<String, Ellipse2D.Double> circleMap;
 
-//    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings, int boundaryOffset) {
-//        this.domImpl = GenericDOMImplementation.getDOMImplementation();
-//        this.svgNS = "http://www.w3.org/2000/svg";
-//        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
-//        this.svgGenerator = new SVGGraphics2D(this.document);
-//        this.scaleFactor = 1.0D;
-//        this.trans = new AffineTransform();
-//        this.highlightedContour = null;
-//        this.highlightedZone = null;
-//        this.highlightedFoot = null;
-//        this.boundaryOffset = boundaryOffset;
-//        this.initComponents();
-//        this.resetDiagram(diagram);
-//        this.resizeContents();
-//
-//        this.targetMappings = targetMappings;
-//    }
-
-    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap, int boundaryOffset) {
+    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
         this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
@@ -70,12 +49,9 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.highlightedContour = null;
         this.highlightedZone = null;
         this.highlightedFoot = null;
-        this.boundaryOffset = boundaryOffset;
         this.initComponents();
         this.resetDiagram(diagram);
         this.resizeContents();
-
-//        this.targetMappings = targetMappings;
         this.circleMap = circleMap;
     }
 
@@ -83,10 +59,6 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.scaleFactor = newScaleFactor;
         this.recalculateTransform();
         this.repaint();
-    }
-
-    HashMap<String, ConcreteArrowEnd> getTargetMappings() {
-        return targetMappings;
     }
 
     HashMap<String, Ellipse2D.Double> getCircleMap() {
@@ -141,9 +113,7 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                 g.setColor(col);
                 transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
-//                targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() - (tmpCircle.getHeight()/2) + getY() + getCenteringTranslationY()));
-//                circleMap.put(cc.ac.getLabel(), tmpCircle);
-                circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() +getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+                circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
                 g2d.draw(tmpCircle);
 
                 if (cc.ac.getLabel() != null) {
@@ -200,9 +170,7 @@ public class ConceptDiagramsDrawer extends JPanel {
                     }
 
                     g2d.fill(tmpCircle);
-//                    targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getCenteringTranslationY()));
-//                    circleMap.put(foot.getSpider().as.getName(), tmpCircle);
-                    circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() +getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+                    circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
                     if (this.getHighlightedFoot() == foot) {
                         g2d.setColor(oldColor2);
                     }
@@ -225,6 +193,8 @@ public class ConceptDiagramsDrawer extends JPanel {
                 transformCircle(this.scaleFactor, this.getHighlightedContour().getCircle(), tmpCircle);
                 g2d.draw(tmpCircle);
             }
+
+            // TODO: draw arrows with SDs.
         }
     }
 

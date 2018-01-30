@@ -92,7 +92,6 @@ public class BoundaryPanel extends JPanel {
 
             AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((ConceptDiagram) conceptDiagram);
             final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
-//            targetMappings = new HashMap<>();
             circleMap = new HashMap<>();
 
             HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> mapping = ccd.getBoundarySpiderDiagramMapping();
@@ -102,7 +101,6 @@ public class BoundaryPanel extends JPanel {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-//                        targetMappings.putAll(dp.getTargetMappings());
                         circleMap.putAll(dp.getCircleMap());
                     }
                 });
@@ -120,19 +118,13 @@ public class BoundaryPanel extends JPanel {
         }
     }
 
-    public ArrowPanel getArrowGlassPanel() {
+    ArrowPanel getArrowGlassPanel() {
         return arrowPanel;
     }
 
     private void addArrows(final HashMap<String, Ellipse2D.Double> circleMap, final List<Arrow> arrows) {
-        if (circleMap != null && circleMap.keySet().size() > 0) {
+        if ((circleMap != null) && (circleMap.keySet().size() > 0)) {
             arrowPanel = new ArrowPanel(arrows, circleMap);
         }
     }
-
-//    private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
-//        if (targetMappings != null && targetMappings.keySet().size() > 0) {
-//            arrowPanel = new ArrowPanel(arrows, targetMappings);
-//        }
-//    }
 }

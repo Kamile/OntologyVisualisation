@@ -1,9 +1,7 @@
 package gui;
 
-import concrete.ConcreteArrowEnd;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
-import javafx.scene.shape.Ellipse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,19 +12,16 @@ import java.util.Set;
 import static speedith.i18n.Translations.i18n;
 
 /**
- * Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagrams
- * Panel
+ * Bypass ProofPanel and SubgoalsPanel and implement version of SpiderDiagramsPanel
  */
 public class DiagramPanel extends JPanel {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
 
     private Set<ConcreteDiagram> spiderDiagrams;
-//    private HashMap<String, ConcreteArrowEnd> targetMappings;
     private HashMap<String, Ellipse2D.Double> circleMap;
 
     public DiagramPanel(Set<ConcreteDiagram> spiderDiagrams) {
-//        targetMappings = new HashMap<>();
         circleMap = new HashMap<>();
         initComponents();
         setDiagrams(spiderDiagrams);
@@ -65,8 +60,7 @@ public class DiagramPanel extends JPanel {
         if (spiderDiagrams != null) {
             this.setLayout(new GridLayout(1, 0));
             for (ConcreteDiagram cd : spiderDiagrams) {
-                ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, circleMap, this.getX());
-//                targetMappings.putAll(panel.getTargetMappings());
+                ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, circleMap);
                 circleMap.putAll(panel.getCircleMap());
                 panel.setBorder(BorderFactory.createEmptyBorder());
                 panel.setVisible(true);
@@ -74,10 +68,6 @@ public class DiagramPanel extends JPanel {
             }
         }
     }
-
-//    public HashMap<String, ConcreteArrowEnd> getTargetMappings() {
-//        return targetMappings;
-//    }
 
     public HashMap<String, Ellipse2D.Double> getCircleMap() {
         return circleMap;
