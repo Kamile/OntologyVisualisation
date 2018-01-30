@@ -66,7 +66,8 @@ public class ArrowPanel extends JComponent {
                 double y2 = intersections.get(1).y;
                 double gradient = getGradient(x1, y1, x2, y2);
 
-                double midX = (Math.min(x1, x2) + Math.abs(x2 - x1)/2);
+                double midX = x1 + (x2-x1)*0.65;
+//                double midX = (Math.min(x1, x2) + Math.abs(x2 - x1)/2);
                 double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
 
                 //get random control point
@@ -99,7 +100,7 @@ public class ArrowPanel extends JComponent {
                 }
 
                 // TODO: ensure text doesn't cover any components using check over rectangular region.
-                g2d.drawString(label, (int) midX - 30, (int) (midY - 2*offset));
+                g2d.drawString(label, (int) midX, (int) (midY - 2*offset));
             }
         }
     }

@@ -6,7 +6,7 @@ import lang.ClassObjectPropertyDiagram;
 
 import java.util.*;
 
-public class AbstractConceptDiagramDescription extends AbstractDescription{
+public class AbstractConceptDiagramDescription extends AbstractDescription {
     private Set<AbstractArrow> m_arrows;
     private HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> m_spiderDiagrams;
 

@@ -18,7 +18,7 @@ import java.util.Set;
  * -- Boundary rectangles, representing the universal set
  * -- Curves, representing sets, which can be labelled or unlabelled. Curves
  *    without labels represent anonymous sets. We use spatial relationships
- *    between cruves and spiders within a boundary rectangle to convey semantics.
+ *    between curves and spiders within a boundary rectangle to convey semantics.
  * -- Shaded zones (and unshaded zones), representing upper bounds on set cardinality.
  *    In a shaded region, all elements are represented by spiders.
  * -- Arrows (dashed/solid, labelled/unlabelled), representing semantics about
