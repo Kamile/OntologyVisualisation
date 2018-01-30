@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -142,13 +144,95 @@ public class ArrowPanel extends JComponent {
         }
     }
 
-    public Point getSource(Ellipse2D source, Ellipse2D target) {
+    public List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
+        // array holds source intersection then target intersection
+        List<Point2D.Double> intersections = new ArrayList<>();
 
-        Line2D.Double lineBetweenCentres =
-                new Line2D.Double(source.getCenterX(), source.getCenterY(), target.getCenterX(), target.getCenterY());
-//        Collection<Point> intersections = source.intersections(lineBetweenCentres);
-        return new Point();
+        // define line
+        double x1 = source.getCenterX();
+        double x2 = target.getCenterX();
+        double y1 = source.getCenterY();
+        double y2 = target.getCenterY();
+        double gradient = getGradient(x1, y1 , x2, y2);
+        double c = getC(gradient, x1, y1);
 
+        // circles defined by same centre points + radius
+        double sourceRadius = source.getHeight()/2;
+        double targetRadius = target.getHeight()/2;
+
+        // find intersection between source circle and line
+        Point2D.Double sourcePositive = findPoint(gradient, c, sourceRadius,  x1, y1, true);
+        Point2D.Double sourceNegative = findPoint(gradient, c, sourceRadius, x1, y1, false);
+
+        // find intersection between target circle and line
+        Point2D.Double targetPositive = findPoint(gradient, c, targetRadius,  x2, y2, true);
+        Point2D.Double targetNegative = findPoint(gradient, c, targetRadius, x2, y2, false);
+
+        // return points that give the smallest distance between circles
+        Point2D.Double closestSource = sourcePositive;
+        Point2D.Double closestTarget = targetPositive;
+
+        if (sourceNegative.distance(targetPositive) < closestSource.distance(closestTarget)) {
+            closestSource = sourceNegative;
+            closestTarget = targetPositive;
+        }
+
+        if (sourcePositive.distance(targetNegative) < closestSource.distance(closestTarget)) {
+            closestSource = sourcePositive;
+            closestTarget = targetNegative;
+        }
+
+        if (sourceNegative.distance(targetNegative) < closestSource.distance(closestTarget)) {
+            closestSource = sourceNegative;
+            closestTarget = targetNegative;
+        }
+
+
+        intersections.add(closestSource);
+        intersections.add(closestTarget);
+        return intersections;
     }
 
+    private double getC(double gradient, double x, double y) {
+        return y - gradient*x;
+    }
+
+    private double getGradient(double x1, double y1, double x2, double y2) {
+        return (y2-y1)/(x2-x1);
+    }
+
+    private double solveForXPositive(double a, double b, double c) {
+        if (b*b-4*a*c > 0) {
+            return (-b + Math.sqrt(b * b - 4 * a * c)) / 2 * a;
+        } else {
+            throw new NumberFormatException();
+        }
+    }
+
+    private double solveForXNegative(double a, double b, double c) {
+        if (b*b-4*a*c > 0) {
+            return (-b - Math.sqrt(b * b - 4 * a * c)) / 2 * a;
+        } else {
+            throw new NumberFormatException();
+        }
+    }
+
+    /*
+        Find coordinates of intersection where we take either positive or negative root in quadratic equation
+     */
+    private Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive) {
+        double a = Math.pow(gradient, 2) + 1;
+        double b = 2*gradient*(intercept - y1) - 2*x1;
+        double c = x1*x1 + Math.pow((intercept-y1), 2) - Math.pow(radius, 2);
+        double x;
+
+        if (positive) {
+            x = solveForXPositive(a, b, c);
+        } else {
+            x = solveForXNegative(a, b, c);
+        }
+
+        double y = gradient*x + intercept;
+        return new Point2D.Double(x, y);
+    }
 }
