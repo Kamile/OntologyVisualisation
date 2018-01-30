@@ -3,9 +3,11 @@ package gui;
 import concrete.ConcreteArrowEnd;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
+import javafx.scene.shape.Ellipse;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -20,10 +22,12 @@ public class DiagramPanel extends JPanel {
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
 
     private Set<ConcreteDiagram> spiderDiagrams;
-    private HashMap<String, ConcreteArrowEnd> targetMappings;
+//    private HashMap<String, ConcreteArrowEnd> targetMappings;
+    private HashMap<String, Ellipse2D.Double> circleMap;
 
     public DiagramPanel(Set<ConcreteDiagram> spiderDiagrams) {
-        targetMappings = new HashMap<>();
+//        targetMappings = new HashMap<>();
+        circleMap = new HashMap<>();
         initComponents();
         setDiagrams(spiderDiagrams);
     }
@@ -61,9 +65,9 @@ public class DiagramPanel extends JPanel {
         if (spiderDiagrams != null) {
             this.setLayout(new GridLayout(1, 0));
             for (ConcreteDiagram cd : spiderDiagrams) {
-                ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, targetMappings, this.getX());
-                targetMappings.putAll(panel.getTargetMappings());
-                System.out.println(targetMappings);
+                ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, circleMap, this.getX());
+//                targetMappings.putAll(panel.getTargetMappings());
+                circleMap.putAll(panel.getCircleMap());
                 panel.setBorder(BorderFactory.createEmptyBorder());
                 panel.setVisible(true);
                 add(panel);
@@ -71,7 +75,11 @@ public class DiagramPanel extends JPanel {
         }
     }
 
-    public HashMap<String, ConcreteArrowEnd> getTargetMappings() {
-        return targetMappings;
+//    public HashMap<String, ConcreteArrowEnd> getTargetMappings() {
+//        return targetMappings;
+//    }
+
+    public HashMap<String, Ellipse2D.Double> getCircleMap() {
+        return circleMap;
     }
 }

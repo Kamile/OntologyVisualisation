@@ -11,6 +11,7 @@ import lang.ClassObjectPropertyDiagram;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,7 @@ public class BoundaryPanel extends JPanel {
     private ArrowPanel arrowPanel;
     private ConceptDiagram conceptDiagram;
     private HashMap<String, ConcreteArrowEnd> targetMappings;
+    private HashMap<String, Ellipse2D.Double> circleMap;
     private List<Arrow> arrows;
 
     /**
@@ -90,7 +92,8 @@ public class BoundaryPanel extends JPanel {
 
             AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((ConceptDiagram) conceptDiagram);
             final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
-            targetMappings = new HashMap<>();
+//            targetMappings = new HashMap<>();
+            circleMap = new HashMap<>();
 
             HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> mapping = ccd.getBoundarySpiderDiagramMapping();
             for (ClassObjectPropertyDiagram br : mapping.keySet()) {
@@ -99,7 +102,8 @@ public class BoundaryPanel extends JPanel {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        targetMappings.putAll(dp.getTargetMappings());
+//                        targetMappings.putAll(dp.getTargetMappings());
+                        circleMap.putAll(dp.getCircleMap());
                     }
                 });
                 dp.setVisible(true);
@@ -110,7 +114,7 @@ public class BoundaryPanel extends JPanel {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    addArrows(targetMappings, arrows);
+                    addArrows(circleMap, arrows);
                 }
             });
         }
@@ -120,9 +124,15 @@ public class BoundaryPanel extends JPanel {
         return arrowPanel;
     }
 
-    private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
-        if (targetMappings != null && targetMappings.keySet().size() > 0) {
-            arrowPanel = new ArrowPanel(arrows, targetMappings);
+    private void addArrows(final HashMap<String, Ellipse2D.Double> circleMap, final List<Arrow> arrows) {
+        if (circleMap != null && circleMap.keySet().size() > 0) {
+            arrowPanel = new ArrowPanel(arrows, circleMap);
         }
     }
+
+//    private void addArrows(final HashMap<String, ConcreteArrowEnd> targetMappings, final List<Arrow> arrows) {
+//        if (targetMappings != null && targetMappings.keySet().size() > 0) {
+//            arrowPanel = new ArrowPanel(arrows, targetMappings);
+//        }
+//    }
 }

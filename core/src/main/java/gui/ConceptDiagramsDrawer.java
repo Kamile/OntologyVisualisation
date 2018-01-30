@@ -40,9 +40,27 @@ public class ConceptDiagramsDrawer extends JPanel {
     private int boundaryOffset;
 
     private HashMap<String, ConcreteArrowEnd> targetMappings;
-    private HashMap<String, Ellipse2D> circleMap;
+    private HashMap<String, Ellipse2D.Double> circleMap;
 
-    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings, int boundaryOffset) {
+//    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings, int boundaryOffset) {
+//        this.domImpl = GenericDOMImplementation.getDOMImplementation();
+//        this.svgNS = "http://www.w3.org/2000/svg";
+//        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
+//        this.svgGenerator = new SVGGraphics2D(this.document);
+//        this.scaleFactor = 1.0D;
+//        this.trans = new AffineTransform();
+//        this.highlightedContour = null;
+//        this.highlightedZone = null;
+//        this.highlightedFoot = null;
+//        this.boundaryOffset = boundaryOffset;
+//        this.initComponents();
+//        this.resetDiagram(diagram);
+//        this.resizeContents();
+//
+//        this.targetMappings = targetMappings;
+//    }
+
+    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap, int boundaryOffset) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
         this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
@@ -57,25 +75,7 @@ public class ConceptDiagramsDrawer extends JPanel {
         this.resetDiagram(diagram);
         this.resizeContents();
 
-        this.targetMappings = targetMappings;
-    }
-
-    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, ConcreteArrowEnd> targetMappings, HashMap<String, Ellipse2D> circleMap, int boundaryOffset) {
-        this.domImpl = GenericDOMImplementation.getDOMImplementation();
-        this.svgNS = "http://www.w3.org/2000/svg";
-        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
-        this.svgGenerator = new SVGGraphics2D(this.document);
-        this.scaleFactor = 1.0D;
-        this.trans = new AffineTransform();
-        this.highlightedContour = null;
-        this.highlightedZone = null;
-        this.highlightedFoot = null;
-        this.boundaryOffset = boundaryOffset;
-        this.initComponents();
-        this.resetDiagram(diagram);
-        this.resizeContents();
-
-        this.targetMappings = targetMappings;
+//        this.targetMappings = targetMappings;
         this.circleMap = circleMap;
     }
 
@@ -89,7 +89,7 @@ public class ConceptDiagramsDrawer extends JPanel {
         return targetMappings;
     }
 
-    HashMap<String, Ellipse2D> getCircleMap() {
+    HashMap<String, Ellipse2D.Double> getCircleMap() {
         return circleMap;
     }
 
@@ -141,8 +141,9 @@ public class ConceptDiagramsDrawer extends JPanel {
 
                 g.setColor(col);
                 transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
-                targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() - (tmpCircle.getHeight()/2) + getY() + getCenteringTranslationY()));
-                circleMap.put(cc.ac.getLabel(), tmpCircle);
+//                targetMappings.put(cc.ac.getLabel(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() - (tmpCircle.getHeight()/2) + getY() + getCenteringTranslationY()));
+//                circleMap.put(cc.ac.getLabel(), tmpCircle);
+                circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() +getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
                 g2d.draw(tmpCircle);
 
                 if (cc.ac.getLabel() != null) {
@@ -199,8 +200,9 @@ public class ConceptDiagramsDrawer extends JPanel {
                     }
 
                     g2d.fill(tmpCircle);
-                    targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getCenteringTranslationY()));
-                    circleMap.put(foot.getSpider().as.getName(), tmpCircle);
+//                    targetMappings.put(foot.getSpider().as.getName(), new ConcreteArrowEnd(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getCenteringTranslationY()));
+//                    circleMap.put(foot.getSpider().as.getName(), tmpCircle);
+                    circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() +getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
                     if (this.getHighlightedFoot() == foot) {
                         g2d.setColor(oldColor2);
                     }
