@@ -8,20 +8,20 @@ import java.util.*;
 
 public class AbstractConceptDiagramDescription extends AbstractDescription {
     private Set<AbstractArrow> m_arrows;
-    private HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> m_spiderDiagrams;
+    private HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> m_COPs;
 
     public AbstractConceptDiagramDescription() {
         super();
         m_arrows = new TreeSet<>();
     }
 
-    public AbstractConceptDiagramDescription(HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> primarySpiderDiagrams, Set<AbstractArrow> arrows) {
-        m_spiderDiagrams = primarySpiderDiagrams;
+    public AbstractConceptDiagramDescription(HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> COPDescriptionMap, Set<AbstractArrow> arrows) {
+        m_COPs = COPDescriptionMap;
         m_arrows = arrows;
     }
 
-    public HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> getSpiderDescriptions() {
-        return m_spiderDiagrams;
+    public HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> getCOPs() {
+        return m_COPs;
     }
 
     public Set<AbstractArrow> getArrowDescriptions() {

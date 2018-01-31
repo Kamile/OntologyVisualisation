@@ -11,15 +11,10 @@ import java.util.List;
 
 import static speedith.i18n.Translations.i18n;
 
-/**
- * Basic concept diagram that is just a set of primary spider
- * diagrams with no arrows.
- */
 public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
 
     public static final String CDTextBasicId = "ConceptDiagram";
-
-    public static final String CDTextSpiderDiagramAttribute = "spider_diagrams";
+    public static final String CDTextCOPDiagramAttribute = "COPs";
     public static final String CDTextArrowsAttribute = "arrows";
 
     private static final long serialVersionUID = -23423534656432L;
@@ -27,10 +22,9 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
     private ArrayList<Arrow> arrows;
     private boolean hashInvalid = true;
     private int hash;
-    private Boolean valid;
 
-    ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> sds) {
-        setClassObjectPropertyDiagrams(sds);
+    ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs) {
+        setClassObjectPropertyDiagrams(COPs);
         this.arrows = new ArrayList<>();
     }
 
@@ -45,7 +39,7 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
 
     public List<Arrow> getArrows() {
         if (arrows != null) {
-            return Collections.unmodifiableList(arrows);
+            return arrows;
         } else {
             return new ArrayList<>();
         }
@@ -116,7 +110,7 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
     }
 
     private void printArg(Appendable sb, int i) throws IOException {
-        sb.append(CDTextSpiderDiagramAttribute).append(Integer.toString(i)).append(" = ");
+        sb.append(CDTextCOPDiagramAttribute).append(Integer.toString(i)).append(" = ");
         classObjectPropertyDiagrams.get(i-1).toString(sb);
     }
 

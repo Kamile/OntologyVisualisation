@@ -1,24 +1,46 @@
 package lang;
 
-import speedith.core.lang.SpiderDiagram;
+import propity.util.Sets;
+import speedith.core.i18n.Translations;
+import speedith.core.lang.*;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 
 import static speedith.i18n.Translations.i18n;
 
 public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropertyDiagram>, Serializable {
-    private ArrayList<SpiderDiagram> spiderDiagrams;
-    private boolean hashInvalid;
-    private int hash;
+    private static final long serialVersionUID = -4328162983982834123L;
+    private final TreeSet<String> spiders;
+    private final TreeMap<String, Region> spiderHabitatsMap;
+    private final TreeSet<Zone> shadedZones;
+    private final TreeSet<Zone> presentZones;
+    private final TreeSet<Arrow> arrows;
+    private Boolean valid;
 
-    public ClassObjectPropertyDiagram(ArrayList<SpiderDiagram> spiderDiagrams) {
-        this.spiderDiagrams = spiderDiagrams;
+    public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows) {
+        if (spiders != null && !spiders.isEmpty()) {
+            if (habitats != null && !Sets.isNaturalSubset(habitats.navigableKeySet(), spiders)) {
+                throw new IllegalArgumentException(Translations.i18n("ERR_SD_HABITATS_WITHOUT_SPIDERS"));
+            }
+        } else if (habitats != null && !habitats.isEmpty()) {
+            throw new IllegalArgumentException(Translations.i18n("ERR_SD_HABITATS_WITHOUT_SPIDERS"));
+        }
+
+        this.spiders = spiders == null ? new TreeSet() : spiders;
+        this.spiderHabitatsMap = habitats == null ? new TreeMap() : habitats;
+        this.shadedZones = shadedZones == null ? new TreeSet() : shadedZones;
+        this.presentZones = presentZones == null ? new TreeSet() : presentZones;
+        this.arrows = arrows == null ? new TreeSet() : arrows;
     }
 
-    public ArrayList<SpiderDiagram> getSpiderDiagrams() {
-        return spiderDiagrams;
+    public SpiderDiagram getSpiderDiagram() {
+        return SpiderDiagrams.createPrimarySD(spiders, spiderHabitatsMap, shadedZones, presentZones);
+    }
+
+    public List<Arrow> getArrows() {
+        return new ArrayList<>(arrows);
     }
 
     @Override
@@ -27,12 +49,8 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
     }
 
     public boolean isValid() {
-        for (SpiderDiagram sd: getSpiderDiagrams()) {
-            if (!sd.isValid()) {
-                return false;
-            }
-        }
-        return true;
+        valid = getSpiderDiagram().isValid();
+        return valid;
     }
 
     public void toString(Appendable sb) {
@@ -40,13 +58,14 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
             if (sb == null) {
                 throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "sb"));
             }
-            sb.append("(");
-            for (SpiderDiagram sd: spiderDiagrams) {
-                sb.append(sd.toString());
+            sb.append(getSpiderDiagram().toString());
+            sb.append(",");
+            sb.append("arrows= [");
+            for (Arrow a: arrows) {
+                sb.append(a.toString());
                 sb.append(", ");
             }
-
-            sb.append(")");
+            sb.append("]");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -58,4 +77,5 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
         toString(sb);
         return sb.toString();
     }
+
 }

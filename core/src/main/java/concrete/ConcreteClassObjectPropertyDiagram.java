@@ -1,19 +1,15 @@
 package concrete;
 
-import icircles.concreteDiagram.CircleContour;
-import icircles.concreteDiagram.ConcreteDiagram;
-import icircles.concreteDiagram.ConcreteSpider;
-import icircles.concreteDiagram.ConcreteZone;
-
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
+import icircles.concreteDiagram.*;
+import java.util.Set;
 
 public class ConcreteClassObjectPropertyDiagram extends ConcreteDiagram {
+    private ConcreteDiagram cd;
+    public Set<ConcreteArrow> arrows;
 
-    ArrayList<ConcreteArrow> arrows;
-    public ConcreteClassObjectPropertyDiagram(Rectangle2D.Double box, ArrayList<CircleContour> circles, ArrayList<ConcreteZone> shadedZones, ArrayList<ConcreteZone> unshadedZones, ArrayList<ConcreteSpider> spiders,
-                                              ArrayList<ConcreteArrow> arrows) {
-        super(box, circles, shadedZones, unshadedZones, spiders);
+    public ConcreteClassObjectPropertyDiagram(ConcreteDiagram cd, Set<ConcreteArrow> arrows) {
+        super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
+        this.cd = cd;
         this.arrows = arrows;
     }
 }

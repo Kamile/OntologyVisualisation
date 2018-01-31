@@ -1,5 +1,6 @@
 package gui;
 
+import concrete.ConcreteClassObjectPropertyDiagram;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
 
@@ -18,13 +19,20 @@ public class DiagramPanel extends JPanel {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
 
-    private Set<ConcreteDiagram> spiderDiagrams;
+//    private Set<ConcreteDiagram> spiderDiagrams;
+    private Set<ConcreteClassObjectPropertyDiagram> COPDiagrams;
     private HashMap<String, Ellipse2D.Double> circleMap;
 
-    public DiagramPanel(Set<ConcreteDiagram> spiderDiagrams) {
+//    public DiagramPanel(Set<ConcreteDiagram> spiderDiagrams) {
+//        circleMap = new HashMap<>();
+//        initComponents();
+//        setDiagrams(spiderDiagrams);
+//    }
+
+    public DiagramPanel(Set<ConcreteClassObjectPropertyDiagram> COPDiagrams) {
         circleMap = new HashMap<>();
         initComponents();
-        setDiagrams(spiderDiagrams);
+        setDiagrams(COPDiagrams);
     }
 
     private void initComponents() {
@@ -40,11 +48,27 @@ public class DiagramPanel extends JPanel {
         this.add(errorLabel);
     }
 
-    public final void setDiagrams(Set<ConcreteDiagram> diagrams) {
-        if (spiderDiagrams != diagrams) {
-            spiderDiagrams = diagrams;
+//    public final void setDiagrams(Set<ConcreteDiagram> diagrams) {
+//        if (spiderDiagrams != diagrams) {
+//            spiderDiagrams = diagrams;
+//            this.removeAll();
+//            if (spiderDiagrams != null) {
+//                try {
+//                    drawDiagrams();
+//                } catch (CannotDrawException e) {
+//                    drawErrorLabel();
+//                }
+//            }
+//            validate();
+//            repaint();
+//        }
+//    }
+
+    public final void setDiagrams(Set<ConcreteClassObjectPropertyDiagram> diagrams) {
+        if (COPDiagrams != diagrams) {
+            COPDiagrams = diagrams;
             this.removeAll();
-            if (spiderDiagrams != null) {
+            if (COPDiagrams != null) {
                 try {
                     drawDiagrams();
                 } catch (CannotDrawException e) {
@@ -56,11 +80,24 @@ public class DiagramPanel extends JPanel {
         }
     }
 
+//    private void drawDiagrams() throws CannotDrawException {
+//        if (spiderDiagrams != null) {
+//            this.setLayout(new GridLayout(1, 0));
+//            for (ConcreteDiagram cd : spiderDiagrams) {
+//                COPDiagramsDrawer panel = new COPDiagramsDrawer(cd, circleMap);
+//                circleMap.putAll(panel.getCircleMap());
+//                panel.setBorder(BorderFactory.createEmptyBorder());
+//                panel.setVisible(true);
+//                add(panel);
+//            }
+//        }
+//    }
+
     private void drawDiagrams() throws CannotDrawException {
-        if (spiderDiagrams != null) {
+        if (COPDiagrams != null) {
             this.setLayout(new GridLayout(1, 0));
-            for (ConcreteDiagram cd : spiderDiagrams) {
-                ConceptDiagramsDrawer panel = new ConceptDiagramsDrawer(cd, circleMap);
+            for (ConcreteClassObjectPropertyDiagram cop : COPDiagrams) {
+                COPDiagramsDrawer panel = new COPDiagramsDrawer(cop, circleMap);
                 circleMap.putAll(panel.getCircleMap());
                 panel.setBorder(BorderFactory.createEmptyBorder());
                 panel.setVisible(true);

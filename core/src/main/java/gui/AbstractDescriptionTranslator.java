@@ -1,6 +1,7 @@
 package gui;
 
 import abstractDescription.AbstractArrow;
+import abstractDescription.AbstractCOPDescription;
 import abstractDescription.AbstractConceptDiagramDescription;
 import icircles.abstractDescription.AbstractBasicRegion;
 import icircles.abstractDescription.AbstractCurve;
@@ -17,43 +18,33 @@ import speedith.ui.DiagramVisualisation;
 
 import java.util.*;
 
+/* Modified version of DiagramVisualisation from Speedith */
 public class AbstractDescriptionTranslator {
-    private static final int DEFAULT_DIAGRAM_SIZE = 500;
     private static Set<AbstractCurve> contours;
     private static Set<String> spiders;
-    private static Set<String> boundaryRectangles;
-    private static HashMap<ClassObjectPropertyDiagram, Set<AbstractDescription>> boundaryDescriptions;
     private static Map<String, AbstractBasicRegion> spiderMap;
     private static HashMap<String, AbstractCurve> contourMap;
+    private static HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> COPDescriptionMap;
 
     private AbstractDescriptionTranslator() {
     }
 
-    public static AbstractConceptDiagramDescription getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {
-        Set<AbstractDescription> abstractSDDescriptions = new HashSet<>();
-        Set<AbstractArrow> abstractArrows = new HashSet<>();
+    static AbstractCOPDescription getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
+        PrimarySpiderDiagram sd = (PrimarySpiderDiagram) COPDiagram.getSpiderDiagram();
+        AbstractDescription ad = DiagramVisualisation.getAbstractDescription(sd);
+
         contours = new HashSet<>();
-        boundaryRectangles = new HashSet<>();
-        boundaryDescriptions = new HashMap<>();
         spiders = new HashSet<>();
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
 
-        List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = cd.getClassObjectPropertyDiagrams();
-        for (ClassObjectPropertyDiagram br : classObjectPropertyDiagrams) {
-            for (SpiderDiagram sd : br.getSpiderDiagrams()) {
-                AbstractDescription ad = DiagramVisualisation.getAbstractDescription((PrimarySpiderDiagram) sd);
-                abstractSDDescriptions.add(ad);
-                contours.addAll(ad.getCopyOfContours());
-                createContourMap();
-                spiderMap.putAll(getSpiderMaps((PrimarySpiderDiagram) sd));
-                spiders.addAll(((PrimarySpiderDiagram) sd).getSpiders());
-            }
-            boundaryDescriptions.put(br, abstractSDDescriptions);
-            abstractSDDescriptions = new HashSet<>();
-        }
+        contours.addAll(ad.getCopyOfContours());
+        createContourMap();
+        spiderMap.putAll(getSpiderMaps(sd));
+        spiders.addAll((sd).getSpiders());
 
-        List<Arrow> arrows = cd.getArrows();
+        Set<AbstractArrow> abstractArrows = new HashSet<>();
+        List<Arrow> arrows = COPDiagram.getArrows();
         if (arrows != null) {
             for (Arrow a : arrows) {
                 String label = a.getLabel();
@@ -72,7 +63,44 @@ public class AbstractDescriptionTranslator {
                 }
             }
         }
-        return new AbstractConceptDiagramDescription(boundaryDescriptions, abstractArrows);
+
+        return new AbstractCOPDescription(ad, abstractArrows);
+    }
+
+    public static AbstractConceptDiagramDescription getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {
+        Set<AbstractArrow> abstractArrows = new HashSet<>();
+        contours = new HashSet<>();
+        COPDescriptionMap = new HashMap<>();
+        spiders = new HashSet<>();
+        spiderMap = new TreeMap<>();
+        contourMap = new HashMap<>();
+
+        List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = cd.getClassObjectPropertyDiagrams();
+
+        for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
+            COPDescriptionMap.put(cop, getAbstractDescription(cop));
+        }
+
+        List<Arrow> arrows = cd.getArrows(); // need contour map from
+        if (arrows != null) {
+            for (Arrow a : arrows) {
+                String label = a.getLabel();
+                boolean isAnon = a.isDashed();
+                boolean isSourceContour = isContour(a.getSource());
+                boolean isTargetContour = isContour(a.getTarget());
+
+                if (isSourceContour && isTargetContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget())));
+                } else if (isSourceContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget())));
+                } else if (isTargetContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget())));
+                } else {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget())));
+                }
+            }
+        }
+        return new AbstractConceptDiagramDescription(COPDescriptionMap, abstractArrows);
     }
 
     private static void createContourMap() {

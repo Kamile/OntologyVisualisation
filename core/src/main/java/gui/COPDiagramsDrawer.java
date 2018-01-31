@@ -1,5 +1,6 @@
 package gui;
 
+import concrete.ConcreteClassObjectPropertyDiagram;
 import icircles.concreteDiagram.*;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class ConceptDiagramsDrawer extends JPanel {
+public class COPDiagramsDrawer extends JPanel {
     private static final BasicStroke DEFAULT_CONTOUR_STROKE = new BasicStroke(2.0F);
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(3.5F);
     private static final Color HIGHLIGHT_LEG_COLOUR;
@@ -30,7 +31,7 @@ public class ConceptDiagramsDrawer extends JPanel {
     private String svgNS;
     private Document document;
     private SVGGraphics2D svgGenerator;
-    private ConcreteDiagram diagram;
+    private ConcreteClassObjectPropertyDiagram diagram;
     private double scaleFactor;
     private AffineTransform trans;
     private CircleContour highlightedContour;
@@ -39,7 +40,7 @@ public class ConceptDiagramsDrawer extends JPanel {
 
     private HashMap<String, Ellipse2D.Double> circleMap;
 
-    public ConceptDiagramsDrawer(ConcreteDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
+    public COPDiagramsDrawer(ConcreteClassObjectPropertyDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
         this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
@@ -193,8 +194,6 @@ public class ConceptDiagramsDrawer extends JPanel {
                 transformCircle(this.scaleFactor, this.getHighlightedContour().getCircle(), tmpCircle);
                 g2d.draw(tmpCircle);
             }
-
-            // TODO: draw arrows with SDs.
         }
     }
 
@@ -260,7 +259,7 @@ public class ConceptDiagramsDrawer extends JPanel {
         }
     }
 
-    private void resetDiagram(ConcreteDiagram diagram) {
+    private void resetDiagram(ConcreteClassObjectPropertyDiagram diagram) {
         this.diagram = diagram;
         if (diagram == null) {
             this.setPreferredSize((Dimension)null);

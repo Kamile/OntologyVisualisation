@@ -250,19 +250,26 @@ public class MainForm extends JFrame {
     public static ConceptDiagram getExampleA() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    spider_diagrams = [\n" +
-                    "        (PrimarySD {\n" +
-                    "            spiders = [\"c\"],\n" +
-                    "            habitats = [(\"c\", [([\"C4\"],[])])],\n" +
-                    "            sh_zones = [],\n" +
-                    "            present_zones = [([], [\"C4\"]), ([\"C4\"], [])]},\n" +
+                    "    COPs = [\n" +
                     "        PrimarySD {\n" +
-                    "            spiders = [\"_1\", \"_2\"],\n" +
-                    "            habitats = [(\"_1\", [([\"C5\", \"_anon\"],[])]), (\"_2\", [([\"C5\", \"_anon\"],[])])],\n" +
-                    "            sh_zones = [([\"_anon\"], [\"C5\"])],\n" +
-                    "            present_zones = [([\"_anon\", \"C5\"], []), ([\"C5\"], [\"_anon\"]), ([], [\"_anon\", \"C5\"])]}\n" +
-                    "    )],\n" +
-                    "\tarrows = [(\"op\", \"c\", \"_anon\")]\n" +
+                    "            spiders = [\"c\", \"_1\", \"_2\"],\n" +
+                    "            habitats = [\n" +
+                    "                (\"c\", [([\"C4\"],[\"_anon\", \"C5\"])]),\n" +
+                    "                (\"_1\", [([\"C5\", \"_anon\"],[\"C4\"])]),\n" +
+                    "                (\"_2\", [([\"C5\", \"_anon\"],[\"C4\"])])],\n" +
+                    "            sh_zones = [\n" +
+                    "                ([\"C4\", \"C5\", \"_anon\"],[]),\n" +
+                    "                ([\"_anon\"],[\"C4\", \"C5\"]),\n" +
+                    "                ([\"_anon\", \"C4\"],[\"C5\"]),\n" +
+                    "                ([\"C4\", \"C5\"], [\"_anon\"])],\n" +
+                    "            present_zones = [\n" +
+                    "                ([], [\"C4\", \"C5\", \"_anon\"]),\n" +
+                    "                ([\"C5\"], [\"C4\", \"_anon\"]),\n" +
+                    "                ([\"C5\", \"_anon\"], [\"C4\"]),\n" +
+                    "                ([\"C4\"],[\"C5\", \"_anon\"])]\n" +
+                    "        }\n" +
+                    "    ],\n" +
+                    "\tarrows = [(\"op\", \"C4\", \"_anon\", \"leq\", \"2\", \"true\")]\n" +
                     "}");
         } catch (Exception ex) {
             throw new RuntimeException();
@@ -272,17 +279,17 @@ public class MainForm extends JFrame {
     public static ConceptDiagram getExampleB() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    spider_diagrams = [\n" +
-                    "        (PrimarySD {\n" +
+                    "    COPs = [\n" +
+                    "        PrimarySD {\n" +
                     "            spiders = [],\n" +
                     "            habitats = [],\n" +
                     "            sh_zones = [],\n" +
-                    "            present_zones = [([], [\"CE\"]), ([\"CE\"], [])]}),\n" +
-                    "        (PrimarySD {\n" +
+                    "            present_zones = [([], [\"CE\"]), ([\"CE\"], [])]},\n" +
+                    "        PrimarySD {\n" +
                     "            spiders = [],\n" +
                     "            habitats = [],\n" +
                     "            sh_zones = [([\"_anon\"], [])],\n" +
-                    "            present_zones = [([], [\"_anon\"])]})\n" +
+                    "            present_zones = [([], [\"_anon\"])]}\n" +
                     "    ],\n" +
                     "\tarrows = [(\"op-\", \"CE\", \"_anon\")]\n" +
                     "}\n");
@@ -294,12 +301,12 @@ public class MainForm extends JFrame {
     public static ConceptDiagram getExampleC() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    spider_diagrams = [\n" +
-                    "        (PrimarySD {\n" +
+                    "    COPs = [\n" +
+                    "        PrimarySD {\n" +
                     "            spiders = [\"a\"],\n" +
                     "            sh_zones = [],\n" +
                     "            habitats = [(\"a\", [([\"C1\"], [\"C2\"])])],\n" +
-                    "            present_zones=[([\"C2\"],[\"C1\"]), ([\"C1\"],[\"C2\"]), ([],[\"C1\", \"C2\"]), ([\"C1\", \"C2\"],[])]})\n" +
+                    "            present_zones=[([\"C2\"],[\"C1\"]), ([\"C1\"],[\"C2\"]), ([],[\"C1\", \"C2\"]), ([\"C1\", \"C2\"],[])]}\n" +
                     "    ],\n" +
                     "\tarrows = []\n" +
                     "}");
@@ -311,8 +318,8 @@ public class MainForm extends JFrame {
     public static ConceptDiagram getExampleD() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    spider_diagrams = [\n" +
-                    "        (PrimarySD {\n" +
+                    "    COPs = [\n" +
+                    "        PrimarySD {\n" +
                     "            spiders = [],\n" +
                     "            sh_zones = [\n" +
                     "                ([\"DT\"], [\"DR1\", \"DR2\"]),\n" +
@@ -325,7 +332,7 @@ public class MainForm extends JFrame {
                     "                ([\"DR1\", \"DT\"],[\"DR2\"]),\n" +
                     "                ([],[\"DT\", \"DR1\", \"DR2\"]),\n" +
                     "                ([\"DT\", \"DR1\", \"DR2\"],[])]\n" +
-                    "        })\n" +
+                    "        }\n" +
                     "    ],\n" +
                     "\tarrows = []\n" +
                     "}\n");

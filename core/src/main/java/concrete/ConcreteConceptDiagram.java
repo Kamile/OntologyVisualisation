@@ -1,7 +1,6 @@
 package concrete;
 
 import abstractDescription.AbstractConceptDiagramDescription;
-import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
 import lang.ClassObjectPropertyDiagram;
 
@@ -24,18 +23,18 @@ import java.util.Set;
  * -- Arrows (dashed/solid, labelled/unlabelled), representing semantics about
  *    binary relations.
  */
-public class ConcreteConceptDiagram{
+public class ConcreteConceptDiagram {
 
     private Set<ConcreteArrow> arrows;
-    private HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> spiderDiagrams;
+    private HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> COPDiagrams;
 
-    public ConcreteConceptDiagram(HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> concreteSpiderDiagrams, Set<ConcreteArrow>  concreteArrows) {
-        spiderDiagrams = concreteSpiderDiagrams;
+    public ConcreteConceptDiagram(HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> concreteCOPDiagrams, Set<ConcreteArrow>  concreteArrows) {
+        COPDiagrams = concreteCOPDiagrams;
         arrows = concreteArrows;
     }
 
-    public HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> getBoundarySpiderDiagramMapping() {
-        return spiderDiagrams;
+    public HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> getCOPMapping() {
+        return COPDiagrams;
     }
 
     public Set<ConcreteArrow> getArrows() {

@@ -1,7 +1,7 @@
 package gui;
 
 import abstractDescription.AbstractConceptDiagramDescription;
-import concrete.ConcreteArrowEnd;
+import concrete.ConcreteClassObjectPropertyDiagram;
 import concrete.ConcreteConceptDiagram;
 import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.util.CannotDrawException;
@@ -12,6 +12,7 @@ import lang.ClassObjectPropertyDiagram;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,6 @@ public class BoundaryPanel extends JPanel {
 
     private ArrowPanel arrowPanel;
     private ConceptDiagram conceptDiagram;
-    private HashMap<String, ConcreteArrowEnd> targetMappings;
     private HashMap<String, Ellipse2D.Double> circleMap;
     private List<Arrow> arrows;
 
@@ -38,7 +38,6 @@ public class BoundaryPanel extends JPanel {
 
     /**
      * Create panel visualising given Concept Diagram
-     *
      * @param cd
      */
     public BoundaryPanel(ConceptDiagram cd) {
@@ -90,25 +89,33 @@ public class BoundaryPanel extends JPanel {
             arrows = conceptDiagram.getArrows();
             this.setLayout(new GridLayout(1, 0));
 
-            AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription((ConceptDiagram) conceptDiagram);
+            AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription(conceptDiagram);
             final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
             circleMap = new HashMap<>();
 
-            HashMap<ClassObjectPropertyDiagram, Set<ConcreteDiagram>> mapping = ccd.getBoundarySpiderDiagramMapping();
-            for (ClassObjectPropertyDiagram br : mapping.keySet()) {
-                final DiagramPanel dp = new DiagramPanel(mapping.get(br));
+            HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> mapping = ccd.getCOPMapping();
 
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        circleMap.putAll(dp.getCircleMap());
-                    }
-                });
-                dp.setVisible(true);
-                dp.setBorder(BorderFactory.createLineBorder(new Color(2,0, 113)));
-                add(dp);
+            for (ClassObjectPropertyDiagram cop: mapping.keySet()) {
+                arrows.addAll(cop.getArrows());
             }
 
+            if (mapping.values().size() > 0) {
+                this.setLayout(new GridLayout(1, 0));
+                for (ConcreteClassObjectPropertyDiagram concreteCOP : mapping.values()) {
+                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            circleMap.putAll(panel.getCircleMap());
+                        }
+                    });
+                    circleMap.putAll(panel.getCircleMap());
+                    panel.setBorder(BorderFactory.createLineBorder(new Color(2,0, 113)));
+                    panel.setVisible(true);
+
+                    add(panel);
+                }
+            }
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {

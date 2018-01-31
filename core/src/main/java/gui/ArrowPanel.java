@@ -100,7 +100,7 @@ public class ArrowPanel extends JComponent {
                 }
 
                 // TODO: ensure text doesn't cover any components using check over rectangular region.
-                g2d.drawString(label, (int) midX, (int) (midY - 2*offset));
+                g2d.drawString(label, (int) (midX - offset), (int) (midY - 2*offset));
             }
         }
     }
@@ -109,7 +109,7 @@ public class ArrowPanel extends JComponent {
         return Math.floor(Math.random()*31 + 10);
     }
 
-    private String getLabel(Arrow a) {
+    public static String getLabel(Arrow a) {
         String label = a.getLabel();
 
         if (a.getCardinalityOperator() != null) {
@@ -123,7 +123,7 @@ public class ArrowPanel extends JComponent {
         return label;
     }
 
-    private String getOperator(String operator) {
+    public static String getOperator(String operator) {
         operator = operator.toLowerCase();
         switch (operator) {
             case "leq":
@@ -135,7 +135,7 @@ public class ArrowPanel extends JComponent {
         }
     }
 
-    public List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
+    public static List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
         // array holds source intersection then target intersection
         List<Point2D.Double> intersections = new ArrayList<>();
 
@@ -213,14 +213,14 @@ public class ArrowPanel extends JComponent {
         return intersections;
     }
 
-    private double getC(double gradient, double x, double y) {
+    public static double getC(double gradient, double x, double y) {
         if (gradient < 1 && gradient > -1) {
             return y;
         }
         return y - gradient*x;
     }
 
-    private double getGradient(double x1, double y1, double x2, double y2) {
+    public static double getGradient(double x1, double y1, double x2, double y2) {
         double gradient = (y2-y1)/(x2-x1);
         if (gradient < 1 && gradient > -1) {
             return 0;
@@ -228,7 +228,7 @@ public class ArrowPanel extends JComponent {
         return gradient;
     }
 
-    private double solveForXPositive(double a, double b, double c) {
+    public static double solveForXPositive(double a, double b, double c) {
         if (b*b-4*a*c >= 0) {
             return (-b + Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
         } else {
@@ -236,7 +236,7 @@ public class ArrowPanel extends JComponent {
         }
     }
 
-    private double solveForXNegative(double a, double b, double c) {
+    public static double solveForXNegative(double a, double b, double c) {
         if (b*b-4*a*c >= 0) {
             return (-b - Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
         } else {
@@ -245,7 +245,7 @@ public class ArrowPanel extends JComponent {
     }
 
     // Find coordinates of intersection where we take either positive or negative root in quadratic equation
-    private Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive)  {
+    public static Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive)  {
         double a;
         double b;
         double c;

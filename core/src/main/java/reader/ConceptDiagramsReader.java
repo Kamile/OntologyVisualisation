@@ -16,11 +16,11 @@ import java.util.*;
 
 import static i18n.Translations.i18n;
 import static lang.ConceptDiagram.CDTextArrowsAttribute;
-import static lang.ConceptDiagram.CDTextSpiderDiagramAttribute;
+import static lang.ConceptDiagram.CDTextCOPDiagramAttribute;
 import static speedith.core.lang.PrimarySpiderDiagram.*;
+
 import reader.ConceptDiagramsParser;
 import reader.ConceptDiagramsLexer;
-
 
 /**
  * Read text representation of Concept Diagram and create a
@@ -331,12 +331,14 @@ public class ConceptDiagramsReader {
         }
     }
 
-    private static abstract class GeneralSDTranslator<V extends SpiderDiagram> extends ElementTranslator<V> {
+    /** END methods from SpiderDiagramsReader **/
+
+    private static abstract class GeneralCOPTranslator<V extends ClassObjectPropertyDiagram> extends ElementTranslator<V> {
 
         private GeneralMapTranslator<Object> keyValueMapTranslator;
         private TreeSet<String> mandatoryAttributes;
 
-        private GeneralSDTranslator(int headTokenType) {
+        private GeneralCOPTranslator(int headTokenType) {
             keyValueMapTranslator = new GeneralMapTranslator<>(headTokenType, new HashMap<String, ElementTranslator<? extends Object>>(), null);
         }
 
@@ -371,39 +373,39 @@ public class ConceptDiagramsReader {
         public V fromASTNode(CommonTree treeNode) throws ReadingException {
             Map<String, Map.Entry<Object, CommonTree>> attrs = keyValueMapTranslator.fromASTNode(treeNode);
             if (areMandatoryPresent(attrs)) {
-                return createSD(attrs, treeNode);
+                return createClassObjectPropertyDiagram(attrs, treeNode);
             } else {
                 throw new ReadingException(i18n("ERR_TRANSLATE_MISSING_ELEMENTS", keyValueMapTranslator.typedValueTranslators.keySet()), treeNode);
             }
         }
 
-        abstract V createSD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException;
+        abstract V createClassObjectPropertyDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException;
     }
 
-    private static class SDTranslator extends ElementTranslator<SpiderDiagram> {
+    private static class ClassObjectPropertyTranslator extends ElementTranslator<ClassObjectPropertyDiagram> {
 
-        public static final SDTranslator Instance = new SDTranslator();
+        public static final ClassObjectPropertyTranslator Instance = new ClassObjectPropertyTranslator();
 
-        private SDTranslator() {
+        private ClassObjectPropertyTranslator() {
         }
 
         @Override
-        public SpiderDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
+        public ClassObjectPropertyDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
                 case ConceptDiagramsParser.SD_PRIMARY:
-                    return PrimarySDTranslator.Instance.fromASTNode(treeNode);
-                case ConceptDiagramsParser.SD_NULL:
-                    return NullSDTranslator.Instance.fromASTNode(treeNode);
+                    return COPTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
             }
         }
     }
 
-    private static class PrimarySDTranslator extends GeneralSDTranslator<PrimarySpiderDiagram> {
-        public static final PrimarySDTranslator Instance = new PrimarySDTranslator();
 
-        private PrimarySDTranslator() {
+
+    private static class COPTranslator extends GeneralCOPTranslator<ClassObjectPropertyDiagram> {
+        public static final COPTranslator Instance = new COPTranslator();
+
+        private COPTranslator() {
             super(ConceptDiagramsParser.SD_PRIMARY);
             addMandatoryAttribute(SDTextSpidersAttribute, ListTranslator.StringListTranslator);
             addMandatoryAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
@@ -414,42 +416,15 @@ public class ConceptDiagramsReader {
 
         @Override
         @SuppressWarnings("unchecked")
-        PrimarySpiderDiagram createSD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
+        ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
-            // TODO: re-implement SpiderDiagrams for COPs.
-            return SpiderDiagrams.createPrimarySDNoCopy((Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
+            Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(CDTextArrowsAttribute);
+
+            return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoClassObjectPropertyy((Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
-                    presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey());
-        }
-    }
-
-    private static class NullSDTranslator extends GeneralSDTranslator<NullSpiderDiagram> {
-        public static final NullSDTranslator Instance = new NullSDTranslator();
-        private NullSDTranslator() {
-            super(ConceptDiagramsParser.SD_NULL);
-        }
-
-        @Override
-        NullSpiderDiagram createSD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            return NullSpiderDiagram.getInstance();
-        }
-    }
-
-    /** END methods from SpiderDiagramsReader **/
-
-    private static class SpiderListTranslator extends ElementTranslator<ClassObjectPropertyDiagram> {
-        public static final SpiderListTranslator Instance = new SpiderListTranslator();
-        private ListTranslator<SpiderDiagram> translator;
-
-        private SpiderListTranslator() {
-            translator = new ListTranslator<>(ConceptDiagramsParser.SLIST, SDTranslator.Instance);
-        }
-
-        @Override
-        public ClassObjectPropertyDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
-            ArrayList<SpiderDiagram> spiders = translator.fromASTNode(treeNode);
-            return new ClassObjectPropertyDiagram(spiders);
+                    presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey(),
+                    arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey());
         }
     }
 
@@ -551,14 +526,14 @@ public class ConceptDiagramsReader {
 
         private BasicCDTranslator() {
             super(reader.ConceptDiagramsParser.CD);
-            addMandatoryAttribute(CDTextSpiderDiagramAttribute, new ListTranslator<>(SpiderListTranslator.Instance));
+            addMandatoryAttribute(CDTextCOPDiagramAttribute, new ListTranslator<>(ClassObjectPropertyTranslator.Instance));
             addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
 
         @Override
         @SuppressWarnings("unchecked")
         ConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<ClassObjectPropertyDiagram>) attributes.get(CDTextSpiderDiagramAttribute).getKey(),
+            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<ClassObjectPropertyDiagram>) attributes.get(CDTextCOPDiagramAttribute).getKey(),
                     (ArrayList<Arrow>) attributes.get(CDTextArrowsAttribute).getKey());
         }
     }
