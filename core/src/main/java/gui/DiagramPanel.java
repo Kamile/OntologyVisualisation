@@ -9,6 +9,7 @@ import lang.ConceptDiagram;
 import lang.ClassObjectPropertyDiagram;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
@@ -84,10 +85,11 @@ public class DiagramPanel extends JPanel {
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
             arrows = conceptDiagram.getArrows();
+            this.setBorder(new EmptyBorder(20, 20, 20, 20));
             this.setLayout(new GridLayout(1, 0));
 
             AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription(conceptDiagram);
-            final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 300);
+            final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 350);
             circleMap = new HashMap<>();
 
             HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> mapping = ccd.getCOPMapping();
@@ -97,7 +99,7 @@ public class DiagramPanel extends JPanel {
             }
 
             if (mapping.values().size() > 0) {
-                this.setLayout(new GridLayout(1, 0));
+                this.setLayout(new GridLayout(1, 0, 75, 25));
                 for (ConcreteClassObjectPropertyDiagram concreteCOP : mapping.values()) {
                     final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
                     SwingUtilities.invokeLater(new Runnable() {
@@ -107,7 +109,7 @@ public class DiagramPanel extends JPanel {
                         }
                     });
                     circleMap.putAll(panel.getCircleMap());
-                    panel.setBorder(BorderFactory.createLineBorder(new Color(2,0, 113)));
+                    panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                     panel.setVisible(true);
 
                     add(panel);

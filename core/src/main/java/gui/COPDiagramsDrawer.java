@@ -77,7 +77,7 @@ public class COPDiagramsDrawer extends JPanel {
         } else {
             super.paint(g);
             g2d.setBackground(Color.white);
-            g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
+            g2d.drawRect(0,0,this.getWidth(), this.getHeight());
             g.translate(this.getCenteringTranslationX(), this.getCenteringTranslationY());
             Iterator var3 = this.diagram.getShadedZones().iterator();
 

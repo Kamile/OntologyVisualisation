@@ -533,8 +533,10 @@ public class ConceptDiagramsReader {
         @Override
         @SuppressWarnings("unchecked")
         ConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
+            Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(CDTextArrowsAttribute);
+
             return ConceptDiagrams.createBasicConceptDiagram((ArrayList<ClassObjectPropertyDiagram>) attributes.get(CDTextCOPDiagramAttribute).getKey(),
-                    (ArrayList<Arrow>) attributes.get(CDTextArrowsAttribute).getKey());
+                    arrowAttribute == null ? null : (ArrayList<Arrow>) arrowAttribute.getKey());
         }
     }
 }

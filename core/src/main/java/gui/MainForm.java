@@ -266,10 +266,10 @@ public class MainForm extends JFrame {
                     "                ([], [\"C4\", \"C5\", \"_anon\"]),\n" +
                     "                ([\"C5\"], [\"C4\", \"_anon\"]),\n" +
                     "                ([\"C5\", \"_anon\"], [\"C4\"]),\n" +
-                    "                ([\"C4\"],[\"C5\", \"_anon\"])]\n" +
+                    "                ([\"C4\"],[\"C5\", \"_anon\"])],\n" +
+                    "            arrows = [(\"op\", \"C4\", \"_anon\", \"leq\", \"2\", \"true\")]\n" +
                     "        }\n" +
-                    "    ],\n" +
-                    "\tarrows = [(\"op\", \"C4\", \"_anon\", \"leq\", \"2\", \"true\")]\n" +
+                    "    ]\n" +
                     "}");
         } catch (Exception ex) {
             throw new RuntimeException();
