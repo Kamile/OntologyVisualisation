@@ -30,7 +30,7 @@ public class MainForm extends JFrame {
     private JMenu openMenu;
     private JMenu saveMenu;
 
-    private BoundaryPanel boundaryPanel;
+    private DiagramPanel boundaryPanel;
     private ArrowPanel glassPanel;
     private JMenuBar menuBar;
 
@@ -39,7 +39,7 @@ public class MainForm extends JFrame {
     }
 
     private void initUI() {
-        boundaryPanel = new BoundaryPanel();
+        boundaryPanel = new DiagramPanel();
         glassPanel = new ArrowPanel();
 
         menuBar = new JMenuBar();

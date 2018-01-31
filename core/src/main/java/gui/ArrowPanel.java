@@ -49,7 +49,7 @@ public class ArrowPanel extends JComponent {
         Graphics2D g2d = (Graphics2D) g;
         g.translate(0, 22);
         g.setColor(new Color(10, 86, 0, 255));
-        g.setFont(new Font("Courier", Font.PLAIN, 16));
+        g.setFont(new Font("Courier", Font.PLAIN, 12));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (arrows != null && circleMap.keySet().size() > 0) {
@@ -67,7 +67,6 @@ public class ArrowPanel extends JComponent {
                 double gradient = getGradient(x1, y1, x2, y2);
 
                 double midX = x1 + (x2-x1)*0.65;
-//                double midX = (Math.min(x1, x2) + Math.abs(x2 - x1)/2);
                 double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
 
                 //get random control point
@@ -145,6 +144,9 @@ public class ArrowPanel extends JComponent {
         double y1 = source.getY();
         double y2 = target.getY();
         double gradient = getGradient(x1, y1 , x2, y2);
+
+
+
         double c = getC(gradient, x1, y1);
 
         // circles defined by same centre points + radius
@@ -154,13 +156,25 @@ public class ArrowPanel extends JComponent {
         System.out.println("target circle: (x - " + x2 + ")^2 + (y - " + y2 + ")^2 = " + targetRadius + "^2");
         System.out.println("line: y = " + gradient +"x + " + c);
 
-        // find intersection between source circle and line
-        Point2D.Double sourcePositive = findPoint(gradient, c, sourceRadius,  x1, y1, true);
-        Point2D.Double sourceNegative = findPoint(gradient, c, sourceRadius, x1, y1, false);
 
-        // find intersection between target circle and line
-        Point2D.Double targetPositive = findPoint(gradient, c, targetRadius,  x2, y2, true);
-        Point2D.Double targetNegative = findPoint(gradient, c, targetRadius, x2, y2, false);
+        Point2D.Double sourcePositive;
+        Point2D.Double sourceNegative;
+        Point2D.Double targetPositive;
+        Point2D.Double targetNegative;
+
+
+        // find intersection between source circle and line
+        if (gradient == Double.MAX_VALUE) {
+            sourcePositive = findPoint(sourceRadius, x1, y1, true);
+            sourceNegative = findPoint(sourceRadius, x1, y1, false);
+            targetPositive = findPoint(targetRadius, x2, y2, true);
+            targetNegative = findPoint(targetRadius, x2, y2, false);
+        } else {
+            sourcePositive = findPoint(gradient, c, sourceRadius,  x1, y1, true);
+            sourceNegative = findPoint(gradient, c, sourceRadius, x1, y1, false);
+            targetPositive = findPoint(gradient, c, targetRadius,  x2, y2, true);
+            targetNegative = findPoint(gradient, c, targetRadius, x2, y2, false);
+        }
 
         Point2D.Double closestSource;
         Point2D.Double closestTarget;
@@ -221,14 +235,18 @@ public class ArrowPanel extends JComponent {
     }
 
     public static double getGradient(double x1, double y1, double x2, double y2) {
-        double gradient = (y2-y1)/(x2-x1);
-        if (gradient < 1 && gradient > -1) {
+        double deltaX = x2 - x1;
+        double deltaY = y2 - y1;
+
+        if (deltaX < 1 && deltaX > -1) {
+            return Double.MAX_VALUE;
+        } else if (deltaY < 1 && deltaY > -1) {
             return 0;
         }
-        return gradient;
+        return deltaY/deltaX;
     }
 
-    public static double solveForXPositive(double a, double b, double c) {
+    public static double solveForPositiveDiscriminant(double a, double b, double c) {
         if (b*b-4*a*c >= 0) {
             return (-b + Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
         } else {
@@ -236,7 +254,7 @@ public class ArrowPanel extends JComponent {
         }
     }
 
-    public static double solveForXNegative(double a, double b, double c) {
+    public static double solveForNegativeDiscriminant(double a, double b, double c) {
         if (b*b-4*a*c >= 0) {
             return (-b - Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
         } else {
@@ -244,23 +262,48 @@ public class ArrowPanel extends JComponent {
         }
     }
 
+    /**
+     * Solve for Y where gradient and intercept are INFINITY
+     * @param radius
+     * @param x1
+     * @param y1
+     * @param positive
+     * @return
+     */
+    public static Point2D.Double findPoint(double radius, double x1, double y1, boolean positive) {
+        double a = 1;
+        double b = -2 * y1;
+        double c =  Math.pow((y1), 2) - Math.pow(radius, 2);
+
+        double y;
+
+        try {
+            if (positive) {
+                y = solveForPositiveDiscriminant(a, b, c);
+            } else {
+                y = solveForNegativeDiscriminant(a, b, c);
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Solution is imaginary");
+            return null;
+        }
+
+        return new Point2D.Double(x1, y);
+    }
+
     // Find coordinates of intersection where we take either positive or negative root in quadratic equation
     public static Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive)  {
-        double a;
-        double b;
-        double c;
-
-        a = Math.pow(gradient, 2) + 1;
-        b = 2 * gradient * (intercept - y1) - 2 * x1;
-        c = x1 * x1 + Math.pow((intercept - y1), 2) - Math.pow(radius, 2);
+        double a = Math.pow(gradient, 2) + 1;
+        double b = 2 * gradient * (intercept - y1) - 2 * x1;
+        double c = x1 * x1 + Math.pow((intercept - y1), 2) - Math.pow(radius, 2);
 
         double x;
 
         try {
             if (positive) {
-                x = solveForXPositive(a, b, c);
+                x = solveForPositiveDiscriminant(a, b, c);
             } else {
-                x = solveForXNegative(a, b, c);
+                x = solveForNegativeDiscriminant(a, b, c);
             }
         } catch (NumberFormatException e) {
             System.err.println("Solution for x is imaginary");
