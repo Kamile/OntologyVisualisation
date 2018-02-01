@@ -10,8 +10,6 @@ import speedith.core.lang.reader.ReadingException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.util.*;
 
 import static i18n.Translations.i18n;
@@ -41,27 +39,11 @@ public class ConceptDiagramsReader {
         return readConceptDiagram(new ANTLRStringStream(input));
     }
 
-    public static ConceptDiagram readConceptDiagram(Reader reader) throws ReadingException, IOException {
-        return readConceptDiagram(new ANTLRReaderStream(reader));
-    }
-
-    public static ConceptDiagram readConceptDiagram(InputStream input) throws ReadingException, IOException {
-        return readConceptDiagram(new ANTLRInputStream(input));
-    }
-
-    public static ConceptDiagram readConceptDiagram(InputStream input, String encoding) throws ReadingException, IOException {
-        return readConceptDiagram(new ANTLRInputStream(input, encoding));
-    }
-
     public static ConceptDiagram readConceptDiagram(File file) throws ReadingException, IOException {
         return readConceptDiagram(new ANTLRFileStream(file.getPath()));
     }
 
-    public static ConceptDiagram readConceptDiagram(File file, String encoding) throws ReadingException, IOException {
-        return readConceptDiagram(new ANTLRFileStream(file.getPath(), encoding));
-    }
-
-    public static ConceptDiagram readConceptDiagram(CharStream stream) throws ReadingException {
+    static ConceptDiagram readConceptDiagram(CharStream stream) throws ReadingException {
         reader.ConceptDiagramsLexer lexer = new reader.ConceptDiagramsLexer(stream);
         reader.ConceptDiagramsParser parser = new reader.ConceptDiagramsParser(new CommonTokenStream(lexer));
 
@@ -89,7 +71,7 @@ public class ConceptDiagramsReader {
 
     private static class IDTranslator extends ElementTranslator<String> {
 
-        public static final IDTranslator Instance = new IDTranslator();
+        static final IDTranslator Instance = new IDTranslator();
 
         @Override
         public String fromASTNode(CommonTree treeNode) throws ReadingException {
@@ -104,7 +86,7 @@ public class ConceptDiagramsReader {
 
         private int headTokenType;
 
-        public CollectionTranslator(int headTokenType) {
+        CollectionTranslator(int headTokenType) {
             if (headTokenType == reader.ConceptDiagramsParser.SLIST || headTokenType == ConceptDiagramsParser.LIST) {
                 this.headTokenType = headTokenType;
             } else {
@@ -145,7 +127,7 @@ public class ConceptDiagramsReader {
 
     private static class StringTranslator extends ElementTranslator<String> {
 
-        public static final StringTranslator Instance = new StringTranslator();
+        static final StringTranslator Instance = new StringTranslator();
 
         @Override
         public String fromASTNode(CommonTree treeNode) throws ReadingException {
@@ -161,14 +143,14 @@ public class ConceptDiagramsReader {
 
     private static class ListTranslator<V> extends CollectionTranslator<V> {
 
-        public static final ListTranslator<String> StringListTranslator = new ListTranslator<>(StringTranslator.Instance);
+        static final ListTranslator<String> StringListTranslator = new ListTranslator<>(StringTranslator.Instance);
         ElementTranslator<? extends V> valueTranslator = null;
 
-        public ListTranslator(ElementTranslator<? extends V> valueTranslator) {
+        ListTranslator(ElementTranslator<? extends V> valueTranslator) {
             this(ConceptDiagramsParser.LIST, valueTranslator);
         }
 
-        public ListTranslator(int headTokenType, ElementTranslator<? extends V> valueTranslator) {
+        ListTranslator(int headTokenType, ElementTranslator<? extends V> valueTranslator) {
             super(headTokenType);
             if (valueTranslator == null) {
                 throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "valueTranslator"));
@@ -187,19 +169,7 @@ public class ConceptDiagramsReader {
         private ElementTranslator<? extends V> defaultValueTranslator;
         private int headTokenType = ConceptDiagramsParser.DICT;
 
-        public GeneralMapTranslator(Map<String, ElementTranslator<? extends V>> typedValueTranslators) {
-            this(typedValueTranslators, null);
-        }
-
-        public GeneralMapTranslator(ElementTranslator<? extends V> defaultValueTranslator) {
-            this(null, defaultValueTranslator);
-        }
-
-        public GeneralMapTranslator(Map<String, ElementTranslator<? extends V>> typedValueTranslators, ElementTranslator<? extends V> defaultValueTranslator) {
-            this(ConceptDiagramsParser.DICT, typedValueTranslators, defaultValueTranslator);
-        }
-
-        public GeneralMapTranslator(int headTokenType, Map<String, ElementTranslator<? extends V>> typedValueTranslators, ElementTranslator<? extends V> defaultElements) {
+        GeneralMapTranslator(int headTokenType, Map<String, ElementTranslator<? extends V>> typedValueTranslators, ElementTranslator<? extends V> defaultElements) {
             if (typedValueTranslators == null && defaultElements == null) {
                 throw new IllegalArgumentException(i18n("ERR_ARGUMENT_ALL_NULL"));
             }
@@ -245,20 +215,11 @@ public class ConceptDiagramsReader {
     private static class TupleTranslator<V> extends CollectionTranslator<V> {
 
         List<ElementTranslator<? extends V>> valueTranslators = null;
-
-        public TupleTranslator(List<ElementTranslator<? extends V>> valueTranslators) {
-            this(ConceptDiagramsParser.SLIST, valueTranslators);
-        }
-
-        public TupleTranslator(ElementTranslator<? extends V>[] valueTranslators) {
+        TupleTranslator(ElementTranslator<? extends V>[] valueTranslators) {
             this(ConceptDiagramsParser.SLIST, Arrays.asList(valueTranslators));
         }
 
-        public TupleTranslator(int headTokenType, ElementTranslator<? extends V>[] valueTranslators) {
-            this(headTokenType, Arrays.asList(valueTranslators));
-        }
-
-        public TupleTranslator(int headTokenType, List<ElementTranslator<? extends V>> valueTranslators) {
+        TupleTranslator(int headTokenType, List<ElementTranslator<? extends V>> valueTranslators) {
             super(headTokenType);
             if (valueTranslators == null) {
                 throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "valueTranslators"));
@@ -283,9 +244,8 @@ public class ConceptDiagramsReader {
     }
 
     private static class ZoneTranslator extends ElementTranslator<Zone> {
-
-        public static final ZoneTranslator Instance = new ZoneTranslator();
-        public static final ListTranslator<Zone> ZoneListTranslator = new ListTranslator<>(Instance);
+        static final ZoneTranslator Instance = new ZoneTranslator();
+        static final ListTranslator<Zone> ZoneListTranslator = new ListTranslator<>(Instance);
         private ListTranslator<ArrayList<String>> translator;
 
         private ZoneTranslator() {
@@ -305,8 +265,7 @@ public class ConceptDiagramsReader {
 
 
     private static class HabitatTranslator extends ElementTranslator<Map<String, Region>> {
-
-        public static final HabitatTranslator Instance = new HabitatTranslator();
+        static final HabitatTranslator Instance = new HabitatTranslator();
         private ListTranslator<ArrayList<Object>> regionListTranslator;
 
         @SuppressWarnings("unchecked")
@@ -383,8 +342,7 @@ public class ConceptDiagramsReader {
     }
 
     private static class ClassObjectPropertyTranslator extends ElementTranslator<ClassObjectPropertyDiagram> {
-
-        public static final ClassObjectPropertyTranslator Instance = new ClassObjectPropertyTranslator();
+        static final ClassObjectPropertyTranslator Instance = new ClassObjectPropertyTranslator();
 
         private ClassObjectPropertyTranslator() {
         }
@@ -400,10 +358,8 @@ public class ConceptDiagramsReader {
         }
     }
 
-
-
     private static class COPTranslator extends GeneralCOPTranslator<ClassObjectPropertyDiagram> {
-        public static final COPTranslator Instance = new COPTranslator();
+        static final COPTranslator Instance = new COPTranslator();
 
         private COPTranslator() {
             super(ConceptDiagramsParser.COP_PRIMARY);
@@ -429,7 +385,7 @@ public class ConceptDiagramsReader {
     }
 
     private static class ArrowTranslator extends ElementTranslator<Arrow> {
-        public static final ArrowTranslator Instance = new ArrowTranslator();
+        static final ArrowTranslator Instance = new ArrowTranslator();
         private ListTranslator<String> translator;
 
         private ArrowTranslator() {
@@ -505,7 +461,7 @@ public class ConceptDiagramsReader {
     }
 
     private static class CDTranslator extends ElementTranslator<ConceptDiagram> {
-        public static final CDTranslator Instance = new CDTranslator();
+        static final CDTranslator Instance = new CDTranslator();
 
         private CDTranslator() { }
 
@@ -521,8 +477,7 @@ public class ConceptDiagramsReader {
     }
 
     private static class BasicCDTranslator extends GeneralCDTranslator<ConceptDiagram> {
-
-        public static final BasicCDTranslator Instance = new BasicCDTranslator();
+        static final BasicCDTranslator Instance = new BasicCDTranslator();
 
         private BasicCDTranslator() {
             super(reader.ConceptDiagramsParser.CD);
