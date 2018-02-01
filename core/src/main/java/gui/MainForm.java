@@ -251,7 +251,7 @@ public class MainForm extends JFrame {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
-                    "        PrimarySD {\n" +
+                    "        COP {\n" +
                     "            spiders = [\"c\", \"_1\", \"_2\"],\n" +
                     "            habitats = [\n" +
                     "                (\"c\", [([\"C4\"],[\"_anon\", \"C5\"])]),\n" +
@@ -280,12 +280,12 @@ public class MainForm extends JFrame {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
-                    "        PrimarySD {\n" +
+                    "        COP {\n" +
                     "            spiders = [],\n" +
                     "            habitats = [],\n" +
                     "            sh_zones = [],\n" +
                     "            present_zones = [([], [\"CE\"]), ([\"CE\"], [])]},\n" +
-                    "        PrimarySD {\n" +
+                    "        COP {\n" +
                     "            spiders = [],\n" +
                     "            habitats = [],\n" +
                     "            sh_zones = [([\"_anon\"], [])],\n" +
@@ -302,7 +302,7 @@ public class MainForm extends JFrame {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
-                    "        PrimarySD {\n" +
+                    "        COP {\n" +
                     "            spiders = [\"a\"],\n" +
                     "            sh_zones = [],\n" +
                     "            habitats = [(\"a\", [([\"C1\"], [\"C2\"])])],\n" +
@@ -319,7 +319,7 @@ public class MainForm extends JFrame {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
-                    "        PrimarySD {\n" +
+                    "        COP {\n" +
                     "            spiders = [],\n" +
                     "            sh_zones = [\n" +
                     "                ([\"DT\"], [\"DR1\", \"DR2\"]),\n" +

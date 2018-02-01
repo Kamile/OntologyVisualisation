@@ -392,7 +392,7 @@ public class ConceptDiagramsReader {
         @Override
         public ClassObjectPropertyDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
-                case ConceptDiagramsParser.SD_PRIMARY:
+                case ConceptDiagramsParser.COP_PRIMARY:
                     return COPTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
@@ -406,7 +406,7 @@ public class ConceptDiagramsReader {
         public static final COPTranslator Instance = new COPTranslator();
 
         private COPTranslator() {
-            super(ConceptDiagramsParser.SD_PRIMARY);
+            super(ConceptDiagramsParser.COP_PRIMARY);
             addMandatoryAttribute(SDTextSpidersAttribute, ListTranslator.StringListTranslator);
             addMandatoryAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
             addMandatoryAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));

@@ -11,9 +11,8 @@ tokens {
     PAIR            =           '=';
     LIST            =           '[';
     SLIST           =           '(';
-    CD              =     'ConceptDiagram';
-    SD_PRIMARY      =   'PrimarySD';    // The 'primary spider diagram'.
-    SD_NULL         =      'NullSD';    // The 'null spider diagram'.
+    CD              =           'ConceptDiagram';
+    COP_PRIMARY     =           'COP';
 }
 
 @parser::header {
@@ -68,9 +67,8 @@ conceptDiagram
     :    'ConceptDiagram'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
-spiderDiagram
-    :    'PrimarySD'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'NullSD'^ ('{'! (keyValue (','! keyValue)*)? '}'!)?
+classObjectPropertyDiagram
+    :    'COP'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
 keyValues
@@ -94,7 +92,7 @@ languageElement
     |    keyValues
     |    list
     |    sortedList
-    |    spiderDiagram
+    |    classObjectPropertyDiagram
     |    conceptDiagram
     ;
 
