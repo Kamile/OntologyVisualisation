@@ -17,9 +17,10 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
     private final TreeSet<Zone> shadedZones;
     private final TreeSet<Zone> presentZones;
     private final TreeSet<Arrow> arrows;
+    private final TreeSet<String> dots;
     private Boolean valid;
 
-    public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows) {
+    public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots) {
         if (spiders != null && !spiders.isEmpty()) {
             if (habitats != null && !Sets.isNaturalSubset(habitats.navigableKeySet(), spiders)) {
                 throw new IllegalArgumentException(Translations.i18n("ERR_SD_HABITATS_WITHOUT_SPIDERS"));
@@ -33,6 +34,7 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
         this.shadedZones = shadedZones == null ? new TreeSet() : shadedZones;
         this.presentZones = presentZones == null ? new TreeSet() : presentZones;
         this.arrows = arrows == null ? new TreeSet() : arrows;
+        this.dots = dots == null ? new TreeSet() : dots;
     }
 
     public SpiderDiagram getSpiderDiagram() {
@@ -41,6 +43,10 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
 
     public List<Arrow> getArrows() {
         return new ArrayList<>(arrows);
+    }
+
+    public List<String> getDots() {
+        return new ArrayList<>(dots);
     }
 
     @Override

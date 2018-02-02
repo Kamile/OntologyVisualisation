@@ -149,7 +149,7 @@ public class MainForm extends JFrame {
 
         useCdExample3MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_MASK));
         useCdExample3MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE3_MNEMONIC").charAt(0));
-        useCdExample3MenuItem.setText("Assertion Axiom Example"); // NOI18N
+        useCdExample3MenuItem.setText("ClassAssertion Example"); // NOI18N
         useCdExample3MenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 onExample3(evt);
@@ -228,7 +228,7 @@ public class MainForm extends JFrame {
     private void onExample3(ActionEvent evt) {
         boundaryPanel.setDiagram(getExampleC());
         setArrowPanel();
-        setTitle("OntologyVisualiser: " + ": OWL Assertion Axiom ");
+        setTitle("OntologyVisualiser: " + ": ClassAssertion ");
     }
 
     private void onExample4(ActionEvent evt) {

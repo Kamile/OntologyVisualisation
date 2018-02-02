@@ -9,18 +9,21 @@ import java.util.Set;
 public class AbstractCOPDescription extends AbstractDescription {
     AbstractDescription ad;
     Set<AbstractArrow> m_arrows;
+    Set<String> m_dots;
 
     public AbstractCOPDescription(AbstractDescription spiderDescription, Set<AbstractArrow> arrowDescriptions) {
-        this.ad = spiderDescription;
+        ad = spiderDescription;
         m_arrows = arrowDescriptions;
+    }
+
+    public AbstractCOPDescription(AbstractDescription spiderDescription, Set<AbstractArrow> arrowDescriptions, Set<String> dots) {
+        ad = spiderDescription;
+        m_arrows = arrowDescriptions;
+        m_dots = dots;
     }
 
     public AbstractDescription getPrimarySDDescription() {
         return ad;
-    }
-
-    public void addArrow(AbstractArrow a) {
-        m_arrows.add(a);
     }
 
     @JsonIgnore
@@ -30,5 +33,9 @@ public class AbstractCOPDescription extends AbstractDescription {
 
     public Set<AbstractArrow> getArrows() {
         return m_arrows;
+    }
+
+    public Set<String> getDots() {
+        return m_dots;
     }
 }

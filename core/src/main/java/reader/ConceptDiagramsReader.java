@@ -15,6 +15,7 @@ import java.util.*;
 import static i18n.Translations.i18n;
 import static lang.ConceptDiagram.CDTextArrowsAttribute;
 import static lang.ConceptDiagram.CDTextCOPDiagramAttribute;
+import static lang.ConceptDiagram.CDTextDotsAttribute;
 import static speedith.core.lang.PrimarySpiderDiagram.*;
 
 import reader.ConceptDiagramsParser;
@@ -262,8 +263,6 @@ public class ConceptDiagramsReader {
         }
     }
 
-
-
     private static class HabitatTranslator extends ElementTranslator<Map<String, Region>> {
         static final HabitatTranslator Instance = new HabitatTranslator();
         private ListTranslator<ArrayList<Object>> regionListTranslator;
@@ -352,6 +351,8 @@ public class ConceptDiagramsReader {
             switch (treeNode.token.getType()) {
                 case ConceptDiagramsParser.COP_PRIMARY:
                     return COPTranslator.Instance.fromASTNode(treeNode);
+                case ConceptDiagramsParser.COP_EMPTY:
+                    return Empty_COPTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
             }
@@ -368,6 +369,7 @@ public class ConceptDiagramsReader {
             addMandatoryAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
+            addOptionalAttribute(CDTextDotsAttribute, ListTranslator.StringListTranslator);
         }
 
         @Override
@@ -375,12 +377,33 @@ public class ConceptDiagramsReader {
         ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
             Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(CDTextArrowsAttribute);
+            Map.Entry<Object, CommonTree> dotsAttribute = attributes.get(CDTextDotsAttribute);
 
-            return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoClassObjectPropertyy((Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
+            return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy((Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
                     presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey(),
-                    arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey());
+                    arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey(),
+                    dotsAttribute == null ? null : (Collection<String>) dotsAttribute.getKey());
+        }
+
+    }
+
+    private static class Empty_COPTranslator extends GeneralCOPTranslator<ClassObjectPropertyDiagram> {
+        static final COPTranslator Instance = new COPTranslator();
+
+        private Empty_COPTranslator() {
+            super(ConceptDiagramsParser.COP_PRIMARY);
+            addOptionalAttribute(CDTextDotsAttribute, ListTranslator.StringListTranslator);
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
+            Map.Entry<Object, CommonTree> dotsAttribute = attributes.get(CDTextDotsAttribute);
+
+            return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy(
+                    dotsAttribute == null ? null : (Collection<String>) dotsAttribute.getKey());
         }
     }
 

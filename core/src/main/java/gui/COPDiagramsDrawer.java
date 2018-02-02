@@ -15,6 +15,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -115,9 +116,12 @@ public class COPDiagramsDrawer extends JPanel {
                 g.setColor(col);
                 transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
                 circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
-                g2d.draw(tmpCircle);
 
-                if (cc.ac.getLabel() != null) {
+                if (!cc.ac.getLabel().startsWith("tmp")) {
+                    g2d.draw(tmpCircle);
+                }
+
+                if (cc.ac.getLabel() != null && !cc.ac.getLabel().startsWith("tmp")) {
                     g.setColor(col);
                     if (cc.stroke() != null) {
                         g2d.setStroke(cc.stroke());
@@ -193,6 +197,19 @@ public class COPDiagramsDrawer extends JPanel {
                 g2d.setStroke(HIGHLIGHT_STROKE);
                 transformCircle(this.scaleFactor, this.getHighlightedContour().getCircle(), tmpCircle);
                 g2d.draw(tmpCircle);
+            }
+
+            if (this.diagram.dots != null) {
+                List<String> dots = new ArrayList<>(this.diagram.dots);
+                int numDots = dots.size();
+                int i = getWidth() / (numDots * 2);
+                for (String dot : dots) {
+                    Ellipse2D.Double dotCircle = new Ellipse2D.Double(i, this.getWidth() / 2, 8, 8);
+                    circleMap.put(dot, dotCircle);
+                    g2d.draw(dotCircle);
+                    g2d.drawString(dot, i, this.getWidth() - 15);
+                    i += getWidth() / (numDots * 2);
+                }
             }
         }
     }

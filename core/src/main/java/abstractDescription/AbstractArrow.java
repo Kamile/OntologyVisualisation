@@ -110,14 +110,6 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
         return logger.getEffectiveLevel() == Level.DEBUG ? sb.toString() : new String();
     }
 
-    public boolean matchesLabel(AbstractArrow a) {
-        return m_label.equals(a.getLabel());
-    }
-
-    public String debugWithId() {
-        return this.debug() + "_" + m_id;
-    }
-
     public double checksum() {
         logger.debug("build checksum from" + m_label + " (and not " + m_id + ")\ngiving " + m_label.hashCode());
         return (double) m_label.hashCode();

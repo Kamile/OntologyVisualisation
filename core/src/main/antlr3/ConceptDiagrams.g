@@ -13,6 +13,7 @@ tokens {
     SLIST           =           '(';
     CD              =           'ConceptDiagram';
     COP_PRIMARY     =           'COP';
+    COP_EMPTY        =          'Empty_COP';
 }
 
 @parser::header {
@@ -69,6 +70,7 @@ conceptDiagram
 
 classObjectPropertyDiagram
     :    'COP'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    |    'Empty_COP'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
 keyValues

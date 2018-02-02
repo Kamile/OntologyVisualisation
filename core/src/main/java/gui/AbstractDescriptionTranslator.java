@@ -64,6 +64,10 @@ public class AbstractDescriptionTranslator {
             }
         }
 
+        List<String> dots = COPDiagram.getDots();
+        if (dots != null) {
+            return new AbstractCOPDescription(ad, abstractArrows, new TreeSet<>(dots));
+        }
         return new AbstractCOPDescription(ad, abstractArrows);
     }
 
