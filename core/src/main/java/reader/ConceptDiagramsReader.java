@@ -312,10 +312,6 @@ public class ConceptDiagramsReader {
             keyValueMapTranslator.typedValueTranslators.put(key, valueTranslator);
         }
 
-        <T> void addDefaultAttribute(ElementTranslator<T> valueTranslator) {
-            keyValueMapTranslator.defaultValueTranslator = valueTranslator;
-        }
-
         private boolean areMandatoryPresent(Map<String, ? extends Object> attributes) {
             if (mandatoryAttributes != null) {
                 for (String string : mandatoryAttributes) {
@@ -369,7 +365,6 @@ public class ConceptDiagramsReader {
             addMandatoryAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
-            addOptionalAttribute(CDTextDotsAttribute, ListTranslator.StringListTranslator);
         }
 
         @Override
@@ -377,14 +372,12 @@ public class ConceptDiagramsReader {
         ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
             Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(CDTextArrowsAttribute);
-            Map.Entry<Object, CommonTree> dotsAttribute = attributes.get(CDTextDotsAttribute);
 
             return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy((Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
                     presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey(),
-                    arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey(),
-                    dotsAttribute == null ? null : (Collection<String>) dotsAttribute.getKey());
+                    arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey(), null);
         }
 
     }
@@ -394,7 +387,7 @@ public class ConceptDiagramsReader {
 
         private Empty_COPTranslator() {
             super(ConceptDiagramsParser.COP_PRIMARY);
-            addOptionalAttribute(CDTextDotsAttribute, ListTranslator.StringListTranslator);
+            addMandatoryAttribute(CDTextDotsAttribute, ListTranslator.StringListTranslator);
         }
 
         @Override
@@ -402,8 +395,7 @@ public class ConceptDiagramsReader {
         ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
             Map.Entry<Object, CommonTree> dotsAttribute = attributes.get(CDTextDotsAttribute);
 
-            return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy(
-                    dotsAttribute == null ? null : (Collection<String>) dotsAttribute.getKey());
+            return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy((Collection<String>) dotsAttribute.getKey());
         }
     }
 
@@ -453,10 +445,6 @@ public class ConceptDiagramsReader {
 
         <T> void addOptionalAttribute(String key, ElementTranslator<T> valueTranslator) {
             keyValueMapTranslator.typedValueTranslators.put(key, valueTranslator);
-        }
-
-        <T> void addDefaultAttribute(ElementTranslator<T> valueTranslator) {
-            keyValueMapTranslator.defaultValueTranslator = valueTranslator;
         }
 
         private boolean areMandatoryPresent(Map<String, ? extends Object> attributes) {
