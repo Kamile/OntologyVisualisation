@@ -209,7 +209,7 @@ public class ConceptDiagramsReader {
                 }
                 return kVals;
             }
-            throw new ReadingException(i18n("ERR_TRANSLATE_UNEXPECTED_ELEMENT", i18n(i18n("ERR_TRANSLATE_LIST_OR_SLIST"))), treeNode);
+            throw new ReadingException(i18n("ERR_TRANSLATE_UNEXPECTED_ELEMENT", i18n("ERR_TRANSLATE_LIST_OR_SLIST")), treeNode);
         }
     }
 
@@ -348,6 +348,7 @@ public class ConceptDiagramsReader {
                 case ConceptDiagramsParser.COP_PRIMARY:
                     return COPTranslator.Instance.fromASTNode(treeNode);
                 case ConceptDiagramsParser.COP_EMPTY:
+                    System.out.println("Got that it's empty");
                     return Empty_COPTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
@@ -383,10 +384,11 @@ public class ConceptDiagramsReader {
     }
 
     private static class Empty_COPTranslator extends GeneralCOPTranslator<ClassObjectPropertyDiagram> {
-        static final COPTranslator Instance = new COPTranslator();
+        static final Empty_COPTranslator Instance = new Empty_COPTranslator();
 
         private Empty_COPTranslator() {
-            super(ConceptDiagramsParser.COP_PRIMARY);
+            super(ConceptDiagramsParser.COP_EMPTY);
+            System.out.println("in cop empty translator");
             addMandatoryAttribute(CDTextDotsAttribute, ListTranslator.StringListTranslator);
         }
 
@@ -394,7 +396,7 @@ public class ConceptDiagramsReader {
         @SuppressWarnings("unchecked")
         ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
             Map.Entry<Object, CommonTree> dotsAttribute = attributes.get(CDTextDotsAttribute);
-
+            System.out.println("Create COP");
             return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy((Collection<String>) dotsAttribute.getKey());
         }
     }

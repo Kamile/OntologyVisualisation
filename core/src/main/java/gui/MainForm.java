@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import static speedith.i18n.Translations.i18n;
 
 public class MainForm extends JFrame {
+    private static final String PATH_TO_AXIOMS = "../Documents/Third Year/Project/Axioms";
     private JMenu fileMenu;
     private JMenuItem openMenuItem;
     private JMenuItem saveMenuItem;
@@ -65,7 +66,7 @@ public class MainForm extends JFrame {
         setGlassPane(glassPanel);
         getGlassPane().setVisible(true);
 
-        descriptionFileChooser = new JFileChooser();
+        descriptionFileChooser = new JFileChooser(PATH_TO_AXIOMS);
         descriptionFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("OntologyVisualiser diagram files", "sdt"));
         descriptionFileChooser.setMultiSelectionEnabled(false);
         pack();
