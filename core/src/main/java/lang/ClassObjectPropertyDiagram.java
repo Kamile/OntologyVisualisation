@@ -55,7 +55,11 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
     }
 
     public boolean isValid() {
-        valid = getSpiderDiagram().isValid();
+        if (shadedZones.isEmpty() && presentZones.isEmpty() && !dots.isEmpty()) {
+            valid = true; // zones empty so only dots
+        } else {
+            valid = getSpiderDiagram().isValid();
+        }
         return valid;
     }
 

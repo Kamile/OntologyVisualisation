@@ -178,7 +178,7 @@ public class MainForm extends JFrame {
             try {
                 ConceptDiagram input = ConceptDiagramsReader.readConceptDiagram(file);
                 if (!input.isValid()) {
-                    throw new ReadingException("The spider diagram contained in the file is not valid.");
+                    throw new ReadingException("The diagram contained in the file is not valid.");
                 }
                 boundaryPanel.setDiagram(input);
                 setArrowPanel();

@@ -348,7 +348,6 @@ public class ConceptDiagramsReader {
                 case ConceptDiagramsParser.COP_PRIMARY:
                     return COPTranslator.Instance.fromASTNode(treeNode);
                 case ConceptDiagramsParser.COP_EMPTY:
-                    System.out.println("Got that it's empty");
                     return Empty_COPTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
@@ -388,7 +387,6 @@ public class ConceptDiagramsReader {
 
         private Empty_COPTranslator() {
             super(ConceptDiagramsParser.COP_EMPTY);
-            System.out.println("in cop empty translator");
             addMandatoryAttribute(CDTextDotsAttribute, ListTranslator.StringListTranslator);
         }
 
@@ -396,7 +394,6 @@ public class ConceptDiagramsReader {
         @SuppressWarnings("unchecked")
         ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
             Map.Entry<Object, CommonTree> dotsAttribute = attributes.get(CDTextDotsAttribute);
-            System.out.println("Create COP");
             return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy((Collection<String>) dotsAttribute.getKey());
         }
     }
