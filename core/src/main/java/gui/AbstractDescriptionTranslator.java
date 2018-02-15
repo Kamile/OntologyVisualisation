@@ -31,17 +31,21 @@ public class AbstractDescriptionTranslator {
 
     static AbstractCOPDescription getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
         PrimarySpiderDiagram sd = (PrimarySpiderDiagram) COPDiagram.getSpiderDiagram();
-        AbstractDescription ad = DiagramVisualisation.getAbstractDescription(sd);
 
-        contours = new HashSet<>();
-        spiders = new HashSet<>();
-        spiderMap = new TreeMap<>();
-        contourMap = new HashMap<>();
-
-        contours.addAll(ad.getCopyOfContours());
-        createContourMap();
-        spiderMap.putAll(getSpiderMaps(sd));
-        spiders.addAll((sd).getSpiders());
+        AbstractDescription ad;
+        if (sd.isValid()) {
+            ad = DiagramVisualisation.getAbstractDescription(sd);
+            contours = new HashSet<>();
+            spiders = new HashSet<>();
+            spiderMap = new TreeMap<>();
+            contourMap = new HashMap<>();
+            contours.addAll(ad.getCopyOfContours());
+            createContourMap();
+            spiderMap.putAll(getSpiderMaps(sd));
+            spiders.addAll((sd).getSpiders());
+        } else {
+            ad = null;
+        }
 
         Set<AbstractArrow> abstractArrows = new HashSet<>();
         List<Arrow> arrows = COPDiagram.getArrows();
@@ -80,7 +84,6 @@ public class AbstractDescriptionTranslator {
         contourMap = new HashMap<>();
 
         List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = cd.getClassObjectPropertyDiagrams();
-
         for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
             COPDescriptionMap.put(cop, getAbstractDescription(cop));
         }

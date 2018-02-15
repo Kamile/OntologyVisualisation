@@ -58,7 +58,6 @@ public class DiagramPanel extends JPanel {
                 try {
                     drawDiagram();
                 } catch (CannotDrawException e) {
-                    System.err.println("Couldn't draw diagram");
                     drawErrorLabel();
                 }
             } else {

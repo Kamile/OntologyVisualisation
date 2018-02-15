@@ -41,10 +41,14 @@ public class ConceptDiagramCreator {
                 ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow);
                 concreteCOPArrows.add(concreteArrow);
             }
-
-            DiagramCreator dc = new DiagramCreator(ad);
-            ConcreteDiagram cd = dc.createDiagram(size);
-            ConcreteClassObjectPropertyDiagram COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows);
+            ConcreteClassObjectPropertyDiagram COPDescription;
+            if (ad!=null) {
+                DiagramCreator dc = new DiagramCreator(ad);
+                ConcreteDiagram cd = dc.createDiagram(size);
+                COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows);
+            } else { // no contours, just dots
+                COPDescription = new ConcreteClassObjectPropertyDiagram(concreteArrows, abstractCOPDescription.getDots());
+            }
             COPs.put(copDiagram, COPDescription);
         }
 

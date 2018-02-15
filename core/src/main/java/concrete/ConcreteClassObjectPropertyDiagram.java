@@ -1,6 +1,8 @@
 package concrete;
 
 import icircles.concreteDiagram.*;
+
+import java.awt.geom.Rectangle2D;
 import java.util.Set;
 
 public class ConcreteClassObjectPropertyDiagram extends ConcreteDiagram {
@@ -14,9 +16,13 @@ public class ConcreteClassObjectPropertyDiagram extends ConcreteDiagram {
         this.arrows = arrows;
     }
 
-    public ConcreteClassObjectPropertyDiagram(ConcreteDiagram cd, Set<ConcreteArrow> arrows, Set<String> dots) {
-        super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
-        this.cd = cd;
+    /**
+     * No ConcreteDiagram for PSD when we have dots
+     * @param arrows
+     * @param dots
+     */
+    public ConcreteClassObjectPropertyDiagram(Set<ConcreteArrow> arrows, Set<String> dots) {
+        super(new Rectangle2D.Double(0.0D, 0.0D, (double)300, (double)300), null, null, null, null);
         this.arrows = arrows;
         this.dots = dots;
     }
