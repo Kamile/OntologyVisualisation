@@ -1,6 +1,6 @@
 package concrete;
 
-import icircles.concreteDiagram.*;
+import icircles.concreteDiagram.ConcreteDiagram;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Set;

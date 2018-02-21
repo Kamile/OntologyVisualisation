@@ -1,6 +1,6 @@
 package concrete;
 
-import abstractDescription.AbstractConceptDiagramDescription;
+import abstractDescription.AbstractConceptDiagram;
 import icircles.util.CannotDrawException;
 import lang.ClassObjectPropertyDiagram;
 
@@ -41,7 +41,7 @@ public class ConcreteConceptDiagram {
         return arrows;
     }
 
-    public static ConcreteConceptDiagram makeConcreteDiagram(AbstractConceptDiagramDescription abstractDescription, int size) throws CannotDrawException {
+    public static ConcreteConceptDiagram makeConcreteDiagram(AbstractConceptDiagram abstractDescription, int size) throws CannotDrawException {
 
         if (!abstractDescription.isValid()) {
             throw new CannotDrawException("Invalid diagram specification");

@@ -1,8 +1,8 @@
 package gui;
 
 import abstractDescription.AbstractArrow;
-import abstractDescription.AbstractCOPDescription;
-import abstractDescription.AbstractConceptDiagramDescription;
+import abstractDescription.AbstractCOP;
+import abstractDescription.AbstractConceptDiagram;
 import icircles.abstractDescription.AbstractBasicRegion;
 import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
@@ -12,7 +12,6 @@ import lang.ConceptDiagram;
 import lang.ClassObjectPropertyDiagram;
 import speedith.core.lang.PrimarySpiderDiagram;
 import speedith.core.lang.Region;
-import speedith.core.lang.SpiderDiagram;
 import speedith.core.lang.Zone;
 import speedith.ui.DiagramVisualisation;
 
@@ -24,12 +23,12 @@ public class AbstractDescriptionTranslator {
     private static Set<String> spiders;
     private static Map<String, AbstractBasicRegion> spiderMap;
     private static HashMap<String, AbstractCurve> contourMap;
-    private static HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> COPDescriptionMap;
+    private static HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap;
 
     private AbstractDescriptionTranslator() {
     }
 
-    static AbstractCOPDescription getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
+    static AbstractCOP getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
         PrimarySpiderDiagram sd = (PrimarySpiderDiagram) COPDiagram.getSpiderDiagram();
 
         AbstractDescription ad;
@@ -70,12 +69,12 @@ public class AbstractDescriptionTranslator {
 
         List<String> dots = COPDiagram.getDots();
         if (dots != null) {
-            return new AbstractCOPDescription(ad, abstractArrows, new TreeSet<>(dots));
+            return new AbstractCOP(ad, abstractArrows, new TreeSet<>(dots));
         }
-        return new AbstractCOPDescription(ad, abstractArrows);
+        return new AbstractCOP(ad, abstractArrows);
     }
 
-    public static AbstractConceptDiagramDescription getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {
+    public static AbstractConceptDiagram getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {
         Set<AbstractArrow> abstractArrows = new HashSet<>();
         contours = new HashSet<>();
         COPDescriptionMap = new HashMap<>();
@@ -107,7 +106,7 @@ public class AbstractDescriptionTranslator {
                 }
             }
         }
-        return new AbstractConceptDiagramDescription(COPDescriptionMap, abstractArrows);
+        return new AbstractConceptDiagram(COPDescriptionMap, abstractArrows);
     }
 
     private static void createContourMap() {

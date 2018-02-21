@@ -1,10 +1,9 @@
 package concrete;
 
 import abstractDescription.AbstractArrow;
-import abstractDescription.AbstractCOPDescription;
-import abstractDescription.AbstractConceptDiagramDescription;
+import abstractDescription.AbstractCOP;
+import abstractDescription.AbstractConceptDiagram;
 import icircles.abstractDescription.AbstractDescription;
-import icircles.concreteDiagram.ConcreteDiagram;
 import icircles.concreteDiagram.DiagramCreator;
 import icircles.util.CannotDrawException;
 import lang.ClassObjectPropertyDiagram;
@@ -20,10 +19,10 @@ import java.util.*;
  * First use DiagramCreator to draw each spider diagram separately, space them out and draw arrows
  */
 public class ConceptDiagramCreator {
-    HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> abstractCOPDescriptions;
+    HashMap<ClassObjectPropertyDiagram, AbstractCOP> abstractCOPDescriptions;
     Set<AbstractArrow> abstractArrowDescriptions;
 
-    public ConceptDiagramCreator(AbstractConceptDiagramDescription abstractDescription) {
+    public ConceptDiagramCreator(AbstractConceptDiagram abstractDescription) {
         abstractCOPDescriptions = abstractDescription.getCOPs();
         abstractArrowDescriptions = abstractDescription.getArrowDescriptions();
     }
@@ -33,7 +32,7 @@ public class ConceptDiagramCreator {
         Set<ConcreteArrow> concreteArrows = new HashSet<>();
 
         for (ClassObjectPropertyDiagram copDiagram: abstractCOPDescriptions.keySet()) {
-            AbstractCOPDescription abstractCOPDescription = abstractCOPDescriptions.get(copDiagram);
+            AbstractCOP abstractCOPDescription = abstractCOPDescriptions.get(copDiagram);
             AbstractDescription ad = abstractCOPDescription.getPrimarySDDescription();
             Set<ConcreteArrow> concreteCOPArrows = new HashSet<>();
 
@@ -44,7 +43,7 @@ public class ConceptDiagramCreator {
             ConcreteClassObjectPropertyDiagram COPDescription;
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
-                ConcreteDiagram cd = dc.createDiagram(size);
+                icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
                 COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows);
             } else { // no contours, just dots
                 COPDescription = new ConcreteClassObjectPropertyDiagram(concreteArrows, abstractCOPDescription.getDots());

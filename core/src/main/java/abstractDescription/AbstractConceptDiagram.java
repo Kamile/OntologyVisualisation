@@ -6,21 +6,21 @@ import lang.ClassObjectPropertyDiagram;
 
 import java.util.*;
 
-public class AbstractConceptDiagramDescription extends AbstractDescription {
+public class AbstractConceptDiagram extends AbstractDescription {
     private Set<AbstractArrow> m_arrows;
-    private HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> m_COPs;
+    private HashMap<ClassObjectPropertyDiagram, AbstractCOP> m_COPs;
 
-    public AbstractConceptDiagramDescription() {
+    public AbstractConceptDiagram() {
         super();
         m_arrows = new TreeSet<>();
     }
 
-    public AbstractConceptDiagramDescription(HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> COPDescriptionMap, Set<AbstractArrow> arrows) {
+    public AbstractConceptDiagram(HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap, Set<AbstractArrow> arrows) {
         m_COPs = COPDescriptionMap;
         m_arrows = arrows;
     }
 
-    public HashMap<ClassObjectPropertyDiagram, AbstractCOPDescription> getCOPs() {
+    public HashMap<ClassObjectPropertyDiagram, AbstractCOP> getCOPs() {
         return m_COPs;
     }
 

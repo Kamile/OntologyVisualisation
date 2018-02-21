@@ -1,6 +1,6 @@
 package gui;
 
-import abstractDescription.AbstractConceptDiagramDescription;
+import abstractDescription.AbstractConceptDiagram;
 import concrete.ConcreteClassObjectPropertyDiagram;
 import concrete.ConcreteConceptDiagram;
 import icircles.util.CannotDrawException;
@@ -88,7 +88,7 @@ public class DiagramPanel extends JPanel {
             this.setBorder(new EmptyBorder(20, 20, 20, 20));
             this.setLayout(new GridLayout(1, 0));
 
-            AbstractConceptDiagramDescription ad2 = AbstractDescriptionTranslator.getAbstractDescription(conceptDiagram);
+            AbstractConceptDiagram ad2 = AbstractDescriptionTranslator.getAbstractDescription(conceptDiagram);
             final ConcreteConceptDiagram ccd = ConcreteConceptDiagram.makeConcreteDiagram(ad2, 350);
             circleMap = new HashMap<>();
 
