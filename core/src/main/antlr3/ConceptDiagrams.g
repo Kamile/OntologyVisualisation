@@ -12,8 +12,10 @@ tokens {
     LIST            =           '[';
     SLIST           =           '(';
     CD              =           'ConceptDiagram';
+    PD              =           'PropertyDiagram';
     COP_PRIMARY     =           'COP';
-    COP_EMPTY        =          'EmptyCOP';
+    COP_EMPTY       =           'EmptyCOP';
+    DT              =           'Datatype';
 }
 
 @parser::header {
@@ -62,15 +64,24 @@ public void reportError(RecognitionException e) {
 /* Entry. */
 start
     :    conceptDiagram
+    |    propertyDiagram
     ;
 
 conceptDiagram
     :    'ConceptDiagram'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
+propertyDiagram
+    :    'PropertyDiagram'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    ;
+
 classObjectPropertyDiagram
     :    'COP'^ '{'! (keyValue (','! keyValue)*)? '}'!
     |    'EmptyCOP'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    ;
+
+datatypeDiagram
+    :    'Datatype'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
 keyValues
@@ -95,7 +106,9 @@ languageElement
     |    list
     |    sortedList
     |    classObjectPropertyDiagram
+    |    datatyleDiagram
     |    conceptDiagram
+    |    propertyDiagram
     ;
 
 
