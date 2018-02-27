@@ -12,32 +12,15 @@ public class ClassObjectPropertyDiagrams {
 
     private ClassObjectPropertyDiagrams() {}
 
-    public static ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Collection<String> spiders, Map<String, Region> habitats, Collection<Zone> shadedZones, Collection<Zone> presentZones, Collection<Arrow> arrows, Collection<String> dots) {
-        return createClassObjectPropertyDiagram(spiders, habitats, shadedZones, presentZones, arrows, dots, true);
-    }
-
-    public static ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Map<String, Region> habitats, Collection<Zone> shadedZones, Collection<Zone> presentZones, Collection<Arrow> arrows, Collection<String> dots) {
-        return createClassObjectPropertyDiagram((Collection)habitats.keySet(), (Map)habitats, (Collection)shadedZones, (Collection)presentZones, arrows, dots, true);
-    }
-
-    public static ClassObjectPropertyDiagram createClassObjectPropertyDiagram() {
-        return createClassObjectPropertyDiagram((Collection)null, (Map)null, (Collection)null, (Collection)null, (Collection) null, null);
-    }
-
-    public static ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Collection<String> dots) {
-        return createClassObjectPropertyDiagram(null, null, null, null, dots);
-    }
-
     public static ClassObjectPropertyDiagram createClassObjectPropertyDiagramNoCopy(Collection<String> spiders, Map<String, Region> habitats, Collection<Zone> shadedZones, Collection<Zone> presentZones, Collection<Arrow> arrows, Collection<String> dots) {
+        if (habitats == null && shadedZones == null && presentZones == null) {
+            return createClassObjectPropertyDiagram(null, null, null,null, arrows, spiders, false);
+        }
         return createClassObjectPropertyDiagram(spiders, habitats, shadedZones, presentZones, arrows, dots, false);
     }
 
     public static ClassObjectPropertyDiagram createClassObjectPropertyDiagramNoCopy(Collection<String> dots) {
         return createClassObjectPropertyDiagram(null, null, null, null, null, dots, false);
-    }
-
-    static ClassObjectPropertyDiagram createClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, boolean ClassObjectPropertyyCollections) {
-        return __createClassObjectProperty(spiders, habitats, shadedZones, presentZones, arrows, dots, ClassObjectPropertyyCollections);
     }
 
     private static ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Collection<String> spiders, Map<String, Region> habitats, Collection<Zone> shadedZones, Collection<Zone> presentZones, Collection<Arrow> arrows, Collection<String> dots, boolean ClassObjectPropertyyCollections) {

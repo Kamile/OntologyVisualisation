@@ -14,7 +14,6 @@ tokens {
     CD              =           'ConceptDiagram';
     PD              =           'PropertyDiagram';
     COP_PRIMARY     =           'COP';
-    COP_EMPTY       =           'EmptyCOP';
     DT              =           'Datatype';
 }
 
@@ -77,7 +76,6 @@ propertyDiagram
 
 classObjectPropertyDiagram
     :    'COP'^ '{'! (keyValue (','! keyValue)*)? '}'!
-    |    'EmptyCOP'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
 datatypeDiagram
@@ -106,7 +104,7 @@ languageElement
     |    list
     |    sortedList
     |    classObjectPropertyDiagram
-    |    datatyleDiagram
+    |    datatypeDiagram
     |    conceptDiagram
     |    propertyDiagram
     ;

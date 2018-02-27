@@ -210,7 +210,7 @@ public class COPDiagramsDrawer extends JPanel {
                 g2d.draw(tmpCircle);
             }
 
-            if (this.diagram.dots != null) {
+            if (this.diagram.dots != null && this.diagram.dots.size() > 0) {
                 List<String> dots = new ArrayList<>(this.diagram.dots);
                 int numDots = dots.size();
                 int distance = this.getWidth()/(numDots*2);
