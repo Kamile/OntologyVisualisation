@@ -13,9 +13,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static i18n.Translations.i18n;
-import static lang.ConceptDiagram.CDTextArrowsAttribute;
-import static lang.ConceptDiagram.CDTextCOPDiagramAttribute;
-import static lang.ConceptDiagram.CDTextDotsAttribute;
+import static lang.ConceptDiagram.*;
 import static speedith.core.lang.PrimarySpiderDiagram.*;
 
 import reader.ConceptDiagramsParser;
@@ -363,6 +361,8 @@ public class ConceptDiagramsReader {
             addOptionalAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
+            addOptionalAttribute(CDTextKnownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(true)));
+            addOptionalAttribute(CDTextUnknownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(false)));
         }
 
         @Override
@@ -372,15 +372,18 @@ public class ConceptDiagramsReader {
             Map.Entry<Object, CommonTree> shadedZonesAttribute = attributes.get(SDTextShadedZonesAttribute);
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
             Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(CDTextArrowsAttribute);
-
+            Map.Entry<Object, CommonTree> knownEqualityAttribute = attributes.get(CDTextKnownEqualityAttribute);
+            Map.Entry<Object, CommonTree> unknownEqualityAttribute = attributes.get(CDTextUnknownEqualityAttribute);
             return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy(
                     (Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     habitatsAttribute == null ? null : (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     shadedZonesAttribute == null ? null : (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
                     presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey(),
-                    arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey(), null);
+                    arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey(),
+                    null,
+                    knownEqualityAttribute == null ? null : (Collection<Equality>) knownEqualityAttribute.getKey(),
+                    unknownEqualityAttribute == null ? null : (Collection<Equality>) unknownEqualityAttribute.getKey());
         }
-
     }
 
     private static class ArrowTranslator extends ElementTranslator<Arrow> {
@@ -407,6 +410,31 @@ public class ConceptDiagramsReader {
                         Boolean.parseBoolean(arrows.get(5)));
             }  else {
                 throw new ReadingException("Error translating arrow", treeNode);
+            }
+        }
+    }
+
+    private static class EqualityTranslator extends ElementTranslator<Equality> {
+//        static final EqualityTranslator Instance = new EqualityTranslator();
+        private ListTranslator<String> translator;
+        private boolean knownEquality;
+
+        private EqualityTranslator(boolean knownEquality) {
+            this.knownEquality = knownEquality;
+            translator = new ListTranslator<>(ConceptDiagramsParser.SLIST, StringTranslator.Instance);
+        }
+
+        @Override
+        public Equality fromASTNode(CommonTree treeNode) throws ReadingException {
+            ArrayList<String> equalities = translator.fromASTNode(treeNode);
+            if (equalities != null && equalities.size() == 2) {
+                if (knownEquality) {
+                    return new Equality(equalities.get(0), equalities.get(1));
+                } else {
+                    return new Equality(equalities.get(0), equalities.get(1), false);
+                }
+            }  else {
+                throw new ReadingException("Error translating equality", treeNode);
             }
         }
     }

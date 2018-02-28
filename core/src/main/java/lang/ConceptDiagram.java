@@ -16,7 +16,8 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
     public static final String CDTextBasicId = "ConceptDiagram";
     public static final String CDTextCOPDiagramAttribute = "COPs";
     public static final String CDTextArrowsAttribute = "arrows";
-    public static final String CDTextDotsAttribute = "dots";
+    public static final String CDTextKnownEqualityAttribute = "equality";
+    public static final String CDTextUnknownEqualityAttribute = "unknown_equality";
 
     private static final long serialVersionUID = -23423534656432L;
     private ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams;

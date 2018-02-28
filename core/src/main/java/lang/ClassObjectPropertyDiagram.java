@@ -3,6 +3,7 @@ package lang;
 import propity.util.Sets;
 import speedith.core.i18n.Translations;
 import speedith.core.lang.*;
+import sun.security.util.Cache;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,9 +19,10 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
     private final TreeSet<Zone> presentZones;
     private final TreeSet<Arrow> arrows;
     private final TreeSet<String> dots;
+    private final TreeSet<Equality> equalities;
     private Boolean valid;
 
-    public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots) {
+    public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, TreeSet<Equality> equalities) {
         if (spiders != null && !spiders.isEmpty()) {
             if (habitats != null && !Sets.isNaturalSubset(habitats.navigableKeySet(), spiders)) {
                 throw new IllegalArgumentException(Translations.i18n("ERR_SD_HABITATS_WITHOUT_SPIDERS"));
@@ -35,6 +37,7 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
         this.presentZones = presentZones == null ? new TreeSet() : presentZones;
         this.arrows = arrows == null ? new TreeSet() : arrows;
         this.dots = dots == null ? new TreeSet() : dots;
+        this.equalities = equalities == null ? new TreeSet() : equalities;
     }
 
     public SpiderDiagram getSpiderDiagram() {
@@ -47,6 +50,10 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
 
     public List<String> getDots() {
         return new ArrayList<>(dots);
+    }
+
+    public List<Equality> getEqualities() {
+        return new ArrayList<>(equalities);
     }
 
     @Override
