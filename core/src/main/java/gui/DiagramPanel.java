@@ -7,11 +7,13 @@ import icircles.util.CannotDrawException;
 import lang.Arrow;
 import lang.ConceptDiagram;
 import lang.ClassObjectPropertyDiagram;
+import lang.Equality;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class DiagramPanel extends JPanel {
     private ConceptDiagram conceptDiagram;
     private HashMap<String, Ellipse2D.Double> circleMap;
     private List<Arrow> arrows;
+    private List<Equality> equalities;
 
     /**
      * Create new diagram panel with nothing displayed in it.
@@ -85,6 +88,7 @@ public class DiagramPanel extends JPanel {
     private void drawDiagram() throws CannotDrawException {
         if (conceptDiagram != null) {
             arrows = conceptDiagram.getArrows();
+            equalities = new ArrayList<>();
             this.setBorder(new EmptyBorder(20, 20, 20, 20));
             this.setLayout(new GridLayout(1, 0));
 
@@ -96,6 +100,7 @@ public class DiagramPanel extends JPanel {
 
             for (ClassObjectPropertyDiagram cop: mapping.keySet()) {
                 arrows.addAll(cop.getArrows());
+                equalities.addAll(cop.getEqualities());
             }
 
             if (mapping.values().size() > 0) {
@@ -118,7 +123,7 @@ public class DiagramPanel extends JPanel {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    addArrows(circleMap, arrows);
+                    addArrows(circleMap, arrows, equalities);
                 }
             });
         }
@@ -128,9 +133,9 @@ public class DiagramPanel extends JPanel {
         return arrowPanel;
     }
 
-    private void addArrows(final HashMap<String, Ellipse2D.Double> circleMap, final List<Arrow> arrows) {
+    private void addArrows(final HashMap<String, Ellipse2D.Double> circleMap, final List<Arrow> arrows, final List<Equality> equalities) {
         if ((circleMap != null) && (circleMap.keySet().size() > 0)) {
-            arrowPanel = new ArrowPanel(arrows, circleMap);
+            arrowPanel = new ArrowPanel(arrows, equalities, circleMap);
         }
     }
 }

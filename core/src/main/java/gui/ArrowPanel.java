@@ -1,6 +1,7 @@
 package gui;
 
 import lang.Arrow;
+import lang.Equality;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,15 +21,17 @@ public class ArrowPanel extends JComponent {
     private static final double phi = Math.PI/6;
 
     private List<Arrow> arrows;
+    private List<Equality> equalities;
     private HashMap<String, Ellipse2D.Double> circleMap;
     private HashMap<Arrow, Double> arrowOffsets;
 
     ArrowPanel() {
-        this(null, null);
+        this(null, null, null);
     }
 
-    ArrowPanel(List<Arrow> arrows, HashMap<String, Ellipse2D.Double> circleMap) {
+    ArrowPanel(List<Arrow> arrows, List<Equality> equalities, HashMap<String, Ellipse2D.Double> circleMap) {
         this.arrows = arrows;
+        this.equalities = equalities;
         this.circleMap = circleMap;
         if (arrows != null) {
             arrowOffsets = new HashMap<>();
@@ -91,6 +94,29 @@ public class ArrowPanel extends JComponent {
 
                 // TODO: ensure text doesn't cover any components using check over rectangular region.
                 g2d.drawString(label, (int) (midX), (int) (midY - 15));
+            }
+        }
+
+        if (equalities != null && circleMap.keySet().size() > 0) {
+            super.paintComponent(g);
+
+            for(Equality equality: equalities) {
+                String source = equality.getArg1();
+                String target = equality.getArg2();
+                List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
+
+                double x1 = intersections.get(0).x;
+                double y1 = intersections.get(0).y;
+                double x2 = intersections.get(1).x;
+                double y2 = intersections.get(1).y;
+
+                double midX = x1 + (x2-x1)/2;
+                double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
+                g2d.drawString("=", (int) midX, (int) (midY-15));
+                if (!equality.isKnown()) {
+                    g2d.drawString("?", (int) midX, (int) (midY-20));
+                }
+
             }
         }
     }

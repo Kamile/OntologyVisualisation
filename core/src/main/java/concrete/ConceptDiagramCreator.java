@@ -3,6 +3,7 @@ package concrete;
 import abstractDescription.AbstractArrow;
 import abstractDescription.AbstractCOP;
 import abstractDescription.AbstractConceptDiagram;
+import abstractDescription.AbstractEquality;
 import icircles.abstractDescription.AbstractDescription;
 import icircles.concreteDiagram.DiagramCreator;
 import icircles.util.CannotDrawException;
@@ -35,18 +36,24 @@ public class ConceptDiagramCreator {
             AbstractCOP abstractCOPDescription = abstractCOPDescriptions.get(copDiagram);
             AbstractDescription ad = abstractCOPDescription.getPrimarySDDescription();
             Set<ConcreteArrow> concreteCOPArrows = new HashSet<>();
+            Set<ConcreteEquality> concreteEqualities = new HashSet<>();
 
             for (AbstractArrow abstractArrow: abstractCOPDescription.getArrows()) {
                 ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow);
                 concreteCOPArrows.add(concreteArrow);
             }
+
+            for (AbstractEquality abstractEquality: abstractCOPDescription.getEqualities()) {
+                ConcreteEquality concreteEquality = new ConcreteEquality(abstractEquality);
+                concreteEqualities.add(concreteEquality);
+            }
             ConcreteClassObjectPropertyDiagram COPDescription;
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows);
+                COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows, concreteEqualities);
             } else { // no contours, just dots
-                COPDescription = new ConcreteClassObjectPropertyDiagram(concreteArrows, abstractCOPDescription.getDots());
+                COPDescription = new ConcreteClassObjectPropertyDiagram(concreteCOPArrows, abstractCOPDescription.getDots(), concreteEqualities);
             }
             COPs.put(copDiagram, COPDescription);
         }

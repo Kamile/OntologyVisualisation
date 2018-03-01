@@ -3,6 +3,7 @@ package gui;
 import abstractDescription.AbstractArrow;
 import abstractDescription.AbstractCOP;
 import abstractDescription.AbstractConceptDiagram;
+import abstractDescription.AbstractEquality;
 import icircles.abstractDescription.AbstractBasicRegion;
 import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
@@ -10,6 +11,7 @@ import icircles.util.CannotDrawException;
 import lang.Arrow;
 import lang.ConceptDiagram;
 import lang.ClassObjectPropertyDiagram;
+import lang.Equality;
 import speedith.core.lang.PrimarySpiderDiagram;
 import speedith.core.lang.Region;
 import speedith.core.lang.Zone;
@@ -67,11 +69,20 @@ public class AbstractDescriptionTranslator {
             }
         }
 
-        List<String> dots = COPDiagram.getDots();
-        if (dots != null) {
-            return new AbstractCOP(ad, abstractArrows, new TreeSet<>(dots));
+        List<Equality> equalities = COPDiagram.getEqualities();
+        Set<AbstractEquality> abstractEqualities = new HashSet();
+
+        if (equalities != null) {
+            for (Equality equality: equalities) {
+                boolean isKnown = equality.isKnown();
+                abstractEqualities.add(new AbstractEquality(isKnown, spiderMap.get(equality.getArg1()), spiderMap.get(equality.getArg2())));
+            }
         }
-        return new AbstractCOP(ad, abstractArrows);
+
+        Set<String> dots = new TreeSet<>(COPDiagram.getDots());
+
+        return new AbstractCOP(ad, abstractArrows, abstractEqualities, dots);
+
     }
 
     public static AbstractConceptDiagram getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {
