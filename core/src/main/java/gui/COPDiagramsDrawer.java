@@ -213,15 +213,14 @@ public class COPDiagramsDrawer extends JPanel {
             if (this.diagram.dots != null && this.diagram.dots.size() > 0) {
                 List<String> dots = new ArrayList<>(this.diagram.dots);
                 int numDots = dots.size();
-                int distance = this.getWidth()/(numDots*2);
-                int currentXPos = distance - getCenteringTranslationX();
+                int currentXPos = this.getWidth()/2 - (20*(numDots-1)) - getCenteringTranslationX();
 
                 for (String dot : dots) {
                     Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, this.getHeight() / 2, 8, 8);
-                    circleMap.put(dot, dotCircle);
+                    circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), this.getHeight() / 2 + getCenteringTranslationY() + getY(), 8, 8));
                     g2d.fill(dotCircle);
-                    g2d.drawString(dot, currentXPos, this.getHeight()/2 - 15);
-                    currentXPos += 2*distance;
+                    g2d.drawString(dot, currentXPos, this.getHeight()/2 - 10);
+                    currentXPos += 40;
                 }
             }
 

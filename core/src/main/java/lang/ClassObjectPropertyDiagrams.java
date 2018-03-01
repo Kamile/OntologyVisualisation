@@ -23,8 +23,10 @@ public class ClassObjectPropertyDiagrams {
             Collection<Equality> knownEqualities,
             Collection<Equality> unknownEqualities) {
 
-        if (unknownEqualities != null) {
+        if (unknownEqualities != null && knownEqualities != null) {
             knownEqualities.addAll(unknownEqualities);
+        } else if (knownEqualities == null && unknownEqualities != null) {
+            knownEqualities = unknownEqualities;
         }
 
         if (habitats == null && shadedZones == null && presentZones == null) {

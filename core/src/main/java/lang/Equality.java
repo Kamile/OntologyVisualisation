@@ -1,10 +1,11 @@
 package lang;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import static speedith.i18n.Translations.i18n;
 
-public class Equality {
+public class Equality implements Comparable<Equality>, Serializable {
 
     private String arg1;
     private String arg2;
@@ -53,4 +54,30 @@ public class Equality {
         toString(sb);
         return sb.toString();
     }
+
+    @Override
+    public int compareTo(Equality o) {
+        if (o == null) {
+            throw new NullPointerException();
+        }
+        if (this == o) {
+            return 0;
+        } else if (this.arg1 != o.arg1){
+            return this.arg1.compareTo(o.arg2);
+        } else {
+            return this.arg2.compareTo(o.arg2);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj instanceof Equality) {
+            Equality e = (Equality) obj;
+            return arg1.equals(e.getArg1()) && arg2.equals(e.getArg2());
+        }
+        return false;
+    }
+
 }

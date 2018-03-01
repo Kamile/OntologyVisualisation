@@ -112,9 +112,9 @@ public class ArrowPanel extends JComponent {
 
                 double midX = x1 + (x2-x1)/2;
                 double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
-                g2d.drawString("=", (int) midX, (int) (midY-15));
+                g2d.drawString("=", (int) midX, (int) (midY + 8));
                 if (!equality.isKnown()) {
-                    g2d.drawString("?", (int) midX, (int) (midY-20));
+                    g2d.drawString("?", (int) midX, (int) (midY-5));
                 }
 
             }
@@ -162,8 +162,6 @@ public class ArrowPanel extends JComponent {
         double y2 = target.getY();
         double gradient = getGradient(x1, y1 , x2, y2);
 
-
-
         double c = getC(gradient, x1, y1);
 
         // circles defined by same centre points + radius
@@ -178,7 +176,6 @@ public class ArrowPanel extends JComponent {
         Point2D.Double sourceNegative;
         Point2D.Double targetPositive;
         Point2D.Double targetNegative;
-
 
         // find intersection between source circle and line
         if (gradient == Double.MAX_VALUE) {
