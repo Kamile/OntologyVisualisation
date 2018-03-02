@@ -29,19 +29,16 @@ public class ConcreteBaseDiagram extends ConcreteDiagram {
     }
 
     /**
-     * Datatype diagrams have no arrows
+     * Datatype diagrams have no arrows or equalities since we deal only with literals
      * @param cd
-     * @param equalities
      */
-    public ConcreteBaseDiagram(ConcreteDiagram cd, Set<ConcreteEquality> equalities) {
+    public ConcreteBaseDiagram(ConcreteDiagram cd) {
         super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
-        this.equalities = equalities;
     }
 
-    public ConcreteBaseDiagram(Set<String> dots, Set<ConcreteEquality> equalities) {
+    public ConcreteBaseDiagram(Set<String> dots) {
         super(new Rectangle2D.Double(0.0D, 0.0D, (double)300, (double)300), null, null, null, null);
         this.dots = dots;
-        this.equalities = equalities;
     }
 
 }
