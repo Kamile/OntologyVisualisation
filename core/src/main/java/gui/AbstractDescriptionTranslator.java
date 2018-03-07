@@ -1,17 +1,11 @@
 package gui;
 
-import abstractDescription.AbstractArrow;
-import abstractDescription.AbstractCOP;
-import abstractDescription.AbstractConceptDiagram;
-import abstractDescription.AbstractEquality;
+import abstractDescription.*;
 import icircles.abstractDescription.AbstractBasicRegion;
 import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
 import icircles.util.CannotDrawException;
-import lang.Arrow;
-import lang.ConceptDiagram;
-import lang.ClassObjectPropertyDiagram;
-import lang.Equality;
+import lang.*;
 import speedith.core.lang.PrimarySpiderDiagram;
 import speedith.core.lang.Region;
 import speedith.core.lang.Zone;
@@ -26,6 +20,7 @@ public class AbstractDescriptionTranslator {
     private static Map<String, AbstractBasicRegion> spiderMap;
     private static HashMap<String, AbstractCurve> contourMap;
     private static HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap;
+    private static HashMap<DatatypeDiagram, AbstractDatatypeDiagram> DTDescriptionMap;
 
     private AbstractDescriptionTranslator() {
     }
@@ -82,7 +77,70 @@ public class AbstractDescriptionTranslator {
         Set<String> dots = new TreeSet<>(COPDiagram.getDots());
 
         return new AbstractCOP(ad, abstractArrows, abstractEqualities, dots);
+    }
 
+    static AbstractDatatypeDiagram getAbstractDescription(DatatypeDiagram datatypeDiagram) throws CannotDrawException {
+        PrimarySpiderDiagram sd = (PrimarySpiderDiagram) datatypeDiagram.getSpiderDiagram();
+
+        AbstractDescription ad;
+        if (sd.isValid()) {
+            ad = DiagramVisualisation.getAbstractDescription(sd);
+            contours = new HashSet<>();
+            spiders = new HashSet<>();
+            spiderMap = new TreeMap<>();
+            contourMap = new HashMap<>();
+            contours.addAll(ad.getCopyOfContours());
+            createContourMap();
+            spiderMap.putAll(getSpiderMaps(sd));
+            spiders.addAll((sd).getSpiders());
+        } else {
+            ad = null;
+        }
+
+        Set<String> dots = new TreeSet<>(datatypeDiagram.getDots());
+
+        return new AbstractDatatypeDiagram(ad, dots);
+    }
+
+    public static AbstractPropertyDiagram getAbstractDescription(PropertyDiagram pd) throws CannotDrawException {
+        Set<AbstractArrow> abstractArrows = new HashSet<>();
+        contours = new HashSet<>();
+        COPDescriptionMap = new HashMap<>();
+        DTDescriptionMap = new HashMap<>();
+        spiders = new HashSet<>();
+        spiderMap = new TreeMap<>();
+        contourMap = new HashMap<>();
+
+        List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = pd.getClassObjectPropertyDiagrams();
+        for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
+            COPDescriptionMap.put(cop, getAbstractDescription(cop));
+        }
+
+        List<DatatypeDiagram> datatypeDiagrams = pd.getDatatypeDiagrams();
+        for (DatatypeDiagram dt : datatypeDiagrams) {
+            DTDescriptionMap.put(dt, getAbstractDescription(dt));
+        }
+
+        List<Arrow> arrows = pd.getArrows(); // need contour map from
+        if (arrows != null) {
+            for (Arrow a : arrows) {
+                String label = a.getLabel();
+                boolean isAnon = a.isDashed();
+                boolean isSourceContour = isContour(a.getSource());
+                boolean isTargetContour = isContour(a.getTarget());
+
+                if (isSourceContour && isTargetContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget())));
+                } else if (isSourceContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget())));
+                } else if (isTargetContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget())));
+                } else {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget())));
+                }
+            }
+        }
+        return new AbstractPropertyDiagram(COPDescriptionMap, DTDescriptionMap, abstractArrows);
     }
 
     public static AbstractConceptDiagram getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {

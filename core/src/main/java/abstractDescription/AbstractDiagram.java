@@ -17,6 +17,10 @@ public class AbstractDiagram extends AbstractDescription {
         m_equalities = equalityDescriptions;
     }
 
+    public AbstractDescription getPrimarySDDescription() {
+        return ad;
+    }
+
     public Set<AbstractArrow> getArrows() {
         return m_arrows;
     }

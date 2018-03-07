@@ -17,7 +17,6 @@ public class Arrow implements Comparable<Arrow>, Serializable{
     private boolean hashInvalid = true;
     private int hash;
 
-
     public Arrow(String source, String target) {
         this(NO_LABEL, source, target);
     }

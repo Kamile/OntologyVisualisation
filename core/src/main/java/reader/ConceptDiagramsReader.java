@@ -360,9 +360,9 @@ public class ConceptDiagramsReader {
             addOptionalAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
             addOptionalAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
-            addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
-            addOptionalAttribute(CDTextKnownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(true)));
-            addOptionalAttribute(CDTextUnknownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(false)));
+            addOptionalAttribute(ArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
+            addOptionalAttribute(KnownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(true)));
+            addOptionalAttribute(UnknownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(false)));
         }
 
         @Override
@@ -371,9 +371,9 @@ public class ConceptDiagramsReader {
             Map.Entry<Object, CommonTree> habitatsAttribute = attributes.get(SDTextHabitatsAttribute);
             Map.Entry<Object, CommonTree> shadedZonesAttribute = attributes.get(SDTextShadedZonesAttribute);
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
-            Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(CDTextArrowsAttribute);
-            Map.Entry<Object, CommonTree> knownEqualityAttribute = attributes.get(CDTextKnownEqualityAttribute);
-            Map.Entry<Object, CommonTree> unknownEqualityAttribute = attributes.get(CDTextUnknownEqualityAttribute);
+            Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(ArrowsAttribute);
+            Map.Entry<Object, CommonTree> knownEqualityAttribute = attributes.get(KnownEqualityAttribute);
+            Map.Entry<Object, CommonTree> unknownEqualityAttribute = attributes.get(UnknownEqualityAttribute);
             return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy(
                     (Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     habitatsAttribute == null ? null : (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
@@ -504,16 +504,16 @@ public class ConceptDiagramsReader {
 
         private BasicCDTranslator() {
             super(reader.ConceptDiagramsParser.CD);
-            addMandatoryAttribute(CDTextCOPDiagramAttribute, new ListTranslator<>(ClassObjectPropertyTranslator.Instance));
-            addOptionalAttribute(CDTextArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
+            addMandatoryAttribute(COPDiagramAttribute, new ListTranslator<>(ClassObjectPropertyTranslator.Instance));
+            addOptionalAttribute(ArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
 
         @Override
         @SuppressWarnings("unchecked")
         ConceptDiagram createCD(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(CDTextArrowsAttribute);
+            Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(ArrowsAttribute);
 
-            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<ClassObjectPropertyDiagram>) attributes.get(CDTextCOPDiagramAttribute).getKey(),
+            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<ClassObjectPropertyDiagram>) attributes.get(COPDiagramAttribute).getKey(),
                     arrowAttribute == null ? null : (ArrayList<Arrow>) arrowAttribute.getKey());
         }
     }

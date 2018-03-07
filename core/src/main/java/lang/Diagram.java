@@ -19,7 +19,7 @@ public class Diagram implements Serializable, Iterable<Diagram> {
     public static final String KnownEqualityAttribute = "equality";
     public static final String UnknownEqualityAttribute = "unknown_equality";
 
-    private static final long serialVersionUID = -23423534656432L;
+//    private static final long serialVersionUID = -23423534656432L;
     private ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams;
     private ArrayList<DatatypeDiagram> datatypeDiagrams;
     private ArrayList<Arrow> arrows;
@@ -40,6 +40,11 @@ public class Diagram implements Serializable, Iterable<Diagram> {
 
     public List<ClassObjectPropertyDiagram> getClassObjectPropertyDiagrams() {
         return Collections.unmodifiableList(classObjectPropertyDiagrams);
+    }
+
+
+    public List<DatatypeDiagram> getDatatypeDiagrams() {
+        return Collections.unmodifiableList(datatypeDiagrams);
     }
 
     public List<Arrow> getArrows() {

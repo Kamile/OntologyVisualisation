@@ -3,12 +3,14 @@ package abstractDescription;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import icircles.abstractDescription.AbstractDescription;
 import lang.ClassObjectPropertyDiagram;
+import lang.DatatypeDiagram;
 
 import java.util.*;
 
 public class AbstractConceptDiagram extends AbstractDescription {
     private Set<AbstractArrow> m_arrows;
     private HashMap<ClassObjectPropertyDiagram, AbstractCOP> m_COPs;
+    private HashMap<DatatypeDiagram, AbstractDatatypeDiagram> m_DTs;
 
     public AbstractConceptDiagram() {
         super();
@@ -22,6 +24,10 @@ public class AbstractConceptDiagram extends AbstractDescription {
 
     public HashMap<ClassObjectPropertyDiagram, AbstractCOP> getCOPs() {
         return m_COPs;
+    }
+
+    public HashMap<DatatypeDiagram, AbstractDatatypeDiagram> getDTs() {
+        return m_DTs;
     }
 
     public Set<AbstractArrow> getArrowDescriptions() {

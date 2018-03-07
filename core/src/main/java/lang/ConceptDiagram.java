@@ -11,13 +11,9 @@ import java.util.List;
 
 import static speedith.i18n.Translations.i18n;
 
-public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
+public class ConceptDiagram extends Diagram {
 
     public static final String CDTextBasicId = "ConceptDiagram";
-    public static final String CDTextCOPDiagramAttribute = "COPs";
-    public static final String CDTextArrowsAttribute = "arrows";
-    public static final String CDTextKnownEqualityAttribute = "equality";
-    public static final String CDTextUnknownEqualityAttribute = "unknown_equality";
 
     private static final long serialVersionUID = -23423534656432L;
     private ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams;
@@ -26,11 +22,13 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
     private int hash;
 
     ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs) {
+        super(COPs, null);
         setClassObjectPropertyDiagrams(COPs);
         this.arrows = new ArrayList<>();
     }
 
     ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams, ArrayList<Arrow> arrows) {
+        super(classObjectPropertyDiagrams, null, arrows);
         this.classObjectPropertyDiagrams = classObjectPropertyDiagrams;
         this.arrows = arrows;
     }
@@ -112,7 +110,7 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
     }
 
     private void printArg(Appendable sb, int i) throws IOException {
-        sb.append(CDTextCOPDiagramAttribute).append(Integer.toString(i)).append(" = ");
+        sb.append(COPDiagramAttribute).append(Integer.toString(i)).append(" = ");
         classObjectPropertyDiagrams.get(i-1).toString(sb);
     }
 
@@ -139,9 +137,6 @@ public class ConceptDiagram implements Serializable, Iterable<ConceptDiagram> {
         classObjectPropertyDiagrams = sds;
     }
 
-    public Iterator<ConceptDiagram> iterator() {
-        return null;
-    }
 
     public boolean isEquivalentTo(ConceptDiagram cd) {
         return equals(cd);
