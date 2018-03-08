@@ -17,24 +17,31 @@ public class ConceptDiagram extends Diagram {
 
     private static final long serialVersionUID = -23423534656432L;
     private ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams;
+    private ArrayList<DatatypeDiagram> datatypeDiagrams;
     private ArrayList<Arrow> arrows;
     private boolean hashInvalid = true;
     private int hash;
 
-    ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs) {
-        super(COPs, null);
+    ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs) {
+        super(COPs, DTs);
         setClassObjectPropertyDiagrams(COPs);
+        datatypeDiagrams = DTs;
         this.arrows = new ArrayList<>();
     }
 
-    ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams, ArrayList<Arrow> arrows) {
-        super(classObjectPropertyDiagrams, null, arrows);
-        this.classObjectPropertyDiagrams = classObjectPropertyDiagrams;
+    ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs,  ArrayList<Arrow> arrows) {
+        super(COPs, DTs, arrows);
+        classObjectPropertyDiagrams = COPs;
+        datatypeDiagrams = DTs;
         this.arrows = arrows;
     }
 
     public List<ClassObjectPropertyDiagram> getClassObjectPropertyDiagrams() {
         return Collections.unmodifiableList(classObjectPropertyDiagrams);
+    }
+
+    public List<DatatypeDiagram> getDatatypeDiagrams() {
+        return Collections.unmodifiableList(datatypeDiagrams);
     }
 
     public List<Arrow> getArrows() {
@@ -77,6 +84,12 @@ public class ConceptDiagram extends Diagram {
 
     public boolean isValid() {
         for (ClassObjectPropertyDiagram sd: classObjectPropertyDiagrams) {
+            if (!sd.isValid()) {
+                return false;
+            }
+        }
+
+        for (DatatypeDiagram sd: datatypeDiagrams) {
             if (!sd.isValid()) {
                 return false;
             }

@@ -14,6 +14,7 @@ tokens {
     CD              =           'ConceptDiagram';
     PD              =           'PropertyDiagram';
     COP_PRIMARY     =           'COP';
+    COP_INITIAL     =           'InitialCOP';
     DT              =           'Datatype';
 }
 
@@ -76,6 +77,7 @@ propertyDiagram
 
 classObjectPropertyDiagram
     :    'COP'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    |    'InitialCOP'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
 datatypeDiagram
