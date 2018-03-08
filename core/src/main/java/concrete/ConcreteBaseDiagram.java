@@ -1,44 +1,45 @@
 package concrete;
 
-import icircles.concreteDiagram.ConcreteDiagram;
+import abstractDescription.AbstractDiagram;
+import icircles.util.CannotDrawException;
+import lang.ClassObjectPropertyDiagram;
+import lang.DatatypeDiagram;
 
-import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.Set;
 
-public class ConcreteBaseDiagram extends ConcreteDiagram {
-    public Set<ConcreteArrow> arrows;
-    public Set<String> dots;
-    public Set<ConcreteEquality> equalities;
+public class ConcreteBaseDiagram {
+    Set<ConcreteArrow> arrows;
+    HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> COPDiagrams;
+    HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> DTDiagrams;
 
-    public ConcreteBaseDiagram(ConcreteDiagram cd, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities) {
-        super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
-        this.arrows = arrows;
-        this.equalities = equalities;
+    public ConcreteBaseDiagram(HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> concreteCOPDiagrams,
+                               HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> concreteDTDiagrams,
+                               Set<ConcreteArrow>  concreteArrows) {
+        COPDiagrams = concreteCOPDiagrams;
+        DTDiagrams = concreteDTDiagrams;
+        arrows = concreteArrows;
     }
 
-    /**
-     * No ConcreteDiagram for PSD when we have dots
-     * @param arrows
-     * @param dots
-     */
-    public ConcreteBaseDiagram(Set<ConcreteArrow> arrows, Set<String> dots, Set<ConcreteEquality> equalities) {
-        super(new Rectangle2D.Double(0.0D, 0.0D, (double)300, (double)300), null, null, null, null);
-        this.arrows = arrows;
-        this.dots = dots;
-        this.equalities = equalities;
+    public HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> getCOPMapping() {
+        return COPDiagrams;
     }
 
-    /**
-     * Datatype diagrams have no arrows or equalities since we deal only with literals
-     * @param cd
-     */
-    public ConcreteBaseDiagram(ConcreteDiagram cd) {
-        super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
+    public HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> getDTMapping() {
+        return DTDiagrams;
     }
 
-    public ConcreteBaseDiagram(Set<String> dots) {
-        super(new Rectangle2D.Double(0.0D, 0.0D, (double)300, (double)300), null, null, null, null);
-        this.dots = dots;
+    public Set<ConcreteArrow> getArrows() {
+        return arrows;
     }
 
+    public static ConcreteBaseDiagram makeConcreteDiagram(AbstractDiagram abstractDescription, int size) throws CannotDrawException {
+
+        if (!abstractDescription.isValid()) {
+            throw new CannotDrawException("Invalid diagram specification");
+        }
+
+        BaseDiagramCreator cdc = new BaseDiagramCreator(abstractDescription);
+        return cdc.createDiagram(size);
+    }
 }

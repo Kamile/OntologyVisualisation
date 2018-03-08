@@ -15,7 +15,7 @@ tokens {
     PD              =           'PropertyDiagram';
     COP_PRIMARY     =           'COP';
     COP_INITIAL     =           'InitialCOP';
-    DT              =           'Datatype';
+    DT              =           'DT';
 }
 
 @parser::header {
@@ -81,7 +81,7 @@ classObjectPropertyDiagram
     ;
 
 datatypeDiagram
-    :    'Datatype'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    :    'DT'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
 keyValues

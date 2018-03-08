@@ -56,18 +56,20 @@ public class ConceptDiagram extends Diagram {
     }
 
     public boolean isValid() {
-        for (ClassObjectPropertyDiagram sd : classObjectPropertyDiagrams) {
-            if (!sd.isValid()) {
-                return false;
+        if (classObjectPropertyDiagrams != null) {
+            for (ClassObjectPropertyDiagram d : classObjectPropertyDiagrams) {
+                if (!d.isValid()) {
+                    return false;
+                }
             }
         }
-
-        for (DatatypeDiagram sd: datatypeDiagrams) {
-            if (!sd.isValid()) {
-                return false;
+        if (datatypeDiagrams == null) {
+            for (DatatypeDiagram d : datatypeDiagrams) {
+                if (!d.isValid()) {
+                    return false;
+                }
             }
         }
-
         return true;
     }
 

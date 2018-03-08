@@ -35,12 +35,20 @@ public abstract class Diagram implements Serializable, Iterable<Diagram> {
     }
 
     public List<ClassObjectPropertyDiagram> getClassObjectPropertyDiagrams() {
-        return Collections.unmodifiableList(classObjectPropertyDiagrams);
+        if (classObjectPropertyDiagrams != null) {
+            return Collections.unmodifiableList(classObjectPropertyDiagrams);
+        } else {
+            return null;
+        }
     }
 
 
     public List<DatatypeDiagram> getDatatypeDiagrams() {
-        return Collections.unmodifiableList(datatypeDiagrams);
+        if (datatypeDiagrams != null) {
+            return Collections.unmodifiableList(datatypeDiagrams);
+        } else {
+            return null;
+        }
     }
 
     public List<Arrow> getArrows() {

@@ -504,7 +504,7 @@ public class ConceptDiagramsReader {
 
         private BasicCDTranslator() {
             super(reader.ConceptDiagramsParser.CD);
-            addMandatoryAttribute(COPDiagramAttribute, new ListTranslator<>(ClassObjectPropertyTranslator.Instance));
+            addOptionalAttribute(COPDiagramAttribute, new ListTranslator<>(ClassObjectPropertyTranslator.Instance));
             addOptionalAttribute(DTDiagramAttribute, new ListTranslator<>(DatatypeTranslator.Instance));
             addOptionalAttribute(ArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
@@ -512,10 +512,12 @@ public class ConceptDiagramsReader {
         @Override
         @SuppressWarnings("unchecked")
         ConceptDiagram createDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
+            Map.Entry<Object, CommonTree> COPAttribute = attributes.get(COPDiagramAttribute);
             Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(ArrowsAttribute);
             Map.Entry<Object, CommonTree> DTAttribute = attributes.get(DTDiagramAttribute);
 
-            return ConceptDiagrams.createBasicConceptDiagram((ArrayList<ClassObjectPropertyDiagram>) attributes.get(COPDiagramAttribute).getKey(),
+            return ConceptDiagrams.createBasicConceptDiagram(
+                    COPAttribute == null ? null : (ArrayList<ClassObjectPropertyDiagram>) attributes.get(COPDiagramAttribute).getKey(),
                     DTAttribute == null ? null : (ArrayList<DatatypeDiagram>) DTAttribute.getKey(),
                     arrowAttribute == null ? null : (ArrayList<Arrow>) arrowAttribute.getKey());
         }

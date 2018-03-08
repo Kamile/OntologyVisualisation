@@ -96,9 +96,7 @@ public class AbstractDescriptionTranslator {
         } else {
             ad = null;
         }
-
         Set<String> dots = new TreeSet<>(datatypeDiagram.getDots());
-
         return new AbstractDatatypeDiagram(ad, dots);
     }
 
@@ -147,13 +145,23 @@ public class AbstractDescriptionTranslator {
         Set<AbstractArrow> abstractArrows = new HashSet<>();
         contours = new HashSet<>();
         COPDescriptionMap = new HashMap<>();
+        DTDescriptionMap = new HashMap<>();
         spiders = new HashSet<>();
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
 
         List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = cd.getClassObjectPropertyDiagrams();
-        for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
-            COPDescriptionMap.put(cop, getAbstractDescription(cop));
+        if (classObjectPropertyDiagrams!= null){
+            for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
+                COPDescriptionMap.put(cop, getAbstractDescription(cop));
+            }
+        }
+
+        List<DatatypeDiagram> datatypeDiagrams = cd.getDatatypeDiagrams();
+        if (datatypeDiagrams != null) {
+            for (DatatypeDiagram dt : datatypeDiagrams) {
+                DTDescriptionMap.put(dt, getAbstractDescription(dt));
+            }
         }
 
         List<Arrow> arrows = cd.getArrows(); // need contour map from
@@ -175,7 +183,7 @@ public class AbstractDescriptionTranslator {
                 }
             }
         }
-        return new AbstractConceptDiagram(COPDescriptionMap, abstractArrows);
+        return new AbstractConceptDiagram(COPDescriptionMap, DTDescriptionMap, abstractArrows);
     }
 
     private static void createContourMap() {

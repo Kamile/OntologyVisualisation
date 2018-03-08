@@ -3,7 +3,7 @@ package concrete;
 import icircles.concreteDiagram.ConcreteDiagram;
 import java.util.Set;
 
-public class ConcreteDatatypeDiagram  extends ConcreteBaseDiagram {
+public class ConcreteDatatypeDiagram  extends ConcreteSubDiagram {
     public ConcreteDatatypeDiagram(ConcreteDiagram cd) {
         super(cd);
     }

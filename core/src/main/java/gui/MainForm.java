@@ -320,8 +320,8 @@ public class MainForm extends JFrame {
     public static Diagram getExampleD() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    COPs = [\n" +
-                    "        COP {\n" +
+                    "    DTs = [\n" +
+                    "        DT {\n" +
                     "            spiders = [],\n" +
                     "            sh_zones = [\n" +
                     "                ([\"DT\"], [\"DR1\", \"DR2\"]),\n" +
@@ -335,9 +335,7 @@ public class MainForm extends JFrame {
                     "                ([],[\"DT\", \"DR1\", \"DR2\"]),\n" +
                     "                ([\"DT\", \"DR1\", \"DR2\"],[])]\n" +
                     "        }\n" +
-                    "    ],\n" +
-                    "\tarrows = []\n" +
-                    "}\n");
+                    "    ]}\n");
         } catch (Exception ex) {
             throw new RuntimeException();
         }

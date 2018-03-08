@@ -1,6 +1,6 @@
 package gui;
 
-import concrete.ConcreteClassObjectPropertyDiagram;
+import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -32,7 +32,7 @@ public class COPDiagramsDrawer extends JPanel {
     private String svgNS;
     private Document document;
     private SVGGraphics2D svgGenerator;
-    private ConcreteClassObjectPropertyDiagram diagram;
+    private ConcreteSubDiagram diagram;
     private double scaleFactor;
     private AffineTransform trans;
     private CircleContour highlightedContour;
@@ -41,7 +41,7 @@ public class COPDiagramsDrawer extends JPanel {
 
     private HashMap<String, Ellipse2D.Double> circleMap;
 
-    public COPDiagramsDrawer(ConcreteClassObjectPropertyDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
+    public COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
         this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
@@ -289,7 +289,7 @@ public class COPDiagramsDrawer extends JPanel {
         }
     }
 
-    private void resetDiagram(ConcreteClassObjectPropertyDiagram diagram) {
+    private void resetDiagram(ConcreteSubDiagram diagram) {
         this.diagram = diagram;
         if (diagram == null) {
             this.setPreferredSize(null);
