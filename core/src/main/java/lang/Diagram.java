@@ -11,20 +11,16 @@ import java.util.List;
 
 import static speedith.i18n.Translations.i18n;
 
-public class Diagram implements Serializable, Iterable<Diagram> {
-    public static final String BasicId = "Diagram";
+public abstract class Diagram implements Serializable, Iterable<Diagram> {
     public static final String COPDiagramAttribute = "COPs";
     public static final String DTDiagramAttribute = "DTs";
     public static final String ArrowsAttribute = "arrows";
     public static final String KnownEqualityAttribute = "equality";
     public static final String UnknownEqualityAttribute = "unknown_equality";
 
-//    private static final long serialVersionUID = -23423534656432L;
-    private ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams;
-    private ArrayList<DatatypeDiagram> datatypeDiagrams;
-    private ArrayList<Arrow> arrows;
-    private boolean hashInvalid = true;
-    private int hash;
+    ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams;
+    ArrayList<DatatypeDiagram> datatypeDiagrams;
+    ArrayList<Arrow> arrows;
 
     Diagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs) {
         classObjectPropertyDiagrams = COPs;
@@ -55,44 +51,11 @@ public class Diagram implements Serializable, Iterable<Diagram> {
         }
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        } else if (other instanceof Diagram) {
-            return __isCDEqual((Diagram) other);
-        } else {
-            return false;
-        }
-    }
+    public abstract boolean equals(Object other);
 
-    @Override
-    public int hashCode() {
-        if (hashInvalid) {
-            hash = 0;
-            if (classObjectPropertyDiagrams != null) {
-                for (ClassObjectPropertyDiagram sd : classObjectPropertyDiagrams) {
-                    hash += sd.hashCode();
-                }
-            }
-            if (arrows != null) {
-                for (Arrow a : arrows) {
-                    hash += a.hashCode();
-                }
-            }
-            hashInvalid = false;
-        }
-        return hash;
-    }
+    public abstract int hashCode();
 
-    public boolean isValid() {
-        for (ClassObjectPropertyDiagram sd : classObjectPropertyDiagrams) {
-            if (!sd.isValid()) {
-                return false;
-            }
-        }
-        return true;
-    }
+    public abstract boolean isValid();
 
     public void toString(Appendable sb) throws IOException {
         if (sb == null) {
@@ -115,30 +78,13 @@ public class Diagram implements Serializable, Iterable<Diagram> {
         }
     }
 
-    private void printId(Appendable sb) throws IOException {
-        sb.append(BasicId);
-    }
+    abstract void printId(Appendable sb) throws IOException;
 
-    private void printArg(Appendable sb, int i) throws IOException {
-        sb.append(COPDiagramAttribute).append(Integer.toString(i)).append(" = ");
-        classObjectPropertyDiagrams.get(i - 1).toString(sb);
-    }
+    abstract void printArg(Appendable sb, int i) throws IOException;
 
-    private void printArgs(Appendable sb) throws IOException {
-        if (classObjectPropertyDiagrams.size() > 0) {
-            printArg(sb, 1);
-            for (int i = 2; i <= classObjectPropertyDiagrams.size(); i++) {
-                printArg(sb.append(", "), i);
-            }
-        }
-    }
+    abstract void printArgs(Appendable sb) throws IOException;
 
-    private boolean __isCDEqual(Diagram bcd) {
-        return hashCode() == bcd.hashCode()
-                && classObjectPropertyDiagrams.equals(bcd.classObjectPropertyDiagrams);
-    }
-
-    private void setClassObjectPropertyDiagrams(ArrayList<ClassObjectPropertyDiagram> sds) {
+    void setClassObjectPropertyDiagrams(ArrayList<ClassObjectPropertyDiagram> sds) {
         for (ClassObjectPropertyDiagram sd : sds) {
             if (sd == null) {
                 throw new IllegalArgumentException(i18n("ERR_OPERAND_NULL"));

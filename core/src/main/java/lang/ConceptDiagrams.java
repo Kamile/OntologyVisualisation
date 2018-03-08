@@ -11,19 +11,6 @@ import java.util.WeakHashMap;
 public class ConceptDiagrams {
     private ConceptDiagrams(){}
 
-//    public static ConceptDiagram createBasicConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs) {
-//        return new ConceptDiagram(COPs);
-//    }
-//
-//    public static ConceptDiagram createBasicConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<Arrow> arrows) {
-//        return new ConceptDiagram(COPs, arrows);
-//    }
-
-    public static ConceptDiagram createBasicConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs,
-                                                           ArrayList<DatatypeDiagram> DTs) {
-        return new ConceptDiagram(COPs, DTs);
-    }
-
     public static ConceptDiagram createBasicConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs,
                                                            ArrayList<DatatypeDiagram> DTs,
                                                            ArrayList<Arrow> arrows) {
