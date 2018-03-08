@@ -110,13 +110,17 @@ public class AbstractDescriptionTranslator {
         contourMap = new HashMap<>();
 
         List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = pd.getClassObjectPropertyDiagrams();
-        for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
-            COPDescriptionMap.put(cop, getAbstractDescription(cop));
+        if (classObjectPropertyDiagrams!= null){
+            for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
+                COPDescriptionMap.put(cop, getAbstractDescription(cop));
+            }
         }
 
         List<DatatypeDiagram> datatypeDiagrams = pd.getDatatypeDiagrams();
-        for (DatatypeDiagram dt : datatypeDiagrams) {
-            DTDescriptionMap.put(dt, getAbstractDescription(dt));
+        if (datatypeDiagrams != null) {
+            for (DatatypeDiagram dt : datatypeDiagrams) {
+                DTDescriptionMap.put(dt, getAbstractDescription(dt));
+            }
         }
 
         List<Arrow> arrows = pd.getArrows(); // need contour map from

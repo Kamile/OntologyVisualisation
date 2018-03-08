@@ -48,7 +48,8 @@ public class ConceptDiagramsReader {
         reader.ConceptDiagramsParser parser = new reader.ConceptDiagramsParser(new CommonTokenStream(lexer));
 
         try {
-            return toConceptDiagram(parser.conceptDiagram());
+            return toConceptDiagram(parser.start());
+//            return toConceptDiagram(parser.conceptDiagram());
         } catch (RecognitionException re) {
             throw new ReadingException(i18n("ERR_PARSE_INVALID_SYNTAX"), re);
         } catch (ParseException pe) {
@@ -56,11 +57,11 @@ public class ConceptDiagramsReader {
         }
     }
 
-    private static Diagram toConceptDiagram(conceptDiagram_return cd) throws ReadingException {
-        if (cd == null) {
+    private static Diagram toConceptDiagram(ConceptDiagramsParser.start_return diagram) throws ReadingException {
+        if (diagram == null) {
             throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "conceptDiagram"));
         }
-        return TopTranslator.Instance.fromASTNode(cd.tree);
+        return TopTranslator.Instance.fromASTNode(diagram.tree);
     }
 
     /** BEGIN methods from SpiderDiagramsReader **/
@@ -492,6 +493,7 @@ public class ConceptDiagramsReader {
                 case reader.ConceptDiagramsParser.CD:
                     return BasicCDTranslator.Instance.fromASTNode(treeNode);
                 case reader.ConceptDiagramsParser.PD:
+                    System.out.println("PD");
                     return BasicPDTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
@@ -527,8 +529,8 @@ public class ConceptDiagramsReader {
         static final BasicPDTranslator Instance = new BasicPDTranslator();
 
         private BasicPDTranslator() {
-            super(reader.ConceptDiagramsParser.CD);
-            addMandatoryAttribute(COPDiagramAttribute, new ListTranslator<>(ClassObjectPropertyTranslator.Instance));
+            super(reader.ConceptDiagramsParser.PD);
+            addOptionalAttribute(COPDiagramAttribute, new ListTranslator<>(ClassObjectPropertyTranslator.Instance));
             addOptionalAttribute(DTDiagramAttribute, new ListTranslator<>(DatatypeTranslator.Instance));
             addOptionalAttribute(ArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
         }
@@ -536,10 +538,12 @@ public class ConceptDiagramsReader {
         @Override
         @SuppressWarnings("unchecked")
         PropertyDiagram createDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(ArrowsAttribute);
+            Map.Entry<Object, CommonTree> COPAttribute = attributes.get(COPDiagramAttribute);
             Map.Entry<Object, CommonTree> DTAttribute = attributes.get(DTDiagramAttribute);
+            Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(ArrowsAttribute);
 
-            return PropertyDiagrams.createBasicPropertyDiagram((ArrayList<ClassObjectPropertyDiagram>) attributes.get(COPDiagramAttribute).getKey(),
+            return PropertyDiagrams.createBasicPropertyDiagram(
+                    COPAttribute == null ? null : (ArrayList<ClassObjectPropertyDiagram>) attributes.get(COPDiagramAttribute).getKey(),
                     DTAttribute == null ? null : (ArrayList<DatatypeDiagram>) attributes.get(DTDiagramAttribute).getKey(),
                     arrowAttribute == null ? null : (ArrayList<Arrow>) arrowAttribute.getKey());
         }

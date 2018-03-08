@@ -17,10 +17,6 @@ public class ConceptDiagram extends Diagram {
     private boolean hashInvalid = true;
     private int hash;
 
-    ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs) {
-        super(COPs, DTs);
-    }
-
     ConceptDiagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs,  ArrayList<Arrow> arrows) {
         super(COPs, DTs, arrows);
     }
@@ -63,7 +59,7 @@ public class ConceptDiagram extends Diagram {
                 }
             }
         }
-        if (datatypeDiagrams == null) {
+        if (datatypeDiagrams != null) {
             for (DatatypeDiagram d : datatypeDiagrams) {
                 if (!d.isValid()) {
                     return false;
