@@ -4,10 +4,7 @@ import abstractDescription.AbstractConceptDiagram;
 import concrete.ConcreteClassObjectPropertyDiagram;
 import concrete.ConcreteConceptDiagram;
 import icircles.util.CannotDrawException;
-import lang.Arrow;
-import lang.ConceptDiagram;
-import lang.ClassObjectPropertyDiagram;
-import lang.Equality;
+import lang.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -53,9 +50,9 @@ public class DiagramPanel extends JPanel {
         arrowPanel = new ArrowPanel();
     }
 
-    public final void setDiagram(ConceptDiagram diagram) {
-        if (conceptDiagram != diagram) {
-            conceptDiagram = diagram;
+    public final void setDiagram(Diagram diagram) {
+        if (conceptDiagram != diagram && diagram instanceof ConceptDiagram) {
+            conceptDiagram = (ConceptDiagram) diagram;
             this.removeAll();
             if (conceptDiagram != null) {
                 try {

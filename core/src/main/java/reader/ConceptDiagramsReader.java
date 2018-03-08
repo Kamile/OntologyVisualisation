@@ -35,15 +35,15 @@ public class ConceptDiagramsReader {
 
     private ConceptDiagramsReader() {}
 
-    public static ConceptDiagram readConceptDiagram(String input) throws ReadingException {
+    public static Diagram readConceptDiagram(String input) throws ReadingException {
         return readConceptDiagram(new ANTLRStringStream(input));
     }
 
-    public static ConceptDiagram readConceptDiagram(File file) throws ReadingException, IOException {
+    public static Diagram readConceptDiagram(File file) throws ReadingException, IOException {
         return readConceptDiagram(new ANTLRFileStream(file.getPath()));
     }
 
-    static ConceptDiagram readConceptDiagram(CharStream stream) throws ReadingException {
+    static Diagram readConceptDiagram(CharStream stream) throws ReadingException {
         reader.ConceptDiagramsLexer lexer = new reader.ConceptDiagramsLexer(stream);
         reader.ConceptDiagramsParser parser = new reader.ConceptDiagramsParser(new CommonTokenStream(lexer));
 
@@ -56,11 +56,11 @@ public class ConceptDiagramsReader {
         }
     }
 
-    private static ConceptDiagram toConceptDiagram(conceptDiagram_return cd) throws ReadingException {
+    private static Diagram toConceptDiagram(conceptDiagram_return cd) throws ReadingException {
         if (cd == null) {
             throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "conceptDiagram"));
         }
-        return CDTranslator.Instance.fromASTNode(cd.tree);
+        return TopTranslator.Instance.fromASTNode(cd.tree);
     }
 
     /** BEGIN methods from SpiderDiagramsReader **/
@@ -459,7 +459,6 @@ public class ConceptDiagramsReader {
     }
 
     private static class EqualityTranslator extends ElementTranslator<Equality> {
-//        static final EqualityTranslator Instance = new EqualityTranslator();
         private ListTranslator<String> translator;
         private boolean knownEquality;
 
@@ -527,18 +526,18 @@ public class ConceptDiagramsReader {
         abstract V createDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException;
     }
 
-    private static class CDTranslator extends ElementTranslator<ConceptDiagram> {
-        static final CDTranslator Instance = new CDTranslator();
+    private static class TopTranslator extends ElementTranslator<Diagram> {
+        static final TopTranslator Instance = new TopTranslator();
 
-        private CDTranslator() { }
+        private TopTranslator() { }
 
         @Override
-        public ConceptDiagram fromASTNode(CommonTree treeNode) throws ReadingException {
+        public Diagram fromASTNode(CommonTree treeNode) throws ReadingException {
             switch (treeNode.token.getType()) {
                 case reader.ConceptDiagramsParser.CD:
                     return BasicCDTranslator.Instance.fromASTNode(treeNode);
-//                case reader.ConceptDiagramsParser.PD:
-//                    return BasicPDTranslator.Instance.fromASTNode(treeNode);
+                case reader.ConceptDiagramsParser.PD:
+                    return BasicPDTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
             }

@@ -1,6 +1,7 @@
 package gui;
 
 import lang.ConceptDiagram;
+import lang.Diagram;
 import reader.ConceptDiagramsReader;
 import speedith.core.lang.reader.ReadingException;
 
@@ -176,7 +177,7 @@ public class MainForm extends JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = descriptionFileChooser.getSelectedFile();
             try {
-                ConceptDiagram input = ConceptDiagramsReader.readConceptDiagram(file);
+                Diagram input = ConceptDiagramsReader.readConceptDiagram(file);
                 if (!input.isValid()) {
                     throw new ReadingException("The diagram contained in the file is not valid.");
                 }
@@ -248,7 +249,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public static ConceptDiagram getExampleA() {
+    public static Diagram getExampleA() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
@@ -277,7 +278,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public static ConceptDiagram getExampleB() {
+    public static Diagram getExampleB() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
@@ -299,7 +300,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public static ConceptDiagram getExampleC() {
+    public static Diagram getExampleC() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
@@ -316,7 +317,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public static ConceptDiagram getExampleD() {
+    public static Diagram getExampleD() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
