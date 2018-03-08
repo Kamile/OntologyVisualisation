@@ -17,8 +17,8 @@ import java.util.List;
 import static speedith.i18n.Translations.i18n;
 
 public class DiagramPanel extends JPanel {
-    private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
-    private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
+    private static final Dimension MINIMUM_SIZE = new Dimension(500, 400);
+    private static final Dimension PREFERRED_SIZE = new Dimension(750, 450);
 
     private ArrowPanel arrowPanel;
     private Diagram diagram;
@@ -51,8 +51,8 @@ public class DiagramPanel extends JPanel {
     }
 
     public final void setDiagram(Diagram diagram) {
-        if (this.diagram != diagram && diagram instanceof ConceptDiagram) {
-            this.diagram = (ConceptDiagram) diagram;
+        if (this.diagram != diagram && (diagram instanceof ConceptDiagram || diagram instanceof PropertyDiagram)) {
+            this.diagram = diagram;
             this.removeAll();
             if (this.diagram != null) {
                 try {
@@ -92,16 +92,15 @@ public class DiagramPanel extends JPanel {
             this.setBorder(new EmptyBorder(20, 20, 20, 20));
             this.setLayout(new GridLayout(1, 0));
 
-
             final ConcreteBaseDiagram d;
             if (diagram instanceof ConceptDiagram) {
                 AbstractConceptDiagram adConcept = AbstractDescriptionTranslator.getAbstractDescription((ConceptDiagram) diagram);
-                d = ConcreteConceptDiagram.makeConcreteDiagram(adConcept, 350);
+                d = ConcreteConceptDiagram.makeConcreteDiagram(adConcept, 300);
                 COPmapping = d.getCOPMapping();
                 DTmapping = d.getDTMapping();
             } else if (diagram instanceof PropertyDiagram) {
                 AbstractPropertyDiagram  adProperty = AbstractDescriptionTranslator.getAbstractDescription((PropertyDiagram) diagram);
-                d = ConcretePropertyDiagram.makeConcreteDiagram(adProperty, 350);
+                d = ConcretePropertyDiagram.makeConcreteDiagram(adProperty, 300);
                 COPmapping = d.getCOPMapping();
                 DTmapping = d.getDTMapping();
             } else {

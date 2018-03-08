@@ -39,7 +39,7 @@ public class ConcreteBaseDiagram {
             throw new CannotDrawException("Invalid diagram specification");
         }
 
-        BaseDiagramCreator cdc = new BaseDiagramCreator(abstractDescription);
-        return cdc.createDiagram(size);
+        BaseDiagramCreator diagramCreator = new BaseDiagramCreator(abstractDescription);
+        return diagramCreator.createDiagram(size);
     }
 }

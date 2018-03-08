@@ -140,7 +140,8 @@ public class COPDiagramsDrawer extends JPanel {
                             g2d.setFont(f);
                         }
                         if (!cc.ac.getLabel().startsWith("_")) {
-                            g2d.drawString(cc.ac.getLabel(), (int) (cc.getLabelXPosition() * this.trans.getScaleX()) + 5, (int) (cc.getLabelYPosition() * this.trans.getScaleY()) + 5);
+                            g2d.drawString(cc.ac.getLabel(), (int) tmpCircle.getCenterX() - 5, (int) (tmpCircle.getCenterY() - tmpCircle.getHeight()/2 - 8));
+//                            g2d.drawString(cc.ac.getLabel(), (int) (cc.getLabelXPosition() * this.trans.getScaleX()) + 5, (int) (cc.getLabelYPosition() * this.trans.getScaleY()) + 5);
                         }
                     }
                 }
@@ -304,7 +305,7 @@ public class COPDiagramsDrawer extends JPanel {
         if (this.diagram != null) {
             int size = this.diagram.getSize();
             if (size > 0) {
-                this.setScaleFactor((double)Math.min((float)this.getWidth() / (float)size, (float)this.getHeight() / (float)size));
+                this.setScaleFactor((double)Math.min((float)this.getWidth() / (float)size, (float)(this.getHeight()-50) / (float)size));
             }
         }
     }

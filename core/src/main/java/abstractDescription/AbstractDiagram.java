@@ -10,17 +10,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class AbstractDiagram extends AbstractDescription {
-    Set<AbstractArrow> m_arrows;
-    HashMap<ClassObjectPropertyDiagram, AbstractCOP> m_COPs;
-    HashMap<DatatypeDiagram, AbstractDatatypeDiagram> m_DTs;
+    private Set<AbstractArrow> m_arrows;
+    private HashMap<ClassObjectPropertyDiagram, AbstractCOP> m_COPs;
+    private HashMap<DatatypeDiagram, AbstractDatatypeDiagram> m_DTs;
 
-    public AbstractDiagram(HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap, Set<AbstractArrow> arrows) {
-        m_COPs = COPDescriptionMap;
-        m_DTs = new HashMap<>();
-        m_arrows = arrows;
-    }
-
-    public AbstractDiagram(HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap,
+    AbstractDiagram(HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap,
                            HashMap<DatatypeDiagram, AbstractDatatypeDiagram> DTDescriptionMap,
                            Set<AbstractArrow> arrows) {
         m_COPs = COPDescriptionMap;
