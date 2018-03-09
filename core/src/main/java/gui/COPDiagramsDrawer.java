@@ -1,5 +1,6 @@
 package gui;
 
+import concrete.ConcreteClassObjectPropertyDiagram;
 import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
 import org.apache.batik.dom.GenericDOMImplementation;
@@ -185,8 +186,12 @@ public class COPDiagramsDrawer extends JPanel {
                             scaleCircleCentrally(tmpCircle, 1.4D);
                         }
 
-                        g2d.fill(tmpCircle);
-                        circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+                        if (!this.diagram.containsInitialT && !s.as.getName().equals("t")) {
+                            g2d.fill(tmpCircle);
+                            circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+                        } else {
+                            circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()));
+                        }
                         if (this.getHighlightedFoot() == foot) {
                             g2d.setColor(oldColor2);
                         }
@@ -218,8 +223,13 @@ public class COPDiagramsDrawer extends JPanel {
 
                 for (String dot : dots) {
                     Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, this.getHeight() / 2, 8, 8);
-                    circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), this.getHeight() / 2 + getCenteringTranslationY() + getY(), 8, 8));
-                    g2d.fill(dotCircle);
+
+                    if (!this.diagram.containsInitialT && !dot.equals("t")) {
+                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), this.getHeight() / 2 + getCenteringTranslationY() + getY(), 8, 8));
+                        g2d.fill(dotCircle);
+                    } else {
+                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), this.getHeight() / 2 + getCenteringTranslationY() + getY() - 15, 8, 8));
+                    }
                     g2d.drawString(dot, currentXPos, this.getHeight()/2 - 10);
                     currentXPos += 40;
                 }
