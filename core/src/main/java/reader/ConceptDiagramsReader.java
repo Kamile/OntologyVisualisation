@@ -302,6 +302,8 @@ public class ConceptDiagramsReader {
             switch (treeNode.token.getType()) {
                 case ConceptDiagramsParser.COP_PRIMARY:
                     return COPTranslator.Instance.fromASTNode(treeNode);
+                case ConceptDiagramsParser.COP_INITIAL:
+                    return new COPTranslator(true).fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));
             }
@@ -327,9 +329,26 @@ public class ConceptDiagramsReader {
 
     private static class COPTranslator extends GeneralTranslator<ClassObjectPropertyDiagram> {
         static final COPTranslator Instance = new COPTranslator();
+        boolean containsInitialT = false;
 
         private COPTranslator() {
             super(ConceptDiagramsParser.COP_PRIMARY);
+            addMandatoryAttribute(SDTextSpidersAttribute, ListTranslator.StringListTranslator);
+            addOptionalAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
+            addOptionalAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
+            addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
+            addOptionalAttribute(ArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
+            addOptionalAttribute(KnownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(true)));
+            addOptionalAttribute(UnknownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(false)));
+        }
+
+        private COPTranslator(boolean containsInitialT) {
+            super(ConceptDiagramsParser.COP_INITIAL);
+            this.containsInitialT = containsInitialT;
+            addAttributes();
+        }
+
+        void addAttributes() {
             addMandatoryAttribute(SDTextSpidersAttribute, ListTranslator.StringListTranslator);
             addOptionalAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
             addOptionalAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
@@ -356,7 +375,8 @@ public class ConceptDiagramsReader {
                     arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey(),
                     null,
                     knownEqualityAttribute == null ? null : (Collection<Equality>) knownEqualityAttribute.getKey(),
-                    unknownEqualityAttribute == null ? null : (Collection<Equality>) unknownEqualityAttribute.getKey());
+                    unknownEqualityAttribute == null ? null : (Collection<Equality>) unknownEqualityAttribute.getKey(),
+                    containsInitialT);
         }
     }
 

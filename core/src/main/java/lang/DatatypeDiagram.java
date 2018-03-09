@@ -13,6 +13,6 @@ import java.util.TreeSet;
  */
 public class DatatypeDiagram extends ClassObjectPropertyDiagram {
     public DatatypeDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<String> dots) {
-        super(spiders, habitats, shadedZones, presentZones, null, dots, null);
+        super(spiders, habitats, shadedZones, presentZones, null, dots, null, false);
     }
 }

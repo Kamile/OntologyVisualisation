@@ -20,9 +20,10 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
     private final TreeSet<Arrow> arrows;
     private final TreeSet<String> dots;
     private final TreeSet<Equality> equalities;
+    private final boolean containsInitialT;
     private Boolean valid;
 
-    public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, TreeSet<Equality> equalities) {
+    public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, TreeSet<Equality> equalities, boolean containsInitialT) {
         if (spiders != null && !spiders.isEmpty()) {
             if (habitats != null && !Sets.isNaturalSubset(habitats.navigableKeySet(), spiders)) {
                 throw new IllegalArgumentException(Translations.i18n("ERR_SD_HABITATS_WITHOUT_SPIDERS"));
@@ -38,6 +39,7 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
         this.arrows = arrows == null ? new TreeSet() : arrows;
         this.dots = dots == null ? new TreeSet() : dots;
         this.equalities = equalities == null ? new TreeSet() : equalities;
+        this.containsInitialT = containsInitialT;
     }
 
     public SpiderDiagram getSpiderDiagram() {
@@ -54,6 +56,10 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
 
     public List<Equality> getEqualities() {
         return new ArrayList<>(equalities);
+    }
+
+    public boolean containsInitialT() {
+        return containsInitialT;
     }
 
     @Override

@@ -20,7 +20,8 @@ public class ClassObjectPropertyDiagrams {
             Collection<Arrow> arrows,
             Collection<String> dots,
             Collection<Equality> knownEqualities,
-            Collection<Equality> unknownEqualities) {
+            Collection<Equality> unknownEqualities,
+            boolean containsInitialT) {
 
         if (unknownEqualities != null && knownEqualities != null) {
             knownEqualities.addAll(unknownEqualities);
@@ -33,12 +34,12 @@ public class ClassObjectPropertyDiagrams {
                     null, null,
                     null,null,
                     arrows, spiders,
-                    knownEqualities, false);
+                    knownEqualities, containsInitialT, false);
         }
         return createClassObjectPropertyDiagram(spiders, habitats,
                 shadedZones, presentZones,
                 arrows, dots,
-                knownEqualities, false);
+                knownEqualities, containsInitialT, false);
     }
 
     public static DatatypeDiagram createDatatypeDiagramNoCopy(
@@ -58,7 +59,7 @@ public class ClassObjectPropertyDiagrams {
     }
 
     private static ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Collection<String> spiders, Map<String,
-            Region> habitats, Collection<Zone> shadedZones, Collection<Zone> presentZones, Collection<Arrow> arrows, Collection<String> dots, Collection<Equality> equalities, boolean ClassObjectPropertyyCollections) {
+            Region> habitats, Collection<Zone> shadedZones, Collection<Zone> presentZones, Collection<Arrow> arrows, Collection<String> dots, Collection<Equality> equalities, boolean containsInitialT, boolean ClassObjectPropertyyCollections) {
         if (spiders != null && !(spiders instanceof TreeSet)
                 || habitats != null && !(habitats instanceof TreeMap)
                 || shadedZones != null && !(shadedZones instanceof TreeSet)
@@ -73,7 +74,7 @@ public class ClassObjectPropertyDiagrams {
             TreeSet<Arrow> arrowsClassObjectProperty = arrows == null ? null : new TreeSet(arrows);
             TreeSet<String> dotsClassObjectProperty = dots == null ? null : new TreeSet(dots);
             TreeSet<Equality> equalityClassObjectProperty = equalities == null ? null: new TreeSet(equalities);
-            return __createClassObjectProperty(spidersClassObjectProperty, habitatsClassObjectProperty, shadedZonesClassObjectProperty, presentZonesClassObjectProperty, arrowsClassObjectProperty, dotsClassObjectProperty, equalityClassObjectProperty, false);
+            return __createClassObjectProperty(spidersClassObjectProperty, habitatsClassObjectProperty, shadedZonesClassObjectProperty, presentZonesClassObjectProperty, arrowsClassObjectProperty, dotsClassObjectProperty, equalityClassObjectProperty, containsInitialT, false);
         } else {
             return createClassObjectPropertyDiagram(spiders == null ? null : (TreeSet)spiders,
                     habitats == null ? null : (TreeMap)habitats,
@@ -81,7 +82,7 @@ public class ClassObjectPropertyDiagrams {
                     presentZones == null ? null : (TreeSet)presentZones,
                     arrows == null ? null : (TreeSet) arrows,
                     dots == null ? null : dots,
-                    equalities == null ? null : equalities,
+                    equalities == null ? null : equalities, containsInitialT,
                     ClassObjectPropertyyCollections);
         }
     }
@@ -109,7 +110,7 @@ public class ClassObjectPropertyDiagrams {
         }
     }
 
-    private static ClassObjectPropertyDiagram __createClassObjectProperty(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, TreeSet<Equality> equalities, boolean ClassObjectPropertyCollections) {
+    private static ClassObjectPropertyDiagram __createClassObjectProperty(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, TreeSet<Equality> equalities, boolean containsInitialT, boolean ClassObjectPropertyCollections) {
         WeakHashMap var5 = pool;
         synchronized(pool) {
             ClassObjectPropertyDiagram diagram = null;
@@ -121,9 +122,10 @@ public class ClassObjectPropertyDiagrams {
                         presentZones == null ? null : (TreeSet)presentZones.clone(),
                         arrows == null ? null : (TreeSet) arrows.clone(),
                         dots == null ? null : (TreeSet) dots.clone(),
-                        equalities == null ? null : (TreeSet) equalities.clone());
+                        equalities == null ? null : (TreeSet) equalities.clone(),
+                        containsInitialT);
             } else {
-                diagram = new ClassObjectPropertyDiagram(spiders, habitats, shadedZones, presentZones, arrows, dots, equalities);
+                diagram = new ClassObjectPropertyDiagram(spiders, habitats, shadedZones, presentZones, arrows, dots, equalities, containsInitialT);
             }
 
             ClassObjectPropertyDiagram exDiagram = __getSDFromPool(diagram);
