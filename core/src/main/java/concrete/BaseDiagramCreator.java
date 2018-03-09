@@ -38,6 +38,7 @@ public class BaseDiagramCreator {
             AbstractDescription ad = abstractCOPDescription.getPrimarySDDescription();
             Set<ConcreteArrow> concreteCOPArrows = new HashSet<>();
             Set<ConcreteEquality> concreteEqualities = new HashSet<>();
+            boolean containsInitialT = abstractCOPDescription.containsInitialT();
 
             for (AbstractArrow abstractArrow: abstractCOPDescription.getArrows()) {
                 ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow);
@@ -52,9 +53,9 @@ public class BaseDiagramCreator {
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows, concreteEqualities);
+                COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows, concreteEqualities, containsInitialT);
             } else { // no contours, just dots
-                COPDescription = new ConcreteClassObjectPropertyDiagram(concreteCOPArrows, abstractCOPDescription.getDots(), concreteEqualities);
+                COPDescription = new ConcreteClassObjectPropertyDiagram(concreteCOPArrows, abstractCOPDescription.getDots(), concreteEqualities, containsInitialT);
             }
             COPs.put(copDiagram, COPDescription);
         }

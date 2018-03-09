@@ -9,12 +9,14 @@ public class AbstractSubDiagram extends AbstractDescription {
     private Set<AbstractArrow> m_arrows;
     private Set<String> m_dots;
     private Set<AbstractEquality> m_equalities;
+    private boolean m_containsInitialT;
 
-    AbstractSubDiagram(AbstractDescription spiderDescription, Set<AbstractArrow> arrowDescriptions, Set<AbstractEquality> equalityDescriptions, Set<String> dots) {
+    AbstractSubDiagram(AbstractDescription spiderDescription, Set<AbstractArrow> arrowDescriptions, Set<AbstractEquality> equalityDescriptions, Set<String> dots, boolean containsInitialT) {
         ad = spiderDescription;
         m_arrows = arrowDescriptions;
         m_dots = dots;
         m_equalities = equalityDescriptions;
+        m_containsInitialT = containsInitialT;
     }
 
     public AbstractDescription getPrimarySDDescription() {
@@ -31,5 +33,9 @@ public class AbstractSubDiagram extends AbstractDescription {
 
     public Set<AbstractEquality> getEqualities() {
         return m_equalities;
+    }
+
+    public boolean containsInitialT() {
+        return m_containsInitialT;
     }
 }

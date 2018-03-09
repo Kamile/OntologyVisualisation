@@ -6,6 +6,6 @@ import java.util.Set;
 
 public class AbstractDatatypeDiagram extends AbstractSubDiagram {
     public AbstractDatatypeDiagram(AbstractDescription spiderDescription, Set<String> dots) {
-        super(spiderDescription, null, null, dots);
+        super(spiderDescription, null, null, dots, false);
     }
 }

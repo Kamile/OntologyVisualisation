@@ -27,6 +27,7 @@ public class AbstractDescriptionTranslator {
 
     static AbstractCOP getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
         PrimarySpiderDiagram sd = (PrimarySpiderDiagram) COPDiagram.getSpiderDiagram();
+        boolean containsInitialT = COPDiagram.containsInitialT();
 
         AbstractDescription ad;
         if (sd.isValid()) {
@@ -76,7 +77,7 @@ public class AbstractDescriptionTranslator {
 
         Set<String> dots = new TreeSet<>(COPDiagram.getDots());
 
-        return new AbstractCOP(ad, abstractArrows, abstractEqualities, dots);
+        return new AbstractCOP(ad, abstractArrows, abstractEqualities, dots, containsInitialT);
     }
 
     static AbstractDatatypeDiagram getAbstractDescription(DatatypeDiagram datatypeDiagram) throws CannotDrawException {
