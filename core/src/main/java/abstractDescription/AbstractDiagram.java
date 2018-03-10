@@ -69,6 +69,13 @@ public class AbstractDiagram extends AbstractDescription {
     }
 
     public boolean isValid() {
+        if (this instanceof AbstractConceptDiagram) {
+            for (AbstractCOP cop: m_COPs.values()) {
+                if (cop.containsInitialT()) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 }
