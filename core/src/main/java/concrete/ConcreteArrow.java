@@ -7,15 +7,10 @@ import java.util.ArrayList;
 
 public class ConcreteArrow {
     static Logger logger = Logger.getLogger(ConcreteArrow.class.getName());
-
     private AbstractArrow arrow;
 
-    public ConcreteArrow(AbstractArrow arrow) {
+    ConcreteArrow(AbstractArrow arrow) {
         this.arrow = arrow;
-    }
-
-    public AbstractArrow getAbstractArrow() {
-        return arrow;
     }
 
     public double checksum() {

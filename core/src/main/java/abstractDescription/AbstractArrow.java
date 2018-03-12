@@ -21,7 +21,6 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
     private AbstractCurve c_source;
     private AbstractCurve c_target;
 
-
     public AbstractArrow(String label, boolean isAnon, AbstractBasicRegion source, AbstractBasicRegion target) {
         ++id;
         m_id = id;

@@ -2,7 +2,6 @@ package reader;
 
 import lang.*;
 import org.antlr.runtime.tree.CommonTree;
-import reader.ConceptDiagramsParser.conceptDiagram_return;
 import org.antlr.runtime.*;
 import speedith.core.lang.*;
 import speedith.core.lang.reader.ParseException;
@@ -49,7 +48,6 @@ public class ConceptDiagramsReader {
 
         try {
             return toConceptDiagram(parser.start());
-//            return toConceptDiagram(parser.conceptDiagram());
         } catch (RecognitionException re) {
             throw new ReadingException(i18n("ERR_PARSE_INVALID_SYNTAX"), re);
         } catch (ParseException pe) {

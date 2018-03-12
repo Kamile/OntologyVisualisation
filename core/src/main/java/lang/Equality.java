@@ -79,5 +79,4 @@ public class Equality implements Comparable<Equality>, Serializable {
         }
         return false;
     }
-
 }

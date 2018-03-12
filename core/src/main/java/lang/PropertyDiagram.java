@@ -12,10 +12,6 @@ public class PropertyDiagram extends Diagram {
     private boolean hashInvalid = true;
     private int hash;
 
-    PropertyDiagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs) {
-        super(COPs, DTs);
-    }
-
     PropertyDiagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs, ArrayList<Arrow> arrows) {
         super(COPs, DTs, arrows);
     }

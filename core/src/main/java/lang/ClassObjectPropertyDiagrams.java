@@ -111,9 +111,8 @@ public class ClassObjectPropertyDiagrams {
     }
 
     private static ClassObjectPropertyDiagram __createClassObjectProperty(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, TreeSet<Equality> equalities, boolean containsInitialT, boolean ClassObjectPropertyCollections) {
-        WeakHashMap var5 = pool;
         synchronized(pool) {
-            ClassObjectPropertyDiagram diagram = null;
+            ClassObjectPropertyDiagram diagram;
             if (ClassObjectPropertyCollections) {
                 diagram = new ClassObjectPropertyDiagram(
                         spiders == null ? null : (TreeSet)spiders.clone(),
@@ -146,9 +145,8 @@ public class ClassObjectPropertyDiagrams {
     }
 
     private static DatatypeDiagram __createDatatype(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<String> dots, boolean ClassObjectPropertyCollections) {
-        WeakHashMap var5 = pool;
         synchronized(pool) {
-            DatatypeDiagram diagram = null;
+            DatatypeDiagram diagram;
             if (ClassObjectPropertyCollections) {
                 diagram = new DatatypeDiagram(
                         spiders == null ? null : (TreeSet)spiders.clone(),
