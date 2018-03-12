@@ -48,15 +48,19 @@ public class PropertyDiagram extends Diagram {
 
     @Override
     public boolean isValid() {
-        for (ClassObjectPropertyDiagram sd : classObjectPropertyDiagrams) {
-            if (!sd.isValid()) {
-                return false;
+        if (classObjectPropertyDiagrams != null) {
+            for (ClassObjectPropertyDiagram sd : classObjectPropertyDiagrams) {
+                if (!sd.isValid()) {
+                    return false;
+                }
             }
         }
 
-        for (DatatypeDiagram sd: datatypeDiagrams) {
-            if (!sd.isValid()) {
-                return false;
+        if (datatypeDiagrams != null) {
+            for (DatatypeDiagram sd : datatypeDiagrams) {
+                if (!sd.isValid()) {
+                    return false;
+                }
             }
         }
 
