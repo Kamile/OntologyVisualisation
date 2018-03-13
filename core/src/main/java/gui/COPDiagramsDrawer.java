@@ -232,7 +232,6 @@ public class COPDiagramsDrawer extends JPanel {
                     currentXPos += 40;
                 }
             }
-
         }
     }
 

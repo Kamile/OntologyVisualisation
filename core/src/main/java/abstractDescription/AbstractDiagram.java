@@ -34,20 +34,6 @@ public class AbstractDiagram extends AbstractDescription {
         return m_arrows;
     }
 
-    public void addArrow(AbstractArrow a) {
-        m_arrows.add(a);
-    }
-
-    @JsonIgnore
-    public int getNumArrows() {
-        return m_arrows.size();
-    }
-
-    @JsonIgnore
-    public Iterator<AbstractArrow> getArrowIterator() {
-        return m_arrows.iterator();
-    }
-
     public boolean arrowIncludesLabel(String l) {
         Iterator i = m_arrows.iterator();
         AbstractArrow a;
