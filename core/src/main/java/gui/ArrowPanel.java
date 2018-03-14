@@ -24,6 +24,7 @@ public class ArrowPanel extends JComponent {
     private List<Equality> equalities;
     private HashMap<String, Ellipse2D.Double> circleMap;
     private HashMap<Arrow, Double> arrowOffsets;
+    private HashMap<String, Integer> existingArrowCount;
 
     ArrowPanel() {
         this(null, null, null);
@@ -33,6 +34,7 @@ public class ArrowPanel extends JComponent {
         this.arrows = arrows;
         this.equalities = equalities;
         this.circleMap = circleMap;
+        this.existingArrowCount = new HashMap<>();
         if (arrows != null) {
             arrowOffsets = new HashMap<>();
             for (Arrow a : arrows) {
@@ -55,8 +57,10 @@ public class ArrowPanel extends JComponent {
         g.setFont(new Font("Courier", Font.PLAIN, 12));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+
         if (arrows != null && circleMap.keySet().size() > 0) {
             super.paintComponent(g);
+            double previousOffset = 0;
             for (Arrow a: arrows) {
                 String label = getLabel(a);
                 String source = a.getSource();
@@ -74,6 +78,11 @@ public class ArrowPanel extends JComponent {
                 //get random control point
                 double cx = midX - arrowOffsets.get(a);
                 double cy = midY - arrowOffsets.get(a);
+
+                if (existingArrowCount.containsKey(label)) {
+                    cy -= previousOffset*existingArrowCount.get(label);
+                }
+                previousOffset = cy;
 
                 QuadCurve2D curve = new QuadCurve2D.Double();
                 curve.setCurve(x1, y1, cx, cy, x2, y2);
@@ -94,6 +103,13 @@ public class ArrowPanel extends JComponent {
 
                 // TODO: ensure text doesn't cover any components using check over rectangular region.
                 g2d.drawString(label, (int) (midX), (int) (midY - 15));
+
+
+                if (existingArrowCount.containsKey(label)) {
+                    existingArrowCount.put(label, existingArrowCount.get(label) + 1);
+                } else {
+                    existingArrowCount.put(label, 1);
+                }
             }
         }
 
