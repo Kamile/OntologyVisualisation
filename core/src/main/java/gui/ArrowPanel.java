@@ -24,7 +24,7 @@ public class ArrowPanel extends JComponent {
     private List<Equality> equalities;
     private HashMap<String, Ellipse2D.Double> circleMap;
     private HashMap<Arrow, Double> arrowOffsets;
-    private static HashMap<String, Integer> existingArrowCount;
+    private HashMap<String, Integer> existingArrowCount;
 
     ArrowPanel() {
         this(null, null, null);
@@ -56,7 +56,6 @@ public class ArrowPanel extends JComponent {
         g.setColor(new Color(10, 86, 0, 255));
         g.setFont(new Font("Courier", Font.PLAIN, 12));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 
         if (arrows != null && circleMap.keySet().size() > 0) {
             super.paintComponent(g);
@@ -99,9 +98,8 @@ public class ArrowPanel extends JComponent {
                 x = x2 - headLength * Math.cos(theta - phi);
                 y = y2 - headLength * Math.sin(theta - phi);
                 g2d.drawLine((int) x2, (int) y2, (int) x, (int) y);
-                System.out.println(cy);
-                System.out.println(midY);
-                // TODO: ensure text doesn't cover any components using check over rectangular region.
+
+
                 if (theta < 5) {
                     g2d.drawString(label, (int) (midX), (int) (cy  + 10));
                 } else {
@@ -135,7 +133,6 @@ public class ArrowPanel extends JComponent {
                 if (!equality.isKnown()) {
                     g2d.drawString("?", (int) midX, (int) (midY-5));
                 }
-
             }
         }
     }
