@@ -28,7 +28,6 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
         m_isAnon = isAnon;
         abr_source = source;
         abr_target = target;
-
     }
 
     public AbstractArrow(String label, boolean isAnon, AbstractBasicRegion source, AbstractCurve to) {
