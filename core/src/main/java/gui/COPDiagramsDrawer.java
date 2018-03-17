@@ -122,12 +122,9 @@ public class COPDiagramsDrawer extends JPanel {
                     g.setColor(col);
                     transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
                     circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+                    g2d.draw(tmpCircle);
 
-                    if (!cc.ac.getLabel().startsWith("tmp")) {
-                        g2d.draw(tmpCircle);
-                    }
-
-                    if (cc.ac.getLabel() != null && !cc.ac.getLabel().startsWith("tmp")) {
+                    if (cc.ac.getLabel() != null) {
                         g.setColor(col);
                         if (cc.stroke() != null) {
                             g2d.setStroke(cc.stroke());

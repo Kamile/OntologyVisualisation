@@ -63,7 +63,9 @@ public class ArrowPanel extends JComponent {
                 String label = getLabel(a);
                 String source = a.getSource();
                 String target = a.getTarget();
-                List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target), source);
+                System.out.println(source);
+                System.out.println(target);
+                List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
 
                 double x1 = intersections.get(0).x;
                 double y1 = intersections.get(0).y;
@@ -99,9 +101,9 @@ public class ArrowPanel extends JComponent {
                 y = y2 - headLength * Math.sin(theta - phi);
                 g2d.drawLine((int) x2, (int) y2, (int) x, (int) y);
 
-
+                System.out.println(theta*180/Math.PI);
                 if (theta < 5) {
-                    g2d.drawString(label, (int) (midX), (int) (cy  + 10));
+                    g2d.drawString(label, (int) (midX), (int) (cy  + 7));
                 } else {
                     g2d.drawString(label, (int) (midX), (int) (midY - 15));
                 }
@@ -120,7 +122,7 @@ public class ArrowPanel extends JComponent {
             for(Equality equality: equalities) {
                 String source = equality.getArg1();
                 String target = equality.getArg2();
-                List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target), "");
+                List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
 
                 double x1 = intersections.get(0).x;
                 double y1 = intersections.get(0).y;
@@ -162,12 +164,14 @@ public class ArrowPanel extends JComponent {
                 return "<=";
             case "greq":
                 return ">=";
+            case "eq":
+                return "=";
             default:
                 return "";
         }
     }
 
-    private static List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target, String label) {
+    private static List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
         // array holds source intersection then target intersection
         List<Point2D.Double> intersections = new ArrayList<>();
 
