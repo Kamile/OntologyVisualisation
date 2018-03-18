@@ -181,12 +181,13 @@ public class COPDiagramsDrawer extends JPanel {
                             scaleCircleCentrally(tmpCircle, 1.4D);
                         }
 
-                        if (!this.diagram.containsInitialT && !s.as.getName().equals("t")) {
+                        if (this.diagram.containsInitialT && s.as.getName().equals("t")) {
+                            circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()));
+                        } else {
                             g2d.fill(tmpCircle);
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
-                        } else {
-                            circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()));
                         }
+
                         if (this.getHighlightedFoot() == foot) {
                             g2d.setColor(oldColor2);
                         }
@@ -217,10 +218,10 @@ public class COPDiagramsDrawer extends JPanel {
                 int currentXPos = this.getWidth()/2 - (20*(numDots-1)) - getCenteringTranslationX();
 
                 for (String dot : dots) {
-                    Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, this.getHeight() / 2, 8, 8);
+                    Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, (this.getHeight() - 100)/2, 8, 8);
 
                     if (this.diagram.containsInitialT && dot.equals("t")) {
-                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), this.getHeight() / 2 + getCenteringTranslationY() + getY() - 15, 8, 8));
+                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX() + 5, this.getHeight() / 2 + getCenteringTranslationY() + getY() - 15, 8, 8));
                     } else {
                         circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX() + 2, this.getHeight() / 2 + getCenteringTranslationY() + getY() + 3, 8, 8));
                         g2d.fill(dotCircle);
