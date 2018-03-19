@@ -2,6 +2,7 @@ package gui;
 
 import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
+import lang.Dot;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
@@ -15,10 +16,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.io.StringWriter;
+import java.util.*;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 public class COPDiagramsDrawer extends JPanel {
     private static final BasicStroke DEFAULT_CONTOUR_STROKE = new BasicStroke(2.0F);
@@ -39,6 +38,7 @@ public class COPDiagramsDrawer extends JPanel {
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
     private HashMap<String, Ellipse2D.Double> circleMap;
+    private Set<Dot> dotMap;
 
     public COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
@@ -54,6 +54,7 @@ public class COPDiagramsDrawer extends JPanel {
         this.resetDiagram(diagram);
         this.resizeContents();
         this.circleMap = circleMap;
+        this.dotMap = new HashSet<>();
     }
 
     private void setScaleFactor(double newScaleFactor) {
@@ -91,12 +92,10 @@ public class COPDiagramsDrawer extends JPanel {
                     } else {
                         g.setColor(Color.lightGray);
                     }
-
                     Area a = z.getShape(this.diagram.getBox());
                     g2d.fill(a.createTransformedArea(this.trans));
                 }
             }
-
 
             if (this.getHighlightedZone() != null) {
                 Color oldColour = g2d.getColor();
@@ -121,6 +120,11 @@ public class COPDiagramsDrawer extends JPanel {
                     g.setColor(col);
                     transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
                     circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+
+                    dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()),
+                            cc.ac.getLabel(),
+                            cc.hashCode()));
+
                     g2d.draw(tmpCircle);
 
                     if (cc.ac.getLabel() != null) {
@@ -182,9 +186,19 @@ public class COPDiagramsDrawer extends JPanel {
 
                         if (this.diagram.containsInitialT && s.as.getName().equals("t")) {
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()));
+
+                            dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()),
+                                    foot.getSpider().as.getName(),
+                                    foot.getSpider().hashCode()));
+
                         } else {
                             g2d.fill(tmpCircle);
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+
+                            dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()),
+                                    foot.getSpider().as.getName(),
+                                    foot.getSpider().hashCode()));
+
                         }
 
                         if (this.getHighlightedFoot() == foot) {
@@ -221,8 +235,18 @@ public class COPDiagramsDrawer extends JPanel {
 
                     if (this.diagram.containsInitialT && dot.equals("t")) {
                         circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX() + 5, (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() - 15, 8, 8));
+
+                        dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX() + 5, (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() - 15, 8, 8),
+                                dot,
+                                dot.hashCode()));
+
                     } else {
                         circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() + 3, 8, 8));
+
+                        dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() + 3, 8, 8),
+                                dot,
+                                dot.hashCode()));
+
                         g2d.fill(dotCircle);
                     }
                     g2d.drawString(dot, currentXPos, this.getHeight()/2 - 60);

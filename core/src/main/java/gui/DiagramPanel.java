@@ -109,7 +109,6 @@ public class DiagramPanel extends JPanel {
                 DTmapping = new HashMap<>();
             }
 
-
             for (ConcreteClassObjectPropertyDiagram cop: COPmapping.values()) {
                 arrows.addAll(cop.arrows);
                 equalities.addAll(cop.equalities);

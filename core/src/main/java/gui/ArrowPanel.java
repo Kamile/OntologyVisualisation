@@ -16,7 +16,7 @@ import java.util.Set;
 public class ArrowPanel extends JComponent {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
-    private static final double CHAR_WIDTH = 9.448;
+    private static final double CHAR_WIDTH = 8;
     private static float dash[] = {10.0f};
     private static final BasicStroke dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
     private static final int headLength = 15;
