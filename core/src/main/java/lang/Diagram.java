@@ -22,12 +22,6 @@ public abstract class Diagram implements Serializable, Iterable<Diagram> {
     ArrayList<DatatypeDiagram> datatypeDiagrams;
     ArrayList<Arrow> arrows;
 
-    Diagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs) {
-        classObjectPropertyDiagrams = COPs;
-        datatypeDiagrams = DTs;
-        this.arrows = new ArrayList<>();
-    }
-
     Diagram(ArrayList<ClassObjectPropertyDiagram> COPs, ArrayList<DatatypeDiagram> DTs, ArrayList<Arrow> arrows) {
         classObjectPropertyDiagrams = COPs;
         datatypeDiagrams = DTs;
@@ -41,7 +35,6 @@ public abstract class Diagram implements Serializable, Iterable<Diagram> {
             return null;
         }
     }
-
 
     public List<DatatypeDiagram> getDatatypeDiagrams() {
         if (datatypeDiagrams != null) {
@@ -91,15 +84,6 @@ public abstract class Diagram implements Serializable, Iterable<Diagram> {
     abstract void printArg(Appendable sb, int i) throws IOException;
 
     abstract void printArgs(Appendable sb) throws IOException;
-
-    void setClassObjectPropertyDiagrams(ArrayList<ClassObjectPropertyDiagram> sds) {
-        for (ClassObjectPropertyDiagram sd : sds) {
-            if (sd == null) {
-                throw new IllegalArgumentException(i18n("ERR_OPERAND_NULL"));
-            }
-        }
-        classObjectPropertyDiagrams = sds;
-    }
 
     public Iterator<Diagram> iterator() {
         return null;

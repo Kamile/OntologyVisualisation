@@ -22,8 +22,7 @@ public class AbstractDescriptionTranslator {
     private static HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap;
     private static HashMap<DatatypeDiagram, AbstractDatatypeDiagram> DTDescriptionMap;
 
-    private AbstractDescriptionTranslator() {
-    }
+    private AbstractDescriptionTranslator() { }
 
     static AbstractCOP getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
         PrimarySpiderDiagram sd = (PrimarySpiderDiagram) COPDiagram.getSpiderDiagram();
@@ -44,34 +43,16 @@ public class AbstractDescriptionTranslator {
             ad = null;
         }
 
-        Set<AbstractArrow> abstractArrows = new HashSet<>();
-        List<Arrow> arrows = COPDiagram.getArrows();
-        if (arrows != null) {
-            for (Arrow a : arrows) {
-                String label = a.getLabel();
-                boolean isAnon = a.isDashed();
-                boolean isSourceContour = isContour(a.getSource());
-                boolean isTargetContour = isContour(a.getTarget());
-
-                if (isSourceContour && isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget())));
-                } else if (isSourceContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget())));
-                } else if (isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget())));
-                } else {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget())));
-                }
-            }
-        }
-
+        Set<AbstractArrow> abstractArrows = addArrows(COPDiagram.getArrows());
         List<Equality> equalities = COPDiagram.getEqualities();
         Set<AbstractEquality> abstractEqualities = new HashSet();
 
         if (equalities != null) {
             for (Equality equality: equalities) {
                 boolean isKnown = equality.isKnown();
-                abstractEqualities.add(new AbstractEquality(isKnown, spiderMap.get(equality.getArg1()), spiderMap.get(equality.getArg2())));
+                abstractEqualities.add(new AbstractEquality(isKnown,
+                        spiderMap.get(equality.getArg1()), spiderMap.get(equality.getArg2()),
+                        equality.getArg1(), equality.getArg2()));
             }
         }
 
@@ -102,7 +83,6 @@ public class AbstractDescriptionTranslator {
     }
 
     public static AbstractPropertyDiagram getAbstractDescription(PropertyDiagram pd) throws CannotDrawException {
-        Set<AbstractArrow> abstractArrows = new HashSet<>();
         contours = new HashSet<>();
         COPDescriptionMap = new HashMap<>();
         DTDescriptionMap = new HashMap<>();
@@ -124,30 +104,11 @@ public class AbstractDescriptionTranslator {
             }
         }
 
-        List<Arrow> arrows = pd.getArrows(); // need contour map from
-        if (arrows != null) {
-            for (Arrow a : arrows) {
-                String label = a.getLabel();
-                boolean isAnon = a.isDashed();
-                boolean isSourceContour = isContour(a.getSource());
-                boolean isTargetContour = isContour(a.getTarget());
-
-                if (isSourceContour && isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget())));
-                } else if (isSourceContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget())));
-                } else if (isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget())));
-                } else {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget())));
-                }
-            }
-        }
+        Set<AbstractArrow> abstractArrows = addArrows(pd.getArrows());
         return new AbstractPropertyDiagram(COPDescriptionMap, DTDescriptionMap, abstractArrows);
     }
 
     public static AbstractConceptDiagram getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {
-        Set<AbstractArrow> abstractArrows = new HashSet<>();
         contours = new HashSet<>();
         COPDescriptionMap = new HashMap<>();
         DTDescriptionMap = new HashMap<>();
@@ -168,26 +129,7 @@ public class AbstractDescriptionTranslator {
                 DTDescriptionMap.put(dt, getAbstractDescription(dt));
             }
         }
-
-        List<Arrow> arrows = cd.getArrows(); // need contour map from
-        if (arrows != null) {
-            for (Arrow a : arrows) {
-                String label = a.getLabel();
-                boolean isAnon = a.isDashed();
-                boolean isSourceContour = isContour(a.getSource());
-                boolean isTargetContour = isContour(a.getTarget());
-
-                if (isSourceContour && isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget())));
-                } else if (isSourceContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget())));
-                } else if (isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget())));
-                } else {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget())));
-                }
-            }
-        }
+        Set<AbstractArrow> abstractArrows = addArrows(cd.getArrows());
         return new AbstractConceptDiagram(COPDescriptionMap, DTDescriptionMap, abstractArrows);
     }
 
@@ -222,5 +164,28 @@ public class AbstractDescriptionTranslator {
             }
         }
         return AbstractBasicRegion.get(inContours);
+    }
+
+    private static Set<AbstractArrow> addArrows(List<Arrow> arrows) {
+        Set<AbstractArrow> abstractArrows = new HashSet<>();
+        if (arrows != null) {
+            for (Arrow a : arrows) {
+                ArrowLabel label = new ArrowLabel(a.getLabel(), a.getCardinalityOperator(), a.getCardinalityArgument());
+                boolean isAnon = a.isDashed();
+                boolean isSourceContour = isContour(a.getSource());
+                boolean isTargetContour = isContour(a.getTarget());
+
+                if (isSourceContour && isTargetContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget()), a.getSource(), a.getTarget()));
+                } else if (isSourceContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget()), a.getSource(), a.getTarget()));
+                } else if (isTargetContour) {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget()), a.getSource(), a.getTarget()));
+                } else {
+                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget()), a.getSource(), a.getTarget()));
+                }
+            }
+        }
+        return abstractArrows;
     }
 }

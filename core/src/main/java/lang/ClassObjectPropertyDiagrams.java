@@ -132,8 +132,6 @@ public class ClassObjectPropertyDiagrams {
                 pool.put(diagram, new WeakReference(diagram));
                 return diagram;
             } else {
-                assert exDiagram instanceof ClassObjectPropertyDiagram : Translations.i18n("GERR_ILLEGAL_STATE_EXPLANATION", new Object[]{Translations.i18n("ERR_PRIMARY_SD_EQUALS_NON_PRIMARY_SD")});
-
                 assert ((ClassObjectPropertyDiagram)exDiagram ).equals(diagram) : Translations.i18n("GERR_ILLEGAL_STATE");
 
                 assert diagram.equals(exDiagram ) : Translations.i18n("GERR_ILLEGAL_STATE");
@@ -163,8 +161,6 @@ public class ClassObjectPropertyDiagrams {
                 pool.put(diagram, new WeakReference(diagram));
                 return diagram;
             } else {
-                assert exDiagram instanceof ClassObjectPropertyDiagram : Translations.i18n("GERR_ILLEGAL_STATE_EXPLANATION", new Object[]{Translations.i18n("ERR_PRIMARY_SD_EQUALS_NON_PRIMARY_SD")});
-
                 assert ((ClassObjectPropertyDiagram)exDiagram ).equals(diagram) : Translations.i18n("GERR_ILLEGAL_STATE");
 
                 assert diagram.equals(exDiagram ) : Translations.i18n("GERR_ILLEGAL_STATE");

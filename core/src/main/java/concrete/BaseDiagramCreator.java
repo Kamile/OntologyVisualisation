@@ -41,7 +41,7 @@ public class BaseDiagramCreator {
             boolean containsInitialT = abstractCOPDescription.containsInitialT();
 
             for (AbstractArrow abstractArrow: abstractCOPDescription.getArrows()) {
-                ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow);
+                ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, copDiagram.hashCode());
                 concreteCOPArrows.add(concreteArrow);
             }
 
@@ -76,7 +76,7 @@ public class BaseDiagramCreator {
         }
 
         for (AbstractArrow abstractArrow: abstractArrowDescriptions) {
-            ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow);
+            ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, 0);
             concreteArrows.add(concreteArrow);
         }
 

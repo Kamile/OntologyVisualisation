@@ -1,25 +1,55 @@
 package concrete;
 
 import abstractDescription.AbstractArrow;
-import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
+import java.awt.geom.Point2D;
 
 public class ConcreteArrow {
-    private AbstractArrow arrow;
-    private double sourceX;
-    private double sourceY;
-    private double targetX;
-    private double targetY;
-    private double controlX;
-    private double controlY;
+    private AbstractArrow abstractArrow;
+    private long parentHashCode;
+    private Point2D.Double source;
+    private Point2D.Double target;
+    private Point2D.Double control;
 
-    ConcreteArrow(AbstractArrow arrow) {
-        this.arrow = arrow;
+    ConcreteArrow(AbstractArrow abstractArrow, long parentHashCode) {
+        this.abstractArrow = abstractArrow;
+        this.parentHashCode = parentHashCode;
+        this.source = new Point2D.Double();
+        this.target = new Point2D.Double();
+        this.control = new Point2D.Double();
     }
 
-    public void shiftTarget(double amount) {
+    public AbstractArrow getAbstractArrow() {
+        return abstractArrow;
+    }
 
+    public long getParentHashCode() {
+        return parentHashCode;
+    }
+
+    public void translatePoint(Point2D.Double inPoint, Point2D.Double outPoint) {
+        outPoint.x = inPoint.x;
+        outPoint.y = inPoint.y;
+    }
+
+    public String getLabel() {
+        return abstractArrow.getLabel().getLabel();
+    }
+
+    public String getCardinality() {
+        return abstractArrow.getLabel().getCardinalityOperator() + abstractArrow.getLabel().getCardinalityArgument();
+    }
+
+    public Point2D.Double getSource() {
+        return source;
+    }
+
+    public Point2D.Double getTarget() {
+        return target;
+    }
+
+    public Point2D.Double getControl() {
+        return control;
     }
 
     public double checksum() {

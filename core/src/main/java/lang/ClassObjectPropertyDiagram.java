@@ -32,13 +32,13 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
             throw new IllegalArgumentException(Translations.i18n("ERR_SD_HABITATS_WITHOUT_SPIDERS"));
         }
 
-        this.spiders = spiders == null ? new TreeSet() : spiders;
-        this.spiderHabitatsMap = habitats == null ? new TreeMap() : habitats;
-        this.shadedZones = shadedZones == null ? new TreeSet() : shadedZones;
-        this.presentZones = presentZones == null ? new TreeSet() : presentZones;
-        this.arrows = arrows == null ? new TreeSet() : arrows;
-        this.dots = dots == null ? new TreeSet() : dots;
-        this.equalities = equalities == null ? new TreeSet() : equalities;
+        this.spiders = spiders == null ? new TreeSet<String>() : spiders;
+        this.spiderHabitatsMap = habitats == null ? new TreeMap<String,Region>() : habitats;
+        this.shadedZones = shadedZones == null ? new TreeSet<Zone>() : shadedZones;
+        this.presentZones = presentZones == null ? new TreeSet<Zone>() : presentZones;
+        this.arrows = arrows == null ? new TreeSet<Arrow>() : arrows;
+        this.dots = dots == null ? new TreeSet<String>() : dots;
+        this.equalities = equalities == null ? new TreeSet<Equality>() : equalities;
         this.containsInitialT = containsInitialT;
     }
 
@@ -100,5 +100,4 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
         toString(sb);
         return sb.toString();
     }
-
 }

@@ -7,11 +7,15 @@ public class AbstractEquality implements Comparable<AbstractEquality>{
     private boolean isKnown;
     private AbstractBasicRegion abr1;
     private AbstractBasicRegion abr2;
+    private String arg1;
+    private String arg2;
 
-    public AbstractEquality(boolean isKnown, AbstractBasicRegion abr1, AbstractBasicRegion abr2) {
+    public AbstractEquality(boolean isKnown, AbstractBasicRegion abr1, AbstractBasicRegion abr2, String arg1, String arg2) {
         this.abr1 = abr1;
         this.abr2 = abr2;
         this.isKnown = isKnown;
+        this.arg1 = arg1;
+        this.arg2 = arg2;
         ++id;
     }
 
@@ -25,6 +29,14 @@ public class AbstractEquality implements Comparable<AbstractEquality>{
 
     public AbstractBasicRegion getAbr2() {
         return abr2;
+    }
+
+    public String getArg1() {
+        return arg1;
+    }
+
+    public String getArg2() {
+        return arg2;
     }
 
     @Override

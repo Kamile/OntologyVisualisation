@@ -8,4 +8,8 @@ public class ConcreteEquality {
     public ConcreteEquality(AbstractEquality equality) {
         this.equality = equality;
     }
+
+    public AbstractEquality getAbstractEquality() {
+        return equality;
+    }
 }

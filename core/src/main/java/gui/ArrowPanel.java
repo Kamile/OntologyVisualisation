@@ -1,7 +1,7 @@
 package gui;
 
-import lang.Arrow;
-import lang.Equality;
+import concrete.ConcreteArrow;
+import concrete.ConcreteEquality;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,33 +11,35 @@ import java.awt.geom.QuadCurve2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class ArrowPanel extends JComponent {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
+    private static final double CHAR_WIDTH = 9.448;
     private static float dash[] = {10.0f};
     private static final BasicStroke dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
     private static final int headLength = 15;
     private static final double phi = Math.PI/6;
 
-    private List<Arrow> arrows;
-    private List<Equality> equalities;
+    private Set<ConcreteArrow> arrows;
+    private Set<ConcreteEquality> equalities;
     private HashMap<String, Ellipse2D.Double> circleMap;
-    private HashMap<Arrow, Double> arrowOffsets;
+    private HashMap<ConcreteArrow, Double> arrowOffsets;
     private HashMap<String, Integer> existingArrowCount;
 
     ArrowPanel() {
         this(null, null, null);
     }
 
-    ArrowPanel(List<Arrow> arrows, List<Equality> equalities, HashMap<String, Ellipse2D.Double> circleMap) {
+    ArrowPanel(Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, HashMap<String, Ellipse2D.Double> circleMap) {
         this.arrows = arrows;
         this.equalities = equalities;
         this.circleMap = circleMap;
         this.existingArrowCount = new HashMap<>();
         if (arrows != null) {
             arrowOffsets = new HashMap<>();
-            for (Arrow a : arrows) {
+            for (ConcreteArrow a : arrows) {
                 arrowOffsets.put(a, getRandomOffset());
             }
         }
@@ -59,12 +61,13 @@ public class ArrowPanel extends JComponent {
 
         if (arrows != null && circleMap.keySet().size() > 0) {
             super.paintComponent(g);
-            for (Arrow a: arrows) {
-                String label = getLabel(a);
-                String source = a.getSource();
-                String target = a.getTarget();
-                System.out.println(source);
-                System.out.println(target);
+            for (ConcreteArrow a: arrows) {
+                String label = a.getLabel();
+                String cardinality = a.getCardinality();
+                String source = a.getAbstractArrow().getSourceLabel();
+                String target = a.getAbstractArrow().getTargetLabel();
+                System.out.println("source " + source + ", x= " + circleMap.get(source).getCenterX() + " y= " + circleMap.get(source).getCenterY());
+                System.out.println("target " + target +  ", x= " + circleMap.get(target).getCenterX() + " y= " + circleMap.get(target).getCenterY());
                 List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
 
                 double x1 = intersections.get(0).x;
@@ -85,10 +88,11 @@ public class ArrowPanel extends JComponent {
 
                 QuadCurve2D curve = new QuadCurve2D.Double();
                 curve.setCurve(x1, y1, cx, cy, x2, y2);
-                if (a.isDashed()) {
+                if (a.getAbstractArrow().isAnon()) {
                     g2d.setStroke(dashed);
                 }
                 g2d.draw(curve);
+                g2d.setStroke(new BasicStroke());
 
                 // draw arrowheads for target
                 double theta = Math.atan2(y2 - cy, x2 - cx);
@@ -103,8 +107,14 @@ public class ArrowPanel extends JComponent {
 
                 if (theta < 5) {
                     g2d.drawString(label, (int) (midX), (int) (cy  + 7));
+                    g.setFont(new Font("Courier", Font.PLAIN, 8));
+                    g2d.drawString(cardinality, (int) (midX + label.length() * CHAR_WIDTH), (int) (cy  + 9));
+                    g.setFont(new Font("Courier", Font.PLAIN, 12));
                 } else {
                     g2d.drawString(label, (int) (midX), (int) (midY - 15));
+                    g.setFont(new Font("Courier", Font.PLAIN, 8));
+                    g2d.drawString(label, (int) (midX + label.length() * CHAR_WIDTH), (int) (midY - 12));
+                    g.setFont(new Font("Courier", Font.PLAIN, 12));
                 }
 
                 if (existingArrowCount.containsKey(source)) {
@@ -118,9 +128,9 @@ public class ArrowPanel extends JComponent {
         if (equalities != null && circleMap.keySet().size() > 0) {
             super.paintComponent(g);
 
-            for(Equality equality: equalities) {
-                String source = equality.getArg1();
-                String target = equality.getArg2();
+            for(ConcreteEquality equality: equalities) {
+                String source = equality.getAbstractEquality().getArg1();
+                String target = equality.getAbstractEquality().getArg2();
                 List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
 
                 double x1 = intersections.get(0).x;
@@ -131,7 +141,7 @@ public class ArrowPanel extends JComponent {
                 double midX = x1 + (x2-x1)/2;
                 double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
                 g2d.drawString("=", (int) midX, (int) (midY + 6));
-                if (!equality.isKnown()) {
+                if (!equality.getAbstractEquality().isKnown()) {
                     g2d.drawString("?", (int) midX, (int) (midY-5));
                 }
             }
@@ -142,33 +152,7 @@ public class ArrowPanel extends JComponent {
         return Math.floor(Math.random()*31 + 10);
     }
 
-    private static String getLabel(Arrow a) {
-        String label = a.getLabel();
 
-        if (a.getCardinalityOperator() != null) {
-            label += " " + getOperator(a.getCardinalityOperator());
-        }
-
-        if (a.getCardinalityArgument() != 0) {
-            label += " " + a.getCardinalityArgument();
-        }
-
-        return label;
-    }
-
-    private static String getOperator(String operator) {
-        operator = operator.toLowerCase();
-        switch (operator) {
-            case "leq":
-                return "<=";
-            case "greq":
-                return ">=";
-            case "eq":
-                return "=";
-            default:
-                return "";
-        }
-    }
 
     private static List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
         // array holds source intersection then target intersection
@@ -180,9 +164,6 @@ public class ArrowPanel extends JComponent {
         double y1 = source.getY();
         double y2 = target.getY();
         double gradient = getGradient(x1, y1 , x2, y2);
-        System.out.println("x1 = " + x1 + " y1 " + y1);
-        System.out.println("x2 = " + x2 + " y2 " + y2);
-
         double c = getC(gradient, x1, y1);
 
         // circles defined by same centre points + radius
@@ -195,14 +176,13 @@ public class ArrowPanel extends JComponent {
         Point2D.Double targetNegative;
 
         // find intersection between source circle and line
-        System.out.println("gradient " + gradient);
+        System.out.println("gradient = " + gradient + " c = " + c + " targetRadius = " + targetRadius + " x2 = " + x2 + " y2 = " + y2);
         if (gradient == Double.MAX_VALUE) {
             sourcePositive = findPoint(sourceRadius, x1, y1, true);
             sourceNegative = findPoint(sourceRadius, x1, y1, false);
             targetPositive = findPoint(targetRadius, x2, y2, true);
             targetNegative = findPoint(targetRadius, x2, y2, false);
         } else {
-            System.out.println("gradient = " + gradient + " c = " + c + " targetRadius = " + targetRadius + " x2 = " + x2 + " y2 = " + y2);
             sourcePositive = findPoint(gradient, c, sourceRadius,  x1, y1, true);
             sourceNegative = findPoint(gradient, c, sourceRadius, x1, y1, false);
             targetPositive = findPoint(gradient, c, targetRadius,  x2, y2, true);

@@ -10,8 +10,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 
 import static speedith.i18n.Translations.i18n;
@@ -23,8 +22,8 @@ public class DiagramPanel extends JPanel {
     private ArrowPanel arrowPanel;
     private Diagram diagram;
     private HashMap<String, Ellipse2D.Double> circleMap;
-    private List<Arrow> arrows;
-    private List<Equality> equalities;
+    private Set<ConcreteArrow> arrows;
+    private Set<ConcreteEquality> equalities;
 
     /**
      * Create new diagram panel with nothing displayed in it.
@@ -84,8 +83,8 @@ public class DiagramPanel extends JPanel {
 
     private void drawDiagram() throws CannotDrawException {
         if (diagram != null) {
-            arrows = diagram.getArrows();
-            equalities = new ArrayList<>();
+            arrows = new HashSet<>();
+            equalities = new HashSet<>();
             circleMap = new HashMap<>();
             HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> COPmapping;
             HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> DTmapping;
@@ -96,11 +95,13 @@ public class DiagramPanel extends JPanel {
             if (diagram instanceof ConceptDiagram) {
                 AbstractConceptDiagram adConcept = AbstractDescriptionTranslator.getAbstractDescription((ConceptDiagram) diagram);
                 d = ConcreteConceptDiagram.makeConcreteDiagram(adConcept, 300);
+                arrows.addAll(d.getArrows());
                 COPmapping = d.getCOPMapping();
                 DTmapping = d.getDTMapping();
             } else if (diagram instanceof PropertyDiagram) {
                 AbstractPropertyDiagram  adProperty = AbstractDescriptionTranslator.getAbstractDescription((PropertyDiagram) diagram);
                 d = ConcretePropertyDiagram.makeConcreteDiagram(adProperty, 300);
+                arrows.addAll(d.getArrows());
                 COPmapping = d.getCOPMapping();
                 DTmapping = d.getDTMapping();
             } else {
@@ -108,9 +109,10 @@ public class DiagramPanel extends JPanel {
                 DTmapping = new HashMap<>();
             }
 
-            for (ClassObjectPropertyDiagram cop: COPmapping.keySet()) {
-                arrows.addAll(cop.getArrows());
-                equalities.addAll(cop.getEqualities());
+
+            for (ConcreteClassObjectPropertyDiagram cop: COPmapping.values()) {
+                arrows.addAll(cop.arrows);
+                equalities.addAll(cop.equalities);
             }
 
             if (COPmapping.values().size() > 0 || DTmapping.values().size() > 0) {
@@ -126,7 +128,6 @@ public class DiagramPanel extends JPanel {
                     circleMap.putAll(panel.getCircleMap());
                     panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                     panel.setVisible(true);
-
                     add(panel);
                 }
 
@@ -145,7 +146,6 @@ public class DiagramPanel extends JPanel {
                     add(panel);
                 }
             }
-
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -159,7 +159,7 @@ public class DiagramPanel extends JPanel {
         return arrowPanel;
     }
 
-    private void addArrows(final HashMap<String, Ellipse2D.Double> circleMap, final List<Arrow> arrows, final List<Equality> equalities) {
+    private void addArrows(final HashMap<String, Ellipse2D.Double> circleMap, final Set<ConcreteArrow> arrows, final Set<ConcreteEquality> equalities) {
         if ((circleMap != null) && (circleMap.keySet().size() > 0)) {
             arrowPanel = new ArrowPanel(arrows, equalities, circleMap);
         }

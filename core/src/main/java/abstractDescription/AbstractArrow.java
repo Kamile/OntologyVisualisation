@@ -3,86 +3,114 @@ package abstractDescription;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import icircles.abstractDescription.AbstractBasicRegion;
 import icircles.abstractDescription.AbstractCurve;
+import lang.ArrowLabel;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+
+import java.io.IOException;
+
+import static speedith.i18n.Translations.i18n;
 
 public class AbstractArrow implements Comparable<AbstractArrow> {
     static Logger logger = Logger.getLogger(AbstractArrow.class.getName());
     static int id = 0;
 
     @JsonProperty("label")
-    private String m_label;
-    private int m_id;
-    private boolean m_isAnon;
+    private ArrowLabel label;
+    private int mId;
+    private boolean isAnon;
+    private String sourceLabel;
+    private String targetLabel;
 
     /* Two of the following four will be set; one source, one target */
-    private AbstractBasicRegion abr_source;
-    private AbstractBasicRegion abr_target;
-    private AbstractCurve c_source;
-    private AbstractCurve c_target;
+    private AbstractBasicRegion abrSource;
+    private AbstractBasicRegion abrTarget;
+    private AbstractCurve cSource;
+    private AbstractCurve cTarget;
 
-    public AbstractArrow(String label, boolean isAnon, AbstractBasicRegion source, AbstractBasicRegion target) {
+    public AbstractArrow(ArrowLabel label, boolean isAnon,
+                         AbstractBasicRegion source, AbstractBasicRegion target,
+                         String sourceLabel, String targetLabel) {
         ++id;
-        m_id = id;
-        m_label = label;
-        m_isAnon = isAnon;
-        abr_source = source;
-        abr_target = target;
+        mId = id;
+        this.label = label;
+        this.isAnon = isAnon;
+        abrSource = source;
+        abrTarget = target;
+        this.sourceLabel = sourceLabel;
+        this.targetLabel = targetLabel;
     }
 
-    public AbstractArrow(String label, boolean isAnon, AbstractBasicRegion source, AbstractCurve to) {
+    public AbstractArrow(ArrowLabel label, boolean isAnon, AbstractBasicRegion source, AbstractCurve to,
+                         String sourceLabel, String targetLabel) {
         ++id;
-        m_id = id;
-        m_label = label;
-        m_isAnon = isAnon;
-        abr_source = source;
-        c_target = to;
+        mId = id;
+        this.label = label;
+        this.isAnon = isAnon;
+        abrSource = source;
+        cTarget = to;
+        this.sourceLabel = sourceLabel;
+        this.targetLabel = targetLabel;
     }
 
-    public AbstractArrow(String label, boolean isAnon, AbstractCurve source, AbstractCurve target) {
+    public AbstractArrow(ArrowLabel label, boolean isAnon, AbstractCurve source, AbstractCurve target,
+                         String sourceLabel, String targetLabel) {
         ++id;
-        m_id = id;
-        m_label = label;
-        m_isAnon = isAnon;
-        c_source = source;
-        c_target = target;
+        mId = id;
+        this.label = label;
+        this.isAnon = isAnon;
+        cSource = source;
+        cTarget = target;
+        this.sourceLabel = sourceLabel;
+        this.targetLabel = targetLabel;
     }
 
-    public AbstractArrow(String label, boolean isAnon, AbstractCurve source, AbstractBasicRegion target) {
+    public AbstractArrow(ArrowLabel label, boolean isAnon, AbstractCurve source, AbstractBasicRegion target,
+                         String sourceLabel, String targetLabel) {
         ++id;
-        m_id = id;
-        m_label = label;
-        m_isAnon = isAnon;
-        c_source = source;
-        abr_target = target;
+        mId = id;
+        this.label = label;
+        this.isAnon = isAnon;
+        cSource = source;
+        abrTarget = target;
+        this.sourceLabel = sourceLabel;
+        this.targetLabel = targetLabel;
     }
 
     public int getId() {
-        return m_id;
+        return mId;
     }
 
-    public String getLabel() {
-        return m_label;
+    public ArrowLabel getLabel() {
+        return label;
     }
 
     public boolean isAnon() {
-        return m_isAnon;
+        return isAnon;
     }
 
     public Object getSource() {
-        if (abr_source == null) {
-            return c_source;
+        if (abrSource == null) {
+            return cSource;
         } else {
-            return abr_source;
+            return abrSource;
         }
     }
 
     public Object getTarget() {
-        if (abr_target == null) {
-            return c_target;
+        if (abrTarget == null) {
+            return cTarget;
         } else {
-            return abr_target;
+            return abrTarget;
         }
+    }
+
+    public String getSourceLabel() {
+        return sourceLabel;
+    }
+
+    public String getTargetLabel() {
+        return targetLabel;
     }
 
     @Override
@@ -90,11 +118,11 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
         if (o == null) {
             return 1;
         } else {
-            int tmp = m_label.compareTo(o.getLabel());
+            int tmp = label.compareTo(o.getLabel());
             if (tmp != 0) {
                 return tmp;
             } else {
-                return m_id < o.getId() ? -1 : (m_id == o.getId() ? 0 : 1);
+                return mId < o.getId() ? -1 : (mId == o.getId() ? 0 : 1);
             }
         }
     }
@@ -102,18 +130,35 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
     public String debug() {
         StringBuilder sb = new StringBuilder();
         sb.append("arrow(");
-        sb.append(m_label);
-        sb.append("_" + m_id + ")@");
+        sb.append(label);
+        sb.append("_" + mId + ")@");
         sb.append(this.hashCode());
         return logger.getEffectiveLevel() == Level.DEBUG ? sb.toString() : new String();
     }
 
     public double checksum() {
-        logger.debug("build checksum from" + m_label + " (and not " + m_id + ")\ngiving " + m_label.hashCode());
-        return (double) m_label.hashCode();
+        logger.debug("build checksum from" + label + " (and not " + mId + ")\ngiving " + label.hashCode());
+        return (double) label.hashCode();
     }
 
+    public void toString(Appendable sb) {
+        try {
+            if (sb == null) {
+                throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "sb"));
+            }
+            sb.append("Arrow: id= ").append(String.valueOf(mId));
+            sb.append(" label= ").append(label.toString());
+            sb.append(", source= ").append(getSource().toString());
+            sb.append(", target= ").append(getTarget().toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public String toString() {
-        return m_label;
+        StringBuilder sb = new StringBuilder();
+        toString(sb);
+        return sb.toString();
     }
 }

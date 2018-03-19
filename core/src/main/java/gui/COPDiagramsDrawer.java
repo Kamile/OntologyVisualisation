@@ -38,7 +38,6 @@ public class COPDiagramsDrawer extends JPanel {
     private CircleContour highlightedContour;
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
-
     private HashMap<String, Ellipse2D.Double> circleMap;
 
     public COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
@@ -215,18 +214,18 @@ public class COPDiagramsDrawer extends JPanel {
             if (this.diagram.dots != null && this.diagram.dots.size() > 0) {
                 List<String> dots = new ArrayList<>(this.diagram.dots);
                 int numDots = dots.size();
-                int currentXPos = this.getWidth()/2 - (20*(numDots-1)) - getCenteringTranslationX();
+                int currentXPos = this.getWidth()/2 - (19*(numDots-1)) - getCenteringTranslationX();
 
                 for (String dot : dots) {
                     Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, (this.getHeight() - 100)/2, 8, 8);
 
                     if (this.diagram.containsInitialT && dot.equals("t")) {
-                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX() + 5, this.getHeight() / 2 + getCenteringTranslationY() + getY() - 15, 8, 8));
+                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX() + 5, (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() - 15, 8, 8));
                     } else {
-                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX() + 2, this.getHeight() / 2 + getCenteringTranslationY() + getY() + 3, 8, 8));
+                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() + 3, 8, 8));
                         g2d.fill(dotCircle);
                     }
-                    g2d.drawString(dot, currentXPos, this.getHeight()/2 - 10);
+                    g2d.drawString(dot, currentXPos, this.getHeight()/2 - 60);
                     currentXPos += 40;
                 }
             }
