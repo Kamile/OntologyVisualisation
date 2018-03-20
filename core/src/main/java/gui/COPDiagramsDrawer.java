@@ -38,7 +38,7 @@ public class COPDiagramsDrawer extends JPanel {
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
     private HashMap<String, Ellipse2D.Double> circleMap;
-    private Set<Dot> dotMap;
+    private Set<Dot> dots;
 
     public COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
@@ -54,17 +54,32 @@ public class COPDiagramsDrawer extends JPanel {
         this.resetDiagram(diagram);
         this.resizeContents();
         this.circleMap = circleMap;
-        this.dotMap = new HashSet<>();
+        this.dots = new HashSet<>();
     }
 
-    private void setScaleFactor(double newScaleFactor) {
-        this.scaleFactor = newScaleFactor;
-        this.recalculateTransform();
-        this.repaint();
+    public COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap, Set<Dot> dots) {
+        this.domImpl = GenericDOMImplementation.getDOMImplementation();
+        this.svgNS = "http://www.w3.org/2000/svg";
+        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
+        this.svgGenerator = new SVGGraphics2D(this.document);
+        this.scaleFactor = 1.0D;
+        this.trans = new AffineTransform();
+        this.highlightedContour = null;
+        this.highlightedZone = null;
+        this.highlightedFoot = null;
+        this.initComponents();
+        this.resetDiagram(diagram);
+        this.resizeContents();
+        this.circleMap = circleMap;
+        this.dots = dots;
     }
 
     HashMap<String, Ellipse2D.Double> getCircleMap() {
         return circleMap;
+    }
+
+    Set<Dot> getDots() {
+        return dots;
     }
 
     @Override
@@ -121,7 +136,7 @@ public class COPDiagramsDrawer extends JPanel {
                     transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
                     circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
 
-                    dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()),
+                    dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()),
                             cc.ac.getLabel(),
                             cc.hashCode()));
 
@@ -187,7 +202,7 @@ public class COPDiagramsDrawer extends JPanel {
                         if (this.diagram.containsInitialT && s.as.getName().equals("t")) {
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()));
 
-                            dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()),
+                            dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()),
                                     foot.getSpider().as.getName(),
                                     foot.getSpider().hashCode()));
 
@@ -195,7 +210,7 @@ public class COPDiagramsDrawer extends JPanel {
                             g2d.fill(tmpCircle);
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
 
-                            dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()),
+                            dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()),
                                     foot.getSpider().as.getName(),
                                     foot.getSpider().hashCode()));
 
@@ -229,21 +244,21 @@ public class COPDiagramsDrawer extends JPanel {
                 List<String> dots = new ArrayList<>(this.diagram.dots);
                 int numDots = dots.size();
                 int currentXPos = this.getWidth()/2 - (19*(numDots-1)) - getCenteringTranslationX();
-
+                System.out.println("height " + this.getHeight());
                 for (String dot : dots) {
                     Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, (this.getHeight() - 100)/2, 8, 8);
 
                     if (this.diagram.containsInitialT && dot.equals("t")) {
                         circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX() + 5, (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() - 15, 8, 8));
 
-                        dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX() + 5, (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() - 15, 8, 8),
+                        this.dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX() + 5, (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() - 15, 8, 8),
                                 dot,
                                 dot.hashCode()));
 
                     } else {
                         circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() + 3, 8, 8));
 
-                        dotMap.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() + 3, 8, 8),
+                        this.dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() + 3, 8, 8),
                                 dot,
                                 dot.hashCode()));
 
@@ -254,6 +269,12 @@ public class COPDiagramsDrawer extends JPanel {
                 }
             }
         }
+    }
+
+    private void setScaleFactor(double newScaleFactor) {
+        this.scaleFactor = newScaleFactor;
+        this.recalculateTransform();
+        this.repaint();
     }
 
     public void setBounds(int x, int y, int width, int height) {

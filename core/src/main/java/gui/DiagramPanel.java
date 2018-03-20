@@ -22,6 +22,7 @@ public class DiagramPanel extends JPanel {
     private ArrowPanel arrowPanel;
     private Diagram diagram;
     private HashMap<String, Ellipse2D.Double> circleMap;
+    private Set<Dot> dots;
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
 
@@ -86,6 +87,7 @@ public class DiagramPanel extends JPanel {
             arrows = new HashSet<>();
             equalities = new HashSet<>();
             circleMap = new HashMap<>();
+            dots = new HashSet<>();
             HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> COPmapping;
             HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> DTmapping;
             this.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -117,31 +119,32 @@ public class DiagramPanel extends JPanel {
             if (COPmapping.values().size() > 0 || DTmapping.values().size() > 0) {
                 this.setLayout(new GridLayout(1, 0, 75, 25));
                 for (ConcreteClassObjectPropertyDiagram concreteCOP : COPmapping.values()) {
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
+//                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
+                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap, dots);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             circleMap.putAll(panel.getCircleMap());
+                            dots.addAll(panel.getDots());
                         }
                     });
-                    circleMap.putAll(panel.getCircleMap());
                     panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                     panel.setVisible(true);
                     add(panel);
                 }
 
                 for (ConcreteDatatypeDiagram concreteDT : DTmapping.values()) {
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap);
+//                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap);
+                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap,dots);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             circleMap.putAll(panel.getCircleMap());
+                            dots.addAll(panel.getDots());
                         }
                     });
-                    circleMap.putAll(panel.getCircleMap());
                     panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                     panel.setVisible(true);
-
                     add(panel);
                 }
             }
