@@ -26,6 +26,9 @@ public class COPDiagramsDrawer extends JPanel {
     private static final Color HIGHLIGHTED_FOOT_COLOUR;
     private static final Color HIGHLIGHT_STROKE_COLOUR;
     private static final Color HIGHLIGHT_ZONE_COLOUR;
+    private static final int DOT_OFFSET; // position for dot source
+    private static final int LABEL_OFFSET; // position to draw string
+    private static final int LABEL_SOURCE_OFFSET; //position for initial t source
     private static final long serialVersionUID = 6593217652932473248L;
     private DOMImplementation domImpl;
     private String svgNS;
@@ -38,7 +41,6 @@ public class COPDiagramsDrawer extends JPanel {
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
     private HashMap<String, Ellipse2D.Double> circleMap;
-    private Set<Dot> dots;
 
     public COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
@@ -54,32 +56,9 @@ public class COPDiagramsDrawer extends JPanel {
         this.resetDiagram(diagram);
         this.resizeContents();
         this.circleMap = circleMap;
-        this.dots = new HashSet<>();
     }
-
-    public COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap, Set<Dot> dots) {
-        this.domImpl = GenericDOMImplementation.getDOMImplementation();
-        this.svgNS = "http://www.w3.org/2000/svg";
-        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
-        this.svgGenerator = new SVGGraphics2D(this.document);
-        this.scaleFactor = 1.0D;
-        this.trans = new AffineTransform();
-        this.highlightedContour = null;
-        this.highlightedZone = null;
-        this.highlightedFoot = null;
-        this.initComponents();
-        this.resetDiagram(diagram);
-        this.resizeContents();
-        this.circleMap = circleMap;
-        this.dots = dots;
-    }
-
     HashMap<String, Ellipse2D.Double> getCircleMap() {
         return circleMap;
-    }
-
-    Set<Dot> getDots() {
-        return dots;
     }
 
     @Override
@@ -135,11 +114,6 @@ public class COPDiagramsDrawer extends JPanel {
                     g.setColor(col);
                     transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
                     circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
-
-                    dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()),
-                            cc.ac.getLabel(),
-                            cc.hashCode()));
-
                     g2d.draw(tmpCircle);
 
                     if (cc.ac.getLabel() != null) {
@@ -155,7 +129,7 @@ public class COPDiagramsDrawer extends JPanel {
                             g2d.setFont(f);
                         }
                         if (!cc.ac.getLabel().startsWith("_")) {
-                            g2d.drawString(cc.ac.getLabel(), (int) tmpCircle.getCenterX() - 5, (int) (tmpCircle.getCenterY() - tmpCircle.getHeight()/2 - 8));
+                            g2d.drawString(cc.ac.getLabel(), (int) tmpCircle.getCenterX(), (int) (tmpCircle.getCenterY() - tmpCircle.getHeight()/2 - 8));
                         }
                     }
                 }
@@ -200,20 +174,10 @@ public class COPDiagramsDrawer extends JPanel {
                         }
 
                         if (this.diagram.containsInitialT && s.as.getName().equals("t")) {
-                            circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()));
-
-                            dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() - 15, tmpCircle.getHeight(), tmpCircle.getWidth()),
-                                    foot.getSpider().as.getName(),
-                                    foot.getSpider().hashCode()));
-
+                            circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() + LABEL_SOURCE_OFFSET, tmpCircle.getHeight(), tmpCircle.getWidth()));
                         } else {
                             g2d.fill(tmpCircle);
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
-
-                            dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()),
-                                    foot.getSpider().as.getName(),
-                                    foot.getSpider().hashCode()));
-
                         }
 
                         if (this.getHighlightedFoot() == foot) {
@@ -244,27 +208,16 @@ public class COPDiagramsDrawer extends JPanel {
                 List<String> dots = new ArrayList<>(this.diagram.dots);
                 int numDots = dots.size();
                 int currentXPos = this.getWidth()/2 - (19*(numDots-1)) - getCenteringTranslationX();
-                System.out.println("height " + this.getHeight());
+                double y = getHeight()/2 - getCenteringTranslationY();
                 for (String dot : dots) {
-                    Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, (this.getHeight() - 100)/2, 8, 8);
-
+                    Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, y, 8, 8);
                     if (this.diagram.containsInitialT && dot.equals("t")) {
-                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX() + 5, (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() - 15, 8, 8));
-
-                        this.dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX() + 5, (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() - 15, 8, 8),
-                                dot,
-                                dot.hashCode()));
-
+                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), y + getY() + getCenteringTranslationY() + LABEL_SOURCE_OFFSET, 8, 8));
                     } else {
-                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() + 3, 8, 8));
-
-                        this.dots.add(new Dot(new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), (this.getHeight() - 100)/2 + getCenteringTranslationY() + getY() + 3, 8, 8),
-                                dot,
-                                dot.hashCode()));
-
+                        circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), y + getY() + getCenteringTranslationY(), 8, 8));
                         g2d.fill(dotCircle);
                     }
-                    g2d.drawString(dot, currentXPos, this.getHeight()/2 - 60);
+                    g2d.drawString(dot, currentXPos, (int) y - 10);
                     currentXPos += 40;
                 }
             }
@@ -408,5 +361,8 @@ public class COPDiagramsDrawer extends JPanel {
         HIGHLIGHTED_FOOT_COLOUR = Color.RED;
         HIGHLIGHT_STROKE_COLOUR = Color.RED;
         HIGHLIGHT_ZONE_COLOUR = new Color(1895759872, true);
+        DOT_OFFSET = 0;
+        LABEL_OFFSET = 0;
+        LABEL_SOURCE_OFFSET = -15;
     }
 }

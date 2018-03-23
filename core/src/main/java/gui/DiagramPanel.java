@@ -119,13 +119,11 @@ public class DiagramPanel extends JPanel {
             if (COPmapping.values().size() > 0 || DTmapping.values().size() > 0) {
                 this.setLayout(new GridLayout(1, 0, 75, 25));
                 for (ConcreteClassObjectPropertyDiagram concreteCOP : COPmapping.values()) {
-//                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap, dots);
+                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             circleMap.putAll(panel.getCircleMap());
-                            dots.addAll(panel.getDots());
                         }
                     });
                     panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
@@ -134,13 +132,11 @@ public class DiagramPanel extends JPanel {
                 }
 
                 for (ConcreteDatatypeDiagram concreteDT : DTmapping.values()) {
-//                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap);
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap,dots);
+                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
                             circleMap.putAll(panel.getCircleMap());
-                            dots.addAll(panel.getDots());
                         }
                     });
                     panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
