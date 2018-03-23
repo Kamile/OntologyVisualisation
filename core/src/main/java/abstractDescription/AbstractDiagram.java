@@ -1,32 +1,25 @@
 package abstractDescription;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import icircles.abstractDescription.AbstractDescription;
-import lang.ClassObjectPropertyDiagram;
-import lang.DatatypeDiagram;
-
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
 public class AbstractDiagram extends AbstractDescription {
+    private Set<AbstractCOP> m_COPs;
+    private Set<AbstractDT> m_DTs;
     private Set<AbstractArrow> m_arrows;
-    private HashMap<ClassObjectPropertyDiagram, AbstractCOP> m_COPs;
-    private HashMap<DatatypeDiagram, AbstractDatatypeDiagram> m_DTs;
 
-    AbstractDiagram(HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap,
-                           HashMap<DatatypeDiagram, AbstractDatatypeDiagram> DTDescriptionMap,
-                           Set<AbstractArrow> arrows) {
-        m_COPs = COPDescriptionMap;
-        m_DTs = DTDescriptionMap;
+    AbstractDiagram(Set<AbstractCOP> COPs, Set<AbstractDT> DTs, Set<AbstractArrow> arrows) {
+        m_COPs = COPs;
+        m_DTs = DTs;
         m_arrows = arrows;
     }
 
-    public HashMap<ClassObjectPropertyDiagram, AbstractCOP> getCOPs() {
+    public Set<AbstractCOP> getCOPs() {
         return m_COPs;
     }
 
-    public HashMap<DatatypeDiagram, AbstractDatatypeDiagram> getDTs() {
+    public Set<AbstractDT> getDTs() {
         return m_DTs;
     }
 
@@ -56,7 +49,7 @@ public class AbstractDiagram extends AbstractDescription {
 
     public boolean isValid() {
         if (this instanceof AbstractConceptDiagram) {
-            for (AbstractCOP cop: m_COPs.values()) {
+            for (AbstractCOP cop: m_COPs) {
                 if (cop.containsInitialT()) {
                     return false;
                 }

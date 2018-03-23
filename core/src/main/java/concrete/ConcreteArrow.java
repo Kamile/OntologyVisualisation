@@ -2,20 +2,21 @@ package concrete;
 
 import abstractDescription.AbstractArrow;
 
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
 public class ConcreteArrow {
     private AbstractArrow abstractArrow;
     private long parentHashCode;
-    private Point2D.Double source;
-    private Point2D.Double target;
+    private Ellipse2D.Double source;
+    private Ellipse2D.Double target;
     private Point2D.Double control;
 
     ConcreteArrow(AbstractArrow abstractArrow, long parentHashCode) {
         this.abstractArrow = abstractArrow;
         this.parentHashCode = parentHashCode;
-        this.source = new Point2D.Double();
-        this.target = new Point2D.Double();
+        this.source = new Ellipse2D.Double();
+        this.target = new Ellipse2D.Double();
         this.control = new Point2D.Double();
     }
 
@@ -23,11 +24,11 @@ public class ConcreteArrow {
         return abstractArrow;
     }
 
-    public long getParentHashCode() {
-        return parentHashCode;
+    public String getId() {
+        return abstractArrow.getLabel() + String.valueOf(parentHashCode);
     }
 
-    public void translatePoint(Point2D.Double inPoint, Point2D.Double outPoint) {
+    public void translateControlPoint(Point2D.Double inPoint, Point2D.Double outPoint) {
         outPoint.x = inPoint.x;
         outPoint.y = inPoint.y;
     }
@@ -40,11 +41,19 @@ public class ConcreteArrow {
         return abstractArrow.getLabel().getCardinalityOperator() + abstractArrow.getLabel().getCardinalityArgument();
     }
 
-    public Point2D.Double getSource() {
+    public void setSource(Ellipse2D.Double source) {
+        this.source = source;
+    }
+
+    public void setTarget(Ellipse2D.Double target) {
+        this.target = target;
+    }
+
+    public Ellipse2D.Double getSource() {
         return source;
     }
 
-    public Point2D.Double getTarget() {
+    public Ellipse2D.Double getTarget() {
         return target;
     }
 

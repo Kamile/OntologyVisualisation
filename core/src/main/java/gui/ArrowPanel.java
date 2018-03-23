@@ -74,6 +74,7 @@ public class ArrowPanel extends JComponent {
                 double y1 = intersections.get(0).y;
                 double x2 = intersections.get(1).x;
                 double y2 = intersections.get(1).y;
+                applyOffsets(getGradient(x1,y1,x1,y2), x1, y1, x2, y2);
 
                 double midX = x1 + (x2-x1)/2;
                 double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
@@ -148,11 +149,13 @@ public class ArrowPanel extends JComponent {
         }
     }
 
+    private void applyOffsets(double gradient, double x1, double y1, double x2, double y2) {
+
+    }
+
     private static double getRandomOffset() {
         return Math.floor(Math.random()*31 + 10);
     }
-
-
 
     private static List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
         // array holds source intersection then target intersection

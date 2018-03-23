@@ -1,9 +1,5 @@
 package concrete;
 
-import lang.ClassObjectPropertyDiagram;
-import lang.DatatypeDiagram;
-
-import java.util.HashMap;
 import java.util.Set;
 
 /***
@@ -23,8 +19,8 @@ import java.util.Set;
  *    binary relations.
  */
 public class ConcreteConceptDiagram extends ConcreteBaseDiagram {
-    public ConcreteConceptDiagram(HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> concreteCOPDiagrams,
-                                  HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> concreteDTDiagrams,
+    public ConcreteConceptDiagram(Set<ConcreteClassObjectPropertyDiagram> concreteCOPDiagrams,
+                                  Set<ConcreteDatatypeDiagram> concreteDTDiagrams,
                                   Set<ConcreteArrow>  concreteArrows) {
         super(concreteCOPDiagrams, concreteDTDiagrams, concreteArrows);
     }

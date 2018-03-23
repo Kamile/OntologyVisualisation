@@ -19,12 +19,12 @@ public class AbstractDescriptionTranslator {
     private static Set<String> spiders;
     private static Map<String, AbstractBasicRegion> spiderMap;
     private static HashMap<String, AbstractCurve> contourMap;
-    private static HashMap<ClassObjectPropertyDiagram, AbstractCOP> COPDescriptionMap;
-    private static HashMap<DatatypeDiagram, AbstractDatatypeDiagram> DTDescriptionMap;
+    private static Set<AbstractCOP> COPs;
+    private static Set<AbstractDT> DTs;
 
     private AbstractDescriptionTranslator() { }
 
-    static AbstractCOP getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
+    private static AbstractCOP getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
         PrimarySpiderDiagram sd = (PrimarySpiderDiagram) COPDiagram.getSpiderDiagram();
         boolean containsInitialT = COPDiagram.containsInitialT();
 
@@ -61,7 +61,7 @@ public class AbstractDescriptionTranslator {
         return new AbstractCOP(ad, abstractArrows, abstractEqualities, dots, containsInitialT);
     }
 
-    static AbstractDatatypeDiagram getAbstractDescription(DatatypeDiagram datatypeDiagram) throws CannotDrawException {
+    private static AbstractDT getAbstractDescription(DatatypeDiagram datatypeDiagram) throws CannotDrawException {
         PrimarySpiderDiagram sd = (PrimarySpiderDiagram) datatypeDiagram.getSpiderDiagram();
 
         AbstractDescription ad;
@@ -79,13 +79,13 @@ public class AbstractDescriptionTranslator {
             ad = null;
         }
         Set<String> dots = new TreeSet<>(datatypeDiagram.getDots());
-        return new AbstractDatatypeDiagram(ad, dots);
+        return new AbstractDT(ad, dots);
     }
 
-    public static AbstractPropertyDiagram getAbstractDescription(PropertyDiagram pd) throws CannotDrawException {
+    static AbstractPropertyDiagram getAbstractDescription(PropertyDiagram pd) throws CannotDrawException {
         contours = new HashSet<>();
-        COPDescriptionMap = new HashMap<>();
-        DTDescriptionMap = new HashMap<>();
+        COPs = new HashSet<>();
+        DTs = new HashSet<>();
         spiders = new HashSet<>();
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
@@ -93,25 +93,25 @@ public class AbstractDescriptionTranslator {
         List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = pd.getClassObjectPropertyDiagrams();
         if (classObjectPropertyDiagrams!= null){
             for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
-                COPDescriptionMap.put(cop, getAbstractDescription(cop));
+                COPs.add(getAbstractDescription(cop));
             }
         }
 
         List<DatatypeDiagram> datatypeDiagrams = pd.getDatatypeDiagrams();
         if (datatypeDiagrams != null) {
             for (DatatypeDiagram dt : datatypeDiagrams) {
-                DTDescriptionMap.put(dt, getAbstractDescription(dt));
+                DTs.add(getAbstractDescription(dt));
             }
         }
 
         Set<AbstractArrow> abstractArrows = addArrows(pd.getArrows());
-        return new AbstractPropertyDiagram(COPDescriptionMap, DTDescriptionMap, abstractArrows);
+        return new AbstractPropertyDiagram(COPs, DTs, abstractArrows);
     }
 
     public static AbstractConceptDiagram getAbstractDescription(ConceptDiagram cd) throws CannotDrawException {
         contours = new HashSet<>();
-        COPDescriptionMap = new HashMap<>();
-        DTDescriptionMap = new HashMap<>();
+        COPs = new HashSet<>();
+        DTs = new HashSet<>();
         spiders = new HashSet<>();
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
@@ -119,18 +119,18 @@ public class AbstractDescriptionTranslator {
         List<ClassObjectPropertyDiagram> classObjectPropertyDiagrams = cd.getClassObjectPropertyDiagrams();
         if (classObjectPropertyDiagrams!= null){
             for (ClassObjectPropertyDiagram cop : classObjectPropertyDiagrams) {
-                COPDescriptionMap.put(cop, getAbstractDescription(cop));
+                COPs.add(getAbstractDescription(cop));
             }
         }
 
         List<DatatypeDiagram> datatypeDiagrams = cd.getDatatypeDiagrams();
         if (datatypeDiagrams != null) {
             for (DatatypeDiagram dt : datatypeDiagrams) {
-                DTDescriptionMap.put(dt, getAbstractDescription(dt));
+                DTs.add(getAbstractDescription(dt));
             }
         }
         Set<AbstractArrow> abstractArrows = addArrows(cd.getArrows());
-        return new AbstractConceptDiagram(COPDescriptionMap, DTDescriptionMap, abstractArrows);
+        return new AbstractConceptDiagram(COPs, DTs, abstractArrows);
     }
 
     private static void createContourMap() {

@@ -2,30 +2,27 @@ package concrete;
 
 import abstractDescription.AbstractDiagram;
 import icircles.util.CannotDrawException;
-import lang.ClassObjectPropertyDiagram;
-import lang.DatatypeDiagram;
 
-import java.util.HashMap;
 import java.util.Set;
 
 public class ConcreteBaseDiagram {
     Set<ConcreteArrow> arrows;
-    HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> COPDiagrams;
-    HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> DTDiagrams;
+    Set<ConcreteClassObjectPropertyDiagram> COPDiagrams;
+    Set<ConcreteDatatypeDiagram> DTDiagrams;
 
-    public ConcreteBaseDiagram(HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> concreteCOPDiagrams,
-                               HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> concreteDTDiagrams,
+    ConcreteBaseDiagram(Set<ConcreteClassObjectPropertyDiagram> concreteCOPDiagrams,
+                               Set<ConcreteDatatypeDiagram> concreteDTDiagrams,
                                Set<ConcreteArrow>  concreteArrows) {
         COPDiagrams = concreteCOPDiagrams;
         DTDiagrams = concreteDTDiagrams;
         arrows = concreteArrows;
     }
 
-    public HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> getCOPMapping() {
+    public Set<ConcreteClassObjectPropertyDiagram> getCOPs() {
         return COPDiagrams;
     }
 
-    public HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> getDTMapping() {
+    public Set<ConcreteDatatypeDiagram> getDTs() {
         return DTDiagrams;
     }
 

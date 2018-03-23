@@ -4,9 +4,6 @@ import abstractDescription.*;
 import icircles.abstractDescription.AbstractDescription;
 import icircles.concreteDiagram.DiagramCreator;
 import icircles.util.CannotDrawException;
-import lang.ClassObjectPropertyDiagram;
-import lang.DatatypeDiagram;
-
 import java.util.*;
 
 /***
@@ -17,35 +14,35 @@ import java.util.*;
  *
  * First use DiagramCreator to draw each spider diagram separately, space them out and draw arrows
  */
-public class BaseDiagramCreator {
-    HashMap<ClassObjectPropertyDiagram, AbstractCOP> abstractCOPDescriptions;
-    HashMap<DatatypeDiagram, AbstractDatatypeDiagram> abstractDTDescriptions;
-    Set<AbstractArrow> abstractArrowDescriptions;
+class BaseDiagramCreator {
+    private Set<AbstractCOP> abstractCOPs;
+    private Set<AbstractDT> abstractDTs;
+    private Set<AbstractArrow> abstractArrows;
 
-    public BaseDiagramCreator(AbstractDiagram abstractDescription) {
-        abstractCOPDescriptions = abstractDescription.getCOPs();
-        abstractDTDescriptions = abstractDescription.getDTs();
-        abstractArrowDescriptions = abstractDescription.getArrowDescriptions();
+    BaseDiagramCreator(AbstractDiagram abstractDescription) {
+        abstractCOPs = abstractDescription.getCOPs();
+        abstractDTs = abstractDescription.getDTs();
+        abstractArrows = abstractDescription.getArrowDescriptions();
     }
 
-    public ConcreteBaseDiagram createDiagram(int size) throws CannotDrawException {
-        HashMap<ClassObjectPropertyDiagram, ConcreteClassObjectPropertyDiagram> COPs = new HashMap<>();
-        HashMap<DatatypeDiagram, ConcreteDatatypeDiagram> DTs = new HashMap<>();
+    ConcreteBaseDiagram createDiagram(int size) throws CannotDrawException {
+        Set<ConcreteClassObjectPropertyDiagram> COPs = new HashSet<>();
+        Set<ConcreteDatatypeDiagram> DTs = new HashSet<>();
         Set<ConcreteArrow> concreteArrows = new HashSet<>();
+        int id = 0;
 
-        for (ClassObjectPropertyDiagram copDiagram: abstractCOPDescriptions.keySet()) {
-            AbstractCOP abstractCOPDescription = abstractCOPDescriptions.get(copDiagram);
-            AbstractDescription ad = abstractCOPDescription.getPrimarySDDescription();
+        for (AbstractCOP abstractCOP: abstractCOPs) {
+            AbstractDescription ad = abstractCOP.getPrimarySDDescription();
             Set<ConcreteArrow> concreteCOPArrows = new HashSet<>();
             Set<ConcreteEquality> concreteEqualities = new HashSet<>();
-            boolean containsInitialT = abstractCOPDescription.containsInitialT();
+            boolean containsInitialT = abstractCOP.containsInitialT();
 
-            for (AbstractArrow abstractArrow: abstractCOPDescription.getArrows()) {
-                ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, copDiagram.hashCode());
+            for (AbstractArrow abstractArrow: abstractCOP.getArrows()) {
+                ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, id);
                 concreteCOPArrows.add(concreteArrow);
             }
 
-            for (AbstractEquality abstractEquality: abstractCOPDescription.getEqualities()) {
+            for (AbstractEquality abstractEquality: abstractCOP.getEqualities()) {
                 ConcreteEquality concreteEquality = new ConcreteEquality(abstractEquality);
                 concreteEqualities.add(concreteEquality);
             }
@@ -55,14 +52,14 @@ public class BaseDiagramCreator {
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
                 COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows, concreteEqualities, containsInitialT);
             } else { // no contours, just dots
-                COPDescription = new ConcreteClassObjectPropertyDiagram(concreteCOPArrows, abstractCOPDescription.getDots(), concreteEqualities, containsInitialT);
+                COPDescription = new ConcreteClassObjectPropertyDiagram(concreteCOPArrows, abstractCOP.getDots(), concreteEqualities, containsInitialT);
             }
-            COPs.put(copDiagram, COPDescription);
+            COPs.add(COPDescription);
+            id++;
         }
 
-        for (DatatypeDiagram datatypeDiagram: abstractDTDescriptions.keySet()) {
-            AbstractDatatypeDiagram abstractDTDescription = abstractDTDescriptions.get(datatypeDiagram);
-            AbstractDescription ad = abstractDTDescription.getPrimarySDDescription();
+        for (AbstractDT abstractDT: abstractDTs) {
+            AbstractDescription ad = abstractDT.getPrimarySDDescription();
 
             ConcreteDatatypeDiagram DTDescription;
             if (ad!=null) {
@@ -70,12 +67,12 @@ public class BaseDiagramCreator {
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
                 DTDescription = new ConcreteDatatypeDiagram(cd);
             } else { // no contours, just dots
-                DTDescription = new ConcreteDatatypeDiagram(abstractDTDescription.getDots());
+                DTDescription = new ConcreteDatatypeDiagram(abstractDT.getDots());
             }
-            DTs.put(datatypeDiagram, DTDescription);
+            DTs.add(DTDescription);
         }
 
-        for (AbstractArrow abstractArrow: abstractArrowDescriptions) {
+        for (AbstractArrow abstractArrow: abstractArrows) {
             ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, 0);
             concreteArrows.add(concreteArrow);
         }
