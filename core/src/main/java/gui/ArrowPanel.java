@@ -2,6 +2,7 @@ package gui;
 
 import concrete.ConcreteArrow;
 import concrete.ConcreteEquality;
+import lang.Dot;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +25,8 @@ public class ArrowPanel extends JComponent {
 
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
-    private HashMap<String, Ellipse2D.Double> circleMap;
+    private HashMap<String, List<Dot>> dotMap;
+    private HashMap<String, List<Ellipse2D.Double>> circleMap;
     private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap2;
     private HashMap<ConcreteArrow, Double> arrowOffsets;
     private HashMap<String, Integer> existingArrowCount;
@@ -64,6 +66,7 @@ public class ArrowPanel extends JComponent {
         if (arrows != null && circleMap2.keySet().size() > 0) {
             super.paintComponent(g);
             for (ConcreteArrow a: arrows) {
+                int parentId = a.getParentId();
                 String label = a.getLabel();
                 String cardinality = a.getCardinality();
                 String source = a.getAbstractArrow().getSourceLabel();
@@ -71,14 +74,24 @@ public class ArrowPanel extends JComponent {
 
                 List<Point2D.Double> intersections;
                 if (a.getParentId() == -1) {
-//                    break; // here need to assign source and target such that there are no cycles, initial t is source only
+                    // here need to assign source and target such that there are no cycles, initial t is source only
                     for (HashMap<String, Ellipse2D.Double> val: circleMap2.values()) {
-                        circleMap.putAll(val);
+                        for (String s: val.keySet()) {
+                            if (!circleMap.containsKey(s)) {
+                                List<Ellipse2D.Double> arr = new ArrayList<>();
+                                arr.add(val.get(s));
+                                circleMap.put(s, arr);
+                            } else {
+                                if (!circleMap.get(s).contains(val.get(s))) {
+                                    circleMap.get(s).add(val.get(s));
+                                }
+                            }
+                        }
                     }
-                    intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
-
+                    System.out.println(circleMap);
+                    intersections = getClosestPoints(circleMap.get(source).get(0), circleMap.get(target).get(0));
                 } else {
-                    intersections = getClosestPoints(circleMap2.get(a.getParentId()).get(source), circleMap2.get(a.getParentId()).get(target));
+                    intersections = getClosestPoints(circleMap2.get(parentId).get(source), circleMap2.get(parentId).get(target));
                 }
 
                 double x1 = intersections.get(0).x;
@@ -94,8 +107,8 @@ public class ArrowPanel extends JComponent {
                 double cx = midX - arrowOffsets.get(a);
                 double cy = midY - arrowOffsets.get(a);
 
-                if (existingArrowCount.containsKey(source)) {
-                    cy += 30*Math.pow(-1, existingArrowCount.get(source));
+                if (existingArrowCount.containsKey(source+parentId)) {
+                    cy += 30*Math.pow(-1, existingArrowCount.get(source+parentId));
                 }
 
                 QuadCurve2D curve = new QuadCurve2D.Double();
@@ -130,9 +143,9 @@ public class ArrowPanel extends JComponent {
                 }
 
                 if (existingArrowCount.containsKey(source)) {
-                    existingArrowCount.put(source, existingArrowCount.get(source) + 1);
+                    existingArrowCount.put(source+parentId, existingArrowCount.get(source+parentId) + 1);
                 } else {
-                    existingArrowCount.put(source, 1);
+                    existingArrowCount.put(source+parentId, 1);
                 }
             }
         }

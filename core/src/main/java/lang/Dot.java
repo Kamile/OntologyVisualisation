@@ -9,11 +9,17 @@ public class Dot implements Comparator<Dot>, Serializable {
     private Ellipse2D.Double dot;
     private String label;
     private int parentHashCode;
+    private boolean initialT;
 
     public Dot(Ellipse2D.Double dot, String label, int parentHashCode) {
         this.dot = dot;
         this.label = label;
         this.parentHashCode = parentHashCode;
+        this.initialT = false;
+    }
+
+    public void setAsInitialT() {
+        initialT = true;
     }
 
     public Point2D.Double closestIntersectionTo(Dot d) {

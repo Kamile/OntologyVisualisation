@@ -19,8 +19,7 @@ public class DiagramPanel extends JPanel {
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 450);
     private ArrowPanel arrowPanel;
     private Diagram diagram;
-    private HashMap<String, Ellipse2D.Double> circleMap;
-    private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap2;
+    private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap;
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
 
@@ -85,9 +84,8 @@ public class DiagramPanel extends JPanel {
             arrows = new HashSet<>();
             equalities = new HashSet<>();
             circleMap = new HashMap<>();
-            circleMap2 = new HashMap<>();
-            Set<ConcreteClassObjectPropertyDiagram> COPs;
-            Set<ConcreteDatatypeDiagram> DTs;
+            Set<ConcreteCOP> COPs;
+            Set<ConcreteDT> DTs;
             this.setBorder(new EmptyBorder(20, 20, 20, 20));
             this.setLayout(new GridLayout(1, 0));
 
@@ -109,21 +107,19 @@ public class DiagramPanel extends JPanel {
                 DTs = new HashSet<>();
             }
 
-            for (ConcreteClassObjectPropertyDiagram cop: COPs) {
+            for (ConcreteCOP cop: COPs) {
                 arrows.addAll(cop.arrows);
                 equalities.addAll(cop.equalities);
             }
 
 
             this.setLayout(new GridLayout(1, 0, 75, 25));
-            for (final ConcreteClassObjectPropertyDiagram concreteCOP : COPs) {
-//                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
+            for (final ConcreteCOP concreteCOP : COPs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-//                        circleMap.putAll(panel.getCircleMap());
-                        circleMap2.put(concreteCOP.getId(), panel.getCircleMap());
+                        circleMap.put(concreteCOP.getId(), panel.getCircleMap());
                     }
                 });
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
@@ -131,8 +127,7 @@ public class DiagramPanel extends JPanel {
                 add(panel);
             }
 
-            for (ConcreteDatatypeDiagram concreteDT : DTs) {
-//                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap);
+            for (ConcreteDT concreteDT : DTs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT);
 //                SwingUtilities.invokeLater(new Runnable() {
 //                    @Override
@@ -148,7 +143,7 @@ public class DiagramPanel extends JPanel {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    addArrows(circleMap2, arrows, equalities);
+                    addArrows(circleMap, arrows, equalities);
                 }
             });
         }

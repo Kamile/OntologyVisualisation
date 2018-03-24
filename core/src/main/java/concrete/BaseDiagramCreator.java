@@ -26,8 +26,8 @@ class BaseDiagramCreator {
     }
 
     ConcreteBaseDiagram createDiagram(int size) throws CannotDrawException {
-        Set<ConcreteClassObjectPropertyDiagram> COPs = new HashSet<>();
-        Set<ConcreteDatatypeDiagram> DTs = new HashSet<>();
+        Set<ConcreteCOP> COPs = new HashSet<>();
+        Set<ConcreteDT> DTs = new HashSet<>();
         Set<ConcreteArrow> concreteArrows = new HashSet<>();
         int id = 0;
 
@@ -46,13 +46,13 @@ class BaseDiagramCreator {
                 ConcreteEquality concreteEquality = new ConcreteEquality(abstractEquality, id);
                 concreteEqualities.add(concreteEquality);
             }
-            ConcreteClassObjectPropertyDiagram concreteCOP;
+            ConcreteCOP concreteCOP;
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                concreteCOP = new ConcreteClassObjectPropertyDiagram(id, cd, concreteCOPArrows, concreteEqualities, containsInitialT);
+                concreteCOP = new ConcreteCOP(id, cd, concreteCOPArrows, concreteEqualities, containsInitialT);
             } else { // no contours, just dots
-                concreteCOP = new ConcreteClassObjectPropertyDiagram(id, concreteCOPArrows, abstractCOP.getDots(), concreteEqualities, containsInitialT);
+                concreteCOP = new ConcreteCOP(id, concreteCOPArrows, abstractCOP.getDots(), concreteEqualities, containsInitialT);
             }
             COPs.add(concreteCOP);
             id++;
@@ -61,13 +61,13 @@ class BaseDiagramCreator {
         for (AbstractDT abstractDT: abstractDTs) {
             AbstractDescription ad = abstractDT.getPrimarySDDescription();
 
-            ConcreteDatatypeDiagram ConcreteDT;
+            ConcreteDT ConcreteDT;
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                ConcreteDT = new ConcreteDatatypeDiagram(cd);
+                ConcreteDT = new ConcreteDT(cd);
             } else { // no contours, just dots
-                ConcreteDT = new ConcreteDatatypeDiagram(abstractDT.getDots());
+                ConcreteDT = new ConcreteDT(abstractDT.getDots());
             }
             DTs.add(ConcreteDT);
         }

@@ -7,22 +7,22 @@ import java.util.Set;
 
 public class ConcreteBaseDiagram {
     Set<ConcreteArrow> arrows;
-    Set<ConcreteClassObjectPropertyDiagram> COPDiagrams;
-    Set<ConcreteDatatypeDiagram> DTDiagrams;
+    Set<ConcreteCOP> COPDiagrams;
+    Set<ConcreteDT> DTDiagrams;
 
-    ConcreteBaseDiagram(Set<ConcreteClassObjectPropertyDiagram> concreteCOPDiagrams,
-                               Set<ConcreteDatatypeDiagram> concreteDTDiagrams,
+    ConcreteBaseDiagram(Set<ConcreteCOP> concreteCOPDiagrams,
+                               Set<ConcreteDT> concreteDTDiagrams,
                                Set<ConcreteArrow>  concreteArrows) {
         COPDiagrams = concreteCOPDiagrams;
         DTDiagrams = concreteDTDiagrams;
         arrows = concreteArrows;
     }
 
-    public Set<ConcreteClassObjectPropertyDiagram> getCOPs() {
+    public Set<ConcreteCOP> getCOPs() {
         return COPDiagrams;
     }
 
-    public Set<ConcreteDatatypeDiagram> getDTs() {
+    public Set<ConcreteDT> getDTs() {
         return DTDiagrams;
     }
 

@@ -19,8 +19,8 @@ import java.util.Set;
  *    binary relations.
  */
 public class ConcreteConceptDiagram extends ConcreteBaseDiagram {
-    public ConcreteConceptDiagram(Set<ConcreteClassObjectPropertyDiagram> concreteCOPDiagrams,
-                                  Set<ConcreteDatatypeDiagram> concreteDTDiagrams,
+    public ConcreteConceptDiagram(Set<ConcreteCOP> concreteCOPDiagrams,
+                                  Set<ConcreteDT> concreteDTDiagrams,
                                   Set<ConcreteArrow>  concreteArrows) {
         super(concreteCOPDiagrams, concreteDTDiagrams, concreteArrows);
     }

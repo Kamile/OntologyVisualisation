@@ -12,8 +12,8 @@ import java.io.IOException;
 import static speedith.i18n.Translations.i18n;
 
 public class AbstractArrow implements Comparable<AbstractArrow> {
-    static Logger logger = Logger.getLogger(AbstractArrow.class.getName());
-    static int id = 0;
+    private static Logger logger = Logger.getLogger(AbstractArrow.class.getName());
+    private static int id = 0;
 
     @JsonProperty("label")
     private ArrowLabel label;
@@ -89,7 +89,7 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
         return isAnon;
     }
 
-    public Object getSource() {
+    private Object getSource() {
         if (abrSource == null) {
             return cSource;
         } else {
@@ -97,7 +97,7 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
         }
     }
 
-    public Object getTarget() {
+    private Object getTarget() {
         if (abrTarget == null) {
             return cTarget;
         } else {
@@ -147,7 +147,7 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
                 throw new IllegalArgumentException(i18n("GERR_NULL_ARGUMENT", "sb"));
             }
             sb.append("Arrow: id= ").append(String.valueOf(mId));
-            sb.append(" label= ").append(label.toString());
+            sb.append(", label= ").append(label.toString());
             sb.append(", source= ").append(getSource().toString());
             sb.append(", target= ").append(getTarget().toString());
         } catch (IOException e) {
