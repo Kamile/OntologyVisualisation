@@ -7,17 +7,18 @@ import java.awt.geom.Point2D;
 
 public class ConcreteArrow {
     private AbstractArrow abstractArrow;
-    private long parentHashCode;
+    private int parentId;
     private Ellipse2D.Double source;
     private Ellipse2D.Double target;
     private Point2D.Double control;
 
-    ConcreteArrow(AbstractArrow abstractArrow, long parentHashCode) {
+    ConcreteArrow(AbstractArrow abstractArrow, int parentId) {
         this.abstractArrow = abstractArrow;
-        this.parentHashCode = parentHashCode;
+        this.parentId = parentId;
         this.source = new Ellipse2D.Double();
         this.target = new Ellipse2D.Double();
         this.control = new Point2D.Double();
+        System.out.println(parentId);
     }
 
     public AbstractArrow getAbstractArrow() {
@@ -25,7 +26,11 @@ public class ConcreteArrow {
     }
 
     public String getId() {
-        return abstractArrow.getLabel() + String.valueOf(parentHashCode);
+        return abstractArrow.getLabel() + String.valueOf(parentId);
+    }
+
+    public int getParentId() {
+        return parentId;
     }
 
     public void translateControlPoint(Point2D.Double inPoint, Point2D.Double outPoint) {

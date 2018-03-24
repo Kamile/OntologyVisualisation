@@ -25,6 +25,7 @@ public class ArrowPanel extends JComponent {
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
     private HashMap<String, Ellipse2D.Double> circleMap;
+    private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap2;
     private HashMap<ConcreteArrow, Double> arrowOffsets;
     private HashMap<String, Integer> existingArrowCount;
 
@@ -32,10 +33,11 @@ public class ArrowPanel extends JComponent {
         this(null, null, null);
     }
 
-    ArrowPanel(Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, HashMap<String, Ellipse2D.Double> circleMap) {
+    ArrowPanel(Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap) {
         this.arrows = arrows;
         this.equalities = equalities;
-        this.circleMap = circleMap;
+        this.circleMap = new HashMap<>();
+        this.circleMap2 = circleMap;
         this.existingArrowCount = new HashMap<>();
         if (arrows != null) {
             arrowOffsets = new HashMap<>();
@@ -59,16 +61,25 @@ public class ArrowPanel extends JComponent {
         g.setFont(new Font("Courier", Font.PLAIN, 12));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        if (arrows != null && circleMap.keySet().size() > 0) {
+        if (arrows != null && circleMap2.keySet().size() > 0) {
             super.paintComponent(g);
             for (ConcreteArrow a: arrows) {
                 String label = a.getLabel();
                 String cardinality = a.getCardinality();
                 String source = a.getAbstractArrow().getSourceLabel();
                 String target = a.getAbstractArrow().getTargetLabel();
-                System.out.println("source " + source + ", x= " + circleMap.get(source).getCenterX() + " y= " + circleMap.get(source).getCenterY());
-                System.out.println("target " + target +  ", x= " + circleMap.get(target).getCenterX() + " y= " + circleMap.get(target).getCenterY());
-                List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
+
+                List<Point2D.Double> intersections;
+                if (a.getParentId() == -1) {
+//                    break; // here need to assign source and target such that there are no cycles, initial t is source only
+                    for (HashMap<String, Ellipse2D.Double> val: circleMap2.values()) {
+                        circleMap.putAll(val);
+                    }
+                    intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
+
+                } else {
+                    intersections = getClosestPoints(circleMap2.get(a.getParentId()).get(source), circleMap2.get(a.getParentId()).get(target));
+                }
 
                 double x1 = intersections.get(0).x;
                 double y1 = intersections.get(0).y;
@@ -126,13 +137,13 @@ public class ArrowPanel extends JComponent {
             }
         }
 
-        if (equalities != null && circleMap.keySet().size() > 0) {
+        if (equalities != null && circleMap2.keySet().size() > 0) {
             super.paintComponent(g);
 
             for(ConcreteEquality equality: equalities) {
                 String source = equality.getAbstractEquality().getArg1();
                 String target = equality.getAbstractEquality().getArg2();
-                List<Point2D.Double> intersections = getClosestPoints(circleMap.get(source), circleMap.get(target));
+                List<Point2D.Double> intersections = getClosestPoints(circleMap2.get(equality.getParentId()).get(source), circleMap2.get(equality.getParentId()).get(target));
 
                 double x1 = intersections.get(0).x;
                 double y1 = intersections.get(0).y;
@@ -179,7 +190,6 @@ public class ArrowPanel extends JComponent {
         Point2D.Double targetNegative;
 
         // find intersection between source circle and line
-        System.out.println("gradient = " + gradient + " c = " + c + " targetRadius = " + targetRadius + " x2 = " + x2 + " y2 = " + y2);
         if (gradient == Double.MAX_VALUE) {
             sourcePositive = findPoint(sourceRadius, x1, y1, true);
             sourceNegative = findPoint(sourceRadius, x1, y1, false);
@@ -203,7 +213,6 @@ public class ArrowPanel extends JComponent {
             closestSource = new Point2D.Double(x1,y1);
 
             if (targetPositive == null & targetNegative == null) {
-                System.out.println("They're both null..");
             }
 
             if (closestSource.distance(targetPositive) < closestSource.distance(targetNegative)) {
@@ -213,7 +222,6 @@ public class ArrowPanel extends JComponent {
             }
         } else if (targetRadius < 5) {
             if (targetPositive == null & targetNegative == null) {
-                System.out.println("They're both null..");
             }
             closestTarget = new Point2D.Double(x2, y2);
             if (closestTarget.distance(sourcePositive) < closestTarget.distance(sourceNegative)) {

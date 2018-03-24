@@ -20,6 +20,7 @@ public class DiagramPanel extends JPanel {
     private ArrowPanel arrowPanel;
     private Diagram diagram;
     private HashMap<String, Ellipse2D.Double> circleMap;
+    private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap2;
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
 
@@ -84,6 +85,7 @@ public class DiagramPanel extends JPanel {
             arrows = new HashSet<>();
             equalities = new HashSet<>();
             circleMap = new HashMap<>();
+            circleMap2 = new HashMap<>();
             Set<ConcreteClassObjectPropertyDiagram> COPs;
             Set<ConcreteDatatypeDiagram> DTs;
             this.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -112,38 +114,41 @@ public class DiagramPanel extends JPanel {
                 equalities.addAll(cop.equalities);
             }
 
-            if (COPs.size() > 0 || DTs.size() > 0) {
-                this.setLayout(new GridLayout(1, 0, 75, 25));
-                for (ConcreteClassObjectPropertyDiagram concreteCOP : COPs) {
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            circleMap.putAll(panel.getCircleMap());
-                        }
-                    });
-                    panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-                    panel.setVisible(true);
-                    add(panel);
-                }
 
-                for (ConcreteDatatypeDiagram concreteDT : DTs) {
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap);
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            circleMap.putAll(panel.getCircleMap());
-                        }
-                    });
-                    panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-                    panel.setVisible(true);
-                    add(panel);
-                }
+            this.setLayout(new GridLayout(1, 0, 75, 25));
+            for (final ConcreteClassObjectPropertyDiagram concreteCOP : COPs) {
+//                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, circleMap);
+                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+//                        circleMap.putAll(panel.getCircleMap());
+                        circleMap2.put(concreteCOP.getId(), panel.getCircleMap());
+                    }
+                });
+                panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+                panel.setVisible(true);
+                add(panel);
             }
+
+            for (ConcreteDatatypeDiagram concreteDT : DTs) {
+//                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT, circleMap);
+                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT);
+//                SwingUtilities.invokeLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        circleMap.putAll(panel.getCircleMap());
+//                    }
+//                });
+                panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+                panel.setVisible(true);
+                add(panel);
+            }
+
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    addArrows(circleMap, arrows, equalities);
+                    addArrows(circleMap2, arrows, equalities);
                 }
             });
         }
@@ -153,7 +158,7 @@ public class DiagramPanel extends JPanel {
         return arrowPanel;
     }
 
-    private void addArrows(final HashMap<String, Ellipse2D.Double> circleMap, final Set<ConcreteArrow> arrows, final Set<ConcreteEquality> equalities) {
+    private void addArrows(final HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap, final Set<ConcreteArrow> arrows, final Set<ConcreteEquality> equalities) {
         if ((circleMap != null) && (circleMap.keySet().size() > 0)) {
             arrowPanel = new ArrowPanel(arrows, equalities, circleMap);
         }

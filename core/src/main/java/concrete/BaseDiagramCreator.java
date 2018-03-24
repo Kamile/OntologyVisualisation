@@ -43,37 +43,37 @@ class BaseDiagramCreator {
             }
 
             for (AbstractEquality abstractEquality: abstractCOP.getEqualities()) {
-                ConcreteEquality concreteEquality = new ConcreteEquality(abstractEquality);
+                ConcreteEquality concreteEquality = new ConcreteEquality(abstractEquality, id);
                 concreteEqualities.add(concreteEquality);
             }
-            ConcreteClassObjectPropertyDiagram COPDescription;
+            ConcreteClassObjectPropertyDiagram concreteCOP;
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                COPDescription = new ConcreteClassObjectPropertyDiagram(cd, concreteCOPArrows, concreteEqualities, containsInitialT);
+                concreteCOP = new ConcreteClassObjectPropertyDiagram(id, cd, concreteCOPArrows, concreteEqualities, containsInitialT);
             } else { // no contours, just dots
-                COPDescription = new ConcreteClassObjectPropertyDiagram(concreteCOPArrows, abstractCOP.getDots(), concreteEqualities, containsInitialT);
+                concreteCOP = new ConcreteClassObjectPropertyDiagram(id, concreteCOPArrows, abstractCOP.getDots(), concreteEqualities, containsInitialT);
             }
-            COPs.add(COPDescription);
+            COPs.add(concreteCOP);
             id++;
         }
 
         for (AbstractDT abstractDT: abstractDTs) {
             AbstractDescription ad = abstractDT.getPrimarySDDescription();
 
-            ConcreteDatatypeDiagram DTDescription;
+            ConcreteDatatypeDiagram ConcreteDT;
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                DTDescription = new ConcreteDatatypeDiagram(cd);
+                ConcreteDT = new ConcreteDatatypeDiagram(cd);
             } else { // no contours, just dots
-                DTDescription = new ConcreteDatatypeDiagram(abstractDT.getDots());
+                ConcreteDT = new ConcreteDatatypeDiagram(abstractDT.getDots());
             }
-            DTs.add(DTDescription);
+            DTs.add(ConcreteDT);
         }
 
         for (AbstractArrow abstractArrow: abstractArrows) {
-            ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, 0);
+            ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, -1); //outermost arrow set
             concreteArrows.add(concreteArrow);
         }
 

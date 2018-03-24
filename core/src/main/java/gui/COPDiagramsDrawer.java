@@ -2,7 +2,6 @@ package gui;
 
 import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
-import lang.Dot;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
@@ -41,8 +40,9 @@ public class COPDiagramsDrawer extends JPanel {
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
     private HashMap<String, Ellipse2D.Double> circleMap;
+    private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap2;
 
-    public COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
+    COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
         this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
@@ -57,6 +57,23 @@ public class COPDiagramsDrawer extends JPanel {
         this.resizeContents();
         this.circleMap = circleMap;
     }
+
+    COPDiagramsDrawer(ConcreteSubDiagram diagram) {
+        this.domImpl = GenericDOMImplementation.getDOMImplementation();
+        this.svgNS = "http://www.w3.org/2000/svg";
+        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
+        this.svgGenerator = new SVGGraphics2D(this.document);
+        this.scaleFactor = 1.0D;
+        this.trans = new AffineTransform();
+        this.highlightedContour = null;
+        this.highlightedZone = null;
+        this.highlightedFoot = null;
+        this.initComponents();
+        this.resetDiagram(diagram);
+        this.resizeContents();
+        this.circleMap = new HashMap<>();
+    }
+
     HashMap<String, Ellipse2D.Double> getCircleMap() {
         return circleMap;
     }
@@ -253,11 +270,11 @@ public class COPDiagramsDrawer extends JPanel {
         this.setLayout(null);
     }
 
-    protected ConcreteZone getHighlightedZone() {
+    private ConcreteZone getHighlightedZone() {
         return this.highlightedZone;
     }
 
-    protected void setHighlightedZone(ConcreteZone highlightedZone) {
+    private void setHighlightedZone(ConcreteZone highlightedZone) {
         if (this.highlightedZone != highlightedZone) {
             this.setHighlightedContour(null);
             this.setHighlightedFoot(null);
@@ -266,11 +283,11 @@ public class COPDiagramsDrawer extends JPanel {
         }
     }
 
-    protected CircleContour getHighlightedContour() {
+    private CircleContour getHighlightedContour() {
         return this.highlightedContour;
     }
 
-    protected void setHighlightedContour(CircleContour highlightedContour) {
+    private void setHighlightedContour(CircleContour highlightedContour) {
         if (this.highlightedContour != highlightedContour) {
             this.setHighlightedZone(null);
             this.setHighlightedFoot(null);
@@ -279,11 +296,11 @@ public class COPDiagramsDrawer extends JPanel {
         }
     }
 
-    protected ConcreteSpiderFoot getHighlightedFoot() {
+    private ConcreteSpiderFoot getHighlightedFoot() {
         return this.highlightedFoot;
     }
 
-    protected void setHighlightedFoot(ConcreteSpiderFoot foot) {
+    private void setHighlightedFoot(ConcreteSpiderFoot foot) {
         if (this.highlightedFoot != foot) {
             this.setHighlightedZone(null);
             this.setHighlightedContour(null);
