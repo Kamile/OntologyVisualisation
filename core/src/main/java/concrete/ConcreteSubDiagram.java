@@ -3,7 +3,9 @@ package concrete;
 import icircles.concreteDiagram.ConcreteDiagram;
 
 import java.awt.geom.Rectangle2D;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ConcreteSubDiagram extends ConcreteDiagram {
     public Set<ConcreteArrow> arrows;
@@ -11,11 +13,12 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
     public Set<ConcreteEquality> equalities;
     public boolean containsInitialT;
 
-    public ConcreteSubDiagram(ConcreteDiagram cd, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, boolean containsInitialT) {
+    ConcreteSubDiagram(ConcreteDiagram cd, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, boolean containsInitialT) {
         super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
         this.arrows = arrows;
         this.equalities = equalities;
         this.containsInitialT = containsInitialT;
+        dots = new TreeSet<>(); // empty
     }
 
     /**
@@ -23,7 +26,7 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
      * @param arrows
      * @param dots
      */
-    public ConcreteSubDiagram(Set<ConcreteArrow> arrows, Set<String> dots, Set<ConcreteEquality> equalities, boolean containsInitialT) {
+     ConcreteSubDiagram(Set<ConcreteArrow> arrows, Set<String> dots, Set<ConcreteEquality> equalities, boolean containsInitialT) {
         super(new Rectangle2D.Double(0.0D, 0.0D, (double)300, (double)300), null, null, null, null);
         this.arrows = arrows;
         this.dots = dots;
@@ -35,13 +38,17 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
      * Datatype diagrams have no arrows or equalities since we deal only with literals
      * @param cd
      */
-    public ConcreteSubDiagram(ConcreteDiagram cd) {
+    ConcreteSubDiagram(ConcreteDiagram cd) {
         super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
+        arrows = new HashSet<>(); // empty
+        equalities = new HashSet<>(); // empty
+        dots = new HashSet<>(); // empty
     }
 
-    public ConcreteSubDiagram(Set<String> dots) {
+    ConcreteSubDiagram(Set<String> dots) {
         super(new Rectangle2D.Double(0.0D, 0.0D, (double)300, (double)300), null, null, null, null);
         this.dots = dots;
+        arrows = new HashSet<>(); // empty
+        equalities = new HashSet<>(); //empty;
     }
-
 }

@@ -15,8 +15,6 @@ public class ConcreteArrow {
     ConcreteArrow(AbstractArrow abstractArrow, int parentId) {
         this.abstractArrow = abstractArrow;
         this.parentId = parentId;
-        this.source = new Ellipse2D.Double();
-        this.target = new Ellipse2D.Double();
         this.control = new Point2D.Double();
         System.out.println(parentId);
     }
@@ -25,8 +23,9 @@ public class ConcreteArrow {
         return abstractArrow;
     }
 
+    // ID consists of parent id, arrow full label , source and target labels
     public String getId() {
-        return abstractArrow.getLabel() + String.valueOf(parentId);
+        return parentId + abstractArrow.getLabel().getFullLabel() + abstractArrow.getSourceLabel() + abstractArrow.getTargetLabel();
     }
 
     public int getParentId() {
@@ -39,11 +38,11 @@ public class ConcreteArrow {
     }
 
     public String getLabel() {
-        return abstractArrow.getLabel().getLabel();
+        return abstractArrow.getLabel().getProperty();
     }
 
     public String getCardinality() {
-        return abstractArrow.getLabel().getCardinalityOperator() + abstractArrow.getLabel().getCardinalityArgument();
+        return abstractArrow.getLabel().getCardinality();
     }
 
     public void setSource(Ellipse2D.Double source) {

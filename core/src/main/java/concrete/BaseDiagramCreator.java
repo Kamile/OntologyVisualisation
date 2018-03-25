@@ -4,6 +4,8 @@ import abstractDescription.*;
 import icircles.abstractDescription.AbstractDescription;
 import icircles.concreteDiagram.DiagramCreator;
 import icircles.util.CannotDrawException;
+
+import java.awt.geom.Ellipse2D;
 import java.util.*;
 
 /***
@@ -46,6 +48,7 @@ class BaseDiagramCreator {
                 ConcreteEquality concreteEquality = new ConcreteEquality(abstractEquality, id);
                 concreteEqualities.add(concreteEquality);
             }
+
             ConcreteCOP concreteCOP;
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
@@ -76,7 +79,6 @@ class BaseDiagramCreator {
             ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, -1); //outermost arrow set
             concreteArrows.add(concreteArrow);
         }
-
         return new ConcreteBaseDiagram(COPs, DTs, concreteArrows);
     }
 }

@@ -1,5 +1,7 @@
 package gui;
 
+import concrete.ConcreteArrow;
+import concrete.ConcreteEquality;
 import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
 import org.apache.batik.dom.GenericDOMImplementation;
@@ -40,23 +42,6 @@ public class COPDiagramsDrawer extends JPanel {
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
     private HashMap<String, Ellipse2D.Double> circleMap;
-    private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap2;
-
-    COPDiagramsDrawer(ConcreteSubDiagram diagram, HashMap<String, Ellipse2D.Double> circleMap) {
-        this.domImpl = GenericDOMImplementation.getDOMImplementation();
-        this.svgNS = "http://www.w3.org/2000/svg";
-        this.document = this.domImpl.createDocument(this.svgNS, "svg", (DocumentType)null);
-        this.svgGenerator = new SVGGraphics2D(this.document);
-        this.scaleFactor = 1.0D;
-        this.trans = new AffineTransform();
-        this.highlightedContour = null;
-        this.highlightedZone = null;
-        this.highlightedFoot = null;
-        this.initComponents();
-        this.resetDiagram(diagram);
-        this.resizeContents();
-        this.circleMap = circleMap;
-    }
 
     COPDiagramsDrawer(ConcreteSubDiagram diagram) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
@@ -236,6 +221,28 @@ public class COPDiagramsDrawer extends JPanel {
                     }
                     g2d.drawString(dot, currentXPos, (int) y - 10);
                     currentXPos += 40;
+                }
+            }
+
+            for (ConcreteArrow arrow: diagram.arrows) {
+                String source = arrow.getAbstractArrow().getSourceLabel();
+                String target = arrow.getAbstractArrow().getTargetLabel();
+                if (circleMap.containsKey(source)) {
+                    arrow.setSource(circleMap.get(source));
+                }
+                if (circleMap.containsKey(target)) {
+                    arrow.setTarget(circleMap.get(target));
+                }
+            }
+
+            for (ConcreteEquality equality: diagram.equalities) {
+                String arg1 = equality.getAbstractEquality().getArg1();
+                String arg2 = equality.getAbstractEquality().getArg2();
+                if (circleMap.containsKey(arg1)) {
+                    equality.setSource(circleMap.get(arg1));
+                }
+                if (circleMap.containsKey(arg2)) {
+                    equality.setTarget(circleMap.get(arg2));
                 }
             }
         }

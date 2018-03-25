@@ -3,18 +3,18 @@ package lang;
 import java.io.Serializable;
 
 public class ArrowLabel implements Comparable<ArrowLabel>, Serializable {
-    private String label;
+    private String property;
     private String cardinalityOperator;
     private int cardinalityArgument;
 
-    public ArrowLabel(String label, String cardinalityOperator, int cardinalityArgument) {
-        this.label = label;
+    public ArrowLabel(String property, String cardinalityOperator, int cardinalityArgument) {
+        this.property = property;
         this.cardinalityOperator = cardinalityOperator;
         this.cardinalityArgument = cardinalityArgument;
     }
 
-    public String getLabel() {
-        return label;
+    public String getProperty() {
+        return property;
     }
 
     public String getCardinalityOperator() {
@@ -28,9 +28,17 @@ public class ArrowLabel implements Comparable<ArrowLabel>, Serializable {
         return String.valueOf(cardinalityArgument);
     }
 
+    public String getCardinality() {
+        return getCardinalityOperator() + getCardinalityArgument();
+    }
+
+    public String getFullLabel() {
+        return getProperty() + getCardinalityOperator() + getCardinalityArgument();
+    }
+
     @Override
     public int compareTo(ArrowLabel o) {
-        return (label+cardinalityOperator+cardinalityArgument).compareTo(o.getLabel() + o.getCardinalityOperator() + o.getCardinalityArgument());
+        return (getFullLabel()).compareTo(o.getFullLabel());
     }
 
     private static String getOperator(String operator) {

@@ -73,25 +73,30 @@ public class ArrowPanel extends JComponent {
                 String target = a.getAbstractArrow().getTargetLabel();
 
                 List<Point2D.Double> intersections;
-                if (a.getParentId() == -1) {
-                    // here need to assign source and target such that there are no cycles, initial t is source only
-                    for (HashMap<String, Ellipse2D.Double> val: circleMap2.values()) {
-                        for (String s: val.keySet()) {
-                            if (!circleMap.containsKey(s)) {
-                                List<Ellipse2D.Double> arr = new ArrayList<>();
-                                arr.add(val.get(s));
-                                circleMap.put(s, arr);
-                            } else {
-                                if (!circleMap.get(s).contains(val.get(s))) {
-                                    circleMap.get(s).add(val.get(s));
+                if (a.getSource() != null & a.getTarget() != null) {
+                    System.out.println("here");
+                    intersections = getClosestPoints(a.getSource(), a.getTarget());
+                } else {
+                    if (a.getParentId() == -1) {
+                        // here need to assign source and target such that there are no cycles, initial t is source only
+                        for (HashMap<String, Ellipse2D.Double> val : circleMap2.values()) {
+                            for (String s : val.keySet()) {
+                                if (!circleMap.containsKey(s)) {
+                                    List<Ellipse2D.Double> arr = new ArrayList<>();
+                                    arr.add(val.get(s));
+                                    circleMap.put(s, arr);
+                                } else {
+                                    if (!circleMap.get(s).contains(val.get(s))) {
+                                        circleMap.get(s).add(val.get(s));
+                                    }
                                 }
                             }
                         }
+                        System.out.println(circleMap);
+                        intersections = getClosestPoints(circleMap.get(source).get(0), circleMap.get(target).get(0));
+                    } else {
+                        intersections = getClosestPoints(circleMap2.get(parentId).get(source), circleMap2.get(parentId).get(target));
                     }
-                    System.out.println(circleMap);
-                    intersections = getClosestPoints(circleMap.get(source).get(0), circleMap.get(target).get(0));
-                } else {
-                    intersections = getClosestPoints(circleMap2.get(parentId).get(source), circleMap2.get(parentId).get(target));
                 }
 
                 double x1 = intersections.get(0).x;
@@ -154,10 +159,14 @@ public class ArrowPanel extends JComponent {
             super.paintComponent(g);
 
             for(ConcreteEquality equality: equalities) {
-                String source = equality.getAbstractEquality().getArg1();
-                String target = equality.getAbstractEquality().getArg2();
-                List<Point2D.Double> intersections = getClosestPoints(circleMap2.get(equality.getParentId()).get(source), circleMap2.get(equality.getParentId()).get(target));
-
+                List<Point2D.Double> intersections;
+                if (equality.getSource() != null && equality.getTarget() != null) {
+                    intersections = getClosestPoints(equality.getSource(), equality.getTarget());
+                } else {
+                    String source = equality.getAbstractEquality().getArg1();
+                    String target = equality.getAbstractEquality().getArg2();
+                    intersections = getClosestPoints(circleMap2.get(equality.getParentId()).get(source), circleMap2.get(equality.getParentId()).get(target));
+                }
                 double x1 = intersections.get(0).x;
                 double y1 = intersections.get(0).y;
                 double x2 = intersections.get(1).x;

@@ -27,17 +27,8 @@ public class DiagramPanel extends JPanel {
      * Create new diagram panel with nothing displayed in it.
      */
     public DiagramPanel() {
-        this(null);
-        drawNoDiagramLabel();
-    }
-
-    /**
-     * Create panel visualising given Concept Diagram
-     * @param cd
-     */
-    public DiagramPanel(ConceptDiagram cd) {
         initComponents();
-        setDiagram(cd);
+        drawNoDiagramLabel();
     }
 
     private void initComponents() {
