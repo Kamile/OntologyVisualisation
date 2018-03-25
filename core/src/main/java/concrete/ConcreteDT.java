@@ -4,11 +4,11 @@ import icircles.concreteDiagram.ConcreteDiagram;
 import java.util.Set;
 
 public class ConcreteDT extends ConcreteSubDiagram {
-    public ConcreteDT(ConcreteDiagram cd) {
-        super(cd);
+    public ConcreteDT(int id, ConcreteDiagram cd) {
+        super(id, cd);
     }
 
-    public ConcreteDT(Set<String> dots) {
-        super(dots);
+    public ConcreteDT(int id, Set<String> dots) {
+        super(id, dots);
     }
 }

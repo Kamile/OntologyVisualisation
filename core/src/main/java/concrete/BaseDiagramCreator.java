@@ -68,11 +68,12 @@ class BaseDiagramCreator {
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                ConcreteDT = new ConcreteDT(cd);
+                ConcreteDT = new ConcreteDT(id, cd);
             } else { // no contours, just dots
-                ConcreteDT = new ConcreteDT(abstractDT.getDots());
+                ConcreteDT = new ConcreteDT(id, abstractDT.getDots());
             }
             DTs.add(ConcreteDT);
+            id++;
         }
 
         for (AbstractArrow abstractArrow: abstractArrows) {

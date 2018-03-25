@@ -118,14 +118,14 @@ public class DiagramPanel extends JPanel {
                 add(panel);
             }
 
-            for (ConcreteDT concreteDT : DTs) {
+            for (final ConcreteDT concreteDT : DTs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT);
-//                SwingUtilities.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        circleMap.putAll(panel.getCircleMap());
-//                    }
-//                });
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        circleMap.put(concreteDT.getId(), panel.getCircleMap());
+                    }
+                });
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                 panel.setVisible(true);
                 add(panel);

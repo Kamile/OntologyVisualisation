@@ -21,7 +21,7 @@ public class ArrowPanel extends JComponent {
     private static float dash[] = {10.0f};
     private static final BasicStroke dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
     private static final int headLength = 15;
-    private static final double phi = Math.PI/6;
+    private static final double phi = Math.PI / 6;
 
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
@@ -65,7 +65,7 @@ public class ArrowPanel extends JComponent {
 
         if (arrows != null && circleMap2.keySet().size() > 0) {
             super.paintComponent(g);
-            for (ConcreteArrow a: arrows) {
+            for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
                 String label = a.getLabel();
                 String cardinality = a.getCardinality();
@@ -74,46 +74,41 @@ public class ArrowPanel extends JComponent {
 
                 List<Point2D.Double> intersections;
                 if (a.getSource() != null & a.getTarget() != null) {
-                    System.out.println("here");
                     intersections = getClosestPoints(a.getSource(), a.getTarget());
                 } else {
-                    if (a.getParentId() == -1) {
-                        // here need to assign source and target such that there are no cycles, initial t is source only
-                        for (HashMap<String, Ellipse2D.Double> val : circleMap2.values()) {
-                            for (String s : val.keySet()) {
-                                if (!circleMap.containsKey(s)) {
-                                    List<Ellipse2D.Double> arr = new ArrayList<>();
-                                    arr.add(val.get(s));
-                                    circleMap.put(s, arr);
-                                } else {
-                                    if (!circleMap.get(s).contains(val.get(s))) {
-                                        circleMap.get(s).add(val.get(s));
-                                    }
+                    // outermost arrows: here need to assign source and target such that there are no cycles, initial t is source only
+                    for (HashMap<String, Ellipse2D.Double> val : circleMap2.values()) {
+                        for (String s : val.keySet()) {
+                            if (!circleMap.containsKey(s)) {
+                                List<Ellipse2D.Double> arr = new ArrayList<>();
+                                arr.add(val.get(s));
+                                circleMap.put(s, arr);
+                            } else {
+                                if (!circleMap.get(s).contains(val.get(s))) {
+                                    circleMap.get(s).add(val.get(s));
                                 }
                             }
                         }
-                        System.out.println(circleMap);
-                        intersections = getClosestPoints(circleMap.get(source).get(0), circleMap.get(target).get(0));
-                    } else {
-                        intersections = getClosestPoints(circleMap2.get(parentId).get(source), circleMap2.get(parentId).get(target));
                     }
+                    System.out.println(circleMap);
+                    intersections = getClosestPoints(circleMap.get(source).get(0), circleMap.get(target).get(0));
                 }
 
                 double x1 = intersections.get(0).x;
                 double y1 = intersections.get(0).y;
                 double x2 = intersections.get(1).x;
                 double y2 = intersections.get(1).y;
-                applyOffsets(getGradient(x1,y1,x1,y2), x1, y1, x2, y2);
+                applyOffsets(getGradient(x1, y1, x1, y2), x1, y1, x2, y2);
 
-                double midX = x1 + (x2-x1)/2;
-                double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
+                double midX = x1 + (x2 - x1) / 2;
+                double midY = (Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
 
                 //get random control point
                 double cx = midX - arrowOffsets.get(a);
                 double cy = midY - arrowOffsets.get(a);
 
-                if (existingArrowCount.containsKey(source+parentId)) {
-                    cy += 30*Math.pow(-1, existingArrowCount.get(source+parentId));
+                if (existingArrowCount.containsKey(source + parentId)) {
+                    cy += 30 * Math.pow(-1, existingArrowCount.get(source + parentId));
                 }
 
                 QuadCurve2D curve = new QuadCurve2D.Double();
@@ -136,9 +131,9 @@ public class ArrowPanel extends JComponent {
                 g2d.drawLine((int) x2, (int) y2, (int) x, (int) y);
 
                 if (theta < 5) {
-                    g2d.drawString(label, (int) (midX), (int) (cy  + 7));
+                    g2d.drawString(label, (int) (midX), (int) (cy + 7));
                     g.setFont(new Font("Courier", Font.PLAIN, 8));
-                    g2d.drawString(cardinality, (int) (midX + label.length() * CHAR_WIDTH), (int) (cy  + 9));
+                    g2d.drawString(cardinality, (int) (midX + label.length() * CHAR_WIDTH), (int) (cy + 9));
                     g.setFont(new Font("Courier", Font.PLAIN, 12));
                 } else {
                     g2d.drawString(label, (int) (midX), (int) (midY - 15));
@@ -148,9 +143,9 @@ public class ArrowPanel extends JComponent {
                 }
 
                 if (existingArrowCount.containsKey(source)) {
-                    existingArrowCount.put(source+parentId, existingArrowCount.get(source+parentId) + 1);
+                    existingArrowCount.put(source + parentId, existingArrowCount.get(source + parentId) + 1);
                 } else {
-                    existingArrowCount.put(source+parentId, 1);
+                    existingArrowCount.put(source + parentId, 1);
                 }
             }
         }
@@ -158,7 +153,7 @@ public class ArrowPanel extends JComponent {
         if (equalities != null && circleMap2.keySet().size() > 0) {
             super.paintComponent(g);
 
-            for(ConcreteEquality equality: equalities) {
+            for (ConcreteEquality equality : equalities) {
                 List<Point2D.Double> intersections;
                 if (equality.getSource() != null && equality.getTarget() != null) {
                     intersections = getClosestPoints(equality.getSource(), equality.getTarget());
@@ -172,11 +167,11 @@ public class ArrowPanel extends JComponent {
                 double x2 = intersections.get(1).x;
                 double y2 = intersections.get(1).y;
 
-                double midX = x1 + (x2-x1)/2;
-                double midY = (Math.min(y1, y2) + Math.abs(y2 - y1)/2);
+                double midX = x1 + (x2 - x1) / 2;
+                double midY = (Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
                 g2d.drawString("=", (int) midX, (int) (midY + 6));
                 if (!equality.getAbstractEquality().isKnown()) {
-                    g2d.drawString("?", (int) midX, (int) (midY-5));
+                    g2d.drawString("?", (int) midX, (int) (midY - 5));
                 }
             }
         }
@@ -187,7 +182,7 @@ public class ArrowPanel extends JComponent {
     }
 
     private static double getRandomOffset() {
-        return Math.floor(Math.random()*31 + 10);
+        return Math.floor(Math.random() * 31 + 10);
     }
 
     private static List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
@@ -199,12 +194,12 @@ public class ArrowPanel extends JComponent {
         double x2 = target.getX();
         double y1 = source.getY();
         double y2 = target.getY();
-        double gradient = getGradient(x1, y1 , x2, y2);
+        double gradient = getGradient(x1, y1, x2, y2);
         double c = getC(gradient, x1, y1);
 
         // circles defined by same centre points + radius
-        double sourceRadius = source.getWidth()/2.0;
-        double targetRadius = target.getWidth()/2.0;
+        double sourceRadius = source.getWidth() / 2.0;
+        double targetRadius = target.getWidth() / 2.0;
 
         Point2D.Double sourcePositive;
         Point2D.Double sourceNegative;
@@ -218,9 +213,9 @@ public class ArrowPanel extends JComponent {
             targetPositive = findPoint(targetRadius, x2, y2, true);
             targetNegative = findPoint(targetRadius, x2, y2, false);
         } else {
-            sourcePositive = findPoint(gradient, c, sourceRadius,  x1, y1, true);
+            sourcePositive = findPoint(gradient, c, sourceRadius, x1, y1, true);
             sourceNegative = findPoint(gradient, c, sourceRadius, x1, y1, false);
-            targetPositive = findPoint(gradient, c, targetRadius,  x2, y2, true);
+            targetPositive = findPoint(gradient, c, targetRadius, x2, y2, true);
             targetNegative = findPoint(gradient, c, targetRadius, x2, y2, false);
         }
 
@@ -232,7 +227,7 @@ public class ArrowPanel extends JComponent {
             closestSource = new Point2D.Double(x1, y1);
             closestTarget = new Point2D.Double(x2, y2);
         } else if (sourceRadius < 5) {
-            closestSource = new Point2D.Double(x1,y1);
+            closestSource = new Point2D.Double(x1, y1);
 
             if (targetPositive == null & targetNegative == null) {
             }
@@ -272,7 +267,6 @@ public class ArrowPanel extends JComponent {
                 closestTarget = targetNegative;
             }
         }
-
         intersections.add(closestSource);
         intersections.add(closestTarget);
         return intersections;
@@ -282,7 +276,7 @@ public class ArrowPanel extends JComponent {
         if (gradient < 1 && gradient > -1) {
             return y;
         }
-        return y - gradient*x;
+        return y - gradient * x;
     }
 
     private static double getGradient(double x1, double y1, double x2, double y2) {
@@ -294,11 +288,11 @@ public class ArrowPanel extends JComponent {
         } else if (deltaY < 1 && deltaY > -1) {
             return 0;
         }
-        return deltaY/deltaX;
+        return deltaY / deltaX;
     }
 
     private static double solveForPositiveDiscriminant(double a, double b, double c) {
-        if (b*b-4*a*c >= 0) {
+        if (b * b - 4 * a * c >= 0) {
             return (-b + Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
         } else {
             throw new NumberFormatException();
@@ -306,7 +300,7 @@ public class ArrowPanel extends JComponent {
     }
 
     private static double solveForNegativeDiscriminant(double a, double b, double c) {
-        if (b*b-4*a*c >= 0) {
+        if (b * b - 4 * a * c >= 0) {
             return (-b - Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
         } else {
             throw new NumberFormatException();
@@ -315,6 +309,7 @@ public class ArrowPanel extends JComponent {
 
     /**
      * Solve for Y where gradient and intercept are INFINITY
+     *
      * @param radius
      * @param x1
      * @param y1
@@ -324,7 +319,7 @@ public class ArrowPanel extends JComponent {
     private static Point2D.Double findPoint(double radius, double x1, double y1, boolean positive) {
         double a = 1;
         double b = -2 * y1;
-        double c =  Math.pow((y1), 2) - Math.pow(radius, 2);
+        double c = Math.pow((y1), 2) - Math.pow(radius, 2);
 
         double y;
 
@@ -342,7 +337,7 @@ public class ArrowPanel extends JComponent {
     }
 
     // Find coordinates of intersection where we take either positive or negative root in quadratic equation
-    private static Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive)  {
+    private static Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive) {
         double a = Math.pow(gradient, 2) + 1;
         double b = 2 * gradient * (intercept - y1) - 2 * x1;
         double c = Math.pow(x1, 2) + Math.pow((intercept - y1), 2) - Math.pow(radius, 2);
@@ -359,7 +354,7 @@ public class ArrowPanel extends JComponent {
             return null;
         }
 
-        double y = gradient*x + intercept;
+        double y = gradient * x + intercept;
         return new Point2D.Double(x, y);
     }
 }
