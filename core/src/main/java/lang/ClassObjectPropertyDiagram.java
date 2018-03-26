@@ -21,6 +21,7 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
     private final TreeSet<String> dots;
     private final TreeSet<Equality> equalities;
     private final boolean containsInitialT;
+    public boolean isSingleVariableT;
     private Boolean valid;
 
     public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, TreeSet<Equality> equalities, boolean containsInitialT) {
@@ -40,6 +41,7 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
         this.dots = dots == null ? new TreeSet<String>() : dots;
         this.equalities = equalities == null ? new TreeSet<Equality>() : equalities;
         this.containsInitialT = containsInitialT;
+        this.isSingleVariableT = false;
     }
 
     public SpiderDiagram getSpiderDiagram() {
@@ -60,6 +62,10 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
 
     public boolean containsInitialT() {
         return containsInitialT;
+    }
+
+    public void setAsSingleVariableT() {
+        this.isSingleVariableT = true;
     }
 
     @Override

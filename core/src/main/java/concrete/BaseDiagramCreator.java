@@ -37,7 +37,6 @@ class BaseDiagramCreator {
             AbstractDescription ad = abstractCOP.getPrimarySDDescription();
             Set<ConcreteArrow> concreteCOPArrows = new HashSet<>();
             Set<ConcreteEquality> concreteEqualities = new HashSet<>();
-            boolean containsInitialT = abstractCOP.containsInitialT();
 
             for (AbstractArrow abstractArrow: abstractCOP.getArrows()) {
                 ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, id);
@@ -53,10 +52,20 @@ class BaseDiagramCreator {
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                concreteCOP = new ConcreteCOP(id, cd, concreteCOPArrows, concreteEqualities, containsInitialT);
+                concreteCOP = new ConcreteCOP(id, cd, concreteCOPArrows, concreteEqualities);
             } else { // no contours, just dots
-                concreteCOP = new ConcreteCOP(id, concreteCOPArrows, abstractCOP.getDots(), concreteEqualities, containsInitialT);
+                concreteCOP = new ConcreteCOP(id, concreteCOPArrows, abstractCOP.getDots(), concreteEqualities);
+
             }
+
+            if (abstractCOP.containsInitialT()) {
+                concreteCOP.containsInitialT = true;
+            }
+
+            if (abstractCOP.isSingleVariableT) {
+                concreteCOP.isSingleVariableTInstance = true;
+            }
+
             COPs.add(concreteCOP);
             id++;
         }

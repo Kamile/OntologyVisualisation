@@ -90,7 +90,6 @@ public class ArrowPanel extends JComponent {
                             }
                         }
                     }
-                    System.out.println(circleMap);
                     intersections = getClosestPoints(circleMap.get(source).get(0), circleMap.get(target).get(0));
                 }
 

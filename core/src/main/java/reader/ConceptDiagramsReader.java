@@ -511,7 +511,6 @@ public class ConceptDiagramsReader {
                 case reader.ConceptDiagramsParser.CD:
                     return BasicCDTranslator.Instance.fromASTNode(treeNode);
                 case reader.ConceptDiagramsParser.PD:
-                    System.out.println("PD");
                     return BasicPDTranslator.Instance.fromASTNode(treeNode);
                 default:
                     throw new ReadingException(i18n("ERR_UNKNOWN_SD_TYPE"));

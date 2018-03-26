@@ -12,14 +12,12 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
     public Set<ConcreteArrow> arrows;
     public Set<String> dots;
     public Set<ConcreteEquality> equalities;
-    public boolean containsInitialT;
 
-    ConcreteSubDiagram(int id, ConcreteDiagram cd, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, boolean containsInitialT) {
+    ConcreteSubDiagram(int id, ConcreteDiagram cd, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities) {
         super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
         this.id = id;
         this.arrows = arrows;
         this.equalities = equalities;
-        this.containsInitialT = containsInitialT;
         dots = new TreeSet<>(); // empty
     }
 
@@ -28,13 +26,12 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
      * @param arrows
      * @param dots
      */
-     ConcreteSubDiagram(int id, Set<ConcreteArrow> arrows, Set<String> dots, Set<ConcreteEquality> equalities, boolean containsInitialT) {
+     ConcreteSubDiagram(int id, Set<ConcreteArrow> arrows, Set<String> dots, Set<ConcreteEquality> equalities) {
         super(new Rectangle2D.Double(0.0D, 0.0D, (double)300, (double)300), null, null, null, null);
         this.id = id;
         this.arrows = arrows;
         this.dots = dots;
         this.equalities = equalities;
-        this.containsInitialT = containsInitialT;
     }
 
     /**
@@ -60,5 +57,4 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
     public int getId() {
         return id;
     }
-
 }

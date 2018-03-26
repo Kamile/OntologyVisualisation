@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.*;
+import java.util.List;
 
 import static speedith.i18n.Translations.i18n;
 
@@ -20,6 +21,7 @@ public class DiagramPanel extends JPanel {
     private ArrowPanel arrowPanel;
     private Diagram diagram;
     private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap;
+    private List<Dot> dotList;
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
 
@@ -75,6 +77,7 @@ public class DiagramPanel extends JPanel {
             arrows = new HashSet<>();
             equalities = new HashSet<>();
             circleMap = new HashMap<>();
+            dotList = new ArrayList<>();
             Set<ConcreteCOP> COPs;
             Set<ConcreteDT> DTs;
             this.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -103,14 +106,15 @@ public class DiagramPanel extends JPanel {
                 equalities.addAll(cop.equalities);
             }
 
-
             this.setLayout(new GridLayout(1, 0, 75, 25));
             for (final ConcreteCOP concreteCOP : COPs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
+                panel.setDotList(dotList);
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         circleMap.put(concreteCOP.getId(), panel.getCircleMap());
+                        dotList = panel.getDotList();
                     }
                 });
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
@@ -120,10 +124,12 @@ public class DiagramPanel extends JPanel {
 
             for (final ConcreteDT concreteDT : DTs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT);
+                panel.setDotList(dotList);
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         circleMap.put(concreteDT.getId(), panel.getCircleMap());
+                        dotList = panel.getDotList();
                     }
                 });
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
@@ -135,6 +141,9 @@ public class DiagramPanel extends JPanel {
                 @Override
                 public void run() {
                     addArrows(circleMap, arrows, equalities);
+                    for (Dot dot: dotList) {
+                        System.out.println(dot);
+                    }
                 }
             });
         }

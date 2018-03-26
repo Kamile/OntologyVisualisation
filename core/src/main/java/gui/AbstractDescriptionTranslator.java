@@ -58,7 +58,11 @@ public class AbstractDescriptionTranslator {
 
         Set<String> dots = new TreeSet<>(COPDiagram.getDots());
 
-        return new AbstractCOP(ad, abstractArrows, abstractEqualities, dots, containsInitialT);
+        AbstractCOP abstractCOP= new AbstractCOP(ad, abstractArrows, abstractEqualities, dots, containsInitialT);
+        if (COPDiagram.isSingleVariableT) {
+            abstractCOP.isSingleVariableT = true;
+        }
+        return abstractCOP;
     }
 
     private static AbstractDT getAbstractDescription(DatatypeDiagram datatypeDiagram) throws CannotDrawException {

@@ -16,7 +16,6 @@ public class ConcreteArrow {
         this.abstractArrow = abstractArrow;
         this.parentId = parentId;
         this.control = new Point2D.Double();
-        System.out.println(parentId);
     }
 
     public AbstractArrow getAbstractArrow() {
