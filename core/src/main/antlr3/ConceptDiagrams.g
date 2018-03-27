@@ -16,6 +16,7 @@ tokens {
     COP_PRIMARY     =           'COP';
     COP_INITIAL     =           'InitialCOP';
     DT              =           'DT';
+    ARROW           =           'Arrow';
 }
 
 @parser::header {
@@ -84,6 +85,10 @@ datatypeDiagram
     :    'DT'^ '{'! (keyValue (','! keyValue)*)? '}'!
     ;
 
+arrow
+    :    'Arrow'^ '{'! (keyValue (','! keyValue)*)? '}'!
+    ;
+
 keyValues
     :    '{'^ (keyValue (','! keyValue)*)? '}'!
     ;
@@ -109,6 +114,7 @@ languageElement
     |    datatypeDiagram
     |    conceptDiagram
     |    propertyDiagram
+    |    arrow
     ;
 
 

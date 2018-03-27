@@ -518,6 +518,19 @@ public class ConceptDiagramsReader {
         }
     }
 
+    private static class ArrowTranslator2 extends GeneralTranslator<Arrow> {
+        static final ArrowTranslator2 Instance = new ArrowTranslator2();
+
+        private ArrowTranslator2() {
+            super(ConceptDiagramsParser.ARROW);
+        }
+
+        @Override
+        Arrow createDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
+            return null;
+        }
+    }
+
     private static class BasicCDTranslator extends GeneralTranslator<ConceptDiagram> {
         static final BasicCDTranslator Instance = new BasicCDTranslator();
 
