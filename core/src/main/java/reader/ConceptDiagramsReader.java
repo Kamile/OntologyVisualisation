@@ -12,12 +12,12 @@ import java.io.IOException;
 import java.util.*;
 
 import static i18n.Translations.i18n;
+import static lang.Arrow.*;
 import static lang.ConceptDiagram.*;
 import static speedith.core.lang.PrimarySpiderDiagram.*;
 
 import reader.ConceptDiagramsParser;
 import reader.ConceptDiagramsLexer;
-
 
 /**
  * Read text representation of Concept Diagram and create a
@@ -331,13 +331,7 @@ public class ConceptDiagramsReader {
 
         private COPTranslator() {
             super(ConceptDiagramsParser.COP_PRIMARY);
-            addMandatoryAttribute(SDTextSpidersAttribute, ListTranslator.StringListTranslator);
-            addOptionalAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
-            addOptionalAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
-            addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
-            addOptionalAttribute(ArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
-            addOptionalAttribute(KnownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(true)));
-            addOptionalAttribute(UnknownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(false)));
+            addAttributes();
         }
 
         private COPTranslator(boolean containsInitialT) {
@@ -401,34 +395,6 @@ public class ConceptDiagramsReader {
                     shadedZonesAttribute == null ? null : (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
                     presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey(),
                     null);
-        }
-    }
-
-    private static class ArrowTranslator extends ElementTranslator<Arrow> {
-        static final ArrowTranslator Instance = new ArrowTranslator();
-        private ListTranslator<String> translator;
-
-        private ArrowTranslator() {
-            translator = new ListTranslator<>(ConceptDiagramsParser.SLIST, StringTranslator.Instance);
-        }
-
-        @Override
-        public Arrow fromASTNode(CommonTree treeNode) throws ReadingException {
-            ArrayList<String> arrows = translator.fromASTNode(treeNode);
-            if (arrows != null && arrows.size() == 2) {
-                return new Arrow(arrows.get(0), arrows.get(1));
-            } else if (arrows != null && arrows.size() == 3) {
-                return new Arrow(arrows.get(0), arrows.get(1), arrows.get(2));
-            } else if (arrows!= null && arrows.size() == 6) {
-                return new Arrow(arrows.get(0),
-                        arrows.get(1),
-                        arrows.get(2),
-                        arrows.get(3),
-                        Integer.parseInt(arrows.get(4)),
-                        Boolean.parseBoolean(arrows.get(5)));
-            }  else {
-                throw new ReadingException("Error translating arrow", treeNode);
-            }
         }
     }
 
@@ -518,16 +484,31 @@ public class ConceptDiagramsReader {
         }
     }
 
-    private static class ArrowTranslator2 extends GeneralTranslator<Arrow> {
-        static final ArrowTranslator2 Instance = new ArrowTranslator2();
+    private static class ArrowTranslator extends GeneralTranslator<Arrow> {
+        static final ArrowTranslator Instance = new ArrowTranslator();
 
-        private ArrowTranslator2() {
+        private ArrowTranslator() {
             super(ConceptDiagramsParser.ARROW);
+            addMandatoryAttribute(SourceAttribute, StringTranslator.Instance);
+            addMandatoryAttribute(TargetAttribute, StringTranslator.Instance);
+            addMandatoryAttribute(PropertyAttribute, StringTranslator.Instance);
+            addOptionalAttribute(CardinalityOperator, StringTranslator.Instance);
+            addOptionalAttribute(CardinalityArgument, StringTranslator.Instance);
+            addOptionalAttribute(DashedAttribute, StringTranslator.Instance);
         }
 
         @Override
         Arrow createDiagram(Map<String, Map.Entry<Object, CommonTree>> attributes, CommonTree mainNode) throws ReadingException {
-            return null;
+            Map.Entry<Object, CommonTree> op = attributes.get(CardinalityOperator);
+            Map.Entry<Object, CommonTree> arg = attributes.get(CardinalityArgument);
+            Map.Entry<Object, CommonTree> dashed = attributes.get(DashedAttribute);
+
+            return new Arrow((String) attributes.get(PropertyAttribute).getKey(),
+                    (String) attributes.get(SourceAttribute).getKey(),
+                    (String) attributes.get(TargetAttribute).getKey(),
+                    op == null ? null : (String) op.getKey(),
+                    arg == null ? 0 : Integer.valueOf((String) arg.getKey()),
+                    dashed != null && Boolean.parseBoolean((String) dashed.getKey()));
         }
     }
 

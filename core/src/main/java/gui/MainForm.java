@@ -269,7 +269,16 @@ public class MainForm extends JFrame {
                     "                ([\"C5\"], [\"C4\", \"_anon\"]),\n" +
                     "                ([\"C5\", \"_anon\"], [\"C4\"]),\n" +
                     "                ([\"C4\"],[\"C5\", \"_anon\"])],\n" +
-                    "            arrows = [(\"op\", \"C4\", \"_anon\", \"leq\", \"2\", \"true\")]\n" +
+                    "            arrows = [" +
+                    "               Arrow {\n" +
+                    "                    source = \"C4\",\n" +
+                    "                    target = \"_anon\",\n" +
+                    "                    property = \"op\",\n" +
+                    "                    op = \"leq\",\n" +
+                    "                    arg = \"2\",\n" +
+                    "                    dashed = \"true\"\n" +
+                    "                }" +
+                    "           ]\n" +
                     "        }\n" +
                     "    ]\n" +
                     "}");
@@ -293,7 +302,13 @@ public class MainForm extends JFrame {
                     "            sh_zones = [([\"_anon\"], [])],\n" +
                     "            present_zones = [([], [\"_anon\"])]}\n" +
                     "    ],\n" +
-                    "\tarrows = [(\"op-\", \"CE\", \"_anon\")]\n" +
+                    "\tarrows = [" +
+                    "           Arrow {\n" +
+                    "            source = \"CE\",\n" +
+                    "            target = \"_anon\",\n" +
+                    "            property = \"op-\"\n" +
+                    "        }" +
+                    "]\n" +
                     "}\n");
         } catch (Exception ex) {
             throw new RuntimeException();
@@ -309,8 +324,7 @@ public class MainForm extends JFrame {
                     "            sh_zones = [],\n" +
                     "            habitats = [(\"a\", [([\"C1\"], [\"C2\"])])],\n" +
                     "            present_zones=[([\"C2\"],[\"C1\"]), ([\"C1\"],[\"C2\"]), ([],[\"C1\", \"C2\"]), ([\"C1\", \"C2\"],[])]}\n" +
-                    "    ],\n" +
-                    "\tarrows = []\n" +
+                    "    ]\n" +
                     "}");
         } catch (Exception ex) {
             throw new RuntimeException();

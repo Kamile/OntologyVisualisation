@@ -6,8 +6,13 @@ import java.io.Serializable;
 import static speedith.i18n.Translations.i18n;
 
 public class Arrow implements Comparable<Arrow>, Serializable{
-
-    private final static String NO_LABEL = "";
+    private static final String NO_LABEL = "";
+    public static final String SourceAttribute = "source";
+    public static final String TargetAttribute = "target";
+    public static final String PropertyAttribute = "property";
+    public static final String CardinalityArgument = "arg";
+    public static final String CardinalityOperator = "op";
+    public static final String DashedAttribute = "dashed";
     private String label;
     private String source;
     private String target;
