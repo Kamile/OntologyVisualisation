@@ -22,6 +22,7 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
     private final TreeSet<Equality> equalities;
     private final boolean containsInitialT;
     public boolean isSingleVariableT;
+    public int id;
     private Boolean valid;
 
     public ClassObjectPropertyDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Arrow> arrows, TreeSet<String> dots, TreeSet<Equality> equalities, boolean containsInitialT) {
@@ -33,13 +34,13 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
             throw new IllegalArgumentException(Translations.i18n("ERR_SD_HABITATS_WITHOUT_SPIDERS"));
         }
 
-        this.spiders = spiders == null ? new TreeSet<String>() : spiders;
-        this.spiderHabitatsMap = habitats == null ? new TreeMap<String,Region>() : habitats;
-        this.shadedZones = shadedZones == null ? new TreeSet<Zone>() : shadedZones;
-        this.presentZones = presentZones == null ? new TreeSet<Zone>() : presentZones;
-        this.arrows = arrows == null ? new TreeSet<Arrow>() : arrows;
-        this.dots = dots == null ? new TreeSet<String>() : dots;
-        this.equalities = equalities == null ? new TreeSet<Equality>() : equalities;
+        this.spiders = spiders == null ? new TreeSet<>() : spiders;
+        this.spiderHabitatsMap = habitats == null ? new TreeMap<>() : habitats;
+        this.shadedZones = shadedZones == null ? new TreeSet<>() : shadedZones;
+        this.presentZones = presentZones == null ? new TreeSet<>() : presentZones;
+        this.arrows = arrows == null ? new TreeSet<>() : arrows;
+        this.dots = dots == null ? new TreeSet<>() : dots;
+        this.equalities = equalities == null ? new TreeSet<>() : equalities;
         this.containsInitialT = containsInitialT;
         this.isSingleVariableT = false;
     }
@@ -68,12 +69,20 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
         this.isSingleVariableT = true;
     }
 
+    public void setId(int id) {
+        if (id >= 0) {
+            this.id = id;
+        } else {
+            throw new RuntimeException("User-set COP id must be a natural integer."); // we need to set the id as negative so as to be unique from others that will be set
+        }
+    }
+
     @Override
     public int compareTo(ClassObjectPropertyDiagram o) {
         return 0;
     }
 
-    public boolean isValid() {
+    boolean isValid() {
         if (shadedZones.isEmpty() && presentZones.isEmpty() && !dots.isEmpty()) {
             valid = true; // zones empty so only dots
         } else {

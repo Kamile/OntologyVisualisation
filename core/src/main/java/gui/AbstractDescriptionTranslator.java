@@ -62,6 +62,9 @@ public class AbstractDescriptionTranslator {
         if (COPDiagram.isSingleVariableT) {
             abstractCOP.isSingleVariableT = true;
         }
+        if (COPDiagram.id > 0) {
+            abstractCOP.id = COPDiagram.id;
+        }
         return abstractCOP;
     }
 
@@ -178,16 +181,26 @@ public class AbstractDescriptionTranslator {
                 boolean isAnon = a.isDashed();
                 boolean isSourceContour = isContour(a.getSource());
                 boolean isTargetContour = isContour(a.getTarget());
+                AbstractArrow arrow;
 
                 if (isSourceContour && isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget()), a.getSource(), a.getTarget()));
+                    arrow = new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), contourMap.get(a.getTarget()), a.getSource(), a.getTarget());
                 } else if (isSourceContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget()), a.getSource(), a.getTarget()));
+                    arrow = new AbstractArrow(label, isAnon, contourMap.get(a.getSource()), spiderMap.get(a.getTarget()), a.getSource(), a.getTarget());
                 } else if (isTargetContour) {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget()), a.getSource(), a.getTarget()));
+                    arrow = new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), contourMap.get(a.getTarget()), a.getSource(), a.getTarget());
                 } else {
-                    abstractArrows.add(new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget()), a.getSource(), a.getTarget()));
+                    arrow = new AbstractArrow(label, isAnon, spiderMap.get(a.getSource()), spiderMap.get(a.getTarget()), a.getSource(), a.getTarget());
                 }
+
+                if (a.getSourceId() > 0) {
+                    arrow.setSourceId(a.getSourceId()*-1);
+                }
+
+                if (a.getTargetId() > 0) {
+                    arrow.setTargetId(a.getTargetId()*-1);
+                }
+                abstractArrows.add(arrow);
             }
         }
         return abstractArrows;

@@ -13,12 +13,16 @@ public class Arrow implements Comparable<Arrow>, Serializable{
     public static final String CardinalityArgument = "arg";
     public static final String CardinalityOperator = "op";
     public static final String DashedAttribute = "dashed";
+    public static final String SourceIdAttribute = "sourceId";
+    public static final String TargetIdAttribute = "targetId";
     private String label;
     private String source;
     private String target;
     private String cardinalityOperator;
     private int cardinalityArgument;
     private boolean isDashed;
+    private int sourceId;
+    private int targetId;
     private boolean hashInvalid = true;
     private int hash;
 
@@ -63,6 +67,22 @@ public class Arrow implements Comparable<Arrow>, Serializable{
 
     public int getCardinalityArgument() {
         return cardinalityArgument;
+    }
+
+    public int getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(int id) {
+        sourceId = id;
+    }
+
+    public int getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(int id) {
+        targetId = id;
     }
 
     @Override

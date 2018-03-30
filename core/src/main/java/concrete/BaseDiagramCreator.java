@@ -31,7 +31,7 @@ class BaseDiagramCreator {
         Set<ConcreteCOP> COPs = new HashSet<>();
         Set<ConcreteDT> DTs = new HashSet<>();
         Set<ConcreteArrow> concreteArrows = new HashSet<>();
-        int id = 0;
+        int id = 1;
 
         for (AbstractCOP abstractCOP: abstractCOPs) {
             AbstractDescription ad = abstractCOP.getPrimarySDDescription();
@@ -55,7 +55,10 @@ class BaseDiagramCreator {
                 concreteCOP = new ConcreteCOP(id, cd, concreteCOPArrows, concreteEqualities);
             } else { // no contours, just dots
                 concreteCOP = new ConcreteCOP(id, concreteCOPArrows, abstractCOP.getDots(), concreteEqualities);
+            }
 
+            if (abstractCOP.id > 0) {
+                concreteCOP.setId(abstractCOP.id*-1); // id was set in syntax
             }
 
             if (abstractCOP.containsInitialT()) {
@@ -64,6 +67,7 @@ class BaseDiagramCreator {
 
             if (abstractCOP.isSingleVariableT) {
                 concreteCOP.isSingleVariableTInstance = true;
+                concreteCOP.setId(0);
             }
 
             COPs.add(concreteCOP);
@@ -86,7 +90,7 @@ class BaseDiagramCreator {
         }
 
         for (AbstractArrow abstractArrow: abstractArrows) {
-            ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, -1); //outermost arrow set
+            ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, 0); //outermost arrow set
             concreteArrows.add(concreteArrow);
         }
         return new ConcreteBaseDiagram(COPs, DTs, concreteArrows);

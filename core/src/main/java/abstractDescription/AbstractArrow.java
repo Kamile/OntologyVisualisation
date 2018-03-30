@@ -21,6 +21,8 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
     private boolean isAnon;
     private String sourceLabel;
     private String targetLabel;
+    private int sourceId;
+    private int targetId;
 
     /* Two of the following four will be set; one source, one target */
     private AbstractBasicRegion abrSource;
@@ -111,6 +113,22 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
 
     public String getTargetLabel() {
         return targetLabel;
+    }
+
+    public void setSourceId(int id) {
+        sourceId = id;
+    }
+
+    public int getSourceId() {
+        return sourceId;
+    }
+
+    public void setTargetId(int id) {
+        targetId = id;
+    }
+
+    public int getTargetId() {
+        return targetId;
     }
 
     @Override

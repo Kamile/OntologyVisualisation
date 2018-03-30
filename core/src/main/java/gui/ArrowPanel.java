@@ -73,8 +73,11 @@ public class ArrowPanel extends JComponent {
                 String target = a.getAbstractArrow().getTargetLabel();
 
                 List<Point2D.Double> intersections;
+                Ellipse2D.Double sourceEllipse;
+                Ellipse2D.Double targetEllipse;
                 if (a.getSource() != null & a.getTarget() != null) {
-                    intersections = getClosestPoints(a.getSource(), a.getTarget());
+                    sourceEllipse = a.getSource();
+                    targetEllipse = a.getTarget();
                 } else {
                     // outermost arrows: here need to assign source and target such that there are no cycles, initial t is source only
                     for (HashMap<String, Ellipse2D.Double> val : circleMap2.values()) {
@@ -90,8 +93,24 @@ public class ArrowPanel extends JComponent {
                             }
                         }
                     }
-                    intersections = getClosestPoints(circleMap.get(source).get(0), circleMap.get(target).get(0));
+                    sourceEllipse = circleMap.get(source).get(0);
+                    targetEllipse = circleMap.get(target).get(0);
+
+                    // if pd, all t arrows sourced from one cop (id 0)
+                    if (source.equals("t")) {
+                        sourceEllipse = circleMap2.get(0).get("t");
+                    }
+
+                    // check if source and target set by user
+                    if (a.getAbstractArrow().getSourceId() != 0) {
+                        sourceEllipse = circleMap2.get(a.getAbstractArrow().getSourceId()).get(source);
+                    }
+
+                    if (a.getAbstractArrow().getTargetId() != 0) {
+                        targetEllipse = circleMap2.get(a.getAbstractArrow().getTargetId()).get(target);
+                    }
                 }
+                intersections = getClosestPoints(sourceEllipse, targetEllipse);
 
                 double x1 = intersections.get(0).x;
                 double y1 = intersections.get(0).y;

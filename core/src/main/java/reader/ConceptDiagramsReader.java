@@ -348,6 +348,7 @@ public class ConceptDiagramsReader {
             addOptionalAttribute(ArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
             addOptionalAttribute(KnownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(true)));
             addOptionalAttribute(UnknownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(false)));
+            addOptionalAttribute(IdAttribute, StringTranslator.Instance);
         }
 
         @Override
@@ -359,7 +360,8 @@ public class ConceptDiagramsReader {
             Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(ArrowsAttribute);
             Map.Entry<Object, CommonTree> knownEqualityAttribute = attributes.get(KnownEqualityAttribute);
             Map.Entry<Object, CommonTree> unknownEqualityAttribute = attributes.get(UnknownEqualityAttribute);
-            return ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy(
+            Map.Entry<Object, CommonTree> idAttribute = attributes.get(IdAttribute);
+            ClassObjectPropertyDiagram cop = ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy(
                     (Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     habitatsAttribute == null ? null : (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     shadedZonesAttribute == null ? null : (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
@@ -369,6 +371,10 @@ public class ConceptDiagramsReader {
                     knownEqualityAttribute == null ? null : (Collection<Equality>) knownEqualityAttribute.getKey(),
                     unknownEqualityAttribute == null ? null : (Collection<Equality>) unknownEqualityAttribute.getKey(),
                     containsInitialT);
+            if (idAttribute != null) {
+                cop.setId(Integer.parseInt((String) idAttribute.getKey()));
+            }
+            return cop;
         }
     }
 
@@ -495,6 +501,8 @@ public class ConceptDiagramsReader {
             addOptionalAttribute(CardinalityOperator, StringTranslator.Instance);
             addOptionalAttribute(CardinalityArgument, StringTranslator.Instance);
             addOptionalAttribute(DashedAttribute, StringTranslator.Instance);
+            addOptionalAttribute(SourceIdAttribute, StringTranslator.Instance);
+            addOptionalAttribute(TargetIdAttribute, StringTranslator.Instance);
         }
 
         @Override
@@ -502,13 +510,24 @@ public class ConceptDiagramsReader {
             Map.Entry<Object, CommonTree> op = attributes.get(CardinalityOperator);
             Map.Entry<Object, CommonTree> arg = attributes.get(CardinalityArgument);
             Map.Entry<Object, CommonTree> dashed = attributes.get(DashedAttribute);
+            Map.Entry<Object, CommonTree> sourceIdAttribute = attributes.get(SourceIdAttribute);
+            Map.Entry<Object, CommonTree> targetIdAttribute = attributes.get(TargetIdAttribute);
 
-            return new Arrow((String) attributes.get(PropertyAttribute).getKey(),
+            Arrow arrow =  new Arrow((String) attributes.get(PropertyAttribute).getKey(),
                     (String) attributes.get(SourceAttribute).getKey(),
                     (String) attributes.get(TargetAttribute).getKey(),
                     op == null ? null : (String) op.getKey(),
-                    arg == null ? 0 : Integer.valueOf((String) arg.getKey()),
+                    arg == null ? 0 : Integer.parseInt((String) arg.getKey()),
                     dashed != null && Boolean.parseBoolean((String) dashed.getKey()));
+            if  (sourceIdAttribute != null) {
+                int sourceId = Integer.parseInt((String) sourceIdAttribute.getKey());
+                arrow.setSourceId(sourceId);
+            }
+            if (targetIdAttribute != null) {
+                int targetId = Integer.parseInt((String) targetIdAttribute.getKey());
+                arrow.setTargetId(targetId);
+            }
+            return arrow;
         }
     }
 
