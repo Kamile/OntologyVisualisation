@@ -110,12 +110,9 @@ public class DiagramPanel extends JPanel {
             for (final ConcreteCOP concreteCOP : COPs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
                 panel.setDotList(dotList);
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        circleMap.put(concreteCOP.getId(), panel.getCircleMap());
-                        dotList = panel.getDotList();
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    circleMap.put(concreteCOP.getId(), panel.getCircleMap());
+                    dotList = panel.getDotList();
                 });
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                 panel.setVisible(true);
@@ -125,25 +122,19 @@ public class DiagramPanel extends JPanel {
             for (final ConcreteDT concreteDT : DTs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT);
                 panel.setDotList(dotList);
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        circleMap.put(concreteDT.getId(), panel.getCircleMap());
-                        dotList = panel.getDotList();
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    circleMap.put(concreteDT.getId(), panel.getCircleMap());
+                    dotList = panel.getDotList();
                 });
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                 panel.setVisible(true);
                 add(panel);
             }
 
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    addArrows(circleMap, arrows, equalities);
-                    for (Dot dot: dotList) {
-                        System.out.println(dot);
-                    }
+            SwingUtilities.invokeLater(() -> {
+                addArrows(circleMap, arrows, equalities);
+                for (Dot dot: dotList) {
+                    System.out.println(dot);
                 }
             });
         }

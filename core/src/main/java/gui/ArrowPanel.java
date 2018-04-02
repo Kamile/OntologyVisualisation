@@ -25,11 +25,20 @@ public class ArrowPanel extends JComponent {
 
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
-    private HashMap<String, List<Dot>> dotMap;
     private HashMap<String, List<Ellipse2D.Double>> circleMap;
     private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap2;
     private HashMap<ConcreteArrow, Double> arrowOffsets;
     private HashMap<String, Integer> existingArrowCount;
+
+    /*
+        Score used to choose optimal ordering for diagram panels. Minimal score means better ordering.
+        We want to
+        - minimise edge lengths (prefer diagram panels with adjacent arrow source and targets to be closer)
+        - minimise edge crossings
+        - give preference to left-to-right arrows
+
+     */
+    private double score;
 
     ArrowPanel() {
         this(null, null, null);
@@ -41,6 +50,7 @@ public class ArrowPanel extends JComponent {
         this.circleMap = new HashMap<>();
         this.circleMap2 = circleMap;
         this.existingArrowCount = new HashMap<>();
+        this.score = 0;
         if (arrows != null) {
             arrowOffsets = new HashMap<>();
             for (ConcreteArrow a : arrows) {
@@ -116,7 +126,8 @@ public class ArrowPanel extends JComponent {
                 double y1 = intersections.get(0).y;
                 double x2 = intersections.get(1).x;
                 double y2 = intersections.get(1).y;
-                applyOffsets(getGradient(x1, y1, x1, y2), x1, y1, x2, y2);
+                score += getLength(x1, y1, x2, y2);
+                score += getGradient(x1, y1, x2, y2) * -1; // positive gradients preferred
 
                 double midX = x1 + (x2 - x1) / 2;
                 double midY = (Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
@@ -195,8 +206,8 @@ public class ArrowPanel extends JComponent {
         }
     }
 
-    private void applyOffsets(double gradient, double x1, double y1, double x2, double y2) {
-
+    public double getScore() {
+        return score;
     }
 
     private static double getRandomOffset() {
@@ -247,17 +258,12 @@ public class ArrowPanel extends JComponent {
         } else if (sourceRadius < 5) {
             closestSource = new Point2D.Double(x1, y1);
 
-            if (targetPositive == null & targetNegative == null) {
-            }
-
             if (closestSource.distance(targetPositive) < closestSource.distance(targetNegative)) {
                 closestTarget = targetPositive;
             } else {
                 closestTarget = targetNegative;
             }
         } else if (targetRadius < 5) {
-            if (targetPositive == null & targetNegative == null) {
-            }
             closestTarget = new Point2D.Double(x2, y2);
             if (closestTarget.distance(sourcePositive) < closestTarget.distance(sourceNegative)) {
                 closestSource = sourcePositive;
@@ -374,5 +380,9 @@ public class ArrowPanel extends JComponent {
 
         double y = gradient * x + intercept;
         return new Point2D.Double(x, y);
+    }
+
+    private double getLength(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
     }
 }
