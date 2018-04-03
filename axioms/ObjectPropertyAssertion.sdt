@@ -1,0 +1,16 @@
+ConceptDiagram {
+    COPs = [
+        COP {
+            spiders = ["a1"]},
+        COP {
+            spiders = ["a2"]}
+    ],
+    arrows = [
+        Arrow {
+            source = "a1",
+            target = "a2",
+            property = "op",
+            dashed = "true"
+        }
+    ]
+}

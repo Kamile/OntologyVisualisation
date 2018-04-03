@@ -1,0 +1,21 @@
+PropertyDiagram {
+    COPs = [
+        COP {
+            spiders = [],
+            habitats = [],
+            sh_zones = [(["_anonB"], ["_anonA"])],
+            present_zones = [([], ["_anonA", "_anonB"]), (["_anonA"],["_anonB"]), (["_anonA", "_anonB"],[])]}
+    ],
+    arrows = [
+        Arrow {
+            source = "t",
+            target = "_anonA",
+            property = "op1"
+        },
+        Arrow {
+            source = "t",
+            target = "_anonB",
+            property = "op2"
+        }
+    ]
+}

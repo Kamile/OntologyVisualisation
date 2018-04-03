@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 import static speedith.i18n.Translations.i18n;
 
 public class MainForm extends JFrame {
-    private static final String PATH_TO_AXIOMS = "../Documents/Third Year/Project/Axioms";
+    private static final String PATH_TO_AXIOMS = "axioms";
     private JMenu fileMenu;
     private JMenuItem openMenuItem;
     private JMenuItem saveMenuItem;

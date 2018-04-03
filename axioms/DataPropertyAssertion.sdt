@@ -1,0 +1,18 @@
+ConceptDiagram {
+    COPs = [
+        COP {
+            spiders = ["a1"]}
+    ],
+    DTs = [
+        DT {
+            spiders = ["lt"]
+        }
+    ],
+	arrows = [
+        Arrow {
+            source = "a1",
+            target = "lt",
+            property = "dp"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+ConceptDiagram {
+    COPs = [COP {
+        spiders = ["a1", "a2"],
+        equality=[("a1", "a2")]}
+    ]
+}

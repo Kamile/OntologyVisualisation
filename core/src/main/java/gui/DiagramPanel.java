@@ -107,6 +107,7 @@ public class DiagramPanel extends JPanel {
             }
 
             this.setLayout(new GridLayout(1, 0, 75, 25));
+
             for (final ConcreteCOP concreteCOP : COPs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
                 panel.setDotList(dotList);

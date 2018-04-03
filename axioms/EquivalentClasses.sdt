@@ -1,0 +1,13 @@
+ConceptDiagram {
+    COPs = [
+        COP {
+            spiders = [],
+            habitats = [],
+            sh_zones = [
+                (["C1"],["C2"]),
+                (["C2"], ["C1"])],
+            present_zones = [
+                (["C1", "C2"], []),
+                ([], ["C1", "C2"])]}
+    ]
+}
