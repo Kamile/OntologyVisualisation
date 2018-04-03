@@ -5,6 +5,7 @@ import abstractDescription.AbstractPropertyDiagram;
 import concrete.*;
 import icircles.util.CannotDrawException;
 import lang.*;
+import util.Permutation;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -108,7 +109,33 @@ public class DiagramPanel extends JPanel {
 
             this.setLayout(new GridLayout(1, 0, 75, 25));
 
-            for (final ConcreteCOP concreteCOP : COPs) {
+//            // calculate the score for each, then draw most optimal
+//            List<ConcreteCOP> copList = new ArrayList<>();
+//            copList.addAll(COPs);
+//            List<List<ConcreteCOP>> copPermutations = Permutation.permutations2(copList);
+//            final List<ConcreteCOP>[] optimalPermutation = new List[]{copPermutations.get(0)};
+//            final double[] currentMinScore = {Double.MAX_VALUE};
+//            for (List<ConcreteCOP> permutation: copPermutations) {
+//                circleMap = new HashMap<>();
+//                for (ConcreteCOP cop: permutation) {
+//                    COPDiagramsDrawer panel = new COPDiagramsDrawer(cop);
+//                    SwingUtilities.invokeLater(() -> {
+//                        circleMap.put(cop.getId(), panel.getCircleMap());
+//                    });
+//                }
+//
+//                SwingUtilities.invokeLater(() -> {
+//                    double score = addArrows(circleMap, arrows, equalities);
+//                    System.out.println("current score = "+ score);
+//                    if (score < currentMinScore[0]) {
+//                        System.out.println("Current min score: "+ currentMinScore[0]);
+//                        currentMinScore[0] = score;
+//                        optimalPermutation[0] = permutation;
+//                    }
+//                });
+//            }
+
+             for (final ConcreteCOP concreteCOP : COPs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
                 panel.setDotList(dotList);
                 SwingUtilities.invokeLater(() -> {
@@ -134,9 +161,9 @@ public class DiagramPanel extends JPanel {
 
             SwingUtilities.invokeLater(() -> {
                 addArrows(circleMap, arrows, equalities);
-                for (Dot dot: dotList) {
-                    System.out.println(dot);
-                }
+//                for (Dot dot: dotList) {
+//                    System.out.println(dot);
+//                }
             });
         }
     }

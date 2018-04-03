@@ -1,26 +1,27 @@
 package util;
 
+import concrete.ConcreteCOP;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Heap's algorithm for generating all permutations of a list of n objects.
- * @param <T>
  */
-public class Permutation<T> {
-    private List<T> list2;
-    private List<List<T>> permutations2;
+public class Permutation {
+    private static List<ConcreteCOP> mList;
+    private static List<List<ConcreteCOP>> mPermutations;
 
-    public List<List<T>> permutations2(List<T> list) {
-        this.list2 = list;
-        permutations2 = new ArrayList<>();
-        helper2(list.size(), list2);
-        return permutations2;
+    public static List<List<ConcreteCOP>> permutations2(List list) {
+        mList = list;
+        mPermutations = new ArrayList<>();
+        helper2(list.size(), mList);
+        return mPermutations;
     }
 
-    private void helper2(int n, List<T> list) {
-        if (n == 1) {
-            permutations2.add(list);
+    private static void helper2(int n, List<ConcreteCOP> list) {
+        if (n <= 1) {
+            mPermutations.add(list);
         } else {
             for (int i = 0; i < n - 1; i++) {
                 helper2(n-1, list);
@@ -35,9 +36,9 @@ public class Permutation<T> {
         }
     }
 
-    private void swap2(int i1, int i2) {
-        T tmp = list2.get(i1);
-        list2.set(i2, list2.get(i1));
-        list2.set(i1, tmp);
+    private static void swap2(int i1, int i2) {
+        ConcreteCOP tmp = mList.get(i1);
+        mList.set(i1, mList.get(i2));
+        mList.set(i2, tmp);
     }
 }
