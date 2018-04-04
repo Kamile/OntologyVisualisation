@@ -9,7 +9,6 @@ import java.awt.geom.QuadCurve2D;
 import java.util.List;
 
 import static util.GraphicsHelper.getClosestPoints;
-import static util.GraphicsHelper.getGradient;
 import static util.GraphicsHelper.getLength;
 
 public class ConcreteArrow {
@@ -21,7 +20,6 @@ public class ConcreteArrow {
     private int parentId;
     private Ellipse2D.Double source;
     private Ellipse2D.Double target;
-    private Point2D.Double control;
 
     private double x1;
     private double x2;
@@ -37,7 +35,6 @@ public class ConcreteArrow {
     ConcreteArrow(AbstractArrow abstractArrow, int parentId) {
         this.abstractArrow = abstractArrow;
         this.parentId = parentId;
-        this.control = new Point2D.Double();
     }
 
     public AbstractArrow getAbstractArrow() {
@@ -148,11 +145,6 @@ public class ConcreteArrow {
 
      */
     public double getScore() {
-        return getLength(x1, y1, x2, y2) + getGradient(x1, y1, x2, y2) * -1; // positive gradients preferred
-    }
-
-    public double checksum() {
-        double result = 0.0;
-        return result;
+        return getLength(x1, y1, x2, y2); // positive gradients preferred
     }
 }

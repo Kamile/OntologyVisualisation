@@ -1,6 +1,5 @@
 package gui;
 
-import lang.ConceptDiagram;
 import lang.Diagram;
 import reader.ConceptDiagramsReader;
 import speedith.core.lang.reader.ReadingException;
@@ -36,7 +35,7 @@ public class MainForm extends JFrame {
     private ArrowPanel glassPanel;
     private JMenuBar menuBar;
 
-    public MainForm() {
+    private MainForm() {
         initUI();
     }
 
@@ -85,33 +84,19 @@ public class MainForm extends JFrame {
         openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
         openMenuItem.setMnemonic('L');
         openMenuItem.setText("Load Description");
-        openMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                onOpen();
-            }
-        });
+        openMenuItem.addActionListener(evt -> onOpen());
         openMenu.add(openMenuItem);
 
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
         saveMenuItem.setMnemonic('S');
         saveMenuItem.setText("Save selected description");
-        saveMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                onSave();
-            }
-        });
+        saveMenuItem.addActionListener(evt -> onSave());
         saveMenu.add(saveMenuItem);
 
         exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
+        exitMenuItem.addActionListener(evt -> exitMenuItemActionPerformed());
         fileMenu.add(exitMenuItem);
         menuBar.add(fileMenu);
 
@@ -122,51 +107,31 @@ public class MainForm extends JFrame {
         textInputMenuItem.setMnemonic(ResourceBundle.getBundle("speedith/i18n/strings").getString("MAIN_FORM_TEXT_INPUT_MNEMONIC").charAt(0));
         ResourceBundle bundle = ResourceBundle.getBundle("speedith/i18n/strings"); // NOI18N
         textInputMenuItem.setText(bundle.getString("MAIN_FORM_TEXT_INPUT")); // NOI18N
-        textInputMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onTextInputClicked(evt);
-            }
-        });
+        textInputMenuItem.addActionListener(evt -> onTextInputClicked());
         drawMenu.add(textInputMenuItem);
 
         useCdExample1MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.CTRL_MASK));
         useCdExample1MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE1_MNEMONIC").charAt(0));
         useCdExample1MenuItem.setText("Subclass example"); // NOI18N
-        useCdExample1MenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onExample1(evt);
-            }
-        });
+        useCdExample1MenuItem.addActionListener(evt -> onExample1());
         drawMenu.add(useCdExample1MenuItem);
 
         useCdExample2MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_MASK));
         useCdExample2MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE2_MNEMONIC").charAt(0));
         useCdExample2MenuItem.setText("ObjectSomeValuesFrom(op CE) Example");
-        useCdExample2MenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onExample2(evt);
-            }
-        });
+        useCdExample2MenuItem.addActionListener(evt -> onExample2());
         drawMenu.add(useCdExample2MenuItem);
 
         useCdExample3MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.CTRL_MASK));
         useCdExample3MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE3_MNEMONIC").charAt(0));
         useCdExample3MenuItem.setText("ClassAssertion Example"); // NOI18N
-        useCdExample3MenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onExample3(evt);
-            }
-        });
+        useCdExample3MenuItem.addActionListener(evt -> onExample3());
         drawMenu.add(useCdExample3MenuItem);
 
         useCdExample4MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, InputEvent.CTRL_MASK));
         useCdExample4MenuItem.setMnemonic('4');
         useCdExample4MenuItem.setText("Datatype Definition Example"); // NOI18N
-        useCdExample4MenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onExample4(evt);
-            }
-        });
+        useCdExample4MenuItem.addActionListener(evt -> onExample4());
         drawMenu.add(useCdExample4MenuItem);
         menuBar.add(drawMenu);
         setJMenuBar(menuBar);
@@ -196,50 +161,47 @@ public class MainForm extends JFrame {
     private void onSave() {
     }
 
-    private void exitMenuItemActionPerformed(ActionEvent evt) {
+    private void exitMenuItemActionPerformed() {
         this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
     private void setArrowPanel() {
         this.remove(glassPanel);
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        SwingUtilities.invokeLater(() -> {
                 glassPanel = boundaryPanel.getArrowGlassPanel();
                 setGlassPane(glassPanel);
                 getGlassPane().setVisible(true);
                 pack();
-            }
         });
         validate();
         repaint();
     }
 
-    private void onExample1(ActionEvent evt) {
+    private void onExample1() {
         boundaryPanel.setDiagram(getExampleA());
         setArrowPanel();
         setTitle("OntologyVisualiser" + ": " + "Subclass");
     }
 
-    private void onExample2(ActionEvent evt) {
+    private void onExample2() {
         boundaryPanel.setDiagram(getExampleB());
         setArrowPanel();
         setTitle("OntologyVisualiser" + ": ObjectSomeValuesFrom(op CE)");
     }
 
-    private void onExample3(ActionEvent evt) {
+    private void onExample3() {
         boundaryPanel.setDiagram(getExampleC());
         setArrowPanel();
         setTitle("OntologyVisualiser: " + ": ClassAssertion ");
     }
 
-    private void onExample4(ActionEvent evt) {
+    private void onExample4() {
         boundaryPanel.setDiagram(getExampleD());
         setArrowPanel();
         setTitle("OntologyVisualiser: " + ": DatatypeDefinition(DT DataUnionOf(DR1, DR2))");
     }
 
-    private void onTextInputClicked(java.awt.event.ActionEvent evt) {
+    private void onTextInputClicked() {
         CDInputDialog dialog = new CDInputDialog();
         dialog.setVisible(true);
         if (!dialog.isCancelled() && dialog.getConceptDiagram() != null) {
@@ -249,7 +211,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public static Diagram getExampleA() {
+    private static Diagram getExampleA() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
@@ -287,7 +249,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public static Diagram getExampleB() {
+    private static Diagram getExampleB() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
@@ -315,7 +277,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public static Diagram getExampleC() {
+    private static Diagram getExampleC() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
@@ -331,7 +293,7 @@ public class MainForm extends JFrame {
         }
     }
 
-    public static Diagram getExampleD() {
+    private static Diagram getExampleD() {
         try {
             return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    DTs = [\n" +

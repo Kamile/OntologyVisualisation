@@ -23,7 +23,9 @@ public class ArrowPanel extends JComponent {
     private Set<ConcreteArrow> toBeUpdated;
 
     ArrowPanel() {
-        this(null, null, null);
+        this.arrows = null;
+        this.equalities = null;
+        this.circleMap2 = null;
     }
 
     ArrowPanel(Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap) {
@@ -45,7 +47,6 @@ public class ArrowPanel extends JComponent {
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
-
                 if (a.getSource() == null || a.getTarget() == null) {
                     toBeUpdated.add(a);
                     if (existingArrowCount.containsKey(source)) {
@@ -53,6 +54,8 @@ public class ArrowPanel extends JComponent {
                     } else {
                         existingArrowCount.put(source + parentId, 1);
                     }
+                } else {
+                    a.init();
                 }
             }
         }
@@ -71,45 +74,43 @@ public class ArrowPanel extends JComponent {
 
     private void updateOutermostArrows() {
         circleMap = new HashMap<>();
-        for (ConcreteArrow a : toBeUpdated) {
-            String source = a.getAbstractArrow().getSourceLabel();
-            String target = a.getAbstractArrow().getTargetLabel();
-            Ellipse2D.Double sourceEllipse;
-            Ellipse2D.Double targetEllipse;
+        if (circleMap2 != null && circleMap2.keySet().size() > 0) {
+            for (ConcreteArrow a : toBeUpdated) {
+                String source = a.getAbstractArrow().getSourceLabel();
+                String target = a.getAbstractArrow().getTargetLabel();
+                Ellipse2D.Double sourceEllipse = null;
+                Ellipse2D.Double targetEllipse = null;
 
-            // outermost arrows: here need to assign source and target such that there are no cycles, initial t is source only
-            for (HashMap<String, Ellipse2D.Double> val : circleMap2.values()) {
-                for (String s : val.keySet()) {
-                    if (!circleMap.containsKey(s)) {
-                        List<Ellipse2D.Double> arr = new ArrayList<>();
-                        arr.add(val.get(s));
-                        circleMap.put(s, arr);
-                    } else {
-                        if (!circleMap.get(s).contains(val.get(s))) {
-                            circleMap.get(s).add(val.get(s));
-                        }
+                // outermost arrows: here need to assign source and target such that there are no cycles, initial t is source only
+                for (HashMap<String, Ellipse2D.Double> val : circleMap2.values()) {
+                    if (val.containsKey(source)) {
+                        sourceEllipse = val.get(source);
+                    }
+                    if (val.containsKey(target)) {
+                        targetEllipse = val.get(target);
                     }
                 }
-            }
-            sourceEllipse = circleMap.get(source).get(0);
-            targetEllipse = circleMap.get(target).get(0);
 
-            // if pd, all t arrows sourced from one cop (id 0)
-            if (source.equals("t")) {
-                sourceEllipse = circleMap2.get(0).get("t");
-            }
+                // if pd, all t arrows sourced from one cop (id 0)
+                if (source.equals("t")) {
+                    sourceEllipse = circleMap2.get(0).get("t");
+                }
 
-            // check if source and target set by user
-            if (a.getAbstractArrow().getSourceId() != 0) {
-                sourceEllipse = circleMap2.get(a.getAbstractArrow().getSourceId()).get(source);
-            }
+                // check if source and target set by user
+                if (a.getAbstractArrow().getSourceId() != 0) {
+                    sourceEllipse = circleMap2.get(a.getAbstractArrow().getSourceId()).get(source);
+                }
 
-            if (a.getAbstractArrow().getTargetId() != 0) {
-                targetEllipse = circleMap2.get(a.getAbstractArrow().getTargetId()).get(target);
-            }
+                if (a.getAbstractArrow().getTargetId() != 0) {
+                    targetEllipse = circleMap2.get(a.getAbstractArrow().getTargetId()).get(target);
+                }
 
-            a.setSource(sourceEllipse);
-            a.setTarget(targetEllipse);
+                if (sourceEllipse != null & targetEllipse != null) {
+                    a.setSource(sourceEllipse);
+                    a.setTarget(targetEllipse);
+                    a.init();
+                }
+            }
         }
     }
 
@@ -122,7 +123,7 @@ public class ArrowPanel extends JComponent {
         g.setFont(new Font("Courier", Font.PLAIN, 12));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        if (arrows != null && circleMap2.keySet().size() > 0) {
+        if (arrows != null && circleMap2 != null && circleMap2.keySet().size() > 0) {
             updateOutermostArrows();
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
@@ -158,5 +159,13 @@ public class ArrowPanel extends JComponent {
                 }
             }
         }
+    }
+
+    double getScore() {
+        double score = 0;
+        for (ConcreteArrow a: arrows) {
+            score += a.getScore();
+        }
+        return score;
     }
 }

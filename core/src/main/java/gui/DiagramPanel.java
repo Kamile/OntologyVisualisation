@@ -38,7 +38,6 @@ public class DiagramPanel extends JPanel {
         setMinimumSize(MINIMUM_SIZE);
         setPreferredSize(PREFERRED_SIZE);
         setBackground(Color.WHITE);
-        arrowPanel = new ArrowPanel();
     }
 
     public final void setDiagram(Diagram diagram) {
@@ -109,33 +108,35 @@ public class DiagramPanel extends JPanel {
 
             this.setLayout(new GridLayout(1, 0, 75, 25));
 
-//            // calculate the score for each, then draw most optimal
-//            List<ConcreteCOP> copList = new ArrayList<>();
-//            copList.addAll(COPs);
-//            List<List<ConcreteCOP>> copPermutations = Permutation.permutations2(copList);
-//            final List<ConcreteCOP>[] optimalPermutation = new List[]{copPermutations.get(0)};
-//            final double[] currentMinScore = {Double.MAX_VALUE};
-//            for (List<ConcreteCOP> permutation: copPermutations) {
-//                circleMap = new HashMap<>();
-//                for (ConcreteCOP cop: permutation) {
-//                    COPDiagramsDrawer panel = new COPDiagramsDrawer(cop);
-//                    SwingUtilities.invokeLater(() -> {
-//                        circleMap.put(cop.getId(), panel.getCircleMap());
-//                    });
-//                }
-//
-//                SwingUtilities.invokeLater(() -> {
-//                    double score = addArrows(circleMap, arrows, equalities);
-//                    System.out.println("current score = "+ score);
-//                    if (score < currentMinScore[0]) {
-//                        System.out.println("Current min score: "+ currentMinScore[0]);
-//                        currentMinScore[0] = score;
-//                        optimalPermutation[0] = permutation;
-//                    }
-//                });
-//            }
+            // calculate the score for each, then draw most optimal
+            List<ConcreteCOP> copList = new ArrayList<>();
+            copList.addAll(COPs);
+            List<List<ConcreteCOP>> copPermutations = Permutation.permutations2(copList);
+            final List<ConcreteCOP>[] optimalPermutation = new List[]{copPermutations.get(0)};
+            final double[] currentMinScore = {Double.MAX_VALUE};
+            for (List<ConcreteCOP> permutation: copPermutations) {
+                for (ConcreteCOP cop: permutation) {
+                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop);
+                    SwingUtilities.invokeLater(() -> {
+                        circleMap.put(cop.getId(), panel.getCircleMap());
+                    });
+                }
 
-             for (final ConcreteCOP concreteCOP : COPs) {
+                SwingUtilities.invokeLater(() -> {
+                    addArrows(circleMap, arrows, equalities);
+                    SwingUtilities.invokeLater(() -> {
+                        double score = arrowPanel.getScore();
+                        System.out.println("current score = "+ score);
+                        System.out.println("Current min score: "+ currentMinScore[0]);
+                        if (score < currentMinScore[0]) {
+                            currentMinScore[0] = score;
+                            optimalPermutation[0] = permutation;
+                        }
+                    });
+                });
+            }
+
+             for (final ConcreteCOP concreteCOP : optimalPermutation[0]) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
                 panel.setDotList(dotList);
                 SwingUtilities.invokeLater(() -> {
