@@ -38,6 +38,7 @@ public class DiagramPanel extends JPanel {
         setMinimumSize(MINIMUM_SIZE);
         setPreferredSize(PREFERRED_SIZE);
         setBackground(Color.WHITE);
+        arrowPanel = new ArrowPanel();
     }
 
     public final void setDiagram(Diagram diagram) {
@@ -111,27 +112,30 @@ public class DiagramPanel extends JPanel {
             // calculate the score for each, then draw most optimal
             List<ConcreteCOP> copList = new ArrayList<>();
             copList.addAll(COPs);
-            List<List<ConcreteCOP>> copPermutations = Permutation.permutations2(copList);
+            List<List<ConcreteCOP>> copPermutations = Permutation.generatePermutations(copList);
             final List<ConcreteCOP>[] optimalPermutation = new List[]{copPermutations.get(0)};
             final double[] currentMinScore = {Double.MAX_VALUE};
+
             for (List<ConcreteCOP> permutation: copPermutations) {
+                System.out.println("____NEW PERMUTATION____");
+                circleMap = new HashMap<>();
                 for (ConcreteCOP cop: permutation) {
                     final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop);
-                    SwingUtilities.invokeLater(() -> {
-                        circleMap.put(cop.getId(), panel.getCircleMap());
-                    });
+                    SwingUtilities.invokeLater(() -> circleMap.put(cop.getId(), panel.getCircleMap()));
                 }
 
+
                 SwingUtilities.invokeLater(() -> {
-                    addArrows(circleMap, arrows, equalities);
+                    addArrows(circleMap, new HashSet<>(arrows), equalities);
                     SwingUtilities.invokeLater(() -> {
                         double score = arrowPanel.getScore();
-                        System.out.println("current score = "+ score);
-                        System.out.println("Current min score: "+ currentMinScore[0]);
+                        System.out.println("current score = " + score);
+                        System.out.println("Current min score: " + currentMinScore[0]);
                         if (score < currentMinScore[0]) {
                             currentMinScore[0] = score;
                             optimalPermutation[0] = permutation;
                         }
+                        System.out.println("___END OF PERMUTATION____");
                     });
                 });
             }

@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.*;
-import java.util.List;
 
 public class ArrowPanel extends JComponent {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
@@ -17,22 +16,22 @@ public class ArrowPanel extends JComponent {
 
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
-    private HashMap<String, List<Ellipse2D.Double>> circleMap;
-    private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap2;
+    private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap;
     private HashMap<String, Integer> existingArrowCount;
     private Set<ConcreteArrow> toBeUpdated;
 
     ArrowPanel() {
-        this.arrows = null;
-        this.equalities = null;
-        this.circleMap2 = null;
+        this.arrows = new HashSet<>();
+        this.equalities = new HashSet<>();
+        this.circleMap = new HashMap<>();
+        this.existingArrowCount = new HashMap<>();
+        this.toBeUpdated = new HashSet<>();
     }
 
     ArrowPanel(Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap) {
         this.arrows = arrows;
         this.equalities = equalities;
-        this.circleMap = new HashMap<>();
-        this.circleMap2 = circleMap;
+        this.circleMap = circleMap;
         this.existingArrowCount = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
         init();
@@ -43,7 +42,8 @@ public class ArrowPanel extends JComponent {
         setPreferredSize(PREFERRED_SIZE);
 
         // loop through arrows and ensure concrete arrows are completely defined (outermost arrows won't be)
-        if (arrows != null && circleMap2.keySet().size() > 0) {
+        if (circleMap.keySet().size() > 0) {
+            System.out.println("initing");
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
@@ -58,23 +58,23 @@ public class ArrowPanel extends JComponent {
                     a.init();
                 }
             }
+            updateOutermostArrows();
         }
 
-        if (equalities != null && circleMap2.keySet().size() > 0) {
+        if (circleMap.keySet().size() > 0) {
             for (ConcreteEquality equality : equalities) {
                 if (equality.getSource() == null || equality.getTarget() == null) {
                     String source = equality.getAbstractEquality().getArg1();
                     String target = equality.getAbstractEquality().getArg2();
-                    equality.setSource(circleMap2.get(equality.getParentId()).get(source));
-                    equality.setTarget(circleMap2.get(equality.getParentId()).get(target));
+                    equality.setSource(circleMap.get(equality.getParentId()).get(source));
+                    equality.setTarget(circleMap.get(equality.getParentId()).get(target));
                 }
             }
         }
     }
 
     private void updateOutermostArrows() {
-        circleMap = new HashMap<>();
-        if (circleMap2 != null && circleMap2.keySet().size() > 0) {
+        if (circleMap.keySet().size() > 0) {
             for (ConcreteArrow a : toBeUpdated) {
                 String source = a.getAbstractArrow().getSourceLabel();
                 String target = a.getAbstractArrow().getTargetLabel();
@@ -82,7 +82,8 @@ public class ArrowPanel extends JComponent {
                 Ellipse2D.Double targetEllipse = null;
 
                 // outermost arrows: here need to assign source and target such that there are no cycles, initial t is source only
-                for (HashMap<String, Ellipse2D.Double> val : circleMap2.values()) {
+                for (HashMap<String, Ellipse2D.Double> val : circleMap.values()) {
+                    System.out.println(val.keySet());
                     if (val.containsKey(source)) {
                         sourceEllipse = val.get(source);
                     }
@@ -93,16 +94,15 @@ public class ArrowPanel extends JComponent {
 
                 // if pd, all t arrows sourced from one cop (id 0)
                 if (source.equals("t")) {
-                    sourceEllipse = circleMap2.get(0).get("t");
+                    sourceEllipse = circleMap.get(0).get("t");
                 }
 
                 // check if source and target set by user
                 if (a.getAbstractArrow().getSourceId() != 0) {
-                    sourceEllipse = circleMap2.get(a.getAbstractArrow().getSourceId()).get(source);
+                    sourceEllipse = circleMap.get(a.getAbstractArrow().getSourceId()).get(source);
                 }
-
                 if (a.getAbstractArrow().getTargetId() != 0) {
-                    targetEllipse = circleMap2.get(a.getAbstractArrow().getTargetId()).get(target);
+                    targetEllipse = circleMap.get(a.getAbstractArrow().getTargetId()).get(target);
                 }
 
                 if (sourceEllipse != null & targetEllipse != null) {
@@ -123,7 +123,7 @@ public class ArrowPanel extends JComponent {
         g.setFont(new Font("Courier", Font.PLAIN, 12));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        if (arrows != null && circleMap2 != null && circleMap2.keySet().size() > 0) {
+        if (arrows != null && circleMap != null && circleMap.keySet().size() > 0) {
             updateOutermostArrows();
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
@@ -150,7 +150,7 @@ public class ArrowPanel extends JComponent {
             }
         }
 
-        if (equalities != null && circleMap2.keySet().size() > 0) {
+        if (circleMap != null && circleMap.keySet().size() > 0) {
             for (ConcreteEquality equality : equalities) {
                 equality.init();
                 g2d.drawString("=", equality.getX(), equality.getY());
@@ -163,7 +163,7 @@ public class ArrowPanel extends JComponent {
 
     double getScore() {
         double score = 0;
-        for (ConcreteArrow a: arrows) {
+        for (ConcreteArrow a : arrows) {
             score += a.getScore();
         }
         return score;
