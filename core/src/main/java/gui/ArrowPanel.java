@@ -19,6 +19,7 @@ public class ArrowPanel extends JComponent {
     private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap;
     private HashMap<String, Integer> existingArrowCount;
     private Set<ConcreteArrow> toBeUpdated;
+    boolean isPD;
 
     ArrowPanel() {
         this.arrows = new HashSet<>();
@@ -26,6 +27,7 @@ public class ArrowPanel extends JComponent {
         this.circleMap = new HashMap<>();
         this.existingArrowCount = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
+        isPD = false;
     }
 
     ArrowPanel(Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap) {
@@ -34,6 +36,7 @@ public class ArrowPanel extends JComponent {
         this.circleMap = circleMap;
         this.existingArrowCount = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
+        isPD = false;
         init();
     }
 
@@ -43,7 +46,6 @@ public class ArrowPanel extends JComponent {
 
         // loop through arrows and ensure concrete arrows are completely defined (outermost arrows won't be)
         if (circleMap.keySet().size() > 0) {
-            System.out.println("initing");
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
@@ -75,6 +77,7 @@ public class ArrowPanel extends JComponent {
 
     private void updateOutermostArrows() {
         if (circleMap.keySet().size() > 0) {
+            System.out.println("updating outermost");
             for (ConcreteArrow a : toBeUpdated) {
                 String source = a.getAbstractArrow().getSourceLabel();
                 String target = a.getAbstractArrow().getTargetLabel();
@@ -86,6 +89,7 @@ public class ArrowPanel extends JComponent {
                     System.out.println(val.keySet());
                     if (val.containsKey(source)) {
                         sourceEllipse = val.get(source);
+
                     }
                     if (val.containsKey(target)) {
                         targetEllipse = val.get(target);
@@ -93,7 +97,7 @@ public class ArrowPanel extends JComponent {
                 }
 
                 // if pd, all t arrows sourced from one cop (id 0)
-                if (source.equals("t")) {
+                if (isPD && source.equals("t")) {
                     sourceEllipse = circleMap.get(0).get("t");
                 }
 
@@ -122,6 +126,7 @@ public class ArrowPanel extends JComponent {
         g.setColor(new Color(10, 86, 0, 255));
         g.setFont(new Font("Courier", Font.PLAIN, 12));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        System.out.println("painting again");
 
         if (arrows != null && circleMap != null && circleMap.keySet().size() > 0) {
             updateOutermostArrows();

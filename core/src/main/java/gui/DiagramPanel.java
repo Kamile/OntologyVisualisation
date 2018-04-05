@@ -45,6 +45,9 @@ public class DiagramPanel extends JPanel {
         if (this.diagram != diagram && (diagram instanceof ConceptDiagram || diagram instanceof PropertyDiagram)) {
             this.diagram = diagram;
             this.removeAll();
+            if (diagram instanceof PropertyDiagram) {
+                arrowPanel.isPD = true;
+            }
             if (this.diagram != null) {
                 try {
                     drawDiagram();
@@ -118,35 +121,29 @@ public class DiagramPanel extends JPanel {
 
             for (List<ConcreteCOP> permutation: copPermutations) {
                 System.out.println("____NEW PERMUTATION____");
-                circleMap = new HashMap<>();
+                circleMap.clear();
                 for (ConcreteCOP cop: permutation) {
                     final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop);
-                    SwingUtilities.invokeLater(() -> circleMap.put(cop.getId(), panel.getCircleMap()));
+                    circleMap.put(cop.getId(), panel.getCircleMap());
                 }
 
-
-                SwingUtilities.invokeLater(() -> {
-                    addArrows(circleMap, new HashSet<>(arrows), equalities);
-                    SwingUtilities.invokeLater(() -> {
-                        double score = arrowPanel.getScore();
-                        System.out.println("current score = " + score);
-                        System.out.println("Current min score: " + currentMinScore[0]);
-                        if (score < currentMinScore[0]) {
-                            currentMinScore[0] = score;
-                            optimalPermutation[0] = permutation;
-                        }
-                        System.out.println("___END OF PERMUTATION____");
-                    });
-                });
+                addArrows(circleMap, new HashSet<>(arrows), equalities);
+                double score = arrowPanel.getScore();
+                System.out.println("current score = " + score);
+                System.out.println("Current min score: " + currentMinScore[0]);
+                if (score < currentMinScore[0]) {
+                    currentMinScore[0] = score;
+                    optimalPermutation[0] = permutation;
+                }
+                System.out.println("___END OF PERMUTATION____");
             }
 
-             for (final ConcreteCOP concreteCOP : optimalPermutation[0]) {
+            circleMap.clear();
+            for (final ConcreteCOP concreteCOP : optimalPermutation[0]) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
                 panel.setDotList(dotList);
-                SwingUtilities.invokeLater(() -> {
-                    circleMap.put(concreteCOP.getId(), panel.getCircleMap());
-                    dotList = panel.getDotList();
-                });
+                circleMap.put(concreteCOP.getId(), panel.getCircleMap());
+                dotList = panel.getDotList();
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                 panel.setVisible(true);
                 add(panel);
@@ -155,21 +152,14 @@ public class DiagramPanel extends JPanel {
             for (final ConcreteDT concreteDT : DTs) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT);
                 panel.setDotList(dotList);
-                SwingUtilities.invokeLater(() -> {
-                    circleMap.put(concreteDT.getId(), panel.getCircleMap());
-                    dotList = panel.getDotList();
-                });
+                circleMap.put(concreteDT.getId(), panel.getCircleMap());
+                dotList = panel.getDotList();
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                 panel.setVisible(true);
                 add(panel);
             }
 
-            SwingUtilities.invokeLater(() -> {
-                addArrows(circleMap, arrows, equalities);
-//                for (Dot dot: dotList) {
-//                    System.out.println(dot);
-//                }
-            });
+            addArrows(circleMap, arrows, equalities);
         }
     }
 
