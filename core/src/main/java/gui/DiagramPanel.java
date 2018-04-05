@@ -121,25 +121,23 @@ public class DiagramPanel extends JPanel {
                 circleMap = new HashMap<>();
                 for (ConcreteCOP cop: permutation) {
                     final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop);
-                    SwingUtilities.invokeLater(() -> circleMap.put(cop.getId(), panel.getCircleMap()));
+                    circleMap.put(cop.getId(), panel.getScoringCircleMap());
                 }
 
 
                 SwingUtilities.invokeLater(() -> {
                     addArrows(circleMap, new HashSet<>(arrows), equalities);
-                    SwingUtilities.invokeLater(() -> {
-                        double score = arrowPanel.getScore();
-                        System.out.println("current score = " + score);
-                        System.out.println("Current min score: " + currentMinScore[0]);
-                        if (score < currentMinScore[0]) {
-                            currentMinScore[0] = score;
-                            optimalPermutation[0] = permutation;
-                        }
-                        System.out.println("___END OF PERMUTATION____");
-                    });
+                    double score = arrowPanel.getScore();
+                    System.out.println("current score = " + score);
+                    System.out.println("Current min score: " + currentMinScore[0]);
+                    if (score < currentMinScore[0]) {
+                        currentMinScore[0] = score;
+                        optimalPermutation[0] = permutation;
+                    }
+                    System.out.println("___END OF PERMUTATION____");
                 });
             }
-
+                circleMap.clear();
              for (final ConcreteCOP concreteCOP : optimalPermutation[0]) {
                 final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
                 panel.setDotList(dotList);

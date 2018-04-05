@@ -5,6 +5,7 @@ import concrete.ConcreteCOP;
 import concrete.ConcreteEquality;
 import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
+import javafx.scene.shape.Ellipse;
 import lang.Dot;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -23,14 +24,12 @@ import java.util.*;
 import java.util.List;
 
 public class COPDiagramsDrawer extends JPanel {
-    private static final BasicStroke DEFAULT_CONTOUR_STROKE = new BasicStroke(2.0F);
+    private static final BasicStroke DEFAULT_CONTOUR_STROKE = new BasicStroke(1.2F);
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(3.5F);
     private static final Color HIGHLIGHT_LEG_COLOUR;
     private static final Color HIGHLIGHTED_FOOT_COLOUR;
     private static final Color HIGHLIGHT_STROKE_COLOUR;
     private static final Color HIGHLIGHT_ZONE_COLOUR;
-    private static final int DOT_OFFSET; // position for dot source
-    private static final int LABEL_OFFSET; // position to draw string
     private static final int LABEL_SOURCE_OFFSET; //position for initial t source
     private static final long serialVersionUID = 6593217652932473248L;
     private DOMImplementation domImpl;
@@ -66,6 +65,49 @@ public class COPDiagramsDrawer extends JPanel {
         return circleMap;
     }
 
+    HashMap<String, Ellipse2D.Double> getScoringCircleMap(){
+        HashMap<String, Ellipse2D.Double> scoringCircleMap = new HashMap<>();
+
+        if (diagram != null) {
+            Ellipse2D.Double tmpCircle = new Ellipse2D.Double();
+            ArrayList<CircleContour> circles = diagram.getCircles();
+            if (circles != null) {
+                for (CircleContour cc : circles) {
+                    transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
+                    scoringCircleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+
+
+                }
+            }
+
+            ArrayList<ConcreteSpider> spiders = diagram.getSpiders();
+            if (spiders != null) {
+                for (ConcreteSpider spider : spiders) {
+                    ArrayList<ConcreteSpiderFoot> feet = spider.feet;
+                    for (ConcreteSpiderFoot foot : feet) {
+                        foot.getBlob(tmpCircle);
+                        translateCircleCentre(this.scaleFactor, tmpCircle, tmpCircle);
+                        scoringCircleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(tmpCircle.getCenterX() + getX() + getCenteringTranslationX(), tmpCircle.getCenterY() + getY() + getCenteringTranslationY() + LABEL_SOURCE_OFFSET, tmpCircle.getHeight(), tmpCircle.getWidth()));
+                    }
+                }
+            }
+
+
+            if (diagram != null && diagram.dots != null && diagram.dots.size() > 0) {
+                List<String> dots = new ArrayList<>(this.diagram.dots);
+                int numDots = dots.size();
+                int currentXPos = this.getWidth() / 2 - (19 * (numDots - 1)) - getCenteringTranslationX();
+                double y = getHeight() / 2 - getCenteringTranslationY();
+                for (String dot : dots) {
+                    circleMap.put(dot, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), y + getY() + getCenteringTranslationY(), 8, 8));
+                    currentXPos += 40;
+                }
+            }
+        }
+        updateCOPArrows(scoringCircleMap);
+        return scoringCircleMap;
+    }
+
     List<Dot> getDotList() {
         if (dotList.size() == 0) {
             System.out.println("dotList empty");
@@ -73,8 +115,32 @@ public class COPDiagramsDrawer extends JPanel {
         return dotList;
     }
 
-    public void setDotList(List<Dot> dotList) {
+    void setDotList(List<Dot> dotList) {
         this.dotList = dotList;
+    }
+
+    void updateCOPArrows(HashMap<String, Ellipse2D.Double> circleMap) {
+        for (ConcreteArrow arrow: diagram.arrows) {
+            String source = arrow.getAbstractArrow().getSourceLabel();
+            String target = arrow.getAbstractArrow().getTargetLabel();
+            if (circleMap.containsKey(source)) {
+                arrow.setSource(circleMap.get(source));
+            }
+            if (circleMap.containsKey(target)) {
+                arrow.setTarget(circleMap.get(target));
+            }
+        }
+
+        for (ConcreteEquality equality: diagram.equalities) {
+            String arg1 = equality.getAbstractEquality().getArg1();
+            String arg2 = equality.getAbstractEquality().getArg2();
+            if (circleMap.containsKey(arg1)) {
+                equality.setSource(circleMap.get(arg1));
+            }
+            if (circleMap.containsKey(arg2)) {
+                equality.setTarget(circleMap.get(arg2));
+            }
+        }
     }
 
     @Override
@@ -242,28 +308,7 @@ public class COPDiagramsDrawer extends JPanel {
                     currentXPos += 40;
                 }
             }
-
-            for (ConcreteArrow arrow: diagram.arrows) {
-                String source = arrow.getAbstractArrow().getSourceLabel();
-                String target = arrow.getAbstractArrow().getTargetLabel();
-                if (circleMap.containsKey(source)) {
-                    arrow.setSource(circleMap.get(source));
-                }
-                if (circleMap.containsKey(target)) {
-                    arrow.setTarget(circleMap.get(target));
-                }
-            }
-
-            for (ConcreteEquality equality: diagram.equalities) {
-                String arg1 = equality.getAbstractEquality().getArg1();
-                String arg2 = equality.getAbstractEquality().getArg2();
-                if (circleMap.containsKey(arg1)) {
-                    equality.setSource(circleMap.get(arg1));
-                }
-                if (circleMap.containsKey(arg2)) {
-                    equality.setTarget(circleMap.get(arg2));
-                }
-            }
+            updateCOPArrows(this.circleMap);
         }
     }
 
@@ -412,8 +457,6 @@ public class COPDiagramsDrawer extends JPanel {
         HIGHLIGHTED_FOOT_COLOUR = Color.RED;
         HIGHLIGHT_STROKE_COLOUR = Color.RED;
         HIGHLIGHT_ZONE_COLOUR = new Color(1895759872, true);
-        DOT_OFFSET = 0;
-        LABEL_OFFSET = 0;
         LABEL_SOURCE_OFFSET = -15;
     }
 }

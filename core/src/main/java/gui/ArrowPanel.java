@@ -43,7 +43,6 @@ public class ArrowPanel extends JComponent {
 
         // loop through arrows and ensure concrete arrows are completely defined (outermost arrows won't be)
         if (circleMap.keySet().size() > 0) {
-            System.out.println("initing");
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
@@ -83,7 +82,6 @@ public class ArrowPanel extends JComponent {
 
                 // outermost arrows: here need to assign source and target such that there are no cycles, initial t is source only
                 for (HashMap<String, Ellipse2D.Double> val : circleMap.values()) {
-                    System.out.println(val.keySet());
                     if (val.containsKey(source)) {
                         sourceEllipse = val.get(source);
                     }
