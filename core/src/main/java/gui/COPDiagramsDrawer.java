@@ -170,7 +170,6 @@ public class COPDiagramsDrawer extends JPanel {
                     transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
 
                     circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getAdjustedOffsetX(), tmpCircle.getCenterY() + getAdjustedOffsetY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
-                    addDot(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getAdjustedOffsetX(), tmpCircle.getCenterY() + getAdjustedOffsetY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
                     ellipses.add(new Component(tmpCircle, stroke, col, false));
 
                     if (cc.ac.getLabel() != null) {
@@ -226,11 +225,9 @@ public class COPDiagramsDrawer extends JPanel {
 
                         if (diagram instanceof ConcreteCOP && ((ConcreteCOP) this.diagram).containsInitialT && spider.as.getName().equals("t")) {
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, circle.getHeight(), circle.getWidth()));
-                            addDot(foot.getSpider().as.getName(), new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, circle.getHeight(), circle.getWidth()));
                         } else {
                             ellipses.add(new Component(circle, stroke, colour, true));
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY(), circle.getHeight(), circle.getWidth()));
-                            addDot(foot.getSpider().as.getName(), new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY(), circle.getHeight(), circle.getWidth()));
                         }
 
                         if (this.getHighlightedFoot() == foot) {
@@ -268,10 +265,8 @@ public class COPDiagramsDrawer extends JPanel {
                     Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, y, 8, 8);
                     if (diagram instanceof ConcreteCOP && ((ConcreteCOP) diagram).containsInitialT && dotLabel.equals("t")) {
                         circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX(), y + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, 8, 8));
-                        addDot(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX(), y + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, 8, 8));
                     } else {
                         circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX(), y + getAdjustedOffsetY(), 8, 8));
-                        addDot(dotLabel, new Ellipse2D.Double(currentXPos + getX() + getCenteringTranslationX(), y + getAdjustedOffsetY(), 8, 8));
                         ellipses.add(new Component(dotCircle, stroke, colour, true));
                     }
                     labels.add(new Component(currentXPos, (int) y - 10, dotLabel, font, stroke, colour));
@@ -307,25 +302,6 @@ public class COPDiagramsDrawer extends JPanel {
         return circleMap;
     }
 
-    List<Dot> getDotList() {
-        if (dotList.size() == 0) {
-            System.out.println("dotList empty");
-        }
-        return dotList;
-    }
-
-    void setDotList(List<Dot> dotList) {
-        this.dotList = dotList;
-    }
-
-    private void addDot(String label, Ellipse2D.Double ellipse) {
-        Dot dot = new Dot(ellipse, label, diagram.getId());
-        if (diagram instanceof ConcreteCOP && ((ConcreteCOP) diagram).isSingleVariableTInstance) {
-            dot.setAsInitialT();
-        }
-        dotList.add(dot);
-    }
-  
     @Override
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;

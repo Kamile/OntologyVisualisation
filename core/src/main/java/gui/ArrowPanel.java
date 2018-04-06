@@ -50,7 +50,6 @@ public class ArrowPanel extends JComponent {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
                 if (a.getSource() == null || a.getTarget() == null) {
-                    System.out.println("arrow src + target null");
                     toBeUpdated.add(a);
                     if (existingArrowCount.containsKey(source)) {
                         existingArrowCount.put(source + parentId, existingArrowCount.get(source + parentId) + 1);
