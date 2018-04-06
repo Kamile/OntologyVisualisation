@@ -45,9 +45,6 @@ public class DiagramPanel extends JPanel {
         if (this.diagram != diagram && (diagram instanceof ConceptDiagram || diagram instanceof PropertyDiagram)) {
             this.diagram = diagram;
             this.removeAll();
-            if (diagram instanceof PropertyDiagram) {
-                arrowPanel.isPD = true;
-            }
             if (this.diagram != null) {
                 try {
                     drawDiagram();
@@ -118,12 +115,15 @@ public class DiagramPanel extends JPanel {
             List<List<ConcreteCOP>> copPermutations = Permutation.generatePermutations(copList);
             final List<ConcreteCOP>[] optimalPermutation = new List[]{copPermutations.get(0)};
             final double[] currentMinScore = {Double.MAX_VALUE};
-
+            int height = (this.getHeight() - 40);
             for (List<ConcreteCOP> permutation: copPermutations) {
                 System.out.println("____NEW PERMUTATION____");
                 circleMap.clear();
+                int width = (this.getWidth() - 40 - (permutation.size() - 1)*75)/permutation.size();
+                int offset = 20;
                 for (ConcreteCOP cop: permutation) {
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop);
+                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop, width, height, offset);
+                    offset += 75 + width;
                     circleMap.put(cop.getId(), panel.getCircleMap());
                 }
 
@@ -139,8 +139,11 @@ public class DiagramPanel extends JPanel {
             }
 
             circleMap.clear();
+            int width = (this.getWidth() - 40 - (optimalPermutation[0].size() - 1)*75)/optimalPermutation[0].size();
+            int offset = 20;
             for (final ConcreteCOP concreteCOP : optimalPermutation[0]) {
-                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
+                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, width, height, offset);
+                offset += 75 + width;
                 panel.setDotList(dotList);
                 circleMap.put(concreteCOP.getId(), panel.getCircleMap());
                 dotList = panel.getDotList();
@@ -150,7 +153,7 @@ public class DiagramPanel extends JPanel {
             }
 
             for (final ConcreteDT concreteDT : DTs) {
-                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT);
+                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT,0, height, 0);
                 panel.setDotList(dotList);
                 circleMap.put(concreteDT.getId(), panel.getCircleMap());
                 dotList = panel.getDotList();
@@ -174,10 +177,13 @@ public class DiagramPanel extends JPanel {
     private void addArrows(HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities) {
         if ((circleMap != null) && (circleMap.keySet().size() > 0)) {
             arrowPanel = new ArrowPanel(arrows, equalities, circleMap);
+            if (diagram instanceof PropertyDiagram) {
+                arrowPanel.isPD = true;
+            }
         }
     }
 
-    public Set<ConcreteArrow> getArrowsClone() {
+    private Set<ConcreteArrow> getArrowsClone() {
         Set<ConcreteArrow> clone = new HashSet<>(arrows.size());
         for (ConcreteArrow arrow : arrows) {
             clone.add(arrow.clone());

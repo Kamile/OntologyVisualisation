@@ -96,6 +96,7 @@ public class ArrowPanel extends JComponent {
 
                 // if pd, all t arrows sourced from one cop (id 0)
                 if (isPD && source.equals("t")) {
+                    System.out.println("setting pd t");
                     sourceEllipse = circleMap.get(0).get("t");
                 }
 
