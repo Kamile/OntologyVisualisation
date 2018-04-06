@@ -127,7 +127,7 @@ public class DiagramPanel extends JPanel {
                     circleMap.put(cop.getId(), panel.getCircleMap());
                 }
 
-                addArrows(circleMap, new HashSet<>(arrows), equalities);
+                addArrows(circleMap, getArrowsClone(), equalities);
                 double score = arrowPanel.getScore();
                 System.out.println("current score = " + score);
                 System.out.println("Current min score: " + currentMinScore[0]);
@@ -171,5 +171,13 @@ public class DiagramPanel extends JPanel {
         if ((circleMap != null) && (circleMap.keySet().size() > 0)) {
             arrowPanel = new ArrowPanel(arrows, equalities, circleMap);
         }
+    }
+
+    public Set<ConcreteArrow> getArrowsClone() {
+        Set<ConcreteArrow> clone = new HashSet<>(arrows.size());
+        for (ConcreteArrow arrow : arrows) {
+            clone.add(arrow.clone());
+        }
+        return clone;
     }
 }

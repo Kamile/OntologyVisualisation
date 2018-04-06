@@ -50,6 +50,7 @@ public class ArrowPanel extends JComponent {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
                 if (a.getSource() == null || a.getTarget() == null) {
+                    System.out.println("arrow src + target null");
                     toBeUpdated.add(a);
                     if (existingArrowCount.containsKey(source)) {
                         existingArrowCount.put(source + parentId, existingArrowCount.get(source + parentId) + 1);
@@ -77,7 +78,6 @@ public class ArrowPanel extends JComponent {
 
     private void updateOutermostArrows() {
         if (circleMap.keySet().size() > 0) {
-            System.out.println("updating outermost");
             for (ConcreteArrow a : toBeUpdated) {
                 String source = a.getAbstractArrow().getSourceLabel();
                 String target = a.getAbstractArrow().getTargetLabel();
@@ -86,10 +86,8 @@ public class ArrowPanel extends JComponent {
 
                 // outermost arrows: here need to assign source and target such that there are no cycles, initial t is source only
                 for (HashMap<String, Ellipse2D.Double> val : circleMap.values()) {
-                    System.out.println(val.keySet());
                     if (val.containsKey(source)) {
                         sourceEllipse = val.get(source);
-
                     }
                     if (val.containsKey(target)) {
                         targetEllipse = val.get(target);
@@ -126,15 +124,13 @@ public class ArrowPanel extends JComponent {
         g.setColor(new Color(10, 86, 0, 255));
         g.setFont(new Font("Courier", Font.PLAIN, 12));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        System.out.println("painting again");
 
         if (arrows != null && circleMap != null && circleMap.keySet().size() > 0) {
-            updateOutermostArrows();
+            init();
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
 
-                a.init();
                 if (existingArrowCount.containsKey(source + parentId)) {
                     a.shiftControl(30 * Math.pow(-1, existingArrowCount.get(source + parentId)));
                 }
