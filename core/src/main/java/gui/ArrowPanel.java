@@ -126,11 +126,11 @@ public class ArrowPanel extends JComponent {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (arrows != null && circleMap != null && circleMap.keySet().size() > 0) {
-            init();
+            updateOutermostArrows();
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
-
+                a.init();
                 if (existingArrowCount.containsKey(source + parentId)) {
                     a.shiftControl(30 * Math.pow(-1, existingArrowCount.get(source + parentId)));
                 }

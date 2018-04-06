@@ -159,6 +159,10 @@ public class DiagramPanel extends JPanel {
                 add(panel);
             }
 
+            for (Dot dot: dotList) {
+                System.out.println(dot);
+            }
+
             addArrows(circleMap, arrows, equalities);
         }
     }
@@ -167,7 +171,7 @@ public class DiagramPanel extends JPanel {
         return arrowPanel;
     }
 
-    private void addArrows(final HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap, final Set<ConcreteArrow> arrows, final Set<ConcreteEquality> equalities) {
+    private void addArrows(HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities) {
         if ((circleMap != null) && (circleMap.keySet().size() > 0)) {
             arrowPanel = new ArrowPanel(arrows, equalities, circleMap);
         }

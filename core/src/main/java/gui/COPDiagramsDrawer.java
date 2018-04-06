@@ -62,21 +62,24 @@ public class COPDiagramsDrawer extends JPanel {
         this.highlightedContour = null;
         this.highlightedZone = null;
         this.highlightedFoot = null;
+        this.circleMap = new HashMap<>();
+        this.dotList = new ArrayList<>();
+        this.init();
         this.resetDiagram(diagram);
         this.resizeContents();
         this.initComponents();
     }
 
+    private void init() {
+        this.setBackground(new Color(255, 255, 255));
+        this.setLayout(null);
+    }
+
     private void initComponents() {
-        this.circleMap = new HashMap<>();
-        this.dotList = new ArrayList<>();
         this.lines = new ArrayList<>();
         this.ellipses = new ArrayList<>();
         this.areas = new ArrayList<>();
         this.labels = new ArrayList<>();
-
-        this.setBackground(new Color(255, 255, 255));
-        this.setLayout(null);
 
         if (this.diagram != null) {
             Font font = this.diagram.getFont();
@@ -84,10 +87,8 @@ public class COPDiagramsDrawer extends JPanel {
             Stroke stroke;
             ArrayList<ConcreteZone> shadedZones = this.diagram.getShadedZones();
             if (shadedZones != null) {
-                Iterator var3 = this.diagram.getShadedZones().iterator();
 
-                while (var3.hasNext()) {
-                    ConcreteZone z = (ConcreteZone) var3.next();
+                for (ConcreteZone z : this.diagram.getShadedZones()) {
                     if (z.getColor() != null) {
                         colour = z.getColor();
                     } else {
@@ -105,17 +106,14 @@ public class COPDiagramsDrawer extends JPanel {
             stroke = DEFAULT_CONTOUR_STROKE;
             ArrayList<CircleContour> circles = this.diagram.getCircles();
             if (circles != null) {
-                Iterator var16 = circles.iterator();
 
-                while (var16.hasNext()) {
-                    CircleContour cc = (CircleContour) var16.next();
+                for (CircleContour cc : circles) {
                     Color col = cc.color();
                     if (col == null) {
                         col = Color.black;
                     }
                     Ellipse2D.Double tmpCircle = new Ellipse2D.Double();
-                    Ellipse2D.Double circle = cc.getCircle();
-                    transformCircle(this.scaleFactor, circle, tmpCircle);
+                    transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
                     System.out.println(cc.ac.getLabel() + ": getX " + getX());
                     System.out.println("getct " + getCenteringTranslationX());
 
