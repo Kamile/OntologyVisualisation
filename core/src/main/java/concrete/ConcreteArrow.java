@@ -11,7 +11,7 @@ import java.util.List;
 import static util.GraphicsHelper.getClosestPoints;
 import static util.GraphicsHelper.getLength;
 
-public class ConcreteArrow {
+public class ConcreteArrow implements Cloneable {
     private static final int headLength = 15;
     private static final double phi = Math.PI / 6;
     private static final double CHAR_WIDTH = 8;
@@ -32,7 +32,7 @@ public class ConcreteArrow {
     private double theta;
     private double randomOffset;
 
-    ConcreteArrow(AbstractArrow abstractArrow, int parentId) {
+    public ConcreteArrow(AbstractArrow abstractArrow, int parentId) {
         this.abstractArrow = abstractArrow;
         this.parentId = parentId;
     }
@@ -146,5 +146,16 @@ public class ConcreteArrow {
      */
     public double getScore() {
         return getLength(x1, y1, x2, y2); // positive gradients preferred
+    }
+
+    @Override
+    public ConcreteArrow clone() {
+        ConcreteArrow clone = null;
+        try {
+            clone = (ConcreteArrow) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
     }
 }

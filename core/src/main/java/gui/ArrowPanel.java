@@ -19,6 +19,7 @@ public class ArrowPanel extends JComponent {
     private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap;
     private HashMap<String, Integer> existingArrowCount;
     private Set<ConcreteArrow> toBeUpdated;
+    boolean isPD;
 
     ArrowPanel() {
         this.arrows = new HashSet<>();
@@ -26,6 +27,7 @@ public class ArrowPanel extends JComponent {
         this.circleMap = new HashMap<>();
         this.existingArrowCount = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
+        isPD = false;
     }
 
     ArrowPanel(Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities, HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap) {
@@ -34,6 +36,7 @@ public class ArrowPanel extends JComponent {
         this.circleMap = circleMap;
         this.existingArrowCount = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
+        isPD = false;
         init();
     }
 
@@ -47,6 +50,7 @@ public class ArrowPanel extends JComponent {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
                 if (a.getSource() == null || a.getTarget() == null) {
+                    System.out.println("arrow src + target null");
                     toBeUpdated.add(a);
                     if (existingArrowCount.containsKey(source)) {
                         existingArrowCount.put(source + parentId, existingArrowCount.get(source + parentId) + 1);
@@ -91,7 +95,8 @@ public class ArrowPanel extends JComponent {
                 }
 
                 // if pd, all t arrows sourced from one cop (id 0)
-                if (source.equals("t")) {
+                if (isPD && source.equals("t")) {
+                    System.out.println("setting pd t");
                     sourceEllipse = circleMap.get(0).get("t");
                 }
 
@@ -126,7 +131,6 @@ public class ArrowPanel extends JComponent {
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
                 String source = a.getAbstractArrow().getSourceLabel();
-
                 a.init();
                 if (existingArrowCount.containsKey(source + parentId)) {
                     a.shiftControl(30 * Math.pow(-1, existingArrowCount.get(source + parentId)));

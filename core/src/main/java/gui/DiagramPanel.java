@@ -115,59 +115,58 @@ public class DiagramPanel extends JPanel {
             List<List<ConcreteCOP>> copPermutations = Permutation.generatePermutations(copList);
             final List<ConcreteCOP>[] optimalPermutation = new List[]{copPermutations.get(0)};
             final double[] currentMinScore = {Double.MAX_VALUE};
-
+            int height = (this.getHeight() - 40);
             for (List<ConcreteCOP> permutation: copPermutations) {
                 System.out.println("____NEW PERMUTATION____");
-                circleMap = new HashMap<>();
+                circleMap.clear();
+                int width = (this.getWidth() - 40 - (permutation.size() - 1)*75)/permutation.size();
+                int offset = 20;
                 for (ConcreteCOP cop: permutation) {
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop);
-                    circleMap.put(cop.getId(), panel.getScoringCircleMap());
+                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop, width, height, offset);
+                    offset += 75 + width;
+                    circleMap.put(cop.getId(), panel.getCircleMap());
                 }
 
-
-                SwingUtilities.invokeLater(() -> {
-                    addArrows(circleMap, new HashSet<>(arrows), equalities);
-                    double score = arrowPanel.getScore();
-                    System.out.println("current score = " + score);
-                    System.out.println("Current min score: " + currentMinScore[0]);
-                    if (score < currentMinScore[0]) {
-                        currentMinScore[0] = score;
-                        optimalPermutation[0] = permutation;
-                    }
-                    System.out.println("___END OF PERMUTATION____");
-                });
+                addArrows(circleMap, getArrowsClone(), equalities);
+                double score = arrowPanel.getScore();
+                System.out.println("current score = " + score);
+                System.out.println("Current min score: " + currentMinScore[0]);
+                if (score < currentMinScore[0]) {
+                    currentMinScore[0] = score;
+                    optimalPermutation[0] = permutation;
+                }
+                System.out.println("___END OF PERMUTATION____");
             }
-                circleMap.clear();
-             for (final ConcreteCOP concreteCOP : optimalPermutation[0]) {
-                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP);
+
+            circleMap.clear();
+            int width = (this.getWidth() - 40 - (optimalPermutation[0].size() - 1)*75)/optimalPermutation[0].size();
+            int offset = 20;
+            for (final ConcreteCOP concreteCOP : optimalPermutation[0]) {
+                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, width, height, offset);
+                offset += 75 + width;
                 panel.setDotList(dotList);
-                SwingUtilities.invokeLater(() -> {
-                    circleMap.put(concreteCOP.getId(), panel.getCircleMap());
-                    dotList = panel.getDotList();
-                });
+                circleMap.put(concreteCOP.getId(), panel.getCircleMap());
+                dotList = panel.getDotList();
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                 panel.setVisible(true);
                 add(panel);
             }
 
             for (final ConcreteDT concreteDT : DTs) {
-                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT);
+                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT,0, height, 0);
                 panel.setDotList(dotList);
-                SwingUtilities.invokeLater(() -> {
-                    circleMap.put(concreteDT.getId(), panel.getCircleMap());
-                    dotList = panel.getDotList();
-                });
+                circleMap.put(concreteDT.getId(), panel.getCircleMap());
+                dotList = panel.getDotList();
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                 panel.setVisible(true);
                 add(panel);
             }
 
-            SwingUtilities.invokeLater(() -> {
-                addArrows(circleMap, arrows, equalities);
-//                for (Dot dot: dotList) {
-//                    System.out.println(dot);
-//                }
-            });
+            for (Dot dot: dotList) {
+                System.out.println(dot);
+            }
+
+            addArrows(circleMap, arrows, equalities);
         }
     }
 
@@ -175,9 +174,20 @@ public class DiagramPanel extends JPanel {
         return arrowPanel;
     }
 
-    private void addArrows(final HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap, final Set<ConcreteArrow> arrows, final Set<ConcreteEquality> equalities) {
+    private void addArrows(HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities) {
         if ((circleMap != null) && (circleMap.keySet().size() > 0)) {
             arrowPanel = new ArrowPanel(arrows, equalities, circleMap);
+            if (diagram instanceof PropertyDiagram) {
+                arrowPanel.isPD = true;
+            }
         }
+    }
+
+    private Set<ConcreteArrow> getArrowsClone() {
+        Set<ConcreteArrow> clone = new HashSet<>(arrows.size());
+        for (ConcreteArrow arrow : arrows) {
+            clone.add(arrow.clone());
+        }
+        return clone;
     }
 }
