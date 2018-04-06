@@ -5,6 +5,7 @@ import concrete.ConcreteCOP;
 import concrete.ConcreteEquality;
 import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
+import javafx.scene.shape.Ellipse;
 import lang.Dot;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -87,7 +88,7 @@ public class COPDiagramsDrawer extends JPanel {
             return this.getWidth();
         }
     }
-
+  
     private int getAdjustedHeight() {
         if (this.getWidth() == 0) {
             return height - 92;
@@ -127,8 +128,7 @@ public class COPDiagramsDrawer extends JPanel {
             return this.getCenteringTranslationY();
         }
     }
-
-
+  
     private void initComponents() {
         this.lines = new ArrayList<>();
         this.ellipses = new ArrayList<>();
@@ -278,7 +278,7 @@ public class COPDiagramsDrawer extends JPanel {
                     currentXPos += 40;
                 }
             }
-
+          
             for (ConcreteArrow arrow : diagram.arrows) {
                 String source = arrow.getAbstractArrow().getSourceLabel();
                 String target = arrow.getAbstractArrow().getTargetLabel();
@@ -325,6 +325,7 @@ public class COPDiagramsDrawer extends JPanel {
         }
         dotList.add(dot);
     }
+  
     @Override
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
@@ -398,9 +399,7 @@ public class COPDiagramsDrawer extends JPanel {
         return w.toString();
     }
 
-
-
-    private ConcreteZone getHighlightedZone() {
+  private ConcreteZone getHighlightedZone() {
         return this.highlightedZone;
     }
 
