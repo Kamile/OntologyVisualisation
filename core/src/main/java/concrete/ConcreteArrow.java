@@ -32,9 +32,14 @@ public class ConcreteArrow implements Cloneable {
     private double theta;
     private double randomOffset;
 
+    private QuadCurve2D.Double left;
+    private QuadCurve2D.Double right;
+
     public ConcreteArrow(AbstractArrow abstractArrow, int parentId) {
         this.abstractArrow = abstractArrow;
         this.parentId = parentId;
+        this.left = new QuadCurve2D.Double();
+        this.right = new QuadCurve2D.Double();
     }
 
     public AbstractArrow getAbstractArrow() {
@@ -77,6 +82,7 @@ public class ConcreteArrow implements Cloneable {
     public QuadCurve2D getCurve() {
         QuadCurve2D curve = new QuadCurve2D.Double();
         curve.setCurve(x1, y1, cx, cy, x2, y2);
+        curve.subdivide(left, right);
         return curve;
     }
 
@@ -89,27 +95,23 @@ public class ConcreteArrow implements Cloneable {
     }
 
     public int getCurveLabelX() {
-        return (int) midX;
+        return (int) left.getX2();
     }
 
     public int getCurveLabelY() {
-        if (theta < 5) {
-            return (int) (cy + 7);
-        } else {
-            return (int) (midY - 15);
+        double gradient = getGradient(x1,y1, x2, y2);
+        if (gradient > -0.09 && gradient < 0.09) {
+            return (int) (right.getY1() - 3);
         }
+        return (int) (right.getY1() - 45 * gradient);
     }
 
     public int getCardinalityLabelX() {
-        return (int) (midX + getLabel().length() * CHAR_WIDTH);
+        return (int) (getCurveLabelX() + getLabel().length() * CHAR_WIDTH);
     }
 
     public int getCardinalityLabelY() {
-        if (theta < 5) {
-            return (int) (cy + 9);
-        } else {
-            return (int) (midY - 12);
-        }
+        return getCurveLabelY() + 4;
     }
 
     public void shiftY(double amount) {

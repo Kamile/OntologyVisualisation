@@ -61,7 +61,7 @@ public class ConcreteEquality {
     }
 
     public int getX() {
-        return (int) midX;
+        return (int) midX - 5;
     }
 
     public int getY() {

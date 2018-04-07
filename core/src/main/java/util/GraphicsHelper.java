@@ -95,7 +95,7 @@ public class GraphicsHelper {
         return y - gradient * x;
     }
 
-    private static double getGradient(double x1, double y1, double x2, double y2) {
+    public static double getGradient(double x1, double y1, double x2, double y2) {
         double deltaX = x2 - x1;
         double deltaY = -(y2 - y1); // y is 0 at top
 
