@@ -104,39 +104,42 @@ public class DiagramPanel extends JPanel {
                 arrows.addAll(cop.arrows);
                 equalities.addAll(cop.equalities);
             }
-
-            this.setLayout(new GridLayout(1, 0, 75, 25));
+            int numRows = (int) Math.ceil((double)(COPs.size() + DTs.size())/3);
+            this.setLayout(new GridLayout(numRows, 0, 75, 25));
 
             // calculate the score for each, then draw most optimal
             int height = (this.getHeight() - 40);
             if (COPs.size() > 0) {
                 List<ConcreteCOP> copList = new ArrayList<>();
                 copList.addAll(COPs);
-                List<List<ConcreteCOP>> copPermutations = Permutation.generatePermutations(copList);
-                final List<ConcreteCOP>[] optimalPermutation = new List[]{copPermutations.get(0)};
-                final double[] currentMinScore = {Double.MAX_VALUE};
-                for (List<ConcreteCOP> permutation : copPermutations) {
-                    circleMap.clear();
-                    int width = (this.getWidth() - 40 - (permutation.size() - 1) * 75) / permutation.size();
-                    int offset = 20;
-                    for (ConcreteCOP cop : permutation) {
-                        final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop, width, height, offset);
-                        offset += 75 + width;
-                        circleMap.put(cop.getId(), panel.getCircleMap());
-                    }
+                List<ConcreteCOP> optimalPermutation = copList;
+                if (arrows.size()> 0) { // TODO: Ideally here check we have arrows between COPs.
+                    List<List<ConcreteCOP>> copPermutations = Permutation.generatePermutations(copList);
+                    optimalPermutation = copPermutations.get(0);
+                    double currentMinScore = Double.MAX_VALUE;
+                    for (List<ConcreteCOP> permutation : copPermutations) {
+                        circleMap.clear();
+                        int width = (this.getWidth() - 40 - (permutation.size() - 1) * 75) / permutation.size();
+                        int offset = 20;
+                        for (ConcreteCOP cop : permutation) {
+                            final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop, width, height, offset);
+                            offset += 75 + width;
+                            circleMap.put(cop.getId(), panel.getCircleMap());
+                        }
 
-                    addArrows(circleMap, getArrowsClone(), equalities);
-                    double score = arrowPanel.getScore();
-                    if (score < currentMinScore[0]) {
-                        currentMinScore[0] = score;
-                        optimalPermutation[0] = permutation;
+                        addArrows(circleMap, getArrowsClone(), equalities);
+                        double score = arrowPanel.getScore();
+                        if (score < currentMinScore) {
+                            currentMinScore = score;
+                            optimalPermutation = permutation;
+                        }
                     }
                 }
 
                 circleMap.clear();
-                int width = (this.getWidth() - 40 - (optimalPermutation[0].size() - 1) * 75) / optimalPermutation[0].size();
+                int width = (this.getWidth() - 40 - (COPs.size() - 1) * 75) / COPs.size();
                 int offset = 20;
-                for (final ConcreteCOP concreteCOP : optimalPermutation[0]) {
+                for (final ConcreteCOP concreteCOP : optimalPermutation) {
                     final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, width, height, offset);
                     offset += 75 + width;
                     circleMap.put(concreteCOP.getId(), panel.getCircleMap());

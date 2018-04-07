@@ -102,8 +102,9 @@ public class ConcreteArrow implements Cloneable {
         double gradient = getGradient(x1,y1, x2, y2);
         if (gradient > -0.09 && gradient < 0.09) {
             return (int) (right.getY1() - 3);
-        }
-        return (int) (right.getY1() - 45 * gradient);
+        } else if (gradient > -1 && gradient < 1) {
+            return (int) (right.getY1() - 45 * gradient);
+        } else return (int) right.getY1();
     }
 
     public int getCardinalityLabelX() {
