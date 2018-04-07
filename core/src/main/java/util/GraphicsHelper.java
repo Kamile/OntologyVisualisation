@@ -107,17 +107,9 @@ public class GraphicsHelper {
         return deltaY / deltaX;
     }
 
-    private static double solveForPositiveDiscriminant(double a, double b, double c) {
+    private static double solveForDiscriminant(double a, double b, double c, int sign) {
         if (b * b - 4 * a * c >= 0) {
-            return (-b + Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
-        } else {
-            throw new NumberFormatException();
-        }
-    }
-
-    private static double solveForNegativeDiscriminant(double a, double b, double c) {
-        if (b * b - 4 * a * c >= 0) {
-            return (-b - Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
+            return (-b + sign * Math.sqrt((b * b) - (4 * a * c))) / (2 * a);
         } else {
             throw new NumberFormatException();
         }
@@ -125,7 +117,6 @@ public class GraphicsHelper {
 
     /**
      * Solve for Y where gradient and intercept are INFINITY
-     *
      * @param radius
      * @param x1
      * @param y1
@@ -141,9 +132,9 @@ public class GraphicsHelper {
 
         try {
             if (positive) {
-                y = solveForPositiveDiscriminant(a, b, c);
+                y = solveForDiscriminant(a, b, c, 1);
             } else {
-                y = solveForNegativeDiscriminant(a, b, c);
+                y = solveForDiscriminant(a, b, c, -1);
             }
         } catch (NumberFormatException e) {
             return new Point2D.Double(0,0);
@@ -159,17 +150,15 @@ public class GraphicsHelper {
         double c = Math.pow(x1, 2) + Math.pow((intercept - y1), 2) - Math.pow(radius, 2);
 
         double x;
-
         try {
             if (positive) {
-                x = solveForPositiveDiscriminant(a, b, c);
+                x = solveForDiscriminant(a, b, c, 1);
             } else {
-                x = solveForNegativeDiscriminant(a, b, c);
+                x = solveForDiscriminant(a, b, c, -1);
             }
         } catch (NumberFormatException e) {
             return new Point2D.Double(0,0);
         }
-
         double y = gradient * x + intercept;
         return new Point2D.Double(x, y);
     }
@@ -177,7 +166,6 @@ public class GraphicsHelper {
     public static double getLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
     }
-
 
     public static boolean isGradientPositive(double x1, double y1, double x2, double y2) {
         if (y1 == y2) {
