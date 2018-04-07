@@ -36,8 +36,8 @@ public class GraphicsHelper {
         } else {
             sourcePositive = findPoint(gradient, c, sourceRadius, x1, y1, true);
             sourceNegative = findPoint(gradient, c, sourceRadius, x1, y1, false);
-            targetPositive = findPoint(gradient, c, targetRadius, x2, y2, true);
-            targetNegative = findPoint(gradient, c, targetRadius, x2, y2, false);
+            targetPositive = findPoint(gradient*-1, c, targetRadius, x2, y2, true);
+            targetNegative = findPoint(gradient*-1, c, targetRadius, x2, y2, false);
         }
 
         Point2D.Double closestSource;
@@ -68,17 +68,17 @@ public class GraphicsHelper {
             closestSource = sourcePositive;
             closestTarget = targetPositive;
 
-            if (sourceNegative != null && targetPositive != null && sourceNegative.distance(targetPositive) < closestSource.distance(closestTarget)) {
+            if (sourceNegative.distance(targetPositive) < closestSource.distance(closestTarget)) {
                 closestSource = sourceNegative;
                 closestTarget = targetPositive;
             }
 
-            if (sourcePositive != null && targetNegative != null && sourcePositive.distance(targetNegative) < closestSource.distance(closestTarget)) {
+            if (sourcePositive.distance(targetNegative) < closestSource.distance(closestTarget)) {
                 closestSource = sourcePositive;
                 closestTarget = targetNegative;
             }
 
-            if (sourceNegative != null && targetNegative != null && sourceNegative.distance(targetNegative) < closestSource.distance(closestTarget)) {
+            if (sourceNegative.distance(targetNegative) < closestSource.distance(closestTarget)) {
                 closestSource = sourceNegative;
                 closestTarget = targetNegative;
             }
@@ -88,14 +88,14 @@ public class GraphicsHelper {
         return intersections;
     }
 
-    public static double getC(double gradient, double x, double y) {
+    private static double getC(double gradient, double x, double y) {
         if (gradient < 1 && gradient > -1) {
             return y;
         }
         return y - gradient * x;
     }
 
-    public static double getGradient(double x1, double y1, double x2, double y2) {
+    private static double getGradient(double x1, double y1, double x2, double y2) {
         double deltaX = x2 - x1;
         double deltaY = -(y2 - y1); // y is 0 at top
 
@@ -132,7 +132,7 @@ public class GraphicsHelper {
      * @param positive
      * @return
      */
-    public static Point2D.Double findPoint(double radius, double x1, double y1, boolean positive) {
+    private static Point2D.Double findPoint(double radius, double x1, double y1, boolean positive) {
         double a = 1;
         double b = -2 * y1;
         double c = Math.pow((y1), 2) - Math.pow(radius, 2);
@@ -146,14 +146,14 @@ public class GraphicsHelper {
                 y = solveForNegativeDiscriminant(a, b, c);
             }
         } catch (NumberFormatException e) {
-            return null;
+            return new Point2D.Double(0,0);
         }
 
         return new Point2D.Double(x1, y);
     }
 
     // Find coordinates of intersection where we take either positive or negative root in quadratic equation
-    public static Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive) {
+    private static Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive) {
         double a = Math.pow(gradient, 2) + 1;
         double b = 2 * gradient * (intercept - y1) - 2 * x1;
         double c = Math.pow(x1, 2) + Math.pow((intercept - y1), 2) - Math.pow(radius, 2);
@@ -167,7 +167,7 @@ public class GraphicsHelper {
                 x = solveForNegativeDiscriminant(a, b, c);
             }
         } catch (NumberFormatException e) {
-            return null;
+            return new Point2D.Double(0,0);
         }
 
         double y = gradient * x + intercept;

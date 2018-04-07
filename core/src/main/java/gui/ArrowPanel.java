@@ -20,6 +20,7 @@ public class ArrowPanel extends JComponent {
     private Set<ConcreteEquality> equalities;
     private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap;
     private HashMap<String, Integer> existingArrowCount;
+    private HashMap<String, Integer> offsets;
     private Set<ConcreteArrow> toBeUpdated;
     boolean isPD;
 
@@ -28,6 +29,7 @@ public class ArrowPanel extends JComponent {
         this.equalities = new HashSet<>();
         this.circleMap = new HashMap<>();
         this.existingArrowCount = new HashMap<>();
+        this.offsets = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
         isPD = false;
     }
@@ -37,6 +39,7 @@ public class ArrowPanel extends JComponent {
         this.equalities = equalities;
         this.circleMap = circleMap;
         this.existingArrowCount = new HashMap<>();
+        this.offsets = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
         isPD = false;
         init();
@@ -53,7 +56,7 @@ public class ArrowPanel extends JComponent {
                 String source = a.getAbstractArrow().getSourceLabel();
                 if (a.getSource() == null || a.getTarget() == null) {
                     toBeUpdated.add(a);
-                    if (existingArrowCount.containsKey(source)) {
+                    if (existingArrowCount.containsKey(source+parentId)) {
                         existingArrowCount.put(source + parentId, existingArrowCount.get(source + parentId) + 1);
                     } else {
                         existingArrowCount.put(source + parentId, 1);
@@ -63,6 +66,7 @@ public class ArrowPanel extends JComponent {
                 }
             }
             updateOutermostArrows();
+            calculateOffsets();
         }
 
         if (circleMap.keySet().size() > 0) {
@@ -74,6 +78,13 @@ public class ArrowPanel extends JComponent {
                     equality.setTarget(circleMap.get(equality.getParentId()).get(target));
                 }
             }
+        }
+    }
+
+    private void calculateOffsets() {
+        for (String src: existingArrowCount.keySet()) {
+            int offset = (int) Math.floor(existingArrowCount.get(src)/2)*-1;
+            offsets.put(src, offset);
         }
     }
 
@@ -97,7 +108,6 @@ public class ArrowPanel extends JComponent {
 
                 // if pd, all t arrows sourced from one cop (id 0)
                 if (isPD && source.equals("t")) {
-                    System.out.println("setting pd t");
                     sourceEllipse = circleMap.get(0).get("t");
                 }
 
@@ -134,7 +144,8 @@ public class ArrowPanel extends JComponent {
                 String source = a.getAbstractArrow().getSourceLabel();
                 a.init();
                 if (existingArrowCount.containsKey(source + parentId)) {
-                    a.shiftControl(30 * Math.pow(-1, existingArrowCount.get(source + parentId)));
+                    a.shiftY(offsets.get(source + parentId));
+                    offsets.put(source + parentId, offsets.get(source + parentId) + 1);
                 }
 
                 if (a.getAbstractArrow().isAnon()) {
@@ -153,6 +164,7 @@ public class ArrowPanel extends JComponent {
                 g2d.drawString(a.getCardinality(), a.getCardinalityLabelX(), a.getCardinalityLabelY());
                 g.setFont(basicFont);
             }
+            calculateOffsets();
         }
 
         if (circleMap != null && circleMap.keySet().size() > 0) {

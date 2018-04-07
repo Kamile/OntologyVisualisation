@@ -16,7 +16,6 @@ public class ConcreteArrow implements Cloneable {
     private static final double CHAR_WIDTH = 8;
     private static final int PENALTY = 50;
 
-
     private AbstractArrow abstractArrow;
     private int parentId;
     private Ellipse2D.Double source;
@@ -113,8 +112,14 @@ public class ConcreteArrow implements Cloneable {
         }
     }
 
-    public void shiftControl(double amount) {
-        cx += amount;
+    public void shiftY(double amount) {
+        double radius = target.getWidth();
+        double a = target.getCenterX();
+        double b = target.getCenterY();
+        double newTheta = Math.PI + Math.PI/18 * amount; // shift by 10 degrees
+        x2 = radius * Math.cos(newTheta) + a;
+        y2 = radius * Math.sin(newTheta) + b - radius/2;
+        calculateSecondaryValues();
     }
 
     public void init() {
@@ -123,6 +128,10 @@ public class ConcreteArrow implements Cloneable {
         y1 = intersections.get(0).y;
         x2 = intersections.get(1).x;
         y2 = intersections.get(1).y;
+        calculateSecondaryValues();
+    }
+
+    private void calculateSecondaryValues() {
         midX = x1 + (x2 - x1) / 2;
         midY = (Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
 
@@ -147,11 +156,9 @@ public class ConcreteArrow implements Cloneable {
      */
     public double getScore() {
         double score = getLength(x1, y1, x2, y2);
-        System.out.println("score: " + score);
         if (!isGradientPositive(x1, y1, x2, y2)) {
             score += PENALTY; // positive gradients preferred
         }
-        System.out.println("Score after penalty" + score);
         return score;
     }
 
