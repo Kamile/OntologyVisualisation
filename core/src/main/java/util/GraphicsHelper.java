@@ -177,4 +177,15 @@ public class GraphicsHelper {
     public static double getLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
     }
+
+
+    public static boolean isGradientPositive(double x1, double y1, double x2, double y2) {
+        if (y1 == y2) {
+            return (x1 < x2);
+        } else if (x1 == x2) {
+            return (y1 > y2); // prefer arrows to go down rather than up
+        } else {
+            return getGradient(x1, y1, x2, y2) > 0;
+        }
+    }
 }

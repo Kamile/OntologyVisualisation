@@ -264,9 +264,9 @@ public class COPDiagramsDrawer extends JPanel {
                 for (String dotLabel : dots) {
                     Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, y, 8, 8);
                     if (diagram instanceof ConcreteCOP && ((ConcreteCOP) diagram).containsInitialT && dotLabel.equals("t")) {
-                        circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX(), y + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, 8, 8));
+                        circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX() + LABEL_OFFSET_Y, y + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, 8, 8));
                     } else {
-                        circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX(), y + getAdjustedOffsetY(), 8, 8));
+                        circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX() + LABEL_OFFSET_Y, y + getAdjustedOffsetY(), 8, 8));
                         ellipses.add(new Component(dotCircle, stroke, colour, true));
                     }
                     labels.add(new Component(currentXPos, (int) y - 10, dotLabel, font, stroke, colour));

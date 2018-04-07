@@ -8,13 +8,14 @@ import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.util.List;
 
-import static util.GraphicsHelper.getClosestPoints;
-import static util.GraphicsHelper.getLength;
+import static util.GraphicsHelper.*;
 
 public class ConcreteArrow implements Cloneable {
-    private static final int headLength = 15;
-    private static final double phi = Math.PI / 6;
+    private static final int HEAD_LENGTH = 15;
+    private static final double PHI = Math.PI / 6;
     private static final double CHAR_WIDTH = 8;
+    private static final int PENALTY = 50;
+
 
     private AbstractArrow abstractArrow;
     private int parentId;
@@ -81,8 +82,8 @@ public class ConcreteArrow implements Cloneable {
     }
 
     public Line2D getArrowhead(int sign) {
-        double x = x2 - headLength * Math.cos(theta + phi*sign);
-        double y = y2 - headLength * Math.sin(theta + phi*sign);
+        double x = x2 - HEAD_LENGTH * Math.cos(theta + PHI *sign);
+        double y = y2 - HEAD_LENGTH * Math.sin(theta + PHI *sign);
         Line2D line = new Line2D.Double();
         line.setLine(x2,y2,x,y);
         return line;
@@ -145,7 +146,13 @@ public class ConcreteArrow implements Cloneable {
 
      */
     public double getScore() {
-        return getLength(x1, y1, x2, y2); // positive gradients preferred
+        double score = getLength(x1, y1, x2, y2);
+        System.out.println("score: " + score);
+        if (!isGradientPositive(x1, y1, x2, y2)) {
+            score += PENALTY; // positive gradients preferred
+        }
+        System.out.println("Score after penalty" + score);
+        return score;
     }
 
     @Override

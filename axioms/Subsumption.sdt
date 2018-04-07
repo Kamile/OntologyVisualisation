@@ -10,12 +10,14 @@ PropertyDiagram {
         Arrow {
             source = "t",
             target = "_anonA",
-            property = "op1"
+            property = "op",
+            arg = "1"
         },
         Arrow {
             source = "t",
             target = "_anonB",
-            property = "op2"
+            property = "op",
+            arg = "2"
         }
     ]
 }

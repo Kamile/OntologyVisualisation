@@ -1,10 +1,5 @@
-ConceptDiagram {
+PropertyDiagram {
     COPs = [
-        COP {
-            spiders = ["t"],
-            habitats = [],
-            sh_zones = [],
-            present_zones = []},
         COP {
             spiders = [],
             habitats = [],
@@ -15,7 +10,12 @@ ConceptDiagram {
         Arrow {
             source = "t",
             target = "_anon",
-            property = "op-"
+            property = "op1-"
+        },
+        Arrow {
+            source = "t",
+            target = "_anon",
+            property = "op2"
         }
     ]
 }

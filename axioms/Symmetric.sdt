@@ -16,7 +16,7 @@ PropertyDiagram {
         Arrow {
             source = "t",
             target = "_anon",
-            property = "op1"
+            property = "op"
         },
         Arrow {
             source = "_anon",

@@ -13,6 +13,8 @@ public class ArrowPanel extends JComponent {
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
     private static float dash[] = {10.0f};
     private static final BasicStroke dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
+    private static final Font basicFont =  new Font("Courier", Font.PLAIN, 12);
+    private static final Font smallFont = new Font("Courier", Font.PLAIN, 8);
 
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
@@ -122,7 +124,7 @@ public class ArrowPanel extends JComponent {
         Graphics2D g2d = (Graphics2D) g;
         g.translate(0, 22);
         g.setColor(new Color(10, 86, 0, 255));
-        g.setFont(new Font("Courier", Font.PLAIN, 12));
+        g.setFont(basicFont);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (arrows != null && circleMap != null && circleMap.keySet().size() > 0) {
@@ -147,7 +149,9 @@ public class ArrowPanel extends JComponent {
 
                 // draw label
                 g2d.drawString(a.getLabel(), a.getCurveLabelX(), a.getCurveLabelY());
+                g.setFont(smallFont);
                 g2d.drawString(a.getCardinality(), a.getCardinalityLabelX(), a.getCardinalityLabelY());
+                g.setFont(basicFont);
             }
         }
 
