@@ -113,7 +113,7 @@ public class DiagramPanel extends JPanel {
                 List<ConcreteCOP> copList = new ArrayList<>();
                 copList.addAll(COPs);
                 List<ConcreteCOP> optimalPermutation = copList;
-                if (arrows.size()> 0) { // TODO: Ideally here check we have arrows between COPs.
+                if (getArrowsBetweenCOPs() > 0) {
                     List<List<ConcreteCOP>> copPermutations = Permutation.generatePermutations(copList);
                     optimalPermutation = copPermutations.get(0);
                     double currentMinScore = Double.MAX_VALUE;
@@ -180,5 +180,15 @@ public class DiagramPanel extends JPanel {
             clone.add(arrow.clone());
         }
         return clone;
+    }
+
+    private int getArrowsBetweenCOPs() {
+        int n = 0;
+        for (ConcreteArrow arrow: arrows) {
+            if (arrow.getParentId() == 0) {
+                n++;
+            }
+        }
+        return n;
     }
 }
