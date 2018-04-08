@@ -6,7 +6,10 @@ import concrete.ConcreteEquality;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.QuadCurve2D;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
+import java.util.List;
 
 public class ArrowPanel extends JComponent {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
@@ -19,6 +22,7 @@ public class ArrowPanel extends JComponent {
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
     private HashMap<Integer, HashMap<String, Ellipse2D.Double>> circleMap;
+    private List<Ellipse2D.Double> dotList;
     private HashMap<String, Integer> existingArrowCount;
     private HashMap<String, Integer> offsets;
     private Set<ConcreteArrow> toBeUpdated;
@@ -88,6 +92,40 @@ public class ArrowPanel extends JComponent {
         }
     }
 
+    private void generateDotList() {
+        dotList = new ArrayList<>();
+        for (HashMap<String, Ellipse2D.Double> map: circleMap.values()) {
+            dotList.addAll(map.values());
+        }
+    }
+
+    private void shiftControl(ConcreteArrow arrow, Ellipse2D.Double ellipse) {
+        QuadCurve2D curve = arrow.getCurve();
+        System.out.println(arrow.getLabel()+arrow.getCardinality());
+        double radius = ellipse.getHeight()/2;
+
+        int tries = 0;
+        while (tries < 5 && curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
+            int amountX, amountY;
+            int offset = (int) ellipse.getHeight()/3;
+            System.out.println(offset);
+
+            if (curve.getCtrlY() > ellipse.getY()) {
+                amountY = offset;
+            } else {
+                amountY = offset * -1;
+            }
+
+            if (curve.getCtrlX() > ellipse.getX()) {
+                amountX = offset;
+            } else {
+                amountX = 0;
+            }
+            arrow.shiftControl(amountX, amountY);
+            tries++;
+        }
+    }
+
     private void updateOutermostArrows() {
         if (circleMap.keySet().size() > 0) {
             for (ConcreteArrow a : toBeUpdated) {
@@ -138,6 +176,7 @@ public class ArrowPanel extends JComponent {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (arrows != null && circleMap != null && circleMap.keySet().size() > 0) {
+            generateDotList();
             updateOutermostArrows();
             for (ConcreteArrow a : arrows) {
                 int parentId = a.getParentId();
@@ -146,6 +185,20 @@ public class ArrowPanel extends JComponent {
                 if (existingArrowCount.containsKey(source + parentId)) {
                     a.shiftY(offsets.get(source + parentId));
                     offsets.put(source + parentId, offsets.get(source + parentId) + 1);
+                }
+
+                // check for edge crossings and correct
+                for (Ellipse2D.Double dot: dotList) {
+                    System.out.println("dot center " + dot.getX());
+                    System.out.println("src center: " + a.getSource().getX());
+                    System.out.println("target center: " + a.getTarget().getY());
+                    Rectangle2D.Double dotBoundary = new Rectangle2D.Double(dot.getX() - dot.getHeight()/2, dot.getY() - dot.getHeight(), dot.getHeight(), dot.getHeight());
+                    Rectangle2D.Double targetBoundary = new Rectangle.Double(a.getTarget().getX() - a.getTarget().getHeight()/2, a.getTarget().getY() - a.getTarget().getHeight(), a.getTarget().getHeight(), a.getTarget().getHeight());
+
+                    // if the target is within the contour, intersection is necessary
+                    if (dot != a.getTarget() && dot != a.getSource() && !dotBoundary.contains(targetBoundary)) { // allowed to touch src + target
+                        shiftControl(a, dot);
+                    }
                 }
 
                 if (a.getAbstractArrow().isAnon()) {

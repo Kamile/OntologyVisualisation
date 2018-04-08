@@ -125,6 +125,12 @@ public class ConcreteArrow implements Cloneable {
         calculateSecondaryValues();
     }
 
+    public void shiftControl(int amountX, int amountY) {
+        cx += amountX;
+        cy += amountY;
+        theta = Math.atan2(y2 - cy, x2 - cx);
+    }
+
     public void init() {
         List<Point2D.Double> intersections = getClosestPoints(source, target);
         x1 = intersections.get(0).x;
