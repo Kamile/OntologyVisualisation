@@ -14,7 +14,7 @@ public class ConcreteArrow implements Cloneable {
     private static final int HEAD_LENGTH = 15;
     private static final double PHI = Math.PI / 6;
     private static final double CHAR_WIDTH = 8;
-    private static final int PENALTY = 50;
+    private static final int PENALTY = 1000;
 
     private AbstractArrow abstractArrow;
     private int parentId;
@@ -25,12 +25,10 @@ public class ConcreteArrow implements Cloneable {
     private double x2;
     private double y1;
     private double y2;
-    private double midX;
-    private double midY;
     private double cx;
     private double cy;
     private double theta;
-    private double randomOffset;
+    private static double randomOffset;
 
     private QuadCurve2D.Double left;
     private QuadCurve2D.Double right;
@@ -119,8 +117,20 @@ public class ConcreteArrow implements Cloneable {
         double radius = target.getWidth();
         double a = target.getCenterX();
         double b = target.getCenterY();
-        double newTheta = Math.PI + Math.PI/18 * amount; // shift by 10 degrees
-        x2 = radius * Math.cos(newTheta) + a;
+        double currentTheta;
+        if (isSourceLeftOfTarget(x1,y1,x2,y2))  {
+            currentTheta = Math.PI;
+        } else {
+            currentTheta = 0;
+        }
+        double newTheta = currentTheta + Math.PI/18 * amount; // shift by 10 degrees
+
+        if (isSourceLeftOfTarget(x1,y1,x2,y2)) {
+            x2 = radius * Math.cos(newTheta) + a;
+        } else {
+            x2 = radius * Math.cos(newTheta) + a - radius;
+        }
+
         y2 = radius * Math.sin(newTheta) + b - radius/2;
         calculateSecondaryValues();
     }
@@ -141,8 +151,8 @@ public class ConcreteArrow implements Cloneable {
     }
 
     private void calculateSecondaryValues() {
-        midX = x1 + (x2 - x1) / 2;
-        midY = (Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
+        double midX = x1 + (x2 - x1) / 2;
+        double midY = (Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
 
         //get random control point
         randomOffset = getRandomOffset();
@@ -165,8 +175,8 @@ public class ConcreteArrow implements Cloneable {
      */
     public double getScore() {
         double score = getLength(x1, y1, x2, y2);
-        if (!isGradientPositive(x1, y1, x2, y2)) {
-            score += PENALTY; // positive gradients preferred
+        if (!isSourceLeftOfTarget(x1, y1, x2, y2)) {
+            score += PENALTY; // prefer left to right arrows
         }
         return score;
     }

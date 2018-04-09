@@ -6,14 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GraphicsHelper {
+
+    public static Point2D.Double sourcePositive;
+    public static Point2D.Double sourceNegative;
+    public static Point2D.Double targetPositive;
+    public static Point2D.Double targetNegative;
+
     public static List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
-        // array holds source intersection then target intersection
+        // array holds source intersection [0] then target intersection [1]
         List<Point2D.Double> intersections = new ArrayList<>();
 
-        // define line
+        // define line from center of source ellipse to target ellipse
         double x1 = source.getX();
-        double x2 = target.getX();
         double y1 = source.getY();
+        double x2 = target.getX();
         double y2 = target.getY();
         double gradient = getGradient(x1, y1, x2, y2);
         double c = getC(gradient, x1, y1);
@@ -22,11 +28,8 @@ public class GraphicsHelper {
         double sourceRadius = source.getWidth() / 2.0;
         double targetRadius = target.getWidth() / 2.0;
 
-        Point2D.Double sourcePositive;
-        Point2D.Double sourceNegative;
-        Point2D.Double targetPositive;
-        Point2D.Double targetNegative;
-
+        // points on src an target curves that minimise distance of resulting edge
+        // positive/negative solution in quadratic equation
         // find intersection between source circle and line
         if (gradient == Double.MAX_VALUE) {
             sourcePositive = findPoint(sourceRadius, x1, y1, true);
@@ -36,14 +39,14 @@ public class GraphicsHelper {
         } else {
             sourcePositive = findPoint(gradient, c, sourceRadius, x1, y1, true);
             sourceNegative = findPoint(gradient, c, sourceRadius, x1, y1, false);
-            targetPositive = findPoint(gradient*-1, c, targetRadius, x2, y2, true);
-            targetNegative = findPoint(gradient*-1, c, targetRadius, x2, y2, false);
+            targetPositive = findPoint(gradient * -1, c, targetRadius, x2, y2, true);
+            targetNegative = findPoint(gradient * -1, c, targetRadius, x2, y2, false);
         }
 
         Point2D.Double closestSource;
         Point2D.Double closestTarget;
 
-        // if the source or target is a spider
+        // if the source or target is a spider - these have radius 4
         if (sourceRadius < 5 && targetRadius < 5) {
             closestSource = new Point2D.Double(x1, y1);
             closestTarget = new Point2D.Double(x2, y2);
@@ -62,25 +65,15 @@ public class GraphicsHelper {
             } else {
                 closestSource = sourceNegative;
             }
-
         } else {
             // return points that give the smallest distance between circles
-            closestSource = sourcePositive;
-            closestTarget = targetPositive;
-
-            if (sourceNegative.distance(targetPositive) < closestSource.distance(closestTarget)) {
-                closestSource = sourceNegative;
-                closestTarget = targetPositive;
-            }
-
-            if (sourcePositive.distance(targetNegative) < closestSource.distance(closestTarget)) {
+            // will be pos+neg or neg+pos so as to not cross contour
+            if (sourcePositive.distance(targetNegative) < sourceNegative.distance(targetPositive)) {
                 closestSource = sourcePositive;
                 closestTarget = targetNegative;
-            }
-
-            if (sourceNegative.distance(targetNegative) < closestSource.distance(closestTarget)) {
+            } else {
                 closestSource = sourceNegative;
-                closestTarget = targetNegative;
+                closestTarget = targetPositive;
             }
         }
         intersections.add(closestSource);
@@ -117,6 +110,7 @@ public class GraphicsHelper {
 
     /**
      * Solve for Y where gradient and intercept are INFINITY
+     *
      * @param radius
      * @param x1
      * @param y1
@@ -137,7 +131,8 @@ public class GraphicsHelper {
                 y = solveForDiscriminant(a, b, c, -1);
             }
         } catch (NumberFormatException e) {
-            return new Point2D.Double(0,0);
+            // invalid point that wouldn't fit on screen
+            return new Point2D.Double(Double.MAX_VALUE, Double.MAX_VALUE);
         }
 
         return new Point2D.Double(x1, y);
@@ -157,23 +152,22 @@ public class GraphicsHelper {
                 x = solveForDiscriminant(a, b, c, -1);
             }
         } catch (NumberFormatException e) {
-            return new Point2D.Double(0,0);
+            // invalid point that wouldn't fit on screen
+            return new Point2D.Double(Double.MAX_VALUE, Double.MAX_VALUE);
         }
         double y = gradient * x + intercept;
         return new Point2D.Double(x, y);
     }
 
     public static double getLength(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    public static boolean isGradientPositive(double x1, double y1, double x2, double y2) {
-        if (y1 == y2) {
-            return (x1 < x2);
-        } else if (x1 == x2) {
+    public static boolean isSourceLeftOfTarget(double x1, double y1, double x2, double y2) {
+        if (x1 == x2) {
             return (y1 > y2); // prefer arrows to go down rather than up
         } else {
-            return getGradient(x1, y1, x2, y2) > 0;
+            return (x1 < x2); // prefer arrows to go left to right
         }
     }
 }

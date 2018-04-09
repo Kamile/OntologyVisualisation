@@ -6,6 +6,7 @@ import concrete.ConcreteEquality;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
@@ -18,6 +19,7 @@ public class ArrowPanel extends JComponent {
     private static final BasicStroke dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
     private static final Font basicFont =  new Font("Courier", Font.PLAIN, 12);
     private static final Font smallFont = new Font("Courier", Font.PLAIN, 8);
+    private static final int PENALTY = 1000;
 
     private Set<ConcreteArrow> arrows;
     private Set<ConcreteEquality> equalities;
@@ -26,6 +28,7 @@ public class ArrowPanel extends JComponent {
     private HashMap<String, Integer> existingArrowCount;
     private HashMap<String, Integer> offsets;
     private Set<ConcreteArrow> toBeUpdated;
+    private List<Rectangle2D.Double> rects;
     boolean isPD;
 
     ArrowPanel() {
@@ -35,6 +38,7 @@ public class ArrowPanel extends JComponent {
         this.existingArrowCount = new HashMap<>();
         this.offsets = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
+        rects = new ArrayList<>();
         isPD = false;
     }
 
@@ -45,6 +49,7 @@ public class ArrowPanel extends JComponent {
         this.existingArrowCount = new HashMap<>();
         this.offsets = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
+        rects = new ArrayList<>();
         isPD = false;
         init();
     }
@@ -101,14 +106,13 @@ public class ArrowPanel extends JComponent {
 
     private void shiftControl(ConcreteArrow arrow, Ellipse2D.Double ellipse) {
         QuadCurve2D curve = arrow.getCurve();
-        System.out.println(arrow.getLabel()+arrow.getCardinality());
         double radius = ellipse.getHeight()/2;
 
         int tries = 0;
+        rects.add(new Rectangle2D.Double(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2));
         while (tries < 5 && curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
             int amountX, amountY;
-            int offset = (int) ellipse.getHeight()/3;
-            System.out.println(offset);
+            int offset = (int) ellipse.getHeight()/4;
 
             if (curve.getCtrlY() > ellipse.getY()) {
                 amountY = offset;
@@ -187,11 +191,12 @@ public class ArrowPanel extends JComponent {
                     offsets.put(source + parentId, offsets.get(source + parentId) + 1);
                 }
 
-                // check for edge crossings and correct
+                for (Rectangle2D rect: rects) {
+                    g2d.draw(rect);
+                }
+
+                // check for edge crossings with contours and correct
                 for (Ellipse2D.Double dot: dotList) {
-                    System.out.println("dot center " + dot.getX());
-                    System.out.println("src center: " + a.getSource().getX());
-                    System.out.println("target center: " + a.getTarget().getY());
                     Rectangle2D.Double dotBoundary = new Rectangle2D.Double(dot.getX() - dot.getHeight()/2, dot.getY() - dot.getHeight(), dot.getHeight(), dot.getHeight());
                     Rectangle2D.Double targetBoundary = new Rectangle.Double(a.getTarget().getX() - a.getTarget().getHeight()/2, a.getTarget().getY() - a.getTarget().getHeight(), a.getTarget().getHeight(), a.getTarget().getHeight());
 
@@ -235,6 +240,19 @@ public class ArrowPanel extends JComponent {
         double score = 0;
         for (ConcreteArrow a : arrows) {
             score += a.getScore();
+        }
+
+        // then penalise arrows crossing each other
+        for (ConcreteArrow a1: arrows) {
+            for(ConcreteArrow a2: arrows) {
+                QuadCurve2D c1 = a1.getCurve();
+                QuadCurve2D c2 = a2.getCurve();
+                Line2D.Double l1 = new Line2D.Double(c1.getX1(), c1.getY1(), c1.getX2(), c1.getY2());
+                Line2D.Double l2 = new Line2D.Double(c2.getX1(), c2.getY1(), c2.getX2(), c2.getY2());
+                if (a1 != a2 && l1.intersectsLine(l2)) {
+                    score += PENALTY;
+                }
+            }
         }
         return score;
     }

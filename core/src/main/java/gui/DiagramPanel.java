@@ -104,7 +104,7 @@ public class DiagramPanel extends JPanel {
                 arrows.addAll(cop.arrows);
                 equalities.addAll(cop.equalities);
             }
-            int numRows = (int) Math.ceil((double)(COPs.size() + DTs.size())/3);
+            int numRows = (int) Math.ceil((double)(COPs.size() + DTs.size())/5);
             this.setLayout(new GridLayout(numRows, 0, 75, 25));
 
             // calculate the score for each, then draw most optimal
