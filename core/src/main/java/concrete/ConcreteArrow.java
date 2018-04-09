@@ -14,7 +14,7 @@ public class ConcreteArrow implements Cloneable {
     private static final int HEAD_LENGTH = 15;
     private static final double PHI = Math.PI / 6;
     private static final double CHAR_WIDTH = 8;
-    private static final int PENALTY = 1000;
+    private static final int PENALTY = 10000;
 
     private AbstractArrow abstractArrow;
     private int parentId;

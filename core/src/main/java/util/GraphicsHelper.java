@@ -2,6 +2,7 @@ package util;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.QuadCurve2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -169,5 +170,51 @@ public class GraphicsHelper {
         } else {
             return (x1 < x2); // prefer arrows to go left to right
         }
+    }
+
+    private static boolean rootExists(double a, double b, double c) {
+        try {
+            solveForDiscriminant(a,b,c,1);
+        } catch (NumberFormatException e1) {
+            try {
+                solveForDiscriminant(a,b,c,-1);
+            } catch (NumberFormatException e2) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Find whether two quadcurves intersect
+     * Quadcurve defined as P(t) = (1-t)^2.P_0 + 2(1-t)t.P_1 + t^2.P_2.
+     * Intersect if we can find a root when curves are equated
+     * @param c1
+     * @param c2
+     * @return
+     */
+    public static boolean curvesIntersect(QuadCurve2D c1, QuadCurve2D c2) {
+        double x1_0 = c1.getX1();
+        double x1_1 = c1.getCtrlX();
+        double x1_2 = c1.getX2();
+        double y1_0 = c1.getY1();
+        double y1_1 = c1.getCtrlY();
+        double y1_2 = c1.getY2();
+        double x2_0 = c2.getX1();
+        double x2_1 = c2.getCtrlX();
+        double x2_2 = c2.getX2();
+        double y2_0 = c2.getY1();
+        double y2_1 = c2.getCtrlY();
+        double y2_2 = c2.getY2();
+
+        double aX = x1_0 + x1_2 - 2*x1_1 - (x2_0 + x2_2 - 2*x2_1);
+        double bX = 2*x1_1 - 2*x1_0 - (2*x1_1 - 2*x1_0);
+        double cX = x1_0 - x2_0;
+
+        double aY = y1_0 + y1_2 - 2*y1_1 - (y2_0 + y2_2 - 2*y2_1);
+        double bY = 2*y1_1 - 2*y1_0 - (2*y1_1 - 2*y1_0);
+        double cY = y1_0 - y2_0;
+
+        return rootExists(aX, bX, cX) && rootExists(aY, bY, cY);
     }
 }

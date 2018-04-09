@@ -12,6 +12,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.List;
 
+import static util.GraphicsHelper.curvesIntersect;
+
 public class ArrowPanel extends JComponent {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
     private static final Dimension PREFERRED_SIZE = new Dimension(750, 300);
@@ -28,7 +30,6 @@ public class ArrowPanel extends JComponent {
     private HashMap<String, Integer> existingArrowCount;
     private HashMap<String, Integer> offsets;
     private Set<ConcreteArrow> toBeUpdated;
-    private List<Rectangle2D.Double> rects;
     boolean isPD;
 
     ArrowPanel() {
@@ -38,7 +39,6 @@ public class ArrowPanel extends JComponent {
         this.existingArrowCount = new HashMap<>();
         this.offsets = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
-        rects = new ArrayList<>();
         isPD = false;
     }
 
@@ -49,7 +49,6 @@ public class ArrowPanel extends JComponent {
         this.existingArrowCount = new HashMap<>();
         this.offsets = new HashMap<>();
         this.toBeUpdated = new HashSet<>();
-        rects = new ArrayList<>();
         isPD = false;
         init();
     }
@@ -109,7 +108,6 @@ public class ArrowPanel extends JComponent {
         double radius = ellipse.getHeight()/2;
 
         int tries = 0;
-        rects.add(new Rectangle2D.Double(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2));
         while (tries < 5 && curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
             int amountX, amountY;
             int offset = (int) ellipse.getHeight()/4;
@@ -191,10 +189,6 @@ public class ArrowPanel extends JComponent {
                     offsets.put(source + parentId, offsets.get(source + parentId) + 1);
                 }
 
-                for (Rectangle2D rect: rects) {
-                    g2d.draw(rect);
-                }
-
                 // check for edge crossings with contours and correct
                 for (Ellipse2D.Double dot: dotList) {
                     Rectangle2D.Double dotBoundary = new Rectangle2D.Double(dot.getX() - dot.getHeight()/2, dot.getY() - dot.getHeight(), dot.getHeight(), dot.getHeight());
@@ -245,13 +239,16 @@ public class ArrowPanel extends JComponent {
         // then penalise arrows crossing each other
         for (ConcreteArrow a1: arrows) {
             for(ConcreteArrow a2: arrows) {
-                QuadCurve2D c1 = a1.getCurve();
-                QuadCurve2D c2 = a2.getCurve();
-                Line2D.Double l1 = new Line2D.Double(c1.getX1(), c1.getY1(), c1.getX2(), c1.getY2());
-                Line2D.Double l2 = new Line2D.Double(c2.getX1(), c2.getY1(), c2.getX2(), c2.getY2());
-                if (a1 != a2 && l1.intersectsLine(l2)) {
+                if (curvesIntersect(a1.getCurve(), a2.getCurve())) {
                     score += PENALTY;
                 }
+//                QuadCurve2D c1 = a1.getCurve();
+//                QuadCurve2D c2 = a2.getCurve();
+//                Line2D.Double l1 = new Line2D.Double(c1.getX1(), c1.getY1(), c1.getX2(), c1.getY2());
+//                Line2D.Double l2 = new Line2D.Double(c2.getX1(), c2.getY1(), c2.getX2(), c2.getY2());
+//                if (a1 != a2 && l1.intersectsLine(l2)) {
+//                    score += PENALTY*10;
+//                }
             }
         }
         return score;
