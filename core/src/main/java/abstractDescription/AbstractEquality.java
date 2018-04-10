@@ -3,7 +3,7 @@ package abstractDescription;
 import icircles.abstractDescription.AbstractBasicRegion;
 
 public class AbstractEquality implements Comparable<AbstractEquality>{
-    static int id = 0;
+    private static int id = 0;
     private boolean isKnown;
     private AbstractBasicRegion abr1;
     private AbstractBasicRegion abr2;
@@ -21,14 +21,6 @@ public class AbstractEquality implements Comparable<AbstractEquality>{
 
     public boolean isKnown() {
         return isKnown;
-    }
-
-    public AbstractBasicRegion getAbr1() {
-        return abr1;
-    }
-
-    public AbstractBasicRegion getAbr2() {
-        return abr2;
     }
 
     public String getArg1() {

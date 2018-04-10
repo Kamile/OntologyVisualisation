@@ -10,8 +10,6 @@ ConceptDiagram {
                 (["DR1","DR2"], []),
                 ([], ["DR1", "DR2"])],
             highlighted_zones = [
-                (["DR1"],["DR2"]),
-                (["DR2"], ["DR1"]),
                 (["DR1","DR2"], [])]
         }
     ]

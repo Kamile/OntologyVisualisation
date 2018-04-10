@@ -37,12 +37,12 @@ class BaseDiagramCreator {
         Set<ConcreteArrow> concreteArrows = new HashSet<>();
         int id = 1;
 
+        HashMap<String, ConcreteZone> zoneMap;
         for (AbstractCOP abstractCOP: abstractCOPs) {
             AbstractDescription ad = abstractCOP.getPrimarySDDescription();
             Set<ConcreteArrow> concreteCOPArrows = new HashSet<>();
             Set<ConcreteEquality> concreteEqualities = new HashSet<>();
             Set<ConcreteZone> highlightedZones = new HashSet<>();
-
 
             for (AbstractArrow abstractArrow: abstractCOP.getArrows()) {
                 ConcreteArrow concreteArrow = new ConcreteArrow(abstractArrow, id);
@@ -59,12 +59,15 @@ class BaseDiagramCreator {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
 
-                ArrayList<CircleContour> circles = cd.getCircles();
-                HashMap<AbstractCurve, CircleContour> map = getMap(circles);
+                zoneMap = new HashMap<>();
+                for (ConcreteZone zone: cd.getUnshadedZones()) {
+                    zoneMap.put(zone.getAbstractBasicRegion().toString(), zone);
+                }
 
                 for (AbstractBasicRegion abr: abstractCOP.getHighlightedZones()) {
-                    ConcreteZone highlightedZone =  makeConcreteZone(abr, circles, map);
-                    highlightedZones.add(highlightedZone);
+                    if (zoneMap.containsKey(abr.toString())) {
+                        highlightedZones.add(zoneMap.get(abr.toString()));
+                    }
                 }
 
                 concreteCOP = new ConcreteCOP(id, cd, highlightedZones, concreteCOPArrows, concreteEqualities);
@@ -92,19 +95,20 @@ class BaseDiagramCreator {
         for (AbstractDT abstractDT: abstractDTs) {
             AbstractDescription ad = abstractDT.getPrimarySDDescription();
             Set<ConcreteZone> highlightedZones = new HashSet<>();
-
-
-
             ConcreteDT ConcreteDT;
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
-                ArrayList<CircleContour> circles = cd.getCircles();
-                HashMap<AbstractCurve, CircleContour> map = getMap(circles);
+                zoneMap = new HashMap<>();
+
+                for (ConcreteZone zone: cd.getUnshadedZones()) {
+                    zoneMap.put(zone.getAbstractBasicRegion().toString(), zone);
+                }
 
                 for (AbstractBasicRegion abr: abstractDT.getHighlightedZones()) {
-                    ConcreteZone highlightedZone =  makeConcreteZone(abr, circles, map);
-                    highlightedZones.add(highlightedZone);
+                    if(zoneMap.containsKey(abr.toString())){
+                        highlightedZones.add(zoneMap.get(abr.toString()));
+                    }
                 }
                 ConcreteDT = new ConcreteDT(id, cd, highlightedZones);
 
@@ -120,27 +124,5 @@ class BaseDiagramCreator {
             concreteArrows.add(concreteArrow);
         }
         return new ConcreteBaseDiagram(COPs, DTs, concreteArrows);
-    }
-
-    private ConcreteZone makeConcreteZone(AbstractBasicRegion z, ArrayList<CircleContour> circles, HashMap<AbstractCurve, CircleContour> map) {
-        ArrayList<CircleContour> includingCircles = new ArrayList<CircleContour>();
-        ArrayList<CircleContour> excludingCircles = new ArrayList<CircleContour>(circles);
-        Iterator<AbstractCurve> acIt = z.getContourIterator();
-        while (acIt.hasNext()) {
-            AbstractCurve ac = acIt.next();
-            CircleContour containingCC = map.get(ac);
-            excludingCircles.remove(containingCC);
-            includingCircles.add(containingCC);
-        }
-        ConcreteZone cz = new ConcreteZone(z, includingCircles, excludingCircles);
-        return cz;
-    }
-
-    private HashMap<AbstractCurve, CircleContour> getMap(ArrayList<CircleContour> circles) {
-        HashMap<AbstractCurve, CircleContour> map = new HashMap<>();
-        for (CircleContour circle: circles) {
-            map.put(circle.ac, circle);
-        }
-        return map;
     }
 }

@@ -5,7 +5,6 @@ import concrete.ConcreteCOP;
 import concrete.ConcreteEquality;
 import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
-import javafx.scene.shape.Ellipse;
 import lang.Dot;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -45,7 +44,6 @@ public class COPDiagramsDrawer extends JPanel {
     private ConcreteZone highlightedZone;
     private ConcreteSpiderFoot highlightedFoot;
     private HashMap<String, Ellipse2D.Double> circleMap;
-    private List<Dot> dotList;
     private List<Component> ellipses;
     private List<Component> lines;
     private List<Component> areas;
@@ -53,7 +51,6 @@ public class COPDiagramsDrawer extends JPanel {
     private int width;
     private int height;
     private int offsetX = 0;
-    private int offsetY = 0;
 
     COPDiagramsDrawer(ConcreteSubDiagram diagram, int width, int height, int offsetX) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
@@ -69,7 +66,6 @@ public class COPDiagramsDrawer extends JPanel {
         this.highlightedZone = null;
         this.highlightedFoot = null;
         this.circleMap = new HashMap<>();
-        this.dotList = new ArrayList<>();
         this.init();
         this.resetDiagram(diagram);
         this.resizeContents();
@@ -141,8 +137,7 @@ public class COPDiagramsDrawer extends JPanel {
             Stroke stroke;
             ArrayList<ConcreteZone> shadedZones = this.diagram.getShadedZones();
             if (shadedZones != null) {
-
-                for (ConcreteZone z : this.diagram.getShadedZones()) {
+                for (ConcreteZone z : shadedZones) {
                     if (z.getColor() != null) {
                         colour = z.getColor();
                     } else {
@@ -150,6 +145,14 @@ public class COPDiagramsDrawer extends JPanel {
                     }
                     Area a = z.getShape(this.diagram.getBox()).createTransformedArea(this.trans);
                     areas.add(new Component(a, colour));
+                }
+            }
+
+            Set<ConcreteZone> highlightedZones = this.diagram.getHighlightedZones();
+            if (highlightedZones != null) {
+                for (ConcreteZone z : highlightedZones) {
+                    Area a = z.getShape(this.diagram.getBox()).createTransformedArea(this.trans);
+                    areas.add(new Component(a, HIGHLIGHT_ZONE_COLOUR));
                 }
             }
 
@@ -482,7 +485,7 @@ public class COPDiagramsDrawer extends JPanel {
         HIGHLIGHT_LEG_COLOUR = Color.BLUE;
         HIGHLIGHTED_FOOT_COLOUR = Color.RED;
         HIGHLIGHT_STROKE_COLOUR = Color.RED;
-        HIGHLIGHT_ZONE_COLOUR = new Color(1895759872, true);
+        HIGHLIGHT_ZONE_COLOUR = new Color(0,255,0,77);
         LABEL_OFFSET_X = 8;
         LABEL_OFFSET_Y = 5;
         LABEL_SOURCE_OFFSET = -15;

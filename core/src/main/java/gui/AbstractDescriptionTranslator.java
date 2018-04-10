@@ -17,7 +17,6 @@ import java.util.*;
 /* Modified version of DiagramVisualisation from Speedith */
 public class AbstractDescriptionTranslator {
     private static Set<AbstractCurve> contours;
-    private static Set<String> spiders;
     private static Map<String, AbstractBasicRegion> spiderMap;
     private static HashMap<String, AbstractCurve> contourMap;
     private static Set<AbstractCOP> COPs;
@@ -28,30 +27,21 @@ public class AbstractDescriptionTranslator {
     private static AbstractCOP getAbstractDescription(ClassObjectPropertyDiagram COPDiagram) throws CannotDrawException {
         PrimarySpiderDiagram sd = (PrimarySpiderDiagram) COPDiagram.getSpiderDiagram();
         boolean containsInitialT = COPDiagram.containsInitialT();
-
+        Set<AbstractBasicRegion> highlightedZones = new HashSet<>();
         AbstractDescription ad;
         if (sd.isValid()) {
             ad = DiagramVisualisation.getAbstractDescription(sd);
-
-            contours = new HashSet<>();
-            spiders = new HashSet<>();
             spiderMap = new TreeMap<>();
-            contourMap = new HashMap<>();
             contours.addAll(ad.getCopyOfContours());
             createContourMap();
             spiderMap.putAll(getSpiderMaps(sd));
-            spiders.addAll((sd).getSpiders());
+
+            // ----- get highlighted zones from present zones
+            for (Zone highlightedZone: COPDiagram.getHighlightedZones()) {
+                highlightedZones.add(constructABR(highlightedZone));
+            }
         } else {
             ad = null;
-        }
-
-        Set<AbstractBasicRegion> highlightedZones = new HashSet<>();
-        for (Zone highlightedZone: COPDiagram.getHighlightedZones()) {
-            Set<AbstractCurve> inContours = new HashSet<>();
-            for (String inContour: highlightedZone.getInContours()) {
-                inContours.add(new AbstractCurve(inContour));
-            }
-            highlightedZones.add(AbstractBasicRegion.get(inContours));
         }
 
         Set<AbstractArrow> abstractArrows = addArrows(COPDiagram.getArrows());
@@ -81,30 +71,23 @@ public class AbstractDescriptionTranslator {
 
     private static AbstractDT getAbstractDescription(DatatypeDiagram datatypeDiagram) throws CannotDrawException {
         PrimarySpiderDiagram sd = (PrimarySpiderDiagram) datatypeDiagram.getSpiderDiagram();
-
+        Set<AbstractBasicRegion> highlightedZones = new HashSet<>();
         AbstractDescription ad;
         if (sd.isValid()) {
             ad = DiagramVisualisation.getAbstractDescription(sd);
-            contours = new HashSet<>();
-            spiders = new HashSet<>();
             spiderMap = new TreeMap<>();
-            contourMap = new HashMap<>();
             contours.addAll(ad.getCopyOfContours());
             createContourMap();
             spiderMap.putAll(getSpiderMaps(sd));
-            spiders.addAll((sd).getSpiders());
+
+            // highlighted zone also must be in present zones - get respective ABR
+            for (Zone highlightedZone: datatypeDiagram.getHighlightedZones()) {
+                highlightedZones.add(constructABR(highlightedZone));
+            }
         } else {
             ad = null;
         }
-        // highlighted zone also must be in present zones - get respective ABR
-        Set<AbstractBasicRegion> highlightedZones = new HashSet<>();
-        for (Zone highlightedZone: datatypeDiagram.getHighlightedZones()) {
-            Set<AbstractCurve> inContours = new HashSet<>();
-            for (String inContour: highlightedZone.getInContours()) {
-                inContours.add(new AbstractCurve(inContour));
-            }
-            highlightedZones.add(AbstractBasicRegion.get(inContours));
-        }
+
         Set<String> dots = new TreeSet<>(datatypeDiagram.getDots());
         return new AbstractDT(ad, highlightedZones, dots);
     }
@@ -113,7 +96,6 @@ public class AbstractDescriptionTranslator {
         contours = new HashSet<>();
         COPs = new HashSet<>();
         DTs = new HashSet<>();
-        spiders = new HashSet<>();
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
 
@@ -139,7 +121,6 @@ public class AbstractDescriptionTranslator {
         contours = new HashSet<>();
         COPs = new HashSet<>();
         DTs = new HashSet<>();
-        spiders = new HashSet<>();
         spiderMap = new TreeMap<>();
         contourMap = new HashMap<>();
 
@@ -176,17 +157,17 @@ public class AbstractDescriptionTranslator {
             SortedMap<String, Region> habitats = sd.getHabitats();
             for (Map.Entry<String, Region> habitat : habitats.entrySet()) {
                 for (Zone foot : habitat.getValue().sortedZones()) {
-                    spiderMap.put(habitat.getKey(), constructABR(foot, contourMap));
+                    spiderMap.put(habitat.getKey(), constructABR(foot));
                 }
             }
         }
         return regions;
     }
 
-    private static AbstractBasicRegion constructABR(Zone foot, HashMap<String, AbstractCurve> contourMap) {
+    private static AbstractBasicRegion constructABR(Zone zone) {
         TreeSet<AbstractCurve> inContours = new TreeSet<>();
-        if (foot.getInContoursCount() > 0) {
-            for (String inContour : foot.getInContours()) {
+        if (zone.getInContoursCount() > 0) {
+            for (String inContour : zone.getInContours()) {
                 inContours.add(contourMap.get(inContour));
             }
         }

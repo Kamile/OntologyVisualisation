@@ -18,6 +18,7 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
     ConcreteSubDiagram(int id, ConcreteDiagram cd, Set<ConcreteZone> highlightedZones, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities) {
         super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
         this.id = id;
+        this.highlightedZones = highlightedZones;
         this.arrows = arrows;
         this.equalities = equalities;
         dots = new TreeSet<>(); // empty
@@ -43,6 +44,7 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
     ConcreteSubDiagram(int id, ConcreteDiagram cd, Set<ConcreteZone> highlightedZones) {
         super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
         this.id = id;
+        this.highlightedZones = highlightedZones;
         arrows = new HashSet<>(); // empty
         equalities = new HashSet<>(); // empty
         dots = new HashSet<>(); // empty
@@ -52,6 +54,7 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
         super(new Rectangle2D.Double(0.0D, 0.0D, (double)300, (double)300), null, null, null, null);
         this.id = id;
         this.dots = dots;
+        this.highlightedZones = new HashSet<>(); // empty
         arrows = new HashSet<>(); // empty
         equalities = new HashSet<>(); //empty;
     }
@@ -62,5 +65,9 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Set<ConcreteZone> getHighlightedZones() {
+        return highlightedZones;
     }
 }
