@@ -4,6 +4,7 @@ import abstractDescription.*;
 import icircles.abstractDescription.AbstractBasicRegion;
 import icircles.abstractDescription.AbstractCurve;
 import icircles.abstractDescription.AbstractDescription;
+import icircles.concreteDiagram.CircleContour;
 import icircles.util.CannotDrawException;
 import lang.*;
 import speedith.core.lang.PrimarySpiderDiagram;
@@ -31,6 +32,7 @@ public class AbstractDescriptionTranslator {
         AbstractDescription ad;
         if (sd.isValid()) {
             ad = DiagramVisualisation.getAbstractDescription(sd);
+
             contours = new HashSet<>();
             spiders = new HashSet<>();
             spiderMap = new TreeMap<>();
@@ -43,9 +45,18 @@ public class AbstractDescriptionTranslator {
             ad = null;
         }
 
+        Set<AbstractBasicRegion> highlightedZones = new HashSet<>();
+        for (Zone highlightedZone: COPDiagram.getHighlightedZones()) {
+            Set<AbstractCurve> inContours = new HashSet<>();
+            for (String inContour: highlightedZone.getInContours()) {
+                inContours.add(new AbstractCurve(inContour));
+            }
+            highlightedZones.add(AbstractBasicRegion.get(inContours));
+        }
+
         Set<AbstractArrow> abstractArrows = addArrows(COPDiagram.getArrows());
         List<Equality> equalities = COPDiagram.getEqualities();
-        Set<AbstractEquality> abstractEqualities = new HashSet();
+        Set<AbstractEquality> abstractEqualities = new HashSet<>();
 
         if (equalities != null) {
             for (Equality equality: equalities) {
@@ -58,7 +69,7 @@ public class AbstractDescriptionTranslator {
 
         Set<String> dots = new TreeSet<>(COPDiagram.getDots());
 
-        AbstractCOP abstractCOP= new AbstractCOP(ad, abstractArrows, abstractEqualities, dots, containsInitialT);
+        AbstractCOP abstractCOP= new AbstractCOP(ad, highlightedZones, abstractArrows, abstractEqualities, dots, containsInitialT);
         if (COPDiagram.isSingleVariableT) {
             abstractCOP.isSingleVariableT = true;
         }
@@ -85,8 +96,17 @@ public class AbstractDescriptionTranslator {
         } else {
             ad = null;
         }
+        // highlighted zone also must be in present zones - get respective ABR
+        Set<AbstractBasicRegion> highlightedZones = new HashSet<>();
+        for (Zone highlightedZone: datatypeDiagram.getHighlightedZones()) {
+            Set<AbstractCurve> inContours = new HashSet<>();
+            for (String inContour: highlightedZone.getInContours()) {
+                inContours.add(new AbstractCurve(inContour));
+            }
+            highlightedZones.add(AbstractBasicRegion.get(inContours));
+        }
         Set<String> dots = new TreeSet<>(datatypeDiagram.getDots());
-        return new AbstractDT(ad, dots);
+        return new AbstractDT(ad, highlightedZones, dots);
     }
 
     static AbstractPropertyDiagram getAbstractDescription(PropertyDiagram pd) throws CannotDrawException {

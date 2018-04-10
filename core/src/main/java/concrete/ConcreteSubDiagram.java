@@ -1,6 +1,7 @@
 package concrete;
 
 import icircles.concreteDiagram.ConcreteDiagram;
+import icircles.concreteDiagram.ConcreteZone;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
@@ -12,8 +13,9 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
     public Set<ConcreteArrow> arrows;
     public Set<String> dots;
     public Set<ConcreteEquality> equalities;
+    public Set<ConcreteZone> highlightedZones;
 
-    ConcreteSubDiagram(int id, ConcreteDiagram cd, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities) {
+    ConcreteSubDiagram(int id, ConcreteDiagram cd, Set<ConcreteZone> highlightedZones, Set<ConcreteArrow> arrows, Set<ConcreteEquality> equalities) {
         super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
         this.id = id;
         this.arrows = arrows;
@@ -38,7 +40,7 @@ public class ConcreteSubDiagram extends ConcreteDiagram {
      * Datatype diagrams have no arrows or equalities since we deal only with literals
      * @param cd
      */
-    ConcreteSubDiagram(int id, ConcreteDiagram cd) {
+    ConcreteSubDiagram(int id, ConcreteDiagram cd, Set<ConcreteZone> highlightedZones) {
         super(cd.getBox(), cd.getCircles(), cd.getShadedZones(), cd.getUnshadedZones(), cd.getSpiders());
         this.id = id;
         arrows = new HashSet<>(); // empty

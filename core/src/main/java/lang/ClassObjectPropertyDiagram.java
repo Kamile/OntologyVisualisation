@@ -39,7 +39,7 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
         this.spiderHabitatsMap = habitats == null ? new TreeMap<>() : habitats;
         this.shadedZones = shadedZones == null ? new TreeSet<>() : shadedZones;
         this.presentZones = presentZones == null ? new TreeSet<>() : presentZones;
-        this.highlightedZones = presentZones == null ? new TreeSet<>() : highlightedZones;
+        this.highlightedZones = highlightedZones == null ? new TreeSet<>() : highlightedZones;
         this.arrows = arrows == null ? new TreeSet<>() : arrows;
         this.dots = dots == null ? new TreeSet<>() : dots;
         this.equalities = equalities == null ? new TreeSet<>() : equalities;
@@ -61,6 +61,10 @@ public class ClassObjectPropertyDiagram implements Comparable<ClassObjectPropert
 
     public List<Equality> getEqualities() {
         return new ArrayList<>(equalities);
+    }
+
+    public List<Zone> getHighlightedZones() {
+        return new ArrayList<>(highlightedZones);
     }
 
     public boolean containsInitialT() {
