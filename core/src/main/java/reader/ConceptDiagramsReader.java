@@ -345,6 +345,7 @@ public class ConceptDiagramsReader {
             addOptionalAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
             addOptionalAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
+            addOptionalAttribute(HighlightedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(ArrowsAttribute, new ListTranslator<>(ArrowTranslator.Instance));
             addOptionalAttribute(KnownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(true)));
             addOptionalAttribute(UnknownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(false)));
@@ -357,15 +358,18 @@ public class ConceptDiagramsReader {
             Map.Entry<Object, CommonTree> habitatsAttribute = attributes.get(SDTextHabitatsAttribute);
             Map.Entry<Object, CommonTree> shadedZonesAttribute = attributes.get(SDTextShadedZonesAttribute);
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
+            Map.Entry<Object, CommonTree> highlightedZonesAttribute = attributes.get(HighlightedZonesAttribute);
             Map.Entry<Object, CommonTree> arrowAttribute = attributes.get(ArrowsAttribute);
             Map.Entry<Object, CommonTree> knownEqualityAttribute = attributes.get(KnownEqualityAttribute);
             Map.Entry<Object, CommonTree> unknownEqualityAttribute = attributes.get(UnknownEqualityAttribute);
             Map.Entry<Object, CommonTree> idAttribute = attributes.get(IdAttribute);
+
             ClassObjectPropertyDiagram cop = ClassObjectPropertyDiagrams.createClassObjectPropertyDiagramNoCopy(
                     (Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     habitatsAttribute == null ? null : (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     shadedZonesAttribute == null ? null : (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
                     presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey(),
+                    highlightedZonesAttribute == null ? null : (Collection<Zone>) highlightedZonesAttribute.getKey(),
                     arrowAttribute == null ? null : (Collection<Arrow>) arrowAttribute.getKey(),
                     null,
                     knownEqualityAttribute == null ? null : (Collection<Equality>) knownEqualityAttribute.getKey(),
@@ -387,6 +391,7 @@ public class ConceptDiagramsReader {
             addOptionalAttribute(SDTextHabitatsAttribute, HabitatTranslator.Instance);
             addOptionalAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
+            addOptionalAttribute(HighlightedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
         }
 
         @Override
@@ -395,11 +400,13 @@ public class ConceptDiagramsReader {
             Map.Entry<Object, CommonTree> habitatsAttribute = attributes.get(SDTextHabitatsAttribute);
             Map.Entry<Object, CommonTree> shadedZonesAttribute = attributes.get(SDTextShadedZonesAttribute);
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
+            Map.Entry<Object, CommonTree> highlightedZonesAttribute = attributes.get(HighlightedZonesAttribute);
             return ClassObjectPropertyDiagrams.createDatatypeDiagramNoCopy(
                     (Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     habitatsAttribute == null ? null : (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     shadedZonesAttribute == null ? null : (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
                     presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey(),
+                    highlightedZonesAttribute == null ? null : (Collection<Zone>) highlightedZonesAttribute.getKey(),
                     null);
         }
     }

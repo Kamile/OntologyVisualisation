@@ -10,7 +10,7 @@ public class PropertyDiagrams {
         // Add initial T COP that is the source of arrows only
         TreeSet<String> singleT = new TreeSet<>();
         singleT.add("t");
-        ClassObjectPropertyDiagram initialT =  new ClassObjectPropertyDiagram(null, null, null, null, null, singleT, null, true);
+        ClassObjectPropertyDiagram initialT =  new ClassObjectPropertyDiagram(null, null, null, null, null, null, singleT, null, true);
         initialT.setAsSingleVariableT();
         COPs.add(initialT);
         return new PropertyDiagram(COPs, DTs, arrows);

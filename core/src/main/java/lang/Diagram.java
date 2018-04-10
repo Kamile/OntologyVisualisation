@@ -17,6 +17,7 @@ public abstract class Diagram implements Serializable, Iterable<Diagram> {
     public static final String ArrowsAttribute = "arrows";
     public static final String KnownEqualityAttribute = "equality";
     public static final String UnknownEqualityAttribute = "unknown_equality";
+    public static final String HighlightedZonesAttribute = "highlighted";
     public static final String IdAttribute = "id";
 
     ArrayList<ClassObjectPropertyDiagram> classObjectPropertyDiagrams;

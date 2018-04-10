@@ -1,0 +1,13 @@
+ConceptDiagram {
+    DTs = [
+        DT {
+            spiders = [],
+            habitats = [],
+            sh_zones = [
+                (["DT"],["DR"]),
+                (["DR"], ["DT"])],
+            present_zones = [
+                (["DT", "DR"], []),
+                ([], ["DT", "DR"])]}
+    ]
+}

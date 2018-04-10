@@ -1,0 +1,22 @@
+ConceptDiagram {
+    COPs = [
+        COP {
+            spiders = ["a1"],
+            habitats = [],
+            sh_zones = []}
+    ],
+    DTs = [
+        DT {
+            spiders = ["lt"],
+            habitats = [("lt", [([],["_anon"])])],
+            sh_zones = [],
+            present_zones = [([], ["_anon"]), (["_anon"], [])]}
+    ],
+    arrows = [
+        Arrow {
+            source = "a1",
+            target = "_anon",
+            property = "dp"
+        }
+    ]
+}
