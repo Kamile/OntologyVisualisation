@@ -1,0 +1,10 @@
+ConceptDiagram {
+    COPs = [
+        COP {
+            spiders = ["a1", "a2"],
+            habitats = [("a1", [(["_anon"],[])]), ("a2", [(["_anon"],[])])],
+            sh_zones = [(["_anon"],[])],
+            present_zones = [([], ["_anon"])],
+            unknown_equality = [("a1", "a2")]}
+    ]
+}

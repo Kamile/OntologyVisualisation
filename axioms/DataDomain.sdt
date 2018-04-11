@@ -1,0 +1,16 @@
+PropertyDiagram {
+    DTs = [
+        DT {
+            spiders = [],
+            habitats = [],
+            sh_zones = [(["_anon"], ["DR"])],
+            present_zones = [([], ["DR", "_anon"]), (["DR"],["_anon"]), (["DR", "_anon"],[])]}
+    ],
+    arrows = [
+        Arrow {
+            source = "t",
+            target = "_anon",
+            property = "dp-"
+        }
+    ]
+}
