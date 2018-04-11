@@ -12,7 +12,8 @@ ConceptDiagram {
         Arrow {
             source = "a1",
             target = "lt",
-            property = "dp"
+            property = "dp",
+            dashed = "true"
         }
     ]
 }

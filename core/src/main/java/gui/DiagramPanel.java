@@ -104,6 +104,10 @@ public class DiagramPanel extends JPanel {
                 arrows.addAll(cop.arrows);
                 equalities.addAll(cop.equalities);
             }
+            for (ConcreteDT dt: DTs) {
+                equalities.addAll(dt.equalities);
+            }
+
             int numRows = (int) Math.ceil((double)(COPs.size() + DTs.size())/5);
             this.setLayout(new GridLayout(numRows, 0, 75, 25));
 

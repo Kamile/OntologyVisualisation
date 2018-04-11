@@ -88,8 +88,19 @@ public class AbstractDescriptionTranslator {
             ad = null;
         }
 
+        List<Equality> equalities = datatypeDiagram.getEqualities();
+        Set<AbstractEquality> abstractEqualities = new HashSet<>();
+        if (equalities != null) {
+            for (Equality equality: equalities) {
+                boolean isKnown = equality.isKnown();
+                abstractEqualities.add(new AbstractEquality(isKnown,
+                        spiderMap.get(equality.getArg1()), spiderMap.get(equality.getArg2()),
+                        equality.getArg1(), equality.getArg2()));
+            }
+        }
+
         Set<String> dots = new TreeSet<>(datatypeDiagram.getDots());
-        return new AbstractDT(ad, highlightedZones, dots);
+        return new AbstractDT(ad, highlightedZones, dots, abstractEqualities);
     }
 
     static AbstractPropertyDiagram getAbstractDescription(PropertyDiagram pd) throws CannotDrawException {

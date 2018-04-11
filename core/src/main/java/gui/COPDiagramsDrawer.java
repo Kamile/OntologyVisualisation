@@ -289,6 +289,7 @@ public class COPDiagramsDrawer extends JPanel {
             }
 
             for (ConcreteEquality equality : diagram.equalities) {
+                System.out.println("have equalities");
                 String arg1 = equality.getAbstractEquality().getArg1();
                 String arg2 = equality.getAbstractEquality().getArg2();
                 if (circleMap.containsKey(arg1)) {

@@ -12,7 +12,7 @@ import java.util.TreeSet;
  * There are no arrows and no equalities between literals.
  */
 public class DatatypeDiagram extends ClassObjectPropertyDiagram {
-    public DatatypeDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Zone> highlightedZones, TreeSet<String> dots) {
-        super(spiders, habitats, shadedZones, presentZones, highlightedZones,null, dots, null, false);
+    public DatatypeDiagram(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Zone> highlightedZones, TreeSet<String> dots, TreeSet<Equality> equalities) {
+        super(spiders, habitats, shadedZones, presentZones, highlightedZones,null, dots, equalities, false);
     }
 }

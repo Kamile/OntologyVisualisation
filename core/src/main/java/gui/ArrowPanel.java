@@ -6,7 +6,6 @@ import concrete.ConcreteEquality;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
@@ -235,7 +234,6 @@ public class ArrowPanel extends JComponent {
         for (ConcreteArrow a : arrows) {
             score += a.getScore();
         }
-
         // then penalise arrows crossing each other
         for (ConcreteArrow a1: arrows) {
             for(ConcreteArrow a2: arrows) {

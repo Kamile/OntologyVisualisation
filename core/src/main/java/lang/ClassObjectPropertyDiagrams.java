@@ -49,15 +49,23 @@ public class ClassObjectPropertyDiagrams {
             Collection<Zone> shadedZones,
             Collection<Zone> presentZones,
             Collection<Zone> highlightedZones,
-            Collection<String> dots) {
+            Collection<String> dots,
+            Collection<Equality> knownEqualities,
+            Collection<Equality> unknownEqualities) {
+
+        if (unknownEqualities != null && knownEqualities != null) {
+            knownEqualities.addAll(unknownEqualities);
+        } else if (knownEqualities == null && unknownEqualities != null) {
+            knownEqualities = unknownEqualities;
+        }
 
         if (habitats == null && shadedZones == null && presentZones == null && highlightedZones == null) {
             return createDatatypeDiagram(
                     null, null,
-                    null,null, null, spiders,false);
+                    null,null, null, spiders, knownEqualities, false);
         }
         return createDatatypeDiagram(spiders, habitats,
-                shadedZones, presentZones, highlightedZones, dots, false);
+                shadedZones, presentZones, highlightedZones, dots, knownEqualities, false);
     }
 
     private static ClassObjectPropertyDiagram createClassObjectPropertyDiagram(Collection<String> spiders, Map<String,
@@ -94,7 +102,7 @@ public class ClassObjectPropertyDiagrams {
     }
 
     private static DatatypeDiagram createDatatypeDiagram(Collection<String> spiders, Map<String,
-            Region> habitats, Collection<Zone> shadedZones, Collection<Zone> presentZones, Collection<Zone> highlightedZones, Collection<String> dots, boolean ClassObjectPropertyyCollections) {
+            Region> habitats, Collection<Zone> shadedZones, Collection<Zone> presentZones, Collection<Zone> highlightedZones, Collection<String> dots, Collection<Equality> equalities, boolean ClassObjectPropertyyCollections) {
         if (spiders != null && !(spiders instanceof TreeSet)
                 || habitats != null && !(habitats instanceof TreeMap)
                 || shadedZones != null && !(shadedZones instanceof TreeSet)
@@ -107,7 +115,8 @@ public class ClassObjectPropertyDiagrams {
             TreeSet<Zone> presentZonesClassObjectProperty = presentZones == null ? null : new TreeSet(presentZones);
             TreeSet<Zone> highlightedZonesClassObjectProperty = highlightedZones == null ? null : new TreeSet(highlightedZones);
             TreeSet<String> dotsClassObjectProperty = dots == null ? null : new TreeSet(dots);
-            return __createDatatype(spidersClassObjectProperty, habitatsClassObjectProperty, shadedZonesClassObjectProperty, presentZonesClassObjectProperty, highlightedZonesClassObjectProperty, dotsClassObjectProperty, false);
+            TreeSet<Equality> equalitiesClassObjectProperty = equalities == null ? null : new TreeSet(equalities);
+            return __createDatatype(spidersClassObjectProperty, habitatsClassObjectProperty, shadedZonesClassObjectProperty, presentZonesClassObjectProperty, highlightedZonesClassObjectProperty, dotsClassObjectProperty, equalitiesClassObjectProperty,false);
         } else {
             return createDatatypeDiagram(spiders == null ? null : (TreeSet)spiders,
                     habitats == null ? null : (TreeMap)habitats,
@@ -115,6 +124,7 @@ public class ClassObjectPropertyDiagrams {
                     presentZones == null ? null : (TreeSet)presentZones,
                     highlightedZones == null ? null : (TreeSet)highlightedZones,
                     dots == null ? null : dots,
+                    equalities == null ? null : equalities,
                     ClassObjectPropertyyCollections);
         }
     }
@@ -152,7 +162,7 @@ public class ClassObjectPropertyDiagrams {
         }
     }
 
-    private static DatatypeDiagram __createDatatype(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Zone> highlightedZones, TreeSet<String> dots, boolean ClassObjectPropertyCollections) {
+    private static DatatypeDiagram __createDatatype(TreeSet<String> spiders, TreeMap<String, Region> habitats, TreeSet<Zone> shadedZones, TreeSet<Zone> presentZones, TreeSet<Zone> highlightedZones, TreeSet<String> dots, TreeSet<Equality> equalities, boolean ClassObjectPropertyCollections) {
         synchronized(pool) {
             DatatypeDiagram diagram;
             if (ClassObjectPropertyCollections) {
@@ -162,9 +172,10 @@ public class ClassObjectPropertyDiagrams {
                         shadedZones == null ? null : (TreeSet)shadedZones.clone(),
                         presentZones == null ? null : (TreeSet)presentZones.clone(),
                         highlightedZones == null ? null : (TreeSet) highlightedZones.clone(),
-                        dots == null ? null : (TreeSet) dots.clone());
+                        dots == null ? null : (TreeSet) dots.clone(),
+                        equalities == null ? null : (TreeSet) equalities.clone());
             } else {
-                diagram = new DatatypeDiagram(spiders, habitats, shadedZones, presentZones, highlightedZones, dots);
+                diagram = new DatatypeDiagram(spiders, habitats, shadedZones, presentZones, highlightedZones, dots, equalities);
             }
 
             DatatypeDiagram exDiagram = __getSDFromPool(diagram);

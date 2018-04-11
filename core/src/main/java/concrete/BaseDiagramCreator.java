@@ -95,7 +95,14 @@ class BaseDiagramCreator {
         for (AbstractDT abstractDT: abstractDTs) {
             AbstractDescription ad = abstractDT.getPrimarySDDescription();
             Set<ConcreteZone> highlightedZones = new HashSet<>();
+            Set<ConcreteEquality> concreteEqualities = new HashSet<>();
             ConcreteDT ConcreteDT;
+
+            for (AbstractEquality abstractEquality: abstractDT.getEqualities()) {
+                ConcreteEquality concreteEquality = new ConcreteEquality(abstractEquality, id);
+                concreteEqualities.add(concreteEquality);
+            }
+
             if (ad!=null) {
                 DiagramCreator dc = new DiagramCreator(ad);
                 icircles.concreteDiagram.ConcreteDiagram cd = dc.createDiagram(size);
@@ -110,10 +117,11 @@ class BaseDiagramCreator {
                         highlightedZones.add(zoneMap.get(abr.toString()));
                     }
                 }
-                ConcreteDT = new ConcreteDT(id, cd, highlightedZones);
+
+                ConcreteDT = new ConcreteDT(id, cd, highlightedZones, concreteEqualities);
 
             } else { // no contours, just dots
-                ConcreteDT = new ConcreteDT(id, abstractDT.getDots());
+                ConcreteDT = new ConcreteDT(id, abstractDT.getDots(), concreteEqualities);
             }
             DTs.add(ConcreteDT);
             id++;

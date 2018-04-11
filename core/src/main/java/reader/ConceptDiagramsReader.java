@@ -392,6 +392,8 @@ public class ConceptDiagramsReader {
             addOptionalAttribute(SDTextShadedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(SDTextPresentZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
             addOptionalAttribute(HighlightedZonesAttribute, new ListTranslator<>(ZoneTranslator.Instance));
+            addOptionalAttribute(KnownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(true)));
+            addOptionalAttribute(UnknownEqualityAttribute, new ListTranslator<>(new EqualityTranslator(false)));
         }
 
         @Override
@@ -401,13 +403,17 @@ public class ConceptDiagramsReader {
             Map.Entry<Object, CommonTree> shadedZonesAttribute = attributes.get(SDTextShadedZonesAttribute);
             Map.Entry<Object, CommonTree> presentZonesAttribute = attributes.get(SDTextPresentZonesAttribute);
             Map.Entry<Object, CommonTree> highlightedZonesAttribute = attributes.get(HighlightedZonesAttribute);
+            Map.Entry<Object, CommonTree> knownEqualityAttribute = attributes.get(KnownEqualityAttribute);
+            Map.Entry<Object, CommonTree> unknownEqualityAttribute = attributes.get(UnknownEqualityAttribute);
             return ClassObjectPropertyDiagrams.createDatatypeDiagramNoCopy(
                     (Collection<String>) attributes.get(SDTextSpidersAttribute).getKey(),
                     habitatsAttribute == null ? null : (Map<String, Region>) attributes.get(SDTextHabitatsAttribute).getKey(),
                     shadedZonesAttribute == null ? null : (Collection<Zone>) attributes.get(SDTextShadedZonesAttribute).getKey(),
                     presentZonesAttribute == null ? null : (Collection<Zone>) presentZonesAttribute.getKey(),
                     highlightedZonesAttribute == null ? null : (Collection<Zone>) highlightedZonesAttribute.getKey(),
-                    null);
+                    null,
+                    knownEqualityAttribute == null ? null : (Collection<Equality>) knownEqualityAttribute.getKey(),
+                    unknownEqualityAttribute == null ? null : (Collection<Equality>) unknownEqualityAttribute.getKey());
         }
     }
 

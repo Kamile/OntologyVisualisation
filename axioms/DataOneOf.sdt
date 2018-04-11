@@ -1,0 +1,10 @@
+ConceptDiagram {
+    DTs = [
+        DT {
+            spiders = ["lt1", "lt2"],
+            habitats = [("lt1", [(["_anon"],[])]), ("lt2", [(["_anon"],[])])],
+            sh_zones = [(["_anon"],[])],
+            present_zones = [([], ["_anon"])],
+            unknown_equality = [("lt1", "lt2")]}
+    ]
+}
