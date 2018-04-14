@@ -123,6 +123,7 @@ public class DiagramPanel extends JPanel {
                     double currentMinScore = Double.MAX_VALUE;
                     for (List<ConcreteCOP> permutation : copPermutations) {
                         circleMap.clear();
+                        // 20 border on each side, x gap 75 between panels
                         int width = (this.getWidth() - 40 - (permutation.size() - 1) * 75) / permutation.size();
                         int offset = 20;
                         for (ConcreteCOP cop : permutation) {
@@ -133,6 +134,9 @@ public class DiagramPanel extends JPanel {
 
                         addArrows(circleMap, getArrowsClone(), equalities);
                         double score = arrowPanel.getScore();
+                        if (permutation.get(0).isSingleVariableTInstance) {
+                            score -= 10000; // prefer to have single t variable first
+                        }
                         if (score < currentMinScore) {
                             currentMinScore = score;
                             optimalPermutation = permutation;

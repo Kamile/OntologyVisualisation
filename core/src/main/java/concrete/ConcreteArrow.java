@@ -14,7 +14,7 @@ public class ConcreteArrow implements Cloneable {
     private static final int HEAD_LENGTH = 15;
     private static final double PHI = Math.PI / 6;
     private static final double CHAR_WIDTH = 8;
-    private static final int PENALTY = 10000;
+    private static final int PENALTY = 1000;
 
     private AbstractArrow abstractArrow;
     private int parentId;
@@ -77,8 +77,8 @@ public class ConcreteArrow implements Cloneable {
         return target;
     }
 
-    public QuadCurve2D getCurve() {
-        QuadCurve2D curve = new QuadCurve2D.Double();
+    public QuadCurve2D.Double getCurve() {
+        QuadCurve2D.Double curve = new QuadCurve2D.Double();
         curve.setCurve(x1, y1, cx, cy, x2, y2);
         curve.subdivide(left, right);
         return curve;
@@ -174,7 +174,7 @@ public class ConcreteArrow implements Cloneable {
 
      */
     public double getScore() {
-        double score = getLength(x1, y1, x2, y2);
+        double score = getLength(getCurve());
         if (!isSourceLeftOfTarget(x1, y1, x2, y2)) {
             score += PENALTY; // prefer left to right arrows
         }

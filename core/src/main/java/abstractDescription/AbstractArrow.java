@@ -30,53 +30,42 @@ public class AbstractArrow implements Comparable<AbstractArrow> {
     private AbstractCurve cSource;
     private AbstractCurve cTarget;
 
-    public AbstractArrow(ArrowLabel label, boolean isAnon,
-                         AbstractBasicRegion source, AbstractBasicRegion target,
-                         String sourceLabel, String targetLabel) {
+    private AbstractArrow(ArrowLabel label, boolean isAnon, String sourceLabel, String targetLabel) {
         ++id;
         mId = id;
         this.label = label;
         this.isAnon = isAnon;
-        abrSource = source;
-        abrTarget = target;
         this.sourceLabel = sourceLabel;
         this.targetLabel = targetLabel;
+    }
+
+    public AbstractArrow(ArrowLabel label, boolean isAnon,
+                         AbstractBasicRegion source, AbstractBasicRegion target,
+                         String sourceLabel, String targetLabel) {
+        this(label, isAnon, sourceLabel, targetLabel);
+        abrSource = source;
+        abrTarget = target;
     }
 
     public AbstractArrow(ArrowLabel label, boolean isAnon, AbstractBasicRegion source, AbstractCurve to,
                          String sourceLabel, String targetLabel) {
-        ++id;
-        mId = id;
-        this.label = label;
-        this.isAnon = isAnon;
+        this(label, isAnon, sourceLabel, targetLabel);
         abrSource = source;
         cTarget = to;
-        this.sourceLabel = sourceLabel;
-        this.targetLabel = targetLabel;
     }
 
     public AbstractArrow(ArrowLabel label, boolean isAnon, AbstractCurve source, AbstractCurve target,
                          String sourceLabel, String targetLabel) {
-        ++id;
-        mId = id;
-        this.label = label;
-        this.isAnon = isAnon;
+        this(label, isAnon, sourceLabel, targetLabel);
         cSource = source;
         cTarget = target;
-        this.sourceLabel = sourceLabel;
-        this.targetLabel = targetLabel;
     }
 
     public AbstractArrow(ArrowLabel label, boolean isAnon, AbstractCurve source, AbstractBasicRegion target,
                          String sourceLabel, String targetLabel) {
-        ++id;
-        mId = id;
-        this.label = label;
-        this.isAnon = isAnon;
+        this(label, isAnon, sourceLabel, targetLabel);
         cSource = source;
         abrTarget = target;
-        this.sourceLabel = sourceLabel;
-        this.targetLabel = targetLabel;
     }
 
     public int getId() {

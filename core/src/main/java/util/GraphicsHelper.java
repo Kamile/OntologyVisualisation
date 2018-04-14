@@ -160,8 +160,43 @@ public class GraphicsHelper {
         return new Point2D.Double(x, y);
     }
 
-    public static double getLength(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    /**
+     * No closed-form integral for Quadratic Bezier so compute approximation
+     * @param curve
+     * @return
+     */
+    public static double getLength(QuadCurve2D.Double curve) {
+        double t;
+        double length = 0.0D;
+        int steps = 10; // 10 steps gives a decent approximation
+        Point2D.Double currentPoint = new Point2D.Double();
+        Point2D.Double previousPoint = new Point2D.Double();
+        for (int i = 0; i <= 10; i++) {
+            t = (i + 0.0D)/steps;
+            currentPoint.setLocation(getBezierPoint(t, curve));
+
+            if (i > 0) {
+                double deltaX = currentPoint.getX() - previousPoint.getX();
+                double deltaY = currentPoint.getY() - previousPoint.getY();
+                length += Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            }
+            previousPoint.setLocation(currentPoint);
+        }
+        return length;
+    }
+
+    private static Point2D.Double getBezierPoint(double t, QuadCurve2D.Double curve) {
+        double p0_x = curve.getX1();
+        double p0_y = curve.getY1();
+        double p1_x = curve.getCtrlX();
+        double p1_y = curve.getCtrlY();
+        double p2_x = curve.getX2();
+        double p2_y = curve.getY2();
+
+        double x = Math.pow(1.0D-t,2)*p0_x + 2.0*(1.0D-t)*t*p1_x + Math.pow(t,2)*p2_x;
+        double y = Math.pow(1.0D-t,2)*p0_y + 2.0*(1.0D-t)*t*p1_y + Math.pow(t,2)*p2_y;
+
+        return new Point2D.Double(x,y);
     }
 
     public static boolean isSourceLeftOfTarget(double x1, double y1, double x2, double y2) {

@@ -5,7 +5,6 @@ import concrete.ConcreteCOP;
 import concrete.ConcreteEquality;
 import concrete.ConcreteSubDiagram;
 import icircles.concreteDiagram.*;
-import lang.Dot;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
