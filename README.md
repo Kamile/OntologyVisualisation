@@ -1,6 +1,8 @@
 # Ontology Visualiser
 An extension of iCircles and Speedith allowing Concept and Property Diagrams to be visualised from an abstract textual representation.
 
+[![Build Status](https://travis-ci.org/Kamile/OntologyVisualisation.svg?branch=master)](https://travis-ci.org/Kamile/OntologyVisualisation)
+
 ## Getting started
 * Clone the repository
 * Run `mvn install`
