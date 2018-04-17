@@ -1,6 +1,4 @@
 language: java
 sudo: false
-before_install:
-- rm ~/.m2/settings.xml
 before_script: cd core
 script: mvn test
