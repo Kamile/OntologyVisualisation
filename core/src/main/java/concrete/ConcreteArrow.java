@@ -93,7 +93,7 @@ public class ConcreteArrow implements Cloneable {
     }
 
     public int getCurveLabelX() {
-        return (int) left.getX2();
+        return (int) left.getX2() + 2;
     }
 
     public int getCurveLabelY() {

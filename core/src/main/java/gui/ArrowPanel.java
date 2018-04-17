@@ -20,7 +20,7 @@ public class ArrowPanel extends JComponent {
     private static float dash[] = {10.0f};
     private static final BasicStroke dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
     private static final Font basicFont =  new Font("Courier", Font.PLAIN, 12);
-    private static final Font smallFont = new Font("Courier", Font.PLAIN, 8);
+    private static final Font smallFont = new Font("Courier", Font.PLAIN, 9);
     private static final int PENALTY = 1000;
 
     private Set<ConcreteArrow> arrows;

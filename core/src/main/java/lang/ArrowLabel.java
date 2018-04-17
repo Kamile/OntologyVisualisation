@@ -48,9 +48,9 @@ public class ArrowLabel implements Comparable<ArrowLabel>, Serializable {
         operator = operator.toLowerCase();
         switch (operator) {
             case "leq":
-                return "<=";
+                return "\u2264";
             case "greq":
-                return ">=";
+                return "\u2265";
             case "eq":
                 return "=";
             default:
