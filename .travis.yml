@@ -1,4 +1,5 @@
 language: java
 sudo: false
 before_script: cd core
-script: mvn test -B
+install: true
+script: mvn test
