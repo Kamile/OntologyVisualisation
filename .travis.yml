@@ -1,4 +1,4 @@
 language: java
 sudo: false
 before_script: cd core
-script: mvn test
+script: mvn test -U

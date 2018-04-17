@@ -3,7 +3,6 @@ package lang;
 import propity.util.Sets;
 import speedith.core.i18n.Translations;
 import speedith.core.lang.*;
-import sun.security.util.Cache;
 
 import java.io.IOException;
 import java.io.Serializable;

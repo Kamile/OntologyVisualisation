@@ -12,7 +12,7 @@ public class Permutation {
     private static List<ConcreteCOP> mList;
     private static List<List<ConcreteCOP>> mPermutations;
 
-    public static List<List<ConcreteCOP>> generatePermutations(List list) {
+    public static List<List<ConcreteCOP>> generatePermutations(List<ConcreteCOP> list) {
         mList = list;
         mPermutations = new ArrayList<>();
         helper(list.size(), mList);
