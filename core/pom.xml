@@ -30,11 +30,11 @@
             <version>0.0.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>si.urbas</groupId>
-            <artifactId>speedith-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>si.urbas</groupId>-->
+            <!--<artifactId>speedith-core</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>si.urbas</groupId>
