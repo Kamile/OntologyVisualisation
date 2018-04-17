@@ -94,8 +94,8 @@ public class ClassObjectPropertyDiagrams {
                     presentZones == null ? null : (TreeSet)presentZones,
                     highlightedZones == null ? null : (TreeSet) highlightedZones,
                     arrows == null ? null : (TreeSet) arrows,
-                    dots == null ? null : dots,
-                    equalities == null ? null : equalities,
+                    dots,
+                    equalities,
                     containsInitialT,
                     ClassObjectPropertyyCollections);
         }
@@ -109,7 +109,7 @@ public class ClassObjectPropertyDiagrams {
                 || presentZones != null && !(presentZones instanceof TreeSet)
                 || highlightedZones != null && !(highlightedZones instanceof TreeSet)
                 || dots != null && !(dots instanceof TreeSet)) {
-            TreeSet<String> spidersClassObjectProperty = spiders == null ? null : new TreeSet(spiders);
+            TreeSet<String> spidersClassObjectProperty = spiders == null ? null : new TreeSet<>(spiders);
             TreeMap<String, Region> habitatsClassObjectProperty = habitats == null ? null : new TreeMap(habitats);
             TreeSet<Zone> shadedZonesClassObjectProperty = shadedZones == null ? null : new TreeSet(shadedZones);
             TreeSet<Zone> presentZonesClassObjectProperty = presentZones == null ? null : new TreeSet(presentZones);
@@ -123,8 +123,8 @@ public class ClassObjectPropertyDiagrams {
                     shadedZones == null ? null : (TreeSet)shadedZones,
                     presentZones == null ? null : (TreeSet)presentZones,
                     highlightedZones == null ? null : (TreeSet)highlightedZones,
-                    dots == null ? null : dots,
-                    equalities == null ? null : equalities,
+                    dots,
+                    equalities,
                     ClassObjectPropertyyCollections);
         }
     }
