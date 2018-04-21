@@ -1,7 +1,7 @@
 package gui;
 
 import lang.Diagram;
-import reader.ConceptDiagramsReader;
+import reader.DiagramsReader;
 import speedith.core.lang.reader.ReadingException;
 
 import javax.swing.*;
@@ -142,7 +142,7 @@ public class MainForm extends JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = descriptionFileChooser.getSelectedFile();
             try {
-                Diagram input = ConceptDiagramsReader.readConceptDiagram(file);
+                Diagram input = DiagramsReader.readConceptDiagram(file);
                 if (!input.isValid()) {
                     throw new ReadingException("The diagram contained in the file is not valid.");
                 }
@@ -213,7 +213,7 @@ public class MainForm extends JFrame {
 
     private static Diagram getExampleA() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
+            return DiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
                     "        COP {\n" +
                     "            spiders = [\"c\", \"_1\", \"_2\"],\n" +
@@ -251,7 +251,7 @@ public class MainForm extends JFrame {
 
     private static Diagram getExampleB() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
+            return DiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
                     "        COP {\n" +
                     "            spiders = [],\n" +
@@ -279,7 +279,7 @@ public class MainForm extends JFrame {
 
     private static Diagram getExampleC() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
+            return DiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    COPs = [\n" +
                     "        COP {\n" +
                     "            spiders = [\"a\"],\n" +
@@ -295,7 +295,7 @@ public class MainForm extends JFrame {
 
     private static Diagram getExampleD() {
         try {
-            return ConceptDiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
+            return DiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
                     "    DTs = [\n" +
                     "        DT {\n" +
                     "            spiders = [],\n" +

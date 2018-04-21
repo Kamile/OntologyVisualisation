@@ -2,7 +2,7 @@ package gui;
 
 import lang.ConceptDiagram;
 import lang.Diagram;
-import reader.ConceptDiagramsReader;
+import reader.DiagramsReader;
 import speedith.core.lang.reader.ReadingException;
 
 import javax.swing.*;
@@ -61,7 +61,7 @@ public class CDInputDialog extends JDialog {
         String cdText = txtInputArea.getText();
 
         try {
-            conceptDiagram = ConceptDiagramsReader.readConceptDiagram(cdText);
+            conceptDiagram = DiagramsReader.readConceptDiagram(cdText);
             cancelled = false;
             dispose();
         } catch (ReadingException e) {

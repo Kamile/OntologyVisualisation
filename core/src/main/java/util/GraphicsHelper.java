@@ -8,12 +8,11 @@ import java.util.List;
 
 public class GraphicsHelper {
 
-    public static Point2D.Double sourcePositive;
-    public static Point2D.Double sourceNegative;
-    public static Point2D.Double targetPositive;
-    public static Point2D.Double targetNegative;
-
     public static List<Point2D.Double> getClosestPoints(Ellipse2D source, Ellipse2D target) {
+        Point2D.Double sourcePositive;
+        Point2D.Double sourceNegative;
+        Point2D.Double targetPositive;
+        Point2D.Double targetNegative;
         // array holds source intersection [0] then target intersection [1]
         List<Point2D.Double> intersections = new ArrayList<>();
 

@@ -30,9 +30,9 @@ import reader.ConceptDiagramsLexer;
  * - readRegion
  * - readElement
  */
-public class ConceptDiagramsReader {
+public class DiagramsReader {
 
-    private ConceptDiagramsReader() {}
+    private DiagramsReader() {}
 
     public static Diagram readConceptDiagram(String input) throws ReadingException {
         return readConceptDiagram(new ANTLRStringStream(input));
