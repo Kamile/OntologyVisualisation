@@ -288,7 +288,6 @@ public class COPDiagramsDrawer extends JPanel {
             }
 
             for (ConcreteEquality equality : diagram.equalities) {
-                System.out.println("have equalities");
                 String arg1 = equality.getAbstractEquality().getArg1();
                 String arg2 = equality.getAbstractEquality().getArg2();
                 if (circleMap.containsKey(arg1)) {
@@ -308,6 +307,7 @@ public class COPDiagramsDrawer extends JPanel {
     @Override
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
+        g2d.setFont(g2d.getFont().deriveFont(20.0f));
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (this.diagram == null) {
             this.setBackground(Color.red);
