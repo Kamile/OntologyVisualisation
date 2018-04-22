@@ -8,8 +8,9 @@ ConceptDiagram {
         COP {
             spiders = [],
             habitats = [],
-            sh_zones = [(["_anon"], [])],
-            present_zones = [([], ["_anon"])]}
+            sh_zones = [],
+            present_zones = [([], ["_anon"]), (["_anon"], [])],
+            highlighted_zones = [(["_anon"], [])]}
     ],
     arrows = [
         Arrow {

@@ -261,8 +261,9 @@ public class MainForm extends JFrame {
                     "        COP {\n" +
                     "            spiders = [],\n" +
                     "            habitats = [],\n" +
-                    "            sh_zones = [([\"_anon\"], [])],\n" +
-                    "            present_zones = [([], [\"_anon\"])]}\n" +
+                                "sh_zones =[],\n " +
+            "                    present_zones = [([], [\"_anon\"]), ([\"_anon\"], [])],\n" +
+                    "            highlighted_zones = [([\"_anon\"], [])]}\n" +
                     "    ],\n" +
                     "\tarrows = [" +
                     "           Arrow {\n" +
