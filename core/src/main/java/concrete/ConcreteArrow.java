@@ -44,11 +44,6 @@ public class ConcreteArrow implements Cloneable {
         return abstractArrow;
     }
 
-    // ID consists of parent id, arrow full label , source and target labels
-    public String getId() {
-        return parentId + abstractArrow.getLabel().getFullLabel() + abstractArrow.getSourceLabel() + abstractArrow.getTargetLabel();
-    }
-
     public int getParentId() {
         return parentId;
     }
