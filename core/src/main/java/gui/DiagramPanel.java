@@ -134,8 +134,8 @@ public class DiagramPanel extends JPanel {
 
                         addArrows(circleMap, getArrowsClone(), equalities);
                         double score = arrowPanel.getScore();
-                        if (permutation.get(0).isSingleVariableTInstance) {
-                            score -= 10000; // prefer to have single t variable first
+                        if (diagram instanceof PropertyDiagram && permutation.get(0).isSingleVariableTInstance) {
+                            score -= 100000; // prefer to have single t variable first
                         }
                         if (score < currentMinScore) {
                             currentMinScore = score;

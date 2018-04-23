@@ -111,7 +111,6 @@ public class ArrowPanel extends JComponent {
         while (tries < 5 && curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
             int amountX, amountY;
             int offset = (int) ellipse.getHeight()/4;
-
             if (curve.getCtrlY() > ellipse.getY()) {
                 amountY = offset;
             } else {
@@ -235,6 +234,7 @@ public class ArrowPanel extends JComponent {
         for (ConcreteArrow a : arrows) {
             score += a.getScore();
         }
+
         // then penalise (quadcurve) arrows crossing each other
         for (ConcreteArrow a1: arrows) {
             for(ConcreteArrow a2: arrows) {

@@ -165,20 +165,14 @@ public class GraphicsHelper {
      * @return
      */
     public static double getLength(QuadCurve2D.Double curve) {
-        double t;
         double length = 0.0D;
-        int steps = 10; // 10 steps gives a decent approximation
         Point2D.Double currentPoint = new Point2D.Double();
-        Point2D.Double previousPoint = new Point2D.Double();
-        for (int i = 0; i <= 10; i++) {
-            t = (i + 0.0D)/steps;
-            currentPoint.setLocation(getBezierPoint(t, curve));
-
-            if (i > 0) {
-                double deltaX = currentPoint.getX() - previousPoint.getX();
-                double deltaY = currentPoint.getY() - previousPoint.getY();
-                length += Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            }
+        Point2D.Double previousPoint = getBezierPoint(0, curve);
+        for (double i = 0.1; i <= 1; i+=0.1) { // 10 steps gives a decent approximation
+            currentPoint.setLocation(getBezierPoint(i, curve));
+            double deltaX = currentPoint.getX() - previousPoint.getX();
+            double deltaY = currentPoint.getY() - previousPoint.getY();
+            length += Math.sqrt(deltaX * deltaX + deltaY * deltaY);
             previousPoint.setLocation(currentPoint);
         }
         return length;
@@ -192,8 +186,15 @@ public class GraphicsHelper {
         double p2_x = curve.getX2();
         double p2_y = curve.getY2();
 
-        double x = Math.pow(1.0D-t,2)*p0_x + 2.0*(1.0D-t)*t*p1_x + Math.pow(t,2)*p2_x;
+        double x = Math.pow(1.0D-t,2)*p0_x + 2.0D*(1.0D-t)*t*p1_x + Math.pow(t,2)*p2_x;
+        System.out.println(Math.pow(1.0D-t,2)*p0_x);
+        System.out.println(2.0D*(1.0D-t)*t*p1_x);
+        System.out.println(Math.pow(t,2)*p2_x);
+        System.out.println("x0 " + p0_x);
+        System.out.println("x1 " + p1_x);
+        System.out.println("x2 " + p2_x);
         double y = Math.pow(1.0D-t,2)*p0_y + 2.0*(1.0D-t)*t*p1_y + Math.pow(t,2)*p2_y;
+        System.out.println("y " + y);
 
         return new Point2D.Double(x,y);
     }

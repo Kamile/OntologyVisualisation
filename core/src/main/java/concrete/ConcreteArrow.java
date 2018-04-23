@@ -75,6 +75,20 @@ public class ConcreteArrow implements Cloneable {
     public QuadCurve2D.Double getCurve() {
         QuadCurve2D.Double curve = new QuadCurve2D.Double();
         curve.setCurve(x1, y1, cx, cy, x2, y2);
+        if (cx > 100000) {
+            cx = 0;
+
+        }if (cy > 100000) {
+            cy = 0;
+
+        }if (x2 > 100000) {
+            x2 = 0;
+
+        }if (y2 > 100000) {
+            y2 = 0;
+
+        }
+        curve.setCurve(x1, y1, cx, cy, x2, y2);
         curve.subdivide(left, right);
         return curve;
     }
