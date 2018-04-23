@@ -81,7 +81,7 @@ public class GraphicsHelper {
         return intersections;
     }
 
-    private static double getC(double gradient, double x, double y) {
+    public static double getC(double gradient, double x, double y) {
         if (gradient < 1 && gradient > -1) {
             return y;
         }
@@ -139,7 +139,7 @@ public class GraphicsHelper {
     }
 
     // Find coordinates of intersection where we take either positive or negative root in quadratic equation
-    private static Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive) {
+    public static Point2D.Double findPoint(double gradient, double intercept, double radius, double x1, double y1, boolean positive) {
         double a = Math.pow(gradient, 2) + 1;
         double b = 2 * gradient * (intercept - y1) - 2 * x1;
         double c = Math.pow(x1, 2) + Math.pow((intercept - y1), 2) - Math.pow(radius, 2);
@@ -187,15 +187,7 @@ public class GraphicsHelper {
         double p2_y = curve.getY2();
 
         double x = Math.pow(1.0D-t,2)*p0_x + 2.0D*(1.0D-t)*t*p1_x + Math.pow(t,2)*p2_x;
-        System.out.println(Math.pow(1.0D-t,2)*p0_x);
-        System.out.println(2.0D*(1.0D-t)*t*p1_x);
-        System.out.println(Math.pow(t,2)*p2_x);
-        System.out.println("x0 " + p0_x);
-        System.out.println("x1 " + p1_x);
-        System.out.println("x2 " + p2_x);
         double y = Math.pow(1.0D-t,2)*p0_y + 2.0*(1.0D-t)*t*p1_y + Math.pow(t,2)*p2_y;
-        System.out.println("y " + y);
-
         return new Point2D.Double(x,y);
     }
 

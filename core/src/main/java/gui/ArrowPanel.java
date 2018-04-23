@@ -5,14 +5,11 @@ import concrete.ConcreteEquality;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.QuadCurve2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.*;
 import java.util.List;
 
-import static util.GraphicsHelper.curvesIntersect;
+import static util.GraphicsHelper.*;
 
 public class ArrowPanel extends JComponent {
     private static final Dimension MINIMUM_SIZE = new Dimension(500, 300);
@@ -106,11 +103,29 @@ public class ArrowPanel extends JComponent {
     private void shiftControl(ConcreteArrow arrow, Ellipse2D.Double ellipse) {
         QuadCurve2D curve = arrow.getCurve();
         double radius = ellipse.getHeight()/2;
+        double delta, euclideanDist, Fx, Fy;
 
-        int tries = 0;
-        while (tries < 5 && curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
+        /* Force-directed method: repulsive force between arrow's
+         control point and the contour. For two point u, v
+        Fx(u,v) = -delta^2/d(u,v)^2 * (x(v) - x(u)).
+        where  - d(u,v) is the Euclidean distance between points u and v
+               - delta is the length we would like to obtain
+               - x(u) is the x position of a point u.
+
+        */
+        delta = 3*ellipse.getHeight()/4; // want control point at least beyond circle perimeter.
+        euclideanDist = new Point((int) curve.getCtrlX(), (int) curve.getCtrlY()).distance(ellipse.getX(), ellipse.getY());
+        Fx = - Math.pow(delta, 2) / Math.pow(euclideanDist, 2) * (curve.getCtrlX() - ellipse.getX());
+        Fy = - Math.pow(delta, 2) / Math.pow(euclideanDist, 2) * (-curve.getCtrlY() + ellipse.getY());
+
+        // then apply the force to the control point
+        // work done = force * distance. We fix work done to 20J
+        arrow.shiftControl((int) Fx, (int) Fy);
+
+        // force directed method helps when ctrl point is near to ellipse, if between two, correct for this:
+        if (curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
             int amountX, amountY;
-            int offset = (int) ellipse.getHeight()/4;
+            int offset = (int) ellipse.getHeight()/2;
             if (curve.getCtrlY() > ellipse.getY()) {
                 amountY = offset;
             } else {
@@ -119,11 +134,11 @@ public class ArrowPanel extends JComponent {
 
             if (curve.getCtrlX() > ellipse.getX()) {
                 amountX = offset;
+
             } else {
-                amountX = 0;
+                amountX = offset * -1;
             }
             arrow.shiftControl(amountX, amountY);
-            tries++;
         }
     }
 
@@ -194,6 +209,7 @@ public class ArrowPanel extends JComponent {
                     Rectangle2D.Double targetBoundary = new Rectangle.Double(a.getTarget().getX() - a.getTarget().getHeight()/2, a.getTarget().getY() - a.getTarget().getHeight(), a.getTarget().getHeight(), a.getTarget().getHeight());
 
                     // if the target is within the contour, intersection is necessary
+                    // otherwise shift control of arrow
                     if (dot != a.getTarget() && dot != a.getSource() && !dotBoundary.contains(targetBoundary)) { // allowed to touch src + target
                         shiftControl(a, dot);
                     }
