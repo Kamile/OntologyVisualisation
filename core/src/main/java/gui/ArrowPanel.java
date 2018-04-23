@@ -101,18 +101,36 @@ public class ArrowPanel extends JComponent {
     }
 
     private void shiftControl(ConcreteArrow arrow, Ellipse2D.Double ellipse) {
-        QuadCurve2D curve = arrow.getCurve();
-        double radius = ellipse.getHeight()/2;
-        double delta, euclideanDist, Fx, Fy;
-
         /* Force-directed method: repulsive force between arrow's
          control point and the contour. For two point u, v
         Fx(u,v) = -delta^2/d(u,v)^2 * (x(v) - x(u)).
         where  - d(u,v) is the Euclidean distance between points u and v
                - delta is the length we would like to obtain
                - x(u) is the x position of a point u.
-
         */
+        QuadCurve2D curve = arrow.getCurve();
+        double radius = ellipse.getHeight()/2;
+        double euclideanDist, Fx, Fy, lambda, delta;
+
+//        lambda = radius/2; // want edge at least beyond circle perimeter.
+//        // find projection of ellipse center onto line
+//        // first define line ax + bx + c = 0
+//        double a = getGradient(curve.getX1(), curve.getY1(), curve.getX2(), curve.getY2());
+//        if (curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
+//            double b = -1;
+//            double c = getC(a, curve.getX1(), curve.getY1());
+//            // projected point
+//            double x = (b * (b * ellipse.getX() - a * ellipse.getY()) - (a * c)) / (Math.pow(a, 2) + Math.pow(b, 2));
+//            double y = (a * (-b * ellipse.getX() + a * ellipse.getY()) - (b * c)) / (Math.pow(a, 2) + Math.pow(b, 2));
+//            // calculate forces
+//            euclideanDist = new Point((int) x, (int) y).distance(ellipse.getX(), ellipse.getY());
+//            if (euclideanDist < lambda) {
+//                Fx = ((-Math.pow(lambda - euclideanDist, 2))* (x - ellipse.x)) / euclideanDist ;
+//                Fy = ((-Math.pow(lambda - euclideanDist, 2))* (-y + ellipse.y)) / euclideanDist ;
+//                arrow.shiftControl((int)Fx, (int)Fy);
+//            }
+//        }
+
         delta = 3*ellipse.getHeight()/4; // want control point at least beyond circle perimeter.
         euclideanDist = new Point((int) curve.getCtrlX(), (int) curve.getCtrlY()).distance(ellipse.getX(), ellipse.getY());
         Fx = - Math.pow(delta, 2) / Math.pow(euclideanDist, 2) * (curve.getCtrlX() - ellipse.getX());
@@ -124,21 +142,20 @@ public class ArrowPanel extends JComponent {
 
         // force directed method helps when ctrl point is near to ellipse, if between two, correct for this:
         if (curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
-            int amountX, amountY;
-            int offset = (int) ellipse.getHeight()/2;
+            double amountX, amountY;
             if (curve.getCtrlY() > ellipse.getY()) {
-                amountY = offset;
+                amountY = radius;
             } else {
-                amountY = offset * -1;
+                amountY = radius * -1;
             }
 
             if (curve.getCtrlX() > ellipse.getX()) {
-                amountX = offset;
+                amountX = radius;
 
             } else {
-                amountX = offset * -1;
+                amountX = radius * -1;
             }
-            arrow.shiftControl(amountX, amountY);
+            arrow.shiftControl((int)amountX, (int)amountY);
         }
     }
 
@@ -212,7 +229,7 @@ public class ArrowPanel extends JComponent {
                     // otherwise shift control of arrow
                     if (dot != a.getTarget() && dot != a.getSource() && !dotBoundary.contains(targetBoundary)) { // allowed to touch src + target
                         shiftControl(a, dot);
-                    }
+                  }
                 }
 
                 if (a.getAbstractArrow().isAnon()) {
