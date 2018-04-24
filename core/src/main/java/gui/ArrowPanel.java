@@ -137,24 +137,22 @@ public class ArrowPanel extends JComponent {
         Fy = - Math.pow(delta, 2) / Math.pow(euclideanDist, 2) * (-curve.getCtrlY() + ellipse.getY());
 
         // then apply the force to the control point
-        // work done = force * distance. We fix work done to 20J
+        // work done = force * distance. We fix work done to 1J
         arrow.shiftControl((int) Fx, (int) Fy);
 
         // force directed method helps when ctrl point is near to ellipse, if between two, correct for this:
         if (curve.intersects(ellipse.getX() - radius, ellipse.getY() - radius, radius*2, radius*2)) {
-            double amountX, amountY;
-            if (curve.getCtrlY() > ellipse.getY()) {
-                amountY = radius;
-            } else {
-                amountY = radius * -1;
+            double amountX = radius;
+            double amountY = radius;
+
+            if (curve.getCtrlY() < ellipse.getY()) {
+                amountY *= -1;
             }
 
-            if (curve.getCtrlX() > ellipse.getX()) {
-                amountX = radius;
-
-            } else {
-                amountX = radius * -1;
+            if (curve.getCtrlX() < ellipse.getX()) {
+                amountX *= -1;
             }
+
             arrow.shiftControl((int)amountX, (int)amountY);
         }
     }

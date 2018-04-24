@@ -28,7 +28,6 @@ public class ConcreteArrow implements Cloneable {
     private double cx;
     private double cy;
     private double theta;
-    private static double randomOffset;
 
     private QuadCurve2D.Double left;
     private QuadCurve2D.Double right;
@@ -164,14 +163,9 @@ public class ConcreteArrow implements Cloneable {
         double midY = (Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
 
         //get random control point
-        randomOffset = getRandomOffset();
-        cx = midX - randomOffset;
-        cy = midY - randomOffset;
+        cx = midX;
+        cy = midY - 20; // make arrow curved
         theta = Math.atan2(y2 - cy, x2 - cx);
-    }
-
-    private static double getRandomOffset() {
-        return Math.floor(Math.random() * 31 + 10);
     }
 
     /**
