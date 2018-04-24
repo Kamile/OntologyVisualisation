@@ -127,7 +127,7 @@ public class DiagramPanel extends JPanel {
                         int width = (this.getWidth() - 40 - (permutation.size() - 1) * 75) / permutation.size();
                         int offset = 20;
                         for (ConcreteCOP cop : permutation) {
-                            final COPDiagramsDrawer panel = new COPDiagramsDrawer(cop, width, height, offset);
+                            final SubDiagramPanel panel = new SubDiagramPanel(cop, width, height, offset);
                             offset += 75 + width;
                             circleMap.put(cop.getId(), panel.getCircleMap());
                         }
@@ -148,7 +148,7 @@ public class DiagramPanel extends JPanel {
                 int width = (this.getWidth() - 40 - (COPs.size() - 1) * 75) / COPs.size();
                 int offset = 20;
                 for (final ConcreteCOP concreteCOP : optimalPermutation) {
-                    final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteCOP, width, height, offset);
+                    final SubDiagramPanel panel = new SubDiagramPanel(concreteCOP, width, height, offset);
                     offset += 75 + width;
                     circleMap.put(concreteCOP.getId(), panel.getCircleMap());
                     panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
@@ -158,7 +158,7 @@ public class DiagramPanel extends JPanel {
             }
 
             for (final ConcreteDT concreteDT : DTs) {
-                final COPDiagramsDrawer panel = new COPDiagramsDrawer(concreteDT,0, height, 0);
+                final SubDiagramPanel panel = new SubDiagramPanel(concreteDT,0, height, 0);
                 circleMap.put(concreteDT.getId(), panel.getCircleMap());
                 panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
                 panel.setVisible(true);

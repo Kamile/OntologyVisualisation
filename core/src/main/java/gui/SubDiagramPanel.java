@@ -21,7 +21,7 @@ import java.io.StringWriter;
 import java.util.*;
 import java.util.List;
 
-public class COPDiagramsDrawer extends JPanel {
+public class SubDiagramPanel extends JPanel {
     private static final BasicStroke DEFAULT_CONTOUR_STROKE = new BasicStroke(1.2F);
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(3.5F);
     private static final Color HIGHLIGHT_LEG_COLOUR;
@@ -51,7 +51,7 @@ public class COPDiagramsDrawer extends JPanel {
     private int height;
     private int offsetX = 0;
 
-    COPDiagramsDrawer(ConcreteSubDiagram diagram, int width, int height, int offsetX) {
+    SubDiagramPanel(ConcreteSubDiagram diagram, int width, int height, int offsetX) {
         this.domImpl = GenericDOMImplementation.getDOMImplementation();
         this.svgNS = "http://www.w3.org/2000/svg";
         this.document = this.domImpl.createDocument(this.svgNS, "svg", null);

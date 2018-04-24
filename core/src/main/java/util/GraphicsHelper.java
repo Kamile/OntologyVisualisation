@@ -159,6 +159,14 @@ public class GraphicsHelper {
         return new Point2D.Double(x, y);
     }
 
+    private static List<Point2D.Double> getPointsList(QuadCurve2D.Double curve) {
+        List<Point2D.Double> controlPoints = new ArrayList<>();
+        controlPoints.add(new Point2D.Double(curve.x1, curve.y1));
+        controlPoints.add(new Point2D.Double(curve.ctrlx, curve.ctrly));
+        controlPoints.add(new Point2D.Double(curve.x2, curve.y2));
+        return controlPoints;
+    }
+
     /**
      * No closed-form integral for Quadratic Bezier so compute approximation
      * @param curve
@@ -167,12 +175,11 @@ public class GraphicsHelper {
     public static double getLength(QuadCurve2D.Double curve) {
         double length = 0.0D;
         Point2D.Double currentPoint = new Point2D.Double();
-        Point2D.Double previousPoint = getBezierPoint(0, curve);
+        List<Point2D.Double> pointsList = getPointsList(curve);
+        Point2D.Double previousPoint = getCasteljauBezierPoint(pointsList, 0);
         for (double i = 0.1; i <= 1; i+=0.1) { // 10 steps gives a decent approximation
-            currentPoint.setLocation(getBezierPoint(i, curve));
-            double deltaX = currentPoint.getX() - previousPoint.getX();
-            double deltaY = currentPoint.getY() - previousPoint.getY();
-            length += Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            currentPoint.setLocation(getCasteljauBezierPoint(pointsList, i));
+            length += currentPoint.distance(previousPoint);
             previousPoint.setLocation(currentPoint);
         }
         return length;
@@ -189,6 +196,21 @@ public class GraphicsHelper {
         double x = Math.pow(1.0D-t,2)*p0_x + 2.0D*(1.0D-t)*t*p1_x + Math.pow(t,2)*p2_x;
         double y = Math.pow(1.0D-t,2)*p0_y + 2.0*(1.0D-t)*t*p1_y + Math.pow(t,2)*p2_y;
         return new Point2D.Double(x,y);
+    }
+
+    //  de Casteljau Algorithm
+    private static Point2D.Double getCasteljauBezierPoint(List<Point2D.Double> points, double t) {
+        if (points.size() == 1) {
+            return points.get(0);
+        } else {
+            List<Point2D.Double> newPoints = new ArrayList<>();
+            for (int i=0; i < points.size() - 1; i++) {
+                double x = (1-t)* points.get(i).x + t*points.get(i+1).x;
+                double y = (1-t)* points.get(i).y + t*points.get(i+1).y;
+                newPoints.add(new Point2D.Double(x,y));
+            }
+            return getCasteljauBezierPoint(newPoints, t);
+        }
     }
 
     public static boolean isSourceLeftOfTarget(double x1, double y1, double x2, double y2) {
