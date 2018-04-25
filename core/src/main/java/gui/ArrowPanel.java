@@ -241,9 +241,11 @@ public class ArrowPanel extends JComponent {
                 g2d.draw(a.getArrowhead(-1));
 
                 // draw label
-                g2d.drawString(a.getLabel(), a.getCurveLabelX(), a.getCurveLabelY());
+                Point2D.Double labelPoint = a.getLabelPosition();
+                Point2D.Double cardinalityPoint = a.getCardinalityLabelPosition();
+                g2d.drawString(a.getLabel(), (int) labelPoint.x, (int) labelPoint.y);
                 g.setFont(smallFont);
-                g2d.drawString(a.getCardinality(), a.getCardinalityLabelX(), a.getCardinalityLabelY());
+                g2d.drawString(a.getCardinality(), (int) cardinalityPoint.x, (int) cardinalityPoint.y);
                 g.setFont(basicFont);
             }
             calculateOffsets();

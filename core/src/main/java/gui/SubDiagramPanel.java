@@ -24,8 +24,6 @@ import java.util.List;
 public class SubDiagramPanel extends JPanel {
     private static final BasicStroke DEFAULT_CONTOUR_STROKE = new BasicStroke(1.2F);
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(3.5F);
-    private static final Color HIGHLIGHT_LEG_COLOUR;
-    private static final Color HIGHLIGHTED_FOOT_COLOUR;
     private static final Color HIGHLIGHT_STROKE_COLOUR;
     private static final Color HIGHLIGHT_ZONE_COLOUR;
     private static final int LABEL_OFFSET_X; // position to draw string
@@ -188,21 +186,10 @@ public class SubDiagramPanel extends JPanel {
                 }
             }
 
-            ConcreteSpider highlightedSpider = this.getHighlightedFoot() == null ? null : this.getHighlightedFoot().getSpider();
             colour = Color.black;
-
             ArrayList<ConcreteSpider> spiders = this.diagram.getSpiders();
             if (spiders != null) {
                 for (ConcreteSpider spider : this.diagram.getSpiders()) {
-                    Color oldColor = null;
-                    Stroke oldStroke = null;
-                    if (highlightedSpider == spider) {
-                        oldColor = colour;
-                        colour = HIGHLIGHT_LEG_COLOUR;
-                        oldStroke = stroke;
-                        stroke = HIGHLIGHT_STROKE;
-                    }
-
                     Iterator var10 = spider.legs.iterator();
 
                     while (var10.hasNext()) {
@@ -212,39 +199,28 @@ public class SubDiagramPanel extends JPanel {
                     }
 
                     var10 = spider.feet.iterator();
-
                     while (var10.hasNext()) {
                         ConcreteSpiderFoot foot = (ConcreteSpiderFoot) var10.next();
                         Ellipse2D.Double circle = new Ellipse2D.Double();
                         foot.getBlob(circle);
-                        Color oldColor2 = colour;
                         translateCircleCentre(this.scaleFactor, circle, circle);
-                        if (this.getHighlightedFoot() == foot) {
-                            oldColor2 = colour;
-                            colour = HIGHLIGHTED_FOOT_COLOUR;
-                            scaleCircleCentrally(circle, 1.4D);
+
+                        // spiders outside all contours numContours set to 0
+                        // currently they are too close to the contour and clutter the diagram - move them farther
+                        if (spider.as.get_feet().size() == 1 && spider.as.get_feet().first().getNumContours() == 0) {
+                            translateCircleCenter(circle, circle, 0, 40);
                         }
 
                         if (diagram instanceof ConcreteCOP && ((ConcreteCOP) this.diagram).containsInitialT && spider.as.getName().equals("t")) {
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, circle.getHeight(), circle.getWidth()));
+                            labels.add(new Component((int) (circle.getX() - 2), (int) circle.getY(), spider.as.getName(), font, stroke, colour));
                         } else {
                             ellipses.add(new Component(circle, stroke, colour, true));
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY(), circle.getHeight(), circle.getWidth()));
-                        }
+                            if (!foot.getSpider().as.getName().startsWith("_")) {
+                                labels.add(new Component((int) (circle.getX() - 2), (int) (circle.getY()) - 10, spider.as.getName(), font, stroke, colour));
 
-                        if (this.getHighlightedFoot() == foot) {
-                            colour = oldColor2;
-                        }
-                    }
-
-                    if (spider.as.getName() != null) {
-                        if (!spider.as.getName().startsWith("_")) {
-                            ConcreteSpiderFoot foot = spider.feet.get(0);
-                            labels.add(new Component((int) (foot.getX() * this.trans.getScaleX()) - 5, (int) (foot.getY() * this.trans.getScaleY()) - 10, spider.as.getName(), font, stroke, colour));
-                        }
-                        if (highlightedSpider == spider) {
-                            colour = oldColor;
-                            stroke = oldStroke;
+                            }
                         }
                     }
                 }
@@ -457,16 +433,14 @@ public class SubDiagramPanel extends JPanel {
         outCircle.y = inCircle.y * scaleFactor + inCircle.height * correctionFactor;
     }
 
+    private static void translateCircleCenter(Ellipse2D.Double inCircle, Ellipse2D.Double outCircle, int amountX, int amountY) {
+        outCircle.x = inCircle.x + amountX;
+        outCircle.y = inCircle.y + amountY;
+    }
+
     private static void scaleCircle(double scaleFactor, Ellipse2D.Double inCircle, Ellipse2D.Double outCircle) {
         outCircle.width = inCircle.width * scaleFactor;
         outCircle.height = inCircle.height * scaleFactor;
-    }
-
-    private static void scaleCircleCentrally(Ellipse2D.Double circle, double scale) {
-        circle.x -= circle.width * (scale - 1.0D) / 2.0D;
-        circle.y -= circle.height * (scale - 1.0D) / 2.0D;
-        circle.width *= scale;
-        circle.height *= scale;
     }
 
     private int getCenteringTranslationX() {
@@ -482,8 +456,6 @@ public class SubDiagramPanel extends JPanel {
     }
 
     static {
-        HIGHLIGHT_LEG_COLOUR = Color.BLUE;
-        HIGHLIGHTED_FOOT_COLOUR = Color.RED;
         HIGHLIGHT_STROKE_COLOUR = Color.RED;
         HIGHLIGHT_ZONE_COLOUR = new Color(0,255,0,77);
         LABEL_OFFSET_X = 8;

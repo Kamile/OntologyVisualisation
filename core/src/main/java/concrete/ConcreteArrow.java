@@ -100,25 +100,35 @@ public class ConcreteArrow implements Cloneable {
         return line;
     }
 
-    public int getCurveLabelX() {
+    public Point2D.Double getLabelPosition() {
+        double x = (int) left.getX2() + 2;
+        double y;
+        double gradient = getGradient(x1,y1, x2, y2);
+        if (gradient > -0.09 && gradient < 0.09) {
+            y= (int) (right.getY1() - 3);
+        } else if (gradient > -1 && gradient < 1) {
+            y= (int) (right.getY1() - 45 * gradient);
+        } else {
+            y = (int) right.getY1();
+        }
+        return new Point2D.Double(x,y);
+    }
+
+    private int getCurveLabelX() {
         return (int) left.getX2() + 2;
     }
 
-    public int getCurveLabelY() {
+    private int getCurveLabelY() {
         double gradient = getGradient(x1,y1, x2, y2);
         if (gradient > -0.09 && gradient < 0.09) {
-            return (int) (right.getY1() - 3);
+            return (int) (right.getY1() - 5);
         } else if (gradient > -1 && gradient < 1) {
             return (int) (right.getY1() - 45 * gradient);
         } else return (int) right.getY1();
     }
 
-    public int getCardinalityLabelX() {
-        return (int) (getCurveLabelX() + getLabel().length() * CHAR_WIDTH);
-    }
-
-    public int getCardinalityLabelY() {
-        return getCurveLabelY() + 4;
+    public Point2D.Double getCardinalityLabelPosition() {
+        return new Point2D.Double((int) (getCurveLabelX() + getLabel().length() * CHAR_WIDTH),getCurveLabelY() + 4);
     }
 
     public void shiftY(double amount) {
@@ -174,7 +184,6 @@ public class ConcreteArrow implements Cloneable {
      - minimise edge lengths (prefer diagram panels with adjacent arrow source and targets to be closer)
      - minimise edge crossings
      - give preference to left-to-right arrows
-
      */
     public double getScore() {
         double score = getLength(getCurve());
