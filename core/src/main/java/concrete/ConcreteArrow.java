@@ -8,12 +8,13 @@ import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.util.List;
 
+import static gui.SubDiagramPanel.getCenteredLabelPosition;
 import static util.GraphicsHelper.*;
 
 public class ConcreteArrow implements Cloneable {
+    public static final double CHAR_WIDTH = 12;
     private static final int HEAD_LENGTH = 15;
     private static final double PHI = Math.PI / 6;
-    private static final double CHAR_WIDTH = 12;
     private static final int PENALTY = 1000;
 
     private AbstractArrow abstractArrow;
@@ -101,34 +102,21 @@ public class ConcreteArrow implements Cloneable {
     }
 
     public Point2D.Double getLabelPosition() {
-        double x = (int) left.getX2() + 2;
-        double y;
-        double gradient = getGradient(x1,y1, x2, y2);
+        double x = (left.getX2() + 2);
+        double y = (int) right.getY1();
+        double gradient = getGradient(x1, y1, x2, y2);
         if (gradient > -0.09 && gradient < 0.09) {
+            x = getCenteredLabelPosition(left.getX2() + 2, getLabel());
             y= (int) (right.getY1() - 3);
         } else if (gradient > -1 && gradient < 1) {
             y= (int) (right.getY1() - 45 * gradient);
-        } else {
-            y = (int) right.getY1();
         }
         return new Point2D.Double(x,y);
     }
 
-    private int getCurveLabelX() {
-        return (int) left.getX2() + 2;
-    }
-
-    private int getCurveLabelY() {
-        double gradient = getGradient(x1,y1, x2, y2);
-        if (gradient > -0.09 && gradient < 0.09) {
-            return (int) (right.getY1() - 5);
-        } else if (gradient > -1 && gradient < 1) {
-            return (int) (right.getY1() - 45 * gradient);
-        } else return (int) right.getY1();
-    }
-
     public Point2D.Double getCardinalityLabelPosition() {
-        return new Point2D.Double((int) (getCurveLabelX() + getLabel().length() * CHAR_WIDTH),getCurveLabelY() + 4);
+        Point2D.Double labelPosition = getLabelPosition();
+        return new Point2D.Double((int) (labelPosition.x + getLabel().length() * CHAR_WIDTH),labelPosition.y + 4);
     }
 
     public void shiftY(double amount) {
@@ -195,7 +183,7 @@ public class ConcreteArrow implements Cloneable {
 
     @Override
     public ConcreteArrow clone() {
-        ConcreteArrow clone = null;
+        ConcreteArrow clone;
         try {
             clone = (ConcreteArrow) super.clone();
         } catch (CloneNotSupportedException e) {

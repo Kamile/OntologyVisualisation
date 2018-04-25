@@ -21,13 +21,14 @@ import java.io.StringWriter;
 import java.util.*;
 import java.util.List;
 
+import static concrete.ConcreteArrow.CHAR_WIDTH;
+
 public class SubDiagramPanel extends JPanel {
     private static final BasicStroke DEFAULT_CONTOUR_STROKE = new BasicStroke(1.2F);
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(3.5F);
     private static final Color HIGHLIGHT_STROKE_COLOUR;
     private static final Color HIGHLIGHT_ZONE_COLOUR;
-    private static final int LABEL_OFFSET_X; // position to draw string
-    private static final int LABEL_OFFSET_Y;
+    private static final int LABEL_OFFSET;
     private static final int LABEL_SOURCE_OFFSET; //position for initial t source
     private static final long serialVersionUID = 6593217652932473248L;
     private DOMImplementation domImpl;
@@ -168,8 +169,9 @@ public class SubDiagramPanel extends JPanel {
                     }
                     Ellipse2D.Double tmpCircle = new Ellipse2D.Double();
                     transformCircle(this.scaleFactor, cc.getCircle(), tmpCircle);
+                    String name = cc.ac.getLabel();
 
-                    circleMap.put(cc.ac.getLabel(), new Ellipse2D.Double(tmpCircle.getCenterX() + getAdjustedOffsetX(), tmpCircle.getCenterY() + getAdjustedOffsetY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
+                    circleMap.put(name, new Ellipse2D.Double(tmpCircle.getCenterX() + getAdjustedOffsetX(), tmpCircle.getCenterY() + getAdjustedOffsetY(), tmpCircle.getHeight(), tmpCircle.getWidth()));
                     ellipses.add(new Component(tmpCircle, stroke, col, false));
 
                     if (cc.ac.getLabel() != null) {
@@ -179,8 +181,8 @@ public class SubDiagramPanel extends JPanel {
                             stroke = DEFAULT_CONTOUR_STROKE;
                         }
 
-                        if (!cc.ac.getLabel().startsWith("_")) {
-                            labels.add(new Component(tmpCircle.getCenterX() - LABEL_OFFSET_X, (int) (tmpCircle.getCenterY() - tmpCircle.getHeight() / 2 - LABEL_OFFSET_Y), cc.ac.getLabel(), font, stroke, col));
+                        if (!name.startsWith("_")) {
+                            labels.add(new Component(getCenteredLabelPosition(tmpCircle.getCenterX(), name), (int) (tmpCircle.getCenterY() - tmpCircle.getHeight() / 2 - LABEL_OFFSET), name, font, stroke, col));
                         }
                     }
                 }
@@ -201,6 +203,7 @@ public class SubDiagramPanel extends JPanel {
                     var10 = spider.feet.iterator();
                     while (var10.hasNext()) {
                         ConcreteSpiderFoot foot = (ConcreteSpiderFoot) var10.next();
+                        String name = spider.as.getName();
                         Ellipse2D.Double circle = new Ellipse2D.Double();
                         foot.getBlob(circle);
                         translateCircleCentre(this.scaleFactor, circle, circle);
@@ -211,14 +214,14 @@ public class SubDiagramPanel extends JPanel {
                             translateCircleCenter(circle, circle, 0, 40);
                         }
 
-                        if (diagram instanceof ConcreteCOP && ((ConcreteCOP) this.diagram).containsInitialT && spider.as.getName().equals("t")) {
+                        if (diagram instanceof ConcreteCOP && ((ConcreteCOP) this.diagram).containsInitialT && name.equals("t")) {
                             circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, circle.getHeight(), circle.getWidth()));
-                            labels.add(new Component((int) (circle.getX() - 2), (int) circle.getY(), spider.as.getName(), font, stroke, colour));
+                            labels.add(new Component(getCenteredLabelPosition(circle.getX()  + LABEL_OFFSET, name), (int) circle.getY(), name, font, stroke, colour));
                         } else {
                             ellipses.add(new Component(circle, stroke, colour, true));
-                            circleMap.put(foot.getSpider().as.getName(), new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY(), circle.getHeight(), circle.getWidth()));
-                            if (!foot.getSpider().as.getName().startsWith("_")) {
-                                labels.add(new Component((int) (circle.getX() - 2), (int) (circle.getY()) - 10, spider.as.getName(), font, stroke, colour));
+                            circleMap.put(name, new Ellipse2D.Double(circle.getCenterX() + getAdjustedOffsetX(), circle.getCenterY() + getAdjustedOffsetY(), circle.getHeight(), circle.getWidth()));
+                            if (!name.startsWith("_")) {
+                                labels.add(new Component(getCenteredLabelPosition(circle.getX() + LABEL_OFFSET, name), (int) (circle.getY()) - 10, name, font, stroke, colour));
 
                             }
                         }
@@ -242,12 +245,12 @@ public class SubDiagramPanel extends JPanel {
                 for (String dotLabel : dots) {
                     Ellipse2D.Double dotCircle = new Ellipse2D.Double(currentXPos, y, 8, 8);
                     if (diagram instanceof ConcreteCOP && ((ConcreteCOP) diagram).containsInitialT && dotLabel.equals("t")) {
-                        circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX() + LABEL_OFFSET_Y, y + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, 8, 8));
+                        circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX() + LABEL_OFFSET, y + getAdjustedOffsetY() + LABEL_SOURCE_OFFSET, 8, 8));
                     } else {
-                        circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX() + LABEL_OFFSET_Y, y + getAdjustedOffsetY(), 8, 8));
+                        circleMap.put(dotLabel, new Ellipse2D.Double(currentXPos + getAdjustedOffsetX() + LABEL_OFFSET, y + getAdjustedOffsetY(), 8, 8));
                         ellipses.add(new Component(dotCircle, stroke, colour, true));
                     }
-                    labels.add(new Component(currentXPos, (int) y - 10, dotLabel, font, stroke, colour));
+                    labels.add(new Component(getCenteredLabelPosition(currentXPos + +LABEL_OFFSET, dotLabel), (int) y - 10, dotLabel, font, stroke, colour));
                     currentXPos += 40;
                 }
             }
@@ -380,10 +383,6 @@ public class SubDiagramPanel extends JPanel {
         }
     }
 
-    private ConcreteSpiderFoot getHighlightedFoot() {
-        return this.highlightedFoot;
-    }
-
     private void setHighlightedFoot(ConcreteSpiderFoot foot) {
         if (this.highlightedFoot != foot) {
             this.setHighlightedZone(null);
@@ -451,6 +450,10 @@ public class SubDiagramPanel extends JPanel {
         return Math.abs(this.getHeight() - (int)Math.round((double)this.diagram.getSize() * this.scaleFactor)) / 2;
     }
 
+    public static int getCenteredLabelPosition(double initialPosition, String label) {
+        return (int) (initialPosition -  (label.length()*CHAR_WIDTH/2));
+    }
+
     protected Graphics getComponentGraphics(Graphics g) {
         return this.svgGenerator;
     }
@@ -458,8 +461,7 @@ public class SubDiagramPanel extends JPanel {
     static {
         HIGHLIGHT_STROKE_COLOUR = Color.RED;
         HIGHLIGHT_ZONE_COLOUR = new Color(0,255,0,77);
-        LABEL_OFFSET_X = 8;
-        LABEL_OFFSET_Y = 5;
+        LABEL_OFFSET = 5;
         LABEL_SOURCE_OFFSET = -15;
     }
 }
