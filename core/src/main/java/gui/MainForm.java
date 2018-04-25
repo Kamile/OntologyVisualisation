@@ -35,7 +35,7 @@ public class MainForm extends JFrame {
     private ArrowPanel glassPanel;
     private JMenuBar menuBar;
 
-    private MainForm() {
+    public MainForm() {
         initUI();
     }
 
@@ -118,7 +118,7 @@ public class MainForm extends JFrame {
 
         useCdExample2MenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.CTRL_MASK));
         useCdExample2MenuItem.setMnemonic(i18n("MAIN_FORM_USE_EXAMPLE2_MNEMONIC").charAt(0));
-        useCdExample2MenuItem.setText("ObjectSomeValuesFrom(op CE) Example");
+        useCdExample2MenuItem.setText("ObjectSomeValuesFrom Example");
         useCdExample2MenuItem.addActionListener(evt -> onExample2());
         drawMenu.add(useCdExample2MenuItem);
 
