@@ -1,6 +1,5 @@
 package gui;
 
-import lang.ConceptDiagram;
 import lang.Diagram;
 import reader.DiagramsReader;
 import speedith.core.lang.reader.ReadingException;
@@ -21,7 +20,7 @@ public class CDInputDialog extends JDialog {
     private JLabel lblInstruction;
     private JLabel lblError;
 
-    public CDInputDialog() {
+    CDInputDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -29,17 +28,9 @@ public class CDInputDialog extends JDialog {
         setMinimumSize(new Dimension(500, 200));
         setPreferredSize(new Dimension(750,300));
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -50,11 +41,7 @@ public class CDInputDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onOK() {
@@ -81,23 +68,11 @@ public class CDInputDialog extends JDialog {
         System.exit(0);
     }
 
-    public boolean isCancelled() {
+    boolean isCancelled() {
         return cancelled;
     }
 
-    public void setConceptDiagramText(ConceptDiagram cd) {
-        if (cd == null) {
-            setConceptDiagramText("");
-        } else {
-            setConceptDiagramText(cd.toString());
-        }
-    }
-
-    public void setConceptDiagramText(String cd) {
-        txtInputArea.setText(cd);
-    }
-
-    public Diagram getConceptDiagram() {
+    Diagram getConceptDiagram() {
         return conceptDiagram;
     }
 

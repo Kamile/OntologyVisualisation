@@ -1,34 +1,60 @@
 import gui.MainForm;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static reader.ExampleAxioms.*;
+
 
 public class TimingTest {
 
-    public static void main(String[] args) {
-        long startTime = System.nanoTime();
-        drawOneContour();
+    private long startTime;
+    private static MainForm mf;
+
+    @BeforeClass
+    public static void init() {
+        mf = new MainForm();
+    }
+
+    @Before
+    public void startTimer() {
+        startTime = System.nanoTime();
+
+    }
+
+    @After
+    public void endTimer() {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime)/1000000;  // in ms
         System.out.println(duration);
+    }
+
+    @Test
+    public void drawOneContour() {
+        mf.testVisualisation(SINGLE_CONTOUR);
+    }
+
+    @Test
+    public void drawSimpleEulerDiagram() {
+        mf.testVisualisation(CLASS_EXPRESSION);
+    }
+
+    @Test
+    public void drawConceptDiagram_oneCOP() {
+        mf.testVisualisation(DATATYPE_DEFINITION);
 
     }
 
-    private static void drawOneContour() {
-        MainForm mf = new MainForm();
-    }
-
-    private static void drawSimpleEulerDiagram() {
+    @Test
+    public void drawConceptDiagram_twoCOPs_oneArrow() {
+        mf.testVisualisation(OBJECT_SOME_VALUE);
 
     }
 
-    private static void drawConceptDiagram_oneCOP() {
-
-    }
-
-    private static void drawConceptDiagram_twoCOPs_oneArrow() {
-
-    }
-
-    private static void drawPropertyChain() {
-
+    @Test
+    public void drawPropertyChain() {
+        mf.testVisualisation(PROPERTY_CHAIN);
     }
 
 }

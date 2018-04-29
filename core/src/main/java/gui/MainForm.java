@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import static reader.ExampleAxioms.*;
 import static speedith.i18n.Translations.i18n;
 
 public class MainForm extends JFrame {
@@ -213,37 +214,7 @@ public class MainForm extends JFrame {
 
     private static Diagram getExampleA() {
         try {
-            return DiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    COPs = [\n" +
-                    "        COP {\n" +
-                    "            spiders = [\"c\", \"_1\", \"_2\"],\n" +
-                    "            habitats = [\n" +
-                    "                (\"c\", [([\"C4\"],[\"_anon\", \"C5\"])]),\n" +
-                    "                (\"_1\", [([\"C5\", \"_anon\"],[\"C4\"])]),\n" +
-                    "                (\"_2\", [([\"C5\", \"_anon\"],[\"C4\"])])],\n" +
-                    "            sh_zones = [\n" +
-                    "                ([\"C4\", \"C5\", \"_anon\"],[]),\n" +
-                    "                ([\"_anon\"],[\"C4\", \"C5\"]),\n" +
-                    "                ([\"_anon\", \"C4\"],[\"C5\"]),\n" +
-                    "                ([\"C4\", \"C5\"], [\"_anon\"])],\n" +
-                    "            present_zones = [\n" +
-                    "                ([], [\"C4\", \"C5\", \"_anon\"]),\n" +
-                    "                ([\"C5\"], [\"C4\", \"_anon\"]),\n" +
-                    "                ([\"C5\", \"_anon\"], [\"C4\"]),\n" +
-                    "                ([\"C4\"],[\"C5\", \"_anon\"])],\n" +
-                    "            arrows = [" +
-                    "               Arrow {\n" +
-                    "                    source = \"C4\",\n" +
-                    "                    target = \"_anon\",\n" +
-                    "                    property = \"op\",\n" +
-                    "                    op = \"leq\",\n" +
-                    "                    arg = \"2\",\n" +
-                    "                    dashed = \"true\"\n" +
-                    "                }" +
-                    "           ]\n" +
-                    "        }\n" +
-                    "    ]\n" +
-                    "}");
+            return DiagramsReader.readConceptDiagram(SUBCLASS);
         } catch (Exception ex) {
             throw new RuntimeException();
         }
@@ -251,28 +222,7 @@ public class MainForm extends JFrame {
 
     private static Diagram getExampleB() {
         try {
-            return DiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    COPs = [\n" +
-                    "        COP {\n" +
-                    "            spiders = [],\n" +
-                    "            habitats = [],\n" +
-                    "            sh_zones = [],\n" +
-                    "            present_zones = [([], [\"CE\"]), ([\"CE\"], [])]},\n" +
-                    "        COP {\n" +
-                    "            spiders = [],\n" +
-                    "            habitats = [],\n" +
-                                "sh_zones =[],\n " +
-            "                    present_zones = [([], [\"_anon\"]), ([\"_anon\"], [])],\n" +
-                    "            highlighted_zones = [([\"_anon\"], [])]}\n" +
-                    "    ],\n" +
-                    "\tarrows = [" +
-                    "           Arrow {\n" +
-                    "            source = \"CE\",\n" +
-                    "            target = \"_anon\",\n" +
-                    "            property = \"op-\"\n" +
-                    "        }" +
-                    "]\n" +
-                    "}\n");
+            return DiagramsReader.readConceptDiagram(OBJECT_SOME_VALUE);
         } catch (Exception ex) {
             throw new RuntimeException();
         }
@@ -280,15 +230,7 @@ public class MainForm extends JFrame {
 
     private static Diagram getExampleC() {
         try {
-            return DiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    COPs = [\n" +
-                    "        COP {\n" +
-                    "            spiders = [\"a\"],\n" +
-                    "            sh_zones = [],\n" +
-                    "            habitats = [(\"a\", [([\"C1\"], [\"C2\"])])],\n" +
-                    "            present_zones=[([\"C2\"],[\"C1\"]), ([\"C1\"],[\"C2\"]), ([],[\"C1\", \"C2\"]), ([\"C1\", \"C2\"],[])]}\n" +
-                    "    ]\n" +
-                    "}");
+            return DiagramsReader.readConceptDiagram(CLASS_EXPRESSION);
         } catch (Exception ex) {
             throw new RuntimeException();
         }
@@ -296,23 +238,7 @@ public class MainForm extends JFrame {
 
     private static Diagram getExampleD() {
         try {
-            return DiagramsReader.readConceptDiagram("ConceptDiagram {\n" +
-                    "    DTs = [\n" +
-                    "        DT {\n" +
-                    "            spiders = [],\n" +
-                    "            sh_zones = [\n" +
-                    "                ([\"DT\"], [\"DR1\", \"DR2\"]),\n" +
-                    "                ([\"DR1\", \"DR2\"], [\"DT\"]),\n" +
-                    "                ([\"DR2\"], [\"DT\", \"DR1\"]),\n" +
-                    "                ([\"DR1\"],[\"DT\", \"DR2\"])],\n" +
-                    "            habitats = [],\n" +
-                    "            present_zones=[\n" +
-                    "                ([\"DR2\", \"DT\"],[\"DR1\"]),\n" +
-                    "                ([\"DR1\", \"DT\"],[\"DR2\"]),\n" +
-                    "                ([],[\"DT\", \"DR1\", \"DR2\"]),\n" +
-                    "                ([\"DT\", \"DR1\", \"DR2\"],[])]\n" +
-                    "        }\n" +
-                    "    ]}\n");
+            return DiagramsReader.readConceptDiagram(DATATYPE_DEFINITION);
         } catch (Exception ex) {
             throw new RuntimeException();
         }
@@ -320,5 +246,16 @@ public class MainForm extends JFrame {
 
     public static void main(String[] args) {
         new MainForm().setVisible(true);
+    }
+
+    public void testVisualisation(String axiom) {
+        Diagram diagram = null;
+        try {
+            diagram = DiagramsReader.readConceptDiagram(axiom);
+        } catch (ReadingException e) {
+            e.printStackTrace();
+        }
+        boundaryPanel.setDiagram(diagram);
+        setArrowPanel();
     }
 }
