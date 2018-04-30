@@ -75,5 +75,4 @@ public class CDInputDialog extends JDialog {
     Diagram getConceptDiagram() {
         return conceptDiagram;
     }
-
 }

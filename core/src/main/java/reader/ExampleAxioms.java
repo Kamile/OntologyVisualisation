@@ -158,4 +158,62 @@ public class ExampleAxioms {
             "            sh_zones = [],\n" +
             "            present_zones = [([], [\"C\"]), ([\"C\"], [])]}]\n" +
             "}\n";
+
+    public static String TWO_DISTINCT_CURVES = "ConceptDiagram {\n" +
+            "    COPs = [\n" +
+            "        COP {\n" +
+            "            spiders = [],\n" +
+            "            habitats = [],\n" +
+            "            sh_zones = [([\"C\",\"D\"], [])],\n" +
+            "            present_zones = [([\"C\"], [\"D\"]),\n" +
+            "                             ([\"D\"], [\"C\"]),\n" +
+            "                             ([],[\"C\",\"D\"])\n" +
+            "            ]\n" +
+            "        }\n" +
+            "    ]\n" +
+            "}\n";
+
+    public static String THREE_DISTINCT_CURVES = "ConceptDiagram {\n" +
+            "    COPs = [\n" +
+            "        COP {\n" +
+            "            spiders = [],\n" +
+            "            habitats = [],\n" +
+            "            sh_zones = [([\"C\",\"D\",\"E\"], []), \n" +
+            "                        ([\"C\",\"D\"], [\"E\"]),\n" +
+            "                        ([\"C\",\"E\"], [\"D\"]),\n" +
+            "                        ([\"D\",\"E\"], [\"C\"])],\n" +
+            "            present_zones = [([\"C\"], [\"D\",\"E\"]),\n" +
+            "                             ([\"D\"], [\"C\", \"E\"]),\n" +
+            "                             ([\"E\"], [\"C\", \"D\"]),\n" +
+            "                             ([],[\"C\",\"D\", \"E\"])\n" +
+            "            ]\n" +
+            "        }\n" +
+            "    ]\n" +
+            "}\n";
+
+    public static String FOUR_DISTINCT_CURVES = "ConceptDiagram {\n" +
+            "    COPs = [\n" +
+            "        COP {\n" +
+            "            spiders = [],\n" +
+            "            habitats = [],\n" +
+            "            sh_zones = [([\"C\",\"D\",\"E\",\"F\"], []), \n" +
+            "                        ([\"C\",\"D\"], [\"E\", \"F\"]),\n" +
+            "                        ([\"C\",\"E\"], [\"D\", \"F\"]),\n" +
+            "                        ([\"C\",\"F\"], [\"D\", \"E\"]),\n" +
+            "                        ([\"D\",\"E\"], [\"C\", \"F\"]),\n" +
+            "                        ([\"D\",\"F\"], [\"C\", \"E\"]),\n" +
+            "                        ([\"E\",\"F\"], [\"D\", \"C\"]),\n" +
+            "                        ([\"D\",\"E\",\"F\"], [\"C\"]),\n" +
+            "                        ([\"D\",\"E\",\"C\"], [\"F\"]),\n" +
+            "                        ([\"C\",\"E\",\"F\"], [\"D\"]),\n" +
+            "                        ([\"D\",\"C\",\"F\"], [\"E\"])],\n" +
+            "            present_zones = [([\"C\"], [\"D\", \"E\", \"F\"]),\n" +
+            "                             ([\"D\"], [\"C\", \"E\", \"F\"]),\n" +
+            "                             ([\"E\"], [\"C\", \"D\", \"F\"]),\n" +
+            "                             ([\"F\"], [\"C\", \"D\", \"E\"]),\n" +
+            "                             ([], [\"C\",\"D\", \"E\", \"F\"])\n" +
+            "            ]\n" +
+            "        }\n" +
+            "    ]\n" +
+            "}\n";
 }
