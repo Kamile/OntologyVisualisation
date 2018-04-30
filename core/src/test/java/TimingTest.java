@@ -31,11 +31,6 @@ public class TimingTest {
         System.out.println(duration);
     }
 
-    @AfterClass
-    public static void cleanUp() {
-        mf.removeAll();
-    }
-
     @Test
     public void drawOneContour() {
         mf.testVisualisation(SINGLE_CONTOUR);
