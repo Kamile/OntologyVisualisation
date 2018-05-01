@@ -1,0 +1,2 @@
+M = dlmread('contours.txt');
+printf(M[0]);
