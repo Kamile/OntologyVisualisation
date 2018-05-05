@@ -3,7 +3,6 @@ package evaluation;
 import gui.MainForm;
 
 import java.io.*;
-import java.net.URL;
 
 import static reader.ExampleAxioms.*;
 import static reader.ExampleAxioms.PROPERTY_CHAIN;
@@ -19,9 +18,12 @@ public class TimingTests {
         for (int i = 0; i < 20; i++) {
             timeIncreasingContours();
         }
+        timeIncreasingZones();
     }
 
     private static void init() {
+        System.out.println(FIVE_DISTINCT_CURVES);
+
         mf = new MainForm();
 
         // draw random to stabilise first drawing time
@@ -41,15 +43,15 @@ public class TimingTests {
     // Increasing number of distinct visible curves
     private static void timeIncreasingContours() {
         String[] axioms = {
-            SINGLE_CONTOUR, TWO_DISTINCT_CURVES, THREE_DISTINCT_CURVES, FOUR_DISTINCT_CURVES
+            SINGLE_CONTOUR, TWO_DISTINCT_CURVES, THREE_DISTINCT_CURVES, FOUR_DISTINCT_CURVES,
+                FIVE_DISTINCT_CURVES, SIX_DISTINCT_CURVES, SEVEN_DISTINCT_CURVES, EIGHT_DISTINCT_CURVES, NINE_DISTINCT_CURVES, TEN_DISTINCT_CURVES
         };
         time(axioms, "contours.txt");
     }
 
     // Increasing number of visible zones
     private static void timeIncreasingZones() {
-        // 4, 8 zones
-        String[] axioms = {CLASS_EXPRESSION, DATATYPE_DEFINITION};
+        String[] axioms = {ZONES2, ZONES4, ZONES8, ZONES16, ZONES32, ZONES64, ZONES128, ZONES256};
         time(axioms, "zones.txt");
     }
 

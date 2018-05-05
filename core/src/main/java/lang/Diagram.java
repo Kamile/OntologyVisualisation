@@ -91,10 +91,6 @@ public abstract class Diagram implements Serializable, Iterable<Diagram> {
         return null;
     }
 
-    public boolean isEquivalentTo(Diagram cd) {
-        return equals(cd);
-    }
-
     public Diagram transform(Transformer t) {
         return transform(t, true);
     }

@@ -1,7 +1,7 @@
 M = dlmread('contours.txt');
 disp(M);
-axis([0 5 0 15])
-set(gca, 'XTick', 0:5)
+axis([0 11 0 100])
+set(gca, 'XTick', 0:11)
 hold on;
 plot(0,0);
 title('Performance for increasing contour number');

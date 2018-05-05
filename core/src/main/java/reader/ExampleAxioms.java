@@ -1,5 +1,13 @@
 package reader;
 
+import icircles.abstractDescription.AbstractDescription;
+import speedith.core.lang.Zone;
+import speedith.core.lang.Zones;
+
+import java.util.*;
+
+import static speedith.core.lang.SpiderDiagrams.createPrimarySD;
+
 public class ExampleAxioms {
 
     public static String CLASS_EXPRESSION = "ConceptDiagram {\n" +
@@ -150,70 +158,87 @@ public class ExampleAxioms {
             "    ]\n" +
             "}\n";
 
-    public static String SINGLE_CONTOUR = "ConceptDiagram {\n" +
-            "    COPs = [\n" +
-            "        COP {\n" +
-            "            spiders = [],\n" +
-            "            habitats = [],\n" +
-            "            sh_zones = [],\n" +
-            "            present_zones = [([], [\"C\"]), ([\"C\"], [])]}]\n" +
-            "}\n";
 
-    public static String TWO_DISTINCT_CURVES = "ConceptDiagram {\n" +
-            "    COPs = [\n" +
-            "        COP {\n" +
-            "            spiders = [],\n" +
-            "            habitats = [],\n" +
-            "            sh_zones = [([\"C\",\"D\"], [])],\n" +
-            "            present_zones = [([\"C\"], [\"D\"]),\n" +
-            "                             ([\"D\"], [\"C\"]),\n" +
-            "                             ([],[\"C\",\"D\"])\n" +
-            "            ]\n" +
-            "        }\n" +
-            "    ]\n" +
-            "}\n";
+    /**
+     * ZONE TESTS - Generate all possible zones for contours. Zone number increases exponentially with each new contour
+     */
+    private static final List<Zone> POWER_REGION_A = Zones.allZonesForContours("A");
+    private static final List<Zone> POWER_REGION_AB = Zones.allZonesForContours("A", "B");
+    private static final List<Zone> POWER_REGION_ABC = Zones.allZonesForContours("A", "B", "C");
+    private static final List<Zone> POWER_REGION_ABCD = Zones.allZonesForContours("A", "B", "C", "D");
+    private static final List<Zone> POWER_REGION_ABCDE = Zones.allZonesForContours("A", "B", "C", "D", "E");
+    private static final List<Zone> POWER_REGION_ABCDEF = Zones.allZonesForContours("A", "B", "C", "D", "E", "F");
+    private static final List<Zone> POWER_REGION_ABCDEFG = Zones.allZonesForContours("A", "B", "C", "D", "E", "F", "G");
+    private static final List<Zone> POWER_REGION_ABCDEFGH = Zones.allZonesForContours("A", "B", "C", "D", "E", "F", "G", "H");
+    private static final List<Zone> POWER_REGION_ABCDEFGHI = Zones.allZonesForContours("A", "B", "C", "D", "E", "F", "G", "H", "I");
+    private static final List<Zone> POWER_REGION_ABCDEFGHIJ = Zones.allZonesForContours("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
 
-    public static String THREE_DISTINCT_CURVES = "ConceptDiagram {\n" +
-            "    COPs = [\n" +
-            "        COP {\n" +
-            "            spiders = [],\n" +
-            "            habitats = [],\n" +
-            "            sh_zones = [([\"C\",\"D\",\"E\"], []), \n" +
-            "                        ([\"C\",\"D\"], [\"E\"]),\n" +
-            "                        ([\"C\",\"E\"], [\"D\"]),\n" +
-            "                        ([\"D\",\"E\"], [\"C\"])],\n" +
-            "            present_zones = [([\"C\"], [\"D\",\"E\"]),\n" +
-            "                             ([\"D\"], [\"C\", \"E\"]),\n" +
-            "                             ([\"E\"], [\"C\", \"D\"]),\n" +
-            "                             ([],[\"C\",\"D\", \"E\"])\n" +
-            "            ]\n" +
-            "        }\n" +
-            "    ]\n" +
-            "}\n";
+    public static final String ZONES2 = getCOP(createPrimarySD(null, null, null, POWER_REGION_A).toString());
+    public static final String ZONES4 = getCOP(createPrimarySD(null, null, null, POWER_REGION_AB).toString());
+    public static final String ZONES8 = getCOP(createPrimarySD(null, null, null, POWER_REGION_ABC).toString());
+    public static final String ZONES16 = getCOP(createPrimarySD(null, null, null, POWER_REGION_ABCD).toString());
+    public static final String ZONES32 = getCOP(createPrimarySD(null, null, null, POWER_REGION_ABCDE).toString());
+    public static final String ZONES64 = getCOP(createPrimarySD(null, null, null, POWER_REGION_ABCDEF).toString());
+    public static final String ZONES128 = getCOP(createPrimarySD(null, null, null, POWER_REGION_ABCDEFG).toString());
+    public static final String ZONES256 = getCOP(createPrimarySD(null, null, null, POWER_REGION_ABCDEFGH).toString());
 
-    public static String FOUR_DISTINCT_CURVES = "ConceptDiagram {\n" +
-            "    COPs = [\n" +
-            "        COP {\n" +
-            "            spiders = [],\n" +
-            "            habitats = [],\n" +
-            "            sh_zones = [([\"C\",\"D\",\"E\",\"F\"], []), \n" +
-            "                        ([\"C\",\"D\"], [\"E\", \"F\"]),\n" +
-            "                        ([\"C\",\"E\"], [\"D\", \"F\"]),\n" +
-            "                        ([\"C\",\"F\"], [\"D\", \"E\"]),\n" +
-            "                        ([\"D\",\"E\"], [\"C\", \"F\"]),\n" +
-            "                        ([\"D\",\"F\"], [\"C\", \"E\"]),\n" +
-            "                        ([\"E\",\"F\"], [\"D\", \"C\"]),\n" +
-            "                        ([\"D\",\"E\",\"F\"], [\"C\"]),\n" +
-            "                        ([\"D\",\"E\",\"C\"], [\"F\"]),\n" +
-            "                        ([\"C\",\"E\",\"F\"], [\"D\"]),\n" +
-            "                        ([\"D\",\"C\",\"F\"], [\"E\"])],\n" +
-            "            present_zones = [([\"C\"], [\"D\", \"E\", \"F\"]),\n" +
-            "                             ([\"D\"], [\"C\", \"E\", \"F\"]),\n" +
-            "                             ([\"E\"], [\"C\", \"D\", \"F\"]),\n" +
-            "                             ([\"F\"], [\"C\", \"D\", \"E\"]),\n" +
-            "                             ([], [\"C\",\"D\", \"E\", \"F\"])\n" +
-            "            ]\n" +
-            "        }\n" +
-            "    ]\n" +
-            "}\n";
+    private static String getCOP(String input) {
+        input = input.replace("PrimarySD", "COP");
+        return "ConceptDiagram {"
+                    + "COPs = ["
+                    + input + "]" +
+                "}";
+    }
+
+    private static String getDistinctCurves(List<Zone> shadedZones, Zone outContour, int n) {
+        List<String> allContours = contours.subList(0, n);
+        List<Zone> presentZones = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            String contourName = letters[i];
+            allContours.remove(contourName);
+            Zone z = new Zone(getSingleElementSet(contourName), new TreeSet<>(allContours));
+//            Zone zone = Zone.fromInContours(contourName);
+            presentZones.add(z);
+            shadedZones.remove(z);
+            allContours.add(contourName);
+        }
+        presentZones.add(outContour);
+        shadedZones.remove(outContour);
+        return getCOP(createPrimarySD(null, null, shadedZones, presentZones).toString());
+    }
+
+    private static TreeSet<String> getSingleElementSet(String s) {
+        TreeSet<String> set = new TreeSet<>();
+        set.add(s);
+        return set;
+    }
+
+    /**
+     * CONTOUR TESTS - add distinct curves
+     */
+    private static String[] letters = {"A", "B", "C", "D", "E", "F" ,"G", "H", "I", "J"};
+    private static Zone TWO_OUT_CONTOURS = Zone.fromOutContours("A", "B");
+    private static Zone THREE_OUT_CONTOURS = Zone.fromOutContours("A", "B", "C");
+    private static Zone FOUR_OUT_CONTOURS = Zone.fromOutContours("A", "B", "C", "D");
+    private static Zone FIVE_OUT_CONTOURS = Zone.fromOutContours("A", "B", "C", "D", "E");
+    private static Zone SIX_OUT_CONTOURS = Zone.fromOutContours("A", "B", "C", "D", "E", "F");
+    private static Zone SEVEN_OUT_CONTOURS = Zone.fromOutContours("A", "B", "C", "D", "E", "F", "G");
+    private static Zone EIGHT_OUT_CONTOURS = Zone.fromOutContours("A", "B", "C", "D", "E", "F", "G", "H");
+    private static Zone NINE_OUT_CONTOURS = Zone.fromOutContours("A", "B", "C", "D", "E", "F", "G", "H", "I");
+    private static Zone TEN_OUT_CONTOURS = Zone.fromOutContours("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+    private static List<String> contours = new ArrayList<>(Arrays.asList(letters));
+
+    public static String SINGLE_CONTOUR = ZONES2;
+    public static String TWO_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_AB, TWO_OUT_CONTOURS,2);
+    public static String THREE_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABC, THREE_OUT_CONTOURS, 3);
+    public static String FOUR_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCD, FOUR_OUT_CONTOURS, 4);
+    public static String FIVE_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDE, FIVE_OUT_CONTOURS, 5);
+    public static String SIX_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDEF, SIX_OUT_CONTOURS, 6);
+    public static String SEVEN_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDEFG, SEVEN_OUT_CONTOURS, 7);
+    public static String EIGHT_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDEFGH, EIGHT_OUT_CONTOURS, 8);
+    public static String NINE_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDEFGHI, NINE_OUT_CONTOURS, 9);
+    public static String TEN_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDEFGHIJ, TEN_OUT_CONTOURS, 10);
+
 }
+
+
