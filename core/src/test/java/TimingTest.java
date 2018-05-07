@@ -72,5 +72,4 @@ public class TimingTest {
     public void drawPropertyChain() {
         mf.testVisualisation(PROPERTY_CHAIN);
     }
-
 }

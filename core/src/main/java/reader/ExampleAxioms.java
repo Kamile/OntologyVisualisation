@@ -1,6 +1,5 @@
 package reader;
 
-import icircles.abstractDescription.AbstractDescription;
 import speedith.core.lang.Zone;
 import speedith.core.lang.Zones;
 
@@ -197,7 +196,6 @@ public class ExampleAxioms {
             String contourName = letters[i];
             allContours.remove(contourName);
             Zone z = new Zone(getSingleElementSet(contourName), new TreeSet<>(allContours));
-//            Zone zone = Zone.fromInContours(contourName);
             presentZones.add(z);
             shadedZones.remove(z);
             allContours.add(contourName);
@@ -238,6 +236,27 @@ public class ExampleAxioms {
     public static String EIGHT_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDEFGH, EIGHT_OUT_CONTOURS, 8);
     public static String NINE_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDEFGHI, NINE_OUT_CONTOURS, 9);
     public static String TEN_DISTINCT_CURVES = getDistinctCurves(POWER_REGION_ABCDEFGHIJ, TEN_OUT_CONTOURS, 10);
+
+    /**
+     * UNCONNECTED COP/DT tests - timing as number of subdiagrams in CD/PD increases. No arrows.
+     */
+    public static String getDisconnectedSubDiagrams(int n) {
+        // simple spider in COP
+        String COP = "COP {" +
+                "spiders = [\"a\"]" +
+                "}";
+
+        String COPlist = COP;
+        for (int i=0; i< n-1; i++) {
+            COPlist += ", " + COP;
+        }
+
+        return "ConceptDiagram {" +
+                "   COPs = [" +
+                        COPlist +
+                "   ]" +
+                "}";
+    }
 
 }
 

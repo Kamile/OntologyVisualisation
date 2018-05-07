@@ -1,0 +1,44 @@
+PropertyDiagram {
+    COPs = [
+        COP {
+            spiders = [],
+            habitats = [],
+            sh_zones = [],
+            present_zones = [([], ["_anon1"]), (["_anon1"],[])]},
+        COP {
+            spiders = [],
+            habitats = [],
+            sh_zones = [],
+            present_zones = [([], ["_anon2"]), (["_anon2"],[])]},
+        COP {
+            spiders = [],
+            habitats = [],
+            sh_zones = [(["_anonB"], ["_anonA"])],
+            present_zones = [([], ["_anonA", "_anonB"]), (["_anonA"],["_anonB"]), (["_anonA", "_anonB"],[])]}
+    ],
+    arrows = [
+        Arrow {
+            source = "t",
+            target = "_anon1",
+            property = "op",
+            arg = "1"
+        },
+        Arrow {
+            source = "_anon1",
+            target = "_anon2",
+            property = "op",
+            arg = "2"
+        },
+        Arrow {
+            source = "_anon2",
+            target = "_anonB",
+            property = "op",
+            arg = "3"
+        },
+        Arrow {
+            source = "t",
+            target = "_anonA",
+            property = "op"
+        }
+    ]
+}

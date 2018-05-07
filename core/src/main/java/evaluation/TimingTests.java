@@ -3,9 +3,11 @@ package evaluation;
 import gui.MainForm;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static reader.ExampleAxioms.*;
-import static reader.ExampleAxioms.PROPERTY_CHAIN;
 
 public class TimingTests {
     private static long startTime;
@@ -17,13 +19,13 @@ public class TimingTests {
         init();
         for (int i = 0; i < 20; i++) {
             timeIncreasingContours();
+            timeIncreasingZones();
+            timeIncreasingSubdiagrams();
+            timeIncreasingOuterArrows();
         }
-        timeIncreasingZones();
     }
 
     private static void init() {
-        System.out.println(FIVE_DISTINCT_CURVES);
-
         mf = new MainForm();
 
         // draw random to stabilise first drawing time
@@ -37,7 +39,6 @@ public class TimingTests {
     private static void endTimer() {
         endTime = System.nanoTime();
         duration = (endTime - startTime)/1000000;  // in ms
-        System.out.println(duration);
     }
 
     // Increasing number of distinct visible curves
@@ -57,20 +58,22 @@ public class TimingTests {
 
     // Increasing number of COPs DTs - not connected by arrows
     private static void timeIncreasingSubdiagrams() {
-        String[] axioms = {};
+        String[] axioms = new String[10];
+        for (int i=0; i<10; i++) {
+            axioms[i] = getDisconnectedSubDiagrams(i);
+        }
         time(axioms, "subdiagrams.txt");
     }
 
-    // Increasing number of arrows within one COP
-    private static void timeIncreasingInnerArrows() {
-        String[] axioms = {};
-        time(axioms, "innerarrows.txt");
-    }
-
-    // Increasing number of arrows between COPs and DTs
+    // Increasing number of arrows between COPs and DTs where each arrow is sourced and targeted on distinct pairs
     private static void timeIncreasingOuterArrows() {
-        // 1, 5
-        String[] axioms = {OBJECT_SOME_VALUE, PROPERTY_CHAIN};
+        // 1, 2, 3, 4, 5
+        String[] axioms = {
+                readFile("Class Expressions/ObjectSomeValues.sdt"),
+                readFile("Object Property Expression Axioms/Symmetric.sdt"),
+                readFile("Object Property Expression Axioms/Symmetric.sdt"),
+                readFile("Object Property Expression Axioms/PropertyChain4.sdt"),
+                readFile("Object Property Expression Axioms/PropertyChain.sdt")};
         time(axioms, "outerarrows.txt");
     }
 
@@ -98,5 +101,15 @@ public class TimingTests {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String readFile(String fileName) {
+        String contents = "";
+        try {
+            contents = new String(Files.readAllBytes(Paths.get("axioms/" + fileName)), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contents;
     }
 }
